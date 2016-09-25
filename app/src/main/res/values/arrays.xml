@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="main_tabs">
+        <item>首页</item>
+        <item>学工处</item>
+        <item>教务处</item>
+        <item>更多</item>
+        <item>我</item>
+    </string-array>
+
+    <string-array name="home_tabs_titles">
+        <item>学院简介</item>
+        <item>学院风景</item>
+        <item>学院地图</item>
+        <item>团委建设</item>
+        <item>院党政办</item>
+        <item>院图书馆</item>
+    </string-array>
+
+    <string-array name="home_tabs_images">
+        <item>@drawable/ic_home_intro_normal</item>
+        <item>@drawable/ic_home_sence_normal</item>
+        <item>@drawable/ic_home_map_normal</item>
+        <item>@drawable/ic_home_tuan_normal</item>
+        <item>@drawable/ic_home_party_normal</item>
+        <item>@drawable/ic_home_library_normal</item>
+    </string-array>
+
+    <string-array name="home_items_titles">
+        <item>工作动态</item>
+        <item>公告公示</item>
+    </string-array>
+
+    <string-array name="xuegong_tabs_titles">
+        <item>部门概况</item>
+        <item>教育管理</item>
+        <item>学生资助</item>
+    </string-array>
+
+    <string-array name="xuegong_tabs_images">
+        <item>@drawable/ic_xuegong_basic_normal</item>
+        <item>@drawable/ic_xuegong_manager_normal</item>
+        <item>@drawable/ic_xuegong_stake_normal</item>
+    </string-array>
+
+    <string-array name="jiaowu_tabs_titles">
+        <item>教学成绩</item>
+        <item>网上选课</item>
+        <item>网上报名</item>
+    </string-array>
+
+    <string-array name="jiaowu_tabs_images">
+        <item>@drawable/ic_jiaowu_sroce_normal</item>
+        <item>@drawable/ic_jiaowu_xuanke_normal</item>
+        <item>@drawable/ic_jiaowu_join_normal</item>
+    </string-array>
+
+    <string-array name="more_tabs_titles">
+        <item>成绩查询</item>
+        <item>学习专区</item>
+        <item>招生就业</item>
+        <item>校内圈子</item>
+        <item>社团百态</item>
+        <item>失物招领</item>
+        <item>纸飞机</item>
+        <item>鄱阳湖</item>
+    </string-array>
+
+    <string-array name="more_tabs_images">
+        <item>@drawable/ic_more_score_normal</item>
+        <item>@drawable/ic_more_study_normal</item>
+        <item>@drawable/ic_more_employ_normal</item>
+        <item>@drawable/ic_more_cricle_normal</item>
+        <item>@drawable/ic_more_community_normal</item>
+        <item>@drawable/ic_more_lost_normal</item>
+        <item>@drawable/ic_more_paper_normal</item>
+        <item>@drawable/ic_more_poyang_normal</item>
+    </string-array>
+
+    <string-array name="category_score_item">
+        <item>英语四六级</item>
+        <item>四六级口语</item>
+        <item>普通话水平</item>
+        <item>英语三级</item>
+        <item>计算机二级</item>
+        <item>剑桥商务英语</item>
+        <item>嵌入式技工</item>
+        <item>教师资格证</item>
+        <item>会计资格证</item>
+        <item>全国外语水平</item>
+    </string-array>
+
+    <string-array name="pets_spinner_time">
+        <item>2016年03月</item>
+        <item>2015年09月 </item>
+        <item>2015年03月</item>
+        <item>2014年09月</item>
+        <item>2014年03月</item>
+        <item>2013年09月</item>
+        <item>2013年03月</item>
+    </string-array>
+
+    <string-array name="bec_spinner_time">
+        <item>2014年11月</item>
+        <item>2014年05月 </item>
+        <item>2014年03月</item>
+        <item>2013年11月</item>
+        <item>2013年05月</item>
+    </string-array>
+
+    <string-array name="bec_spinner_level">
+        <item>BEC初级</item>
+        <item>BEC中级</item>
+        <item>BEC高级</item>
+    </string-array>
+
+    <string-array name="computer_spinner_time">
+        <item>2016年03月</item>
+        <item>2015年12月 </item>
+        <item>2015年09月</item>
+    </string-array>
+
+    <string-array name="computer_spinner_level">
+        <item>二级C语言</item>
+        <item>二级VFP</item>
+        <item>二级Java</item>
+        <item>二级Access</item>
+        <item>二级C++</item>
+        <item>二级Delphi</item>
+        <item>二级MySQL</item>
+        <item>二级Office</item>
+        <item>二级Web</item>
+        <item>二级Basic</item>
+    </string-array>
+
+    <string-array name="flush_spinner_time">
+        <item>2015年11月</item>
+        <item>2015年05月</item>
+        <item>2014年5月</item>
+        <item>2014年11月</item>
+    </string-array>
+
+    <string-array name="flush_spinner_location">
+        <item>11-北京</item>
+        <item>12-天津</item>
+        <item>13-河北</item>
+        <item>14-山西</item>
+        <item>15-内蒙古</item>
+        <item>21-辽宁</item>
+        <item>22-吉林</item>
+        <item>23-黑龙江</item>
+        <item>31-上海</item>
+        <item>32-江苏</item>
+        <item>33-浙江</item>
+        <item>34-安徽</item>
+        <item>35-福建</item>
+        <item>36-江西</item>
+        <item>37-山东</item>
+        <item>41-河南</item>
+        <item>42-湖北</item>
+        <item>43-湖南</item>
+        <item>44-广东</item>
+        <item>45-广西</item>
+        <item>46-海南</item>
+        <item>50-重庆</item>
+        <item>51-四川</item>
+        <item>52-贵州</item>
+        <item>53-云南</item>
+        <item>54-西藏</item>
+        <item>61-陕西</item>
+        <item>62-甘肃</item>
+        <item>63-青海</item>
+        <item>64-宁夏</item>
+        <item>65-新疆</item>
+    </string-array>
+
+    <string-array name="foreign_spinner_time">
+        <item>2015年11月</item>
+        <item>2015年05月 </item>
+        <item>2014年11月</item>
+        <item>2014年05月</item>
+    </string-array>
+
+    <string-array name="foreign_spinner_type">
+        <item>法语</item>
+        <item>德语</item>
+        <item>日语</item>
+        <item>俄语</item>
+        <item>英语</item>
+    </string-array>
+
+    <string-array name="dialog_choice_love_items">
+        <item>保密</item>
+        <item>初恋还在</item>
+        <item>单身</item>
+        <item>关系很难解释</item>
+        <item>交往中</item>
+    </string-array>
+    <string-array name="dialog_choice_depart_items">
+        <item>工程技术系</item>
+        <item>经济贸易系</item>
+        <item>工商管理系</item>
+        <item>信息工程系</item>
+        <item>艺术与设计系</item>
+        <item>英汉语言文学系</item>
+    </string-array>
+    <string-array name="dialog_choice_qual_items">
+        <item>本科</item>
+        <item>专科</item>
+    </string-array>
+    <string-array name="share_items">
+        <item>QQ</item>
+        <item>微信</item>
+        <item>朋友圈</item>
+        <item>微博</item>
+        <item>FaceBook</item>
+        <item>更多</item>
+    </string-array>
+
+</resources>

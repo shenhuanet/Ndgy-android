@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_edit_zone_rootview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="TextFields">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <include layout="@layout/common_toolbar_title_left" />
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            app:divider="@drawable/bg_divider_gray"
+            app:showDividers="beginning|middle|end">
+
+            <LinearLayout
+                android:id="@+id/layout_edit_zone_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="真实姓名" />
+
+                <EditText
+                    android:id="@+id/et_edit_zone_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_edit_zone_sign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="个性签名" />
+
+                <EditText
+                    android:id="@+id/et_edit_zone_sign"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_edit_zone_brith"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="生\u3000\u3000日" />
+
+                <TextView
+                    android:id="@+id/tv_edit_zone_brith"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_edit_zone_locate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="家\u3000\u3000乡" />
+
+                <TextView
+                    android:id="@+id/tv_edit_zone_locate"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_edit_zone_love"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="恋爱状态" />
+
+                <TextView
+                    android:id="@+id/tv_edit_zone_love"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:text="保密"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            app:divider="@drawable/bg_divider_gray"
+            app:showDividers="beginning|middle|end">
+
+            <LinearLayout
+                android:id="@+id/layout_edit_zone_depart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="系\u3000\u3000别" />
+
+                <TextView
+                    android:id="@+id/tv_edit_zone_depart"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_edit_zone_qual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="学\u3000\u3000历" />
+
+                <TextView
+                    android:id="@+id/tv_edit_zone_qual"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="毕业中学" />
+
+                <EditText
+                    android:id="@+id/et_edit_zone_school"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <Button
+            android:id="@+id/btn_edit_save"
+            style="@style/ButtonStytle.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="23dp"
+            android:text="保存" />
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

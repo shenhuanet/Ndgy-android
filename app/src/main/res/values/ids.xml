@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="toolbar" type="id" />
+    <item name="ic_arrow_flag" type="id" />
+
+    <item name="iv_sroce_yzm" type="id" />
+    <item name="btn_query" type="id" />
+    <item name="layout_score_root" type="id" />
+    <item name="til_zkzh" type="id" />
+    <item name="til_name" type="id" />
+    <item name="et_zkzh" type="id" />
+    <item name="et_name" type="id" />
+    <item name="et_yzm" type="id" />
+    <item name="et_sfz" type="id" />
+
+    <item name="sign_switch" type="id" />
+
+</resources>

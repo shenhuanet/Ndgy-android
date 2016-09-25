@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/layout_score_root_style">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请至少输入您的姓名、准考证号及证件编号三项中的任意两项" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/ScoreTextInputLayoutHintTextStyle">
+
+        <android.support.design.widget.TextInputEditText
+            style="@style/ScoreTextInputEditTextStyle.ZhunKaoZheng"
+            android:hint="请输入15位准考证号"
+            android:maxLength="15" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/ScoreTextInputLayoutHintTextStyle">
+
+        <android.support.design.widget.TextInputEditText style="@style/ScoreEditTextStyle.XingMing" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/ScoreTextInputLayoutHintTextStyle">
+
+        <android.support.design.widget.TextInputEditText
+            style="@style/ScoreTextInputEditTextStyle"
+            android:hint="请输入证件编号" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button style="@style/ButtonStytle.ScoreQuery" />
+
+</LinearLayout>

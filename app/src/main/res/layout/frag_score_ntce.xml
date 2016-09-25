@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/layout_score_root_style">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/ScoreTextInputLayoutHintTextStyle">
+
+        <android.support.design.widget.TextInputEditText style="@style/ScoreTextInputEditTextStyle.ShenFenZheng" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:hintTextAppearance="@style/ScoreTextInputLayoutHintTextStyle">
+
+        <android.support.design.widget.TextInputEditText style="@style/ScoreEditTextStyle.XingMing" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            app:hintTextAppearance="@style/ScoreTextInputLayoutHintTextStyle">
+
+            <android.support.design.widget.TextInputEditText style="@style/ScoreTextInputEditTextStyle.Yzm" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <ImageView
+            style="@style/verfyCode_style"
+            android:layout_width="180px"
+            android:layout_height="60px"
+            android:layout_gravity="center"
+            android:contentDescription="@string/imgdec" />
+
+    </LinearLayout>
+
+    <Button style="@style/ButtonStytle.ScoreQuery" />
+
+</LinearLayout>

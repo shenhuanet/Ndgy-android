@@ -2,7 +2,6 @@
 .gradle
 .idea
 /local.properties
-/gradle
 /gradle.bat
 /gradle.properties
 /.idea/workspace.xml

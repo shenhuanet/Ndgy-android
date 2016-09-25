@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="加入知乎"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:text="与世界分享你的知识、经验和见解"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_divider_gray" />
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:divider="@drawable/bg_divider_gray"
+        app:showDividers="beginning|middle|end">
+
+        <com.shenhua.nandagy.widget.ClearEditText
+            android:id="@+id/signup_et_username"
+            style="@style/EditSignStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/txt_hint_username"
+            android:textColorHint="@color/colorPrimaryLight" />
+
+        <com.shenhua.nandagy.widget.ClearEditText
+            android:id="@+id/signup_et_password"
+            style="@style/EditSignStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/txt_hint_password"
+            android:inputType="numberPassword"
+            android:maxLength="6"
+            android:textColorHint="@color/colorPrimaryLight" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/EditSignStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_gender"
+                android:textColor="@color/colorPrimaryLight" />
+
+            <RadioGroup
+                android:id="@+id/radiogroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_man"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/txt_gender_man"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_woman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/txt_gender_woman"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/sign_switch_to_signin"
+                style="@style/DialogTextActionSytle"
+                android:text="@string/txt_to_signin" />
+
+            <Button
+                android:id="@+id/sign_btn_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_button_light_selector"
+                android:text="@string/txt_signup" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</LinearLayout>

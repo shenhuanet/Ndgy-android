@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.shenhua.nandagy.widget.BannerView
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@drawable/img_p" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/tabrow_score"
+                    layout="@layout/view_tabrow_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_divider_gray" />
+
+                <include
+                    android:id="@+id/tabrow_study"
+                    layout="@layout/view_tabrow_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_divider_gray" />
+
+                <include
+                    android:id="@+id/tabrow_employ"
+                    layout="@layout/view_tabrow_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@drawable/bg_divider_gray" />
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/tabrow_circle"
+                    layout="@layout/view_tabrow_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_divider_gray" />
+
+                <include
+                    android:id="@+id/tabrow_community"
+                    layout="@layout/view_tabrow_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_divider_gray" />
+
+                <include
+                    android:id="@+id/tabrow_lost"
+                    layout="@layout/view_tabrow_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@drawable/bg_divider_gray" />
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <include
+                    android:id="@+id/tabrow_paper"
+                    layout="@layout/view_tabrow_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_divider_gray" />
+
+                <include
+                    android:id="@+id/tabrow_poyang"
+                    layout="@layout/view_tabrow_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <View
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_divider_gray" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

@@ -1,0 +1,22 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 24
+    }
+}
+
+ext {
+    isLibrary = true
+    pomArtifactId = "WheelPicker"
+    pomDescription = "wheel picker for android, include date picker, time picker, option picker, address picker, etc."
+}
+
+dependencies {
+    compile project(":library:Common")
+    compile 'com.alibaba:fastjson:1.1.54.android'
+}

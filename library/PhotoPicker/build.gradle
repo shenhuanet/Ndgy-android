@@ -1,0 +1,21 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 24
+    }
+}
+
+ext {
+    isLibrary = true
+    pomArtifactId = "PhotoPicker"
+    pomDescription = "A PhotoPicker from gallery or camera and then crop the selected photo use circle or rect."
+}
+
+dependencies {
+    compile project(":library:Common")
+}

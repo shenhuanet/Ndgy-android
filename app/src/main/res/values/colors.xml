@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorPrimary">#1DBFD8</color>
+    <color name="colorPrimaryDark">#1DBFD8</color>
+    <color name="colorPrimaryLight">#A0D7DC</color>
+    <color name="colorAccent">#BDD972</color>
+
+    <color name="colorWhite">#FFFFFFFF</color>
+    <color name="colorBackground">#F7F7F7</color>
+    <color name="colorDivider">#DADEDF</color>
+    <color name="colorText">#576069</color>
+
+    <color name="colorPressed">#1CD6E0</color>
+    <color name="colorEnabled">#D4D4D4</color>
+    <color name="colorLight">#551DBFD8</color>
+
+
+    <color name="textColor_selected">#24C0E6</color>
+    <color name="textColor_unselected">#707070</color>
+    <color name="text">#707070</color>
+    <color name="white">#ffffff</color>
+    <color name="morehui_nor">#E7E7E7</color>
+    <color name="color1">#24C0E6</color>
+    <color name="color2">#F13B86</color>
+    <color name="color3">#315DC5</color>
+    <color name="color4">#79D216</color>
+    <color name="tablinecolor">#F5F5F5</color>
+    <color name="gvitcolor">#FFFFFF</color>
+    <color name="themecolor">#24C0E6</color>
+    <color name="colorgreen">#66CC22</color>
+
+    <color name="action_label_light">#b9e3d9</color>
+    <color name="action_label_dark">#576069</color>
+    <color name="action_hint_label">#80576069</color>
+
 </resources>

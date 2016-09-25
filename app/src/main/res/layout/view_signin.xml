@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="登录知乎"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:text="给你带来全新的体验"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_divider_gray" />
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:divider="@drawable/bg_divider_gray"
+        app:showDividers="beginning|middle">
+
+        <com.shenhua.nandagy.widget.ClearEditText
+            android:id="@+id/signin_et_username"
+            style="@style/EditSignStyle"
+            android:hint="@string/txt_hint_username"
+            android:textColorHint="@color/colorPrimaryLight" />
+
+        <com.shenhua.nandagy.widget.ClearEditText
+            android:id="@+id/signin_et_password"
+            style="@style/EditSignStyle"
+            android:hint="@string/txt_hint_password"
+            android:inputType="numberPassword"
+            android:maxLength="6"
+            android:textColorHint="@color/colorPrimaryLight" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/sign_switch_to_signup"
+                style="@style/DialogTextActionSytle"
+                android:text="@string/txt_to_signup" />
+
+            <TextView
+                android:id="@+id/sign_forget"
+                style="@style/DialogTextActionSytle"
+                android:layout_toEndOf="@+id/sign_switch_to_signup"
+                android:layout_toRightOf="@+id/sign_switch_to_signup"
+                android:padding="10dp"
+                android:text="@string/txt_forget_password"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/sign_btn_signin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_button_light_selector"
+                android:text="@string/txt_signin" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</LinearLayout>

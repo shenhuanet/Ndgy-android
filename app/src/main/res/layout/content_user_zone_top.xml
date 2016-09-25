@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.shenhua.nandagy.widget.CircleImageView
+        android:id="@+id/iv_zone_photo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:scaleType="centerCrop"
+        android:transitionName="photos"
+        app:border_color="@android:color/white"
+        app:border_width="2dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_zone_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:text="ID:"
+            android:textColor="@android:color/white"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/iv_zone_gender"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/ic_user_gender_male" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_zone_exper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="经验值:0"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="12dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:background="@android:color/white" />
+
+        <TextView
+            android:id="@+id/tv_zone_mi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="米粒数:0"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

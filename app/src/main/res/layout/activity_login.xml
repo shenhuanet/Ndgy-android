@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sign_layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:contentDescription="@string/imgdec"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_sign_bg2" />
+
+    <include layout="@layout/common_toolbar_title_center" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/layout_sign_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:background="@drawable/img_content_bg"
+            android:transitionName="content">
+
+            <include
+                android:id="@+id/view_signin"
+                layout="@layout/view_signin" />
+
+            <include
+                android:id="@+id/view_signup"
+                layout="@layout/view_signup"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="90dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/bg_divider_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:gravity="center"
+                    android:text="使用其它登录方式"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/bg_divider_primary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/signin_btn_qq"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/ic_login_qq" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:text="Text"
+                    android:textColor="#ffffff"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/signin_btn_mm"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/ic_login_wechat" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:text="Text"
+                    android:textColor="#ffffff"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/signin_btn_wb"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/ic_login_sina" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:text="Text"
+                    android:textColor="#ffffff"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/signin_btn_fb"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/ic_login_facebook" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

@@ -1,0 +1,13 @@
+body{background:#FFFFFF}
+.banner img{display:block;line-height:0;max-width:100%;width:100%}
+.pic{text-align:center;padding-top:20px}
+.pic img{width:90%}.title{color:#537282;margin:12px 5%}
+.pic_log{text-align:center;padding-top:5px}
+.pic_log img{width:100%}
+.pic-nonet {text-align:center;padding-top:120px;}
+.text-nonet{text-align:center;padding-top:10px;width: 100%;line-height: 30px;font-size: 16px;color: #333;}
+.text-nonet-tips{text-align:center;color: #aaa;width: 100%;line-height: 18px;font-size: 12px;}
+.text-nonet-tips .link{color: #4c9afa;text-decoration: none;}
+.text-nonet-tips-info{text-align:center;color: #707070;width: 100%;line-height: 18px;font-size: 12px;}
+.text-nonet-tips-info .link{color: #4c9afa;text-decoration: none;}
+}

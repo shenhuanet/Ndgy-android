@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/img_content_bg"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/editdialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <com.shenhua.nandagy.widget.ClearEditText
+        android:id="@+id/editdialog_et"
+        style="@style/EditSignStyle"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:textColorHint="@color/colorPrimaryLight" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@drawable/bg_divider_primary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_cancel"
+            style="@style/DialogTextActionSytle"
+            android:layout_marginTop="10dp"
+            android:text="取消" />
+
+        <TextView
+            android:id="@+id/dialog_done"
+            style="@style/DialogTextActionSytle"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="确定" />
+
+    </LinearLayout>
+
+</LinearLayout>

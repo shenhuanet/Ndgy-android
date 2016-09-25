@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/common_toolbar_title_left" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/imgdec"
+            android:scaleType="centerCrop"
+            android:src="@drawable/about_logo_pic" />
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            app:divider="@drawable/bg_divider_gray"
+            app:showDividers="middle">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:padding="16dp"
+                android:text="\u3000\u3000本软件是神话网络科技于2015年12月推出的一款集资讯、通知、生活、学习于一体的全新校园APP；旨在为南大共院学子提供最细致化、便捷化、本地化的校园生活服务指南。"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_about_version"
+                style="@style/ActionLabelTextStytle"
+                android:text="当前版本 4.5.6" />
+
+            <TextView
+                android:id="@+id/tv_about_update"
+                style="@style/ActionLabelTextStytle"
+                android:text="检测更新" />
+
+            <TextView
+                android:id="@+id/tv_about_share"
+                style="@style/ActionLabelTextStytle"
+                android:text="分享app" />
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" All Rights Reserved"
+            android:textColor="#66000000"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Copyright © 2015 神话出品"
+            android:textColor="#66000000"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <com.shenhua.nandagy.widget.BaseShareView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/base_share_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:contentLayout="@layout/view_share" />
+
+</RelativeLayout>

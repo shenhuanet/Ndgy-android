@@ -1,0 +1,38 @@
+<!DOCTYPE>
+<html>
+<head>
+<title>该网站暂时无法访问</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="stylesheet" type="text/css" href="file:///android_asset/css/c.css" >
+<script type="text/javascript">
+	function initShowInfoLink() {
+		var a = document.getElementById("aInfo");
+		a.onclick = function() {
+			var divInfo = document.getElementById("divInfo");
+			a.style.display = "none";
+			divInfo.style.display = "";
+			return false;
+		};
+	}
+</script>
+</head> 
+<body onload="initShowInfoLink()">
+<div class="pic-nonet" align="center">
+		<img  src="file:///android_asset/imgs/ic_nonet_pic.png" alt="" />
+	</div>
+<div class="text-nonet" id="prompt">该网站暂时无法访问</div>
+<div class="text-nonet-tips">
+		<p>
+			<a id="aInfo" class="link" href="javascript:void(0)">详细信息</a>
+		</p>
+	</div>
+<div id="divInfo" class="text-nonet-tips-info" style="display: none;">
+        <p id="errinfo">该网站响应时间过长，导致无法打开</p>
+        <p id="refreshinfo">您可稍后尝试<a class="link" onclick="window.refresh.CheckNet()">重新加载</a>该网页</p>
+    </div>
+</body>
+</html>
