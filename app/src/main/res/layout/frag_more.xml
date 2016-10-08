@@ -40,7 +40,7 @@
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_divider_gray" />
+                    android:background="@drawable/bg_divider_gray_vertical" />
 
                 <include
                     android:id="@+id/tabrow_study"
@@ -52,7 +52,7 @@
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_divider_gray" />
+                    android:background="@drawable/bg_divider_gray_vertical" />
 
                 <include
                     android:id="@+id/tabrow_employ"
@@ -66,7 +66,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@drawable/bg_divider_gray" />
+                android:background="@drawable/bg_divider_gray_vertical" />
 
             <TableRow
                 android:layout_width="wrap_content"
@@ -85,7 +85,7 @@
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_divider_gray" />
+                    android:background="@drawable/bg_divider_gray_vertical" />
 
                 <include
                     android:id="@+id/tabrow_community"
@@ -97,7 +97,7 @@
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_divider_gray" />
+                    android:background="@drawable/bg_divider_gray_vertical" />
 
                 <include
                     android:id="@+id/tabrow_lost"
@@ -111,7 +111,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@drawable/bg_divider_gray" />
+                android:background="@drawable/bg_divider_gray_vertical" />
 
             <TableRow
                 android:layout_width="wrap_content"
@@ -130,7 +130,7 @@
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_divider_gray" />
+                    android:background="@drawable/bg_divider_gray_vertical" />
 
                 <include
                     android:id="@+id/tabrow_poyang"
@@ -142,7 +142,7 @@
                 <View
                     android:layout_width="1px"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_divider_gray" />
+                    android:background="@drawable/bg_divider_gray_vertical" />
 
                 <View
                     android:layout_width="wrap_content"

@@ -3,8 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="imgdec">imgdec</string>
     <string name="home">首页</string>
-    <string name="h_t1">工作动态</string>
-    <string name="h_t2">公告公示</string>
+
     <string name="xcj_string_xn">%s学年</string>
     <string name="xcj_string_xq">第%s学期</string>
     <string name="xcj_string_kcm">课程名：%s</string>
@@ -18,18 +17,22 @@
     <string name="xcj_string_zf">总分\n%s</string>
     <string name="xcjdj_string_zkzh">准考证号：%s</string>
     <string name="xcjdj_string_ksrq">考试日期：%s</string>
-    <string name="cet_string_type">%s 成绩单</string>
-    <string name="cet_string_total">总分： %s</string>
-    <string name="cet_string_listening">听力： %s</string>
+
+    <string name="cet_string_sum">总分： %s</string>
+    <string name="cet_string_listen">听力： %s</string>
     <string name="cet_string_reading">阅读： %s</string>
-    <string name="cet_string_writing">写作： %s</string>
-    <string name="cet_string_name">姓名： %s</string>
-    <string name="cet_string_school">学校： %s</string>
-    <string name="cet_string_zkzh">准考证号： %s</string>
-    <string name="cet_string_kssj">考试时间： %s</string>
+    <string name="cet_string_compos">写作与翻译： %s</string>
+    <string name="cet_string_name">姓\u3000\u3000名： %s</string>
+    <string name="cet_string_exam_type">考试级别： %s</string>
+    <string name="cet_string_school">学\u3000\u3000校： %s</string>
+    <string name="cet_string_exam_num">准考证号： %s</string>
+    <string name="cet_string_exam_time">考试时间： %s</string>
+
     <string name="img_photo">头像</string>
-    <string name="img_arraw">img_arraw</string>
+    <string name="img_arrow">img_arrow</string>
+
     <string name="action_edit">编辑</string>
+
     <string name="txt_gender">性别</string>
     <string name="txt_gender_man">男</string>
     <string name="txt_gender_woman">女</string>

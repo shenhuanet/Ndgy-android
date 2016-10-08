@@ -1,6 +1,6 @@
 package com.shenhua.nandagy.model;
 
-import com.shenhua.nandagy.bean.ScoreData;
+import com.shenhua.nandagy.bean.scorebean.ScoreData;
 import com.shenhua.nandagy.callback.HttpCallback;
 
 /**

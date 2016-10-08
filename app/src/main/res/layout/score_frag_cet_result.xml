@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_margin="16dp"
+    android:background="@drawable/bg_score_board"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="成绩单"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cet_tv_name"
+                style="@style/ScoreTextViewStyle"
+                android:text="@string/cet_string_name" />
+
+            <TextView
+                android:id="@+id/cet_tv_school"
+                style="@style/ScoreTextViewStyle"
+                android:text="@string/cet_string_school" />
+
+            <TextView
+                android:id="@+id/cet_tv_exam_type"
+                style="@style/ScoreTextViewStyle"
+                android:text="@string/cet_string_exam_type" />
+
+            <TextView
+                android:id="@+id/cet_tv_exam_num"
+                style="@style/ScoreTextViewStyle"
+                android:text="@string/cet_string_exam_num" />
+
+            <TextView
+                android:id="@+id/cet_tv_exam_time"
+                style="@style/ScoreTextViewStyle"
+                android:text="@string/cet_string_exam_time" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/cet_tv_reading"
+                    style="@style/ScoreTextViewStyle"
+                    android:layout_weight="1"
+                    android:text="@string/cet_string_reading" />
+
+                <TextView
+                    android:id="@+id/cet_tv_compos"
+                    style="@style/ScoreTextViewStyle"
+                    android:layout_weight="1"
+                    android:text="@string/cet_string_compos" />
+
+                <TextView
+                    android:id="@+id/cet_tv_listen"
+                    style="@style/ScoreTextViewStyle"
+                    android:layout_weight="1"
+                    android:text="@string/cet_string_listen" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/cet_tv_sum"
+                style="@style/ScoreTextViewStyle"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:text="@string/cet_string_sum"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_pass"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="end"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            android:contentDescription="@string/imgdec"
+            android:src="@drawable/ic_exam_nopass" />
+
+    </FrameLayout>
+
+</LinearLayout>

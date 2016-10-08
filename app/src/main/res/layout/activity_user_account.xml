@@ -23,7 +23,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@android:color/white"
                 android:orientation="vertical"
-                app:divider="@drawable/bg_divider_gray"
+                app:divider="@drawable/bg_divider_gray_vertical"
                 app:showDividers="middle|end">
 
                 <TextView
@@ -232,7 +232,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@android:color/white"
                 android:orientation="vertical"
-                app:divider="@drawable/bg_divider_gray"
+                app:divider="@drawable/bg_divider_gray_vertical"
                 app:showDividers="middle|end">
 
                 <TextView

@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="main_tabs">
+    <string-array name="main_tabs_titles">
         <item>首页</item>
         <item>学工处</item>
         <item>教务处</item>
         <item>更多</item>
         <item>我</item>
+    </string-array>
+
+    <string-array name="main_tabs_images">
+        <item>@drawable/ic_tab_home_selector</item>
+        <item>@drawable/ic_tab_xuegong_selector</item>
+        <item>@drawable/ic_tab_jiaowu_selector</item>
+        <item>@drawable/ic_tab_more_selector</item>
+        <item>@drawable/ic_tab_user_selector</item>
     </string-array>
 
     <string-array name="home_tabs_titles">
@@ -80,15 +88,27 @@
 
     <string-array name="category_score_item">
         <item>英语四六级</item>
-        <item>四六级口语</item>
+        <!--<item>四六级口语</item>-->
         <item>普通话水平</item>
         <item>英语三级</item>
         <item>计算机二级</item>
         <item>剑桥商务英语</item>
         <item>嵌入式技工</item>
+        <item>全国外语水平</item>
         <item>教师资格证</item>
         <item>会计资格证</item>
-        <item>全国外语水平</item>
+    </string-array>
+
+    <string-array name="category_score_images">
+        <item>@drawable/ic_score_cet_normal</item>
+        <item>@drawable/ic_score_mandarin_normal</item>
+        <item>@drawable/ic_score_pets_normal</item>
+        <item>@drawable/ic_score_computer_normal</item>
+        <item>@drawable/ic_score_bec_normal</item>
+        <item>@drawable/ic_score_flush_normal</item>
+        <item>@drawable/ic_score_forign_normal</item>
+        <item>@drawable/ic_score_ntce_normal</item>
+        <item>@drawable/ic_score_cap_normal</item>
     </string-array>
 
     <string-array name="pets_spinner_time">

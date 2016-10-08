@@ -13,6 +13,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.shenhua.nandagy.R;
+import com.shenhua.nandagy.activity.GroupActivity;
+import com.shenhua.nandagy.activity.LibraryActivity;
+import com.shenhua.nandagy.activity.PartyActivity;
 import com.shenhua.nandagy.activity.WebActivity;
 import com.shenhua.nandagy.base.BaseFragment;
 import com.shenhua.nandagy.service.HttpService;
@@ -109,13 +112,13 @@ public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelecte
                 intent.putExtra("url", "school-map.html");
                 break;
             case 3:
-                toast("使用原生界面");
+                intent = new Intent(getActivity(), GroupActivity.class);
                 break;
             case 4:
-                toast("使用原生界面");
+                intent = new Intent(getActivity(), PartyActivity.class);
                 break;
             case 5:
-                toast("使用原生界面");
+                intent = new Intent(getActivity(), LibraryActivity.class);
                 break;
         }
         if (intent != null)

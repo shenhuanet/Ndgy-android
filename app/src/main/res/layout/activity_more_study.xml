@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    android:orientation="vertical"
+    tools:context=".activity.MoreStudyActivity">
+
+    <!--这里的paddingTop在5.0以上设置为25，以下需设置为0-->
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/img_photo_bg"
+        android:paddingTop="25dp"
+        app:navigationIcon="@drawable/ic_menu_back">
+
+    </android.support.v7.widget.Toolbar>
+
+</LinearLayout>

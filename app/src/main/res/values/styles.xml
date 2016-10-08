@@ -184,29 +184,53 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="ScoreTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="CircleToolTextViewStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="DividerVertical">
+        <item name="android:layout_width">1px</item>
+        <item name="android:layout_height">10dp</item>
+        <item name="android:background">@color/colorDivider</item>
+    </style>
+
     <!--  分割线45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
 
 
     <!--<style name="dot_style">-->
-        <!--<item name="android:layout_width">5dip</item>-->
-        <!--<item name="android:layout_height">5dip</item>-->
-        <!--<item name="android:background">@drawable/dot_normal</item>-->
-        <!--<item name="android:layout_marginLeft">1.5dip</item>-->
-        <!--<item name="android:layout_marginRight">1.5dip</item>-->
+    <!--<item name="android:layout_width">5dip</item>-->
+    <!--<item name="android:layout_height">5dip</item>-->
+    <!--<item name="android:background">@drawable/dot_normal</item>-->
+    <!--<item name="android:layout_marginLeft">1.5dip</item>-->
+    <!--<item name="android:layout_marginRight">1.5dip</item>-->
     <!--</style>-->
 
     <!--<style name="bangding_btn_style">-->
-        <!--<item name="android:background">@drawable/bangding_btn_bd_bg</item>-->
-        <!--<item name="android:padding">6.0dip</item>-->
-        <!--<item name="android:textColor">@android:color/white</item>-->
-        <!--<item name="android:layout_gravity">center_horizontal</item>-->
+    <!--<item name="android:background">@drawable/bangding_btn_bd_bg</item>-->
+    <!--<item name="android:padding">6.0dip</item>-->
+    <!--<item name="android:textColor">@android:color/white</item>-->
+    <!--<item name="android:layout_gravity">center_horizontal</item>-->
     <!--</style>-->
 
     <!--<style name="cet_btn_style">-->
-        <!--<item name="android:background">@drawable/cet_btn_bd_bg</item>-->
-        <!--<item name="android:padding">6.0dip</item>-->
-        <!--<item name="android:textColor">@android:color/white</item>-->
-        <!--<item name="android:layout_gravity">center_horizontal</item>-->
+    <!--<item name="android:background">@drawable/cet_btn_bd_bg</item>-->
+    <!--<item name="android:padding">6.0dip</item>-->
+    <!--<item name="android:textColor">@android:color/white</item>-->
+    <!--<item name="android:layout_gravity">center_horizontal</item>-->
     <!--</style>-->
 
 

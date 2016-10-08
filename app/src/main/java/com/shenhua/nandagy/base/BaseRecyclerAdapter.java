@@ -17,10 +17,10 @@ import java.util.List;
  */
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseRecyclerViewHolder> {
 
-    protected Context mContext;
-    protected List<T> mDatas;
-    protected LayoutInflater mInflater;
-    protected OnItemClickListener mOnItemClickListener;
+    private Context mContext;
+    private List<T> mDatas;
+    private LayoutInflater mInflater;
+    private OnItemClickListener mOnItemClickListener;
 
     public BaseRecyclerAdapter(Context context, List<T> datas) {
         this.mContext = context;

@@ -1,6 +1,7 @@
 package com.shenhua.nandagy.activity;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,18 +20,17 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseActivity;
-import com.shenhua.nandagy.bean.CommonItemData;
+import com.shenhua.nandagy.base.BaseImageTextItem;
 import com.shenhua.nandagy.bean.bmobbean.BombUtil;
-import com.shenhua.nandagy.frag.ScoreBecFragment;
-import com.shenhua.nandagy.frag.ScoreCAPFragment;
-import com.shenhua.nandagy.frag.ScoreCETFragment;
-import com.shenhua.nandagy.frag.ScoreCETKFragment;
-import com.shenhua.nandagy.frag.ScoreComputerFragment;
-import com.shenhua.nandagy.frag.ScoreFlushFragment;
-import com.shenhua.nandagy.frag.ScoreForeignFragment;
-import com.shenhua.nandagy.frag.ScoreMandarinFragment;
-import com.shenhua.nandagy.frag.ScoreNTCEFragment;
-import com.shenhua.nandagy.frag.ScorePETSFragment;
+import com.shenhua.nandagy.frag.score.ScoreBecFragment;
+import com.shenhua.nandagy.frag.score.ScoreCAPFragment;
+import com.shenhua.nandagy.frag.score.ScoreCetFragment;
+import com.shenhua.nandagy.frag.score.ScoreComputerFragment;
+import com.shenhua.nandagy.frag.score.ScoreFlushFragment;
+import com.shenhua.nandagy.frag.score.ScoreForeignFragment;
+import com.shenhua.nandagy.frag.score.ScoreMandarinFragment;
+import com.shenhua.nandagy.frag.score.ScoreNTCEFragment;
+import com.shenhua.nandagy.frag.score.ScorePETSFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,16 +54,24 @@ public class MoreScoreActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bmob.initialize(this, BombUtil.APP_KEY);
-        setContentView(R.layout.activity_score);
+        setContentView(R.layout.activity_more_score);
         ButterKnife.bind(this);
         setupActionBar("成绩查询", true);
-        setupView();
+        makeCategoryView(R.array.category_score_item, R.array.category_score_images);
     }
 
-    private void setupView() {
-        Adapter adapter = new Adapter(this, getTypeList());
-        mListView.setAdapter(adapter);
+    public void makeCategoryView(int titlesResId, int imagesResId) {
+        List<BaseImageTextItem> items = new ArrayList<>();
+        String[] titles = getResources().getStringArray(titlesResId);
+        TypedArray ar = getResources().obtainTypedArray(imagesResId);
+        for (int i = 0; i < titles.length; i++) {
+            BaseImageTextItem item = new BaseImageTextItem(ar.getResourceId(i, 0), titles[i]);
+            items.add(item);
+        }
+        ar.recycle();
+        Adapter adapter = new Adapter(this, items);
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        mListView.setAdapter(adapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -71,22 +79,6 @@ public class MoreScoreActivity extends BaseActivity {
             }
         });
         onCategoryClicked(DEFAULT_POSITION);
-    }
-
-    private List<CommonItemData> getTypeList() {
-        String[] title = getResources().getStringArray(R.array.category_score_item);
-        int[] resId = {R.drawable.ic_score_cet_normal, R.drawable.ic_score_cetk_normal, R.drawable.ic_score_mandarin_normal,
-                R.drawable.ic_score_pets_normal, R.drawable.ic_score_computer_normal, R.drawable.ic_score_bec_normal,
-                R.drawable.ic_score_flush_normal, R.drawable.ic_score_ntce_normal, R.drawable.ic_score_cap_normal,
-                R.drawable.ic_score_forign_normal,};
-        List<CommonItemData> items = new ArrayList<>();
-        for (int i = 0; i < title.length; i++) {
-            CommonItemData item = new CommonItemData();
-            item.setTitle(title[i]);
-            item.setResId(resId[i]);
-            items.add(item);
-        }
-        return items;
     }
 
     private void onCategoryClicked(int position) {
@@ -101,34 +93,31 @@ public class MoreScoreActivity extends BaseActivity {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = ScoreCETFragment.newInstance();
+                fragment = ScoreCetFragment.newInstance();
                 break;
             case 1:
-                fragment = ScoreCETKFragment.newInstance();
-                break;
-            case 2:
                 fragment = ScoreMandarinFragment.newInstance();
                 break;
-            case 3:
+            case 2:
                 fragment = ScorePETSFragment.newInstance();
                 break;
-            case 4:
+            case 3:
                 fragment = ScoreComputerFragment.newInstance();
                 break;
-            case 5:
+            case 4:
                 fragment = ScoreBecFragment.newInstance();
                 break;
-            case 6:
+            case 5:
                 fragment = ScoreFlushFragment.newInstance();
+                break;
+            case 6:
+                fragment = ScoreForeignFragment.newInstance();
                 break;
             case 7:
                 fragment = ScoreNTCEFragment.newInstance();
                 break;
             case 8:
                 fragment = ScoreCAPFragment.newInstance();
-                break;
-            case 9:
-                fragment = ScoreForeignFragment.newInstance();
                 break;
         }
         navigateTo(fragment);
@@ -144,9 +133,9 @@ public class MoreScoreActivity extends BaseActivity {
     private class Adapter extends BaseAdapter {
 
         private Context context;
-        private List<CommonItemData> lists;
+        private List<BaseImageTextItem> lists;
 
-        public Adapter(Context context, List<CommonItemData> lists) {
+        public Adapter(Context context, List<BaseImageTextItem> lists) {
             this.context = context;
             this.lists = lists;
         }
@@ -180,9 +169,9 @@ public class MoreScoreActivity extends BaseActivity {
                 holder = (ViewHolder) convertView.getTag();
             }
             holder.mListViewItem.setBackground(context.getResources().getDrawable(R.drawable.bg_score_category_item));
-            CommonItemData t = lists.get(position);
+            BaseImageTextItem t = lists.get(position);
             holder.nameTv.setText(t.getTitle());
-            Glide.with(context).load(t.getResId()).centerCrop().into(holder.nameIv);
+            Glide.with(context).load(t.getDrawable()).centerCrop().into(holder.nameIv);
             return convertView;
         }
 

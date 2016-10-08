@@ -8,5 +8,5 @@ public interface OnScoreQueryListener {
 
     void onQuerySuccess(Object result);
 
-    void onQueryFailed(int errorCode);
+    void onQueryFailed(int errorCode,String msg);
 }

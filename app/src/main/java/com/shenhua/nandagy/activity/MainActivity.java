@@ -1,5 +1,6 @@
 package com.shenhua.nandagy.activity;
 
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTabHost;
@@ -40,6 +41,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+//        BmobUpdateAgent.update(this);
+//        BmobUpdateAgent.setUpdateOnlyWifi(false);
         setupTabHost();
         EventBus.getDefault().register(this);
     }
@@ -51,12 +54,15 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
     private void setupTabHost() {
-        final String titles[] = getResources().getStringArray(R.array.main_tabs);
-        final int[] icons = {R.drawable.ic_tab_home_selector, R.drawable.ic_tab_xuegong_selector,
-                R.drawable.ic_tab_jiaowu_selector, R.drawable.ic_tab_more_selector,
-                R.drawable.ic_tab_user_selector};
         Class[] fragments = new Class[]{HomeFragment.class, XueGongFragment.class,
                 JiaoWuFragment.class, MoreFragment.class, UserFragment.class};
+        final String titles[] = getResources().getStringArray(R.array.main_tabs_titles);
+        int[] icons = new int[titles.length];
+        TypedArray ar = getResources().obtainTypedArray(R.array.main_tabs_images);
+        for (int i = 0; i < titles.length; i++) {
+            icons[i] = ar.getResourceId(i, 0);
+        }
+        ar.recycle();
         tabHost.setup(this, getSupportFragmentManager(), R.id.content_frame);
         tabHost.setOnTabChangedListener(this);
         tabHost.getTabWidget().setDividerDrawable(null);

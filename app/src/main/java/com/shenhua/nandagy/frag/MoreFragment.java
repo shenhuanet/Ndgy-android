@@ -12,7 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenhua.nandagy.R;
+import com.shenhua.nandagy.activity.MoreCircleActivity;
+import com.shenhua.nandagy.activity.MoreCommunityActivity;
+import com.shenhua.nandagy.activity.MoreLostActivity;
+import com.shenhua.nandagy.activity.MorePaperActivity;
 import com.shenhua.nandagy.activity.MoreScoreActivity;
+import com.shenhua.nandagy.activity.MoreStudyActivity;
 import com.shenhua.nandagy.activity.WebActivity;
 import com.shenhua.nandagy.base.BaseFragment;
 import com.shenhua.nandagy.widget.BannerView;
@@ -125,34 +130,39 @@ public class MoreFragment extends BaseFragment {
         switch (v.getId()) {
             case R.id.tabrow_score:
                 intent = new Intent(getActivity(), MoreScoreActivity.class);
-                sceneTransitionTo(intent, 0, view, R.id.list_iv, "list");
+                sceneTransitionTo(intent, 0, mScoreTabrow, R.id.list_iv, "list");
                 break;
             case R.id.tabrow_study:
-                toast(tabTitles[1]);
+                sceneTransitionTo(new Intent(getActivity(), MoreStudyActivity.class)
+                        , 0, mStudyTabrow, R.id.list_tv, "title");
                 break;
             case R.id.tabrow_employ:
                 intent = new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("title", tabTitles[2]);
                 intent.putExtra("url", "school-employment.html");
-                sceneTransitionTo(intent, 0, view, R.id.list_tv, "title");
+                sceneTransitionTo(intent, 0, mEmployTabrow, R.id.list_tv, "title");
                 break;
             case R.id.tabrow_circle:
-                toast(tabTitles[3]);
+                sceneTransitionTo(new Intent(getActivity(), MoreCircleActivity.class)
+                        , 0, mCircleTabrow, R.id.list_tv, "title");
                 break;
             case R.id.tabrow_community:
-                toast(tabTitles[4]);
+                sceneTransitionTo(new Intent(getActivity(), MoreCommunityActivity.class)
+                        , 0, mCommunityTabrow, R.id.list_tv, "title");
                 break;
             case R.id.tabrow_lost:
-                toast(tabTitles[5]);
+                sceneTransitionTo(new Intent(getActivity(), MoreLostActivity.class)
+                        , 0, mLostTabrow, R.id.list_tv, "title");
                 break;
             case R.id.tabrow_paper:
-                toast(tabTitles[6]);
+                sceneTransitionTo(new Intent(getActivity(), MorePaperActivity.class)
+                        , 0, mPaperTabrow, R.id.list_tv, "title");
                 break;
             case R.id.tabrow_poyang:
                 intent = new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("title", tabTitles[7]);
                 intent.putExtra("url", "school-poyang.html");
-                sceneTransitionTo(intent, 0, view, R.id.list_tv, "title");
+                sceneTransitionTo(intent, 0, mPoyangTabrow, R.id.list_tv, "title");
                 break;
         }
     }

@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.activity.ContentDetailActivity;
+import com.shenhua.nandagy.activity.EduAdminActivity;
+import com.shenhua.nandagy.activity.FinanceActivity;
 import com.shenhua.nandagy.activity.WebActivity;
 import com.shenhua.nandagy.adapter.XueGongDataAdapter;
 import com.shenhua.nandagy.base.BaseFragment;
@@ -252,10 +254,12 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
                 sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
                 break;
             case 1:
-                toast("使用原生界面");
+                intent = new Intent(getActivity(), EduAdminActivity.class);
+                sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
                 break;
             case 2:
-                toast("使用原生界面");
+                intent = new Intent(getActivity(), FinanceActivity.class);
+                sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
                 break;
         }
     }

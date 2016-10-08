@@ -114,7 +114,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            // finish();
+			finishAfterTransition();
         }
         return super.onOptionsItemSelected(item);
     }

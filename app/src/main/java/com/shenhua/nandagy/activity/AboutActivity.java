@@ -17,10 +17,6 @@ import com.shenhua.nandagy.base.BaseListAdapter;
 import com.shenhua.nandagy.callback.NewMessageEventBus;
 import com.shenhua.nandagy.frag.UserFragment;
 import com.shenhua.nandagy.widget.BaseShareView;
-import com.umeng.update.UmengUpdateAgent;
-import com.umeng.update.UmengUpdateListener;
-import com.umeng.update.UpdateResponse;
-import com.umeng.update.UpdateStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +24,10 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.listener.BmobUpdateListener;
+import cn.bmob.v3.update.BmobUpdateAgent;
+import cn.bmob.v3.update.UpdateResponse;
+import cn.bmob.v3.update.UpdateStatus;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -126,26 +126,20 @@ public class AboutActivity extends BaseActivity {
     void clicks(View v) {
         switch (v.getId()) {
             case R.id.tv_about_update:
-                UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+                BmobUpdateAgent.forceUpdate(this);
+                BmobUpdateAgent.setUpdateListener(new BmobUpdateListener() {
+
                     @Override
                     public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
-                        switch (updateStatus) {
-                            case UpdateStatus.Yes:
-                                UmengUpdateAgent.showUpdateDialog(AboutActivity.this, updateInfo);
-                                break;
-                            case UpdateStatus.No:
-                                toast("当前是已经是最新版本");
-                                break;
-                            case UpdateStatus.NoneWifi:
-                                toast("没有wifi连接， 只在wifi下更新");
-                                break;
-                            case UpdateStatus.Timeout:
-                                toast("暂时没有网络或者网路堵塞！");
-                                break;
+                        if (updateStatus == UpdateStatus.Yes) {//版本有更新
+                            toast("检测到新版本");
+                        } else if (updateStatus == UpdateStatus.No) {
+                            toast("当前已经是最新版本");
+                        } else if (updateStatus == UpdateStatus.TimeOut) {
+                            toast("暂时没有网络或者网路堵塞！");
                         }
                     }
                 });
-                UmengUpdateAgent.forceUpdate(this);
                 break;
             case R.id.tv_about_share:
                 if (!mShareView.getIsShowing())

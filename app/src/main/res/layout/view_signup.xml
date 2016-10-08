@@ -28,13 +28,13 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="5dp"
-        android:background="@drawable/bg_divider_gray" />
+        android:background="@drawable/bg_divider_gray_vertical" />
 
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:divider="@drawable/bg_divider_gray"
+        app:divider="@drawable/bg_divider_gray_vertical"
         app:showDividers="beginning|middle|end">
 
         <com.shenhua.nandagy.widget.ClearEditText

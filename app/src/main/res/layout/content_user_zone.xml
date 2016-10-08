@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:orientation="vertical"
-            app:divider="@drawable/bg_divider_gray"
+            app:divider="@drawable/bg_divider_gray_vertical"
             app:showDividers="beginning|middle|end">
 
             <LinearLayout
@@ -156,7 +156,7 @@
             android:layout_marginTop="12dp"
             android:background="@android:color/white"
             android:orientation="vertical"
-            app:divider="@drawable/bg_divider_gray"
+            app:divider="@drawable/bg_divider_gray_vertical"
             app:showDividers="beginning|middle|end">
 
             <LinearLayout

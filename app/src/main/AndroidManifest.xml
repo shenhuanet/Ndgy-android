@@ -82,6 +82,12 @@
         <activity android:name=".activity.MorePoyangActivity" />
         <activity android:name=".activity.FeedbackActivity" />
         <activity android:name=".activity.WebActivity" />
+        <activity android:name=".activity.ScoreQueryResultActivity" />
+        <activity android:name=".activity.FinanceActivity" />
+        <activity android:name=".activity.EduAdminActivity" />
+        <activity android:name=".activity.GroupActivity"/>
+        <activity android:name=".activity.PartyActivity"/>
+        <activity android:name=".activity.LibraryActivity"/>
         <!--tencent-->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -104,15 +110,15 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="568c6a2767e58e0284001e45" />
+
+        <!--bmob-->
         <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="Channel ID" />
+            android:name="BMOB_CHANNEL"
+            android:value="All" />
 
-        <service
-            android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" />
-
-        <activity android:name="com.umeng.update.UpdateDialogActivity" />
+        <activity
+            android:name="cn.bmob.v3.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
     </application>
 

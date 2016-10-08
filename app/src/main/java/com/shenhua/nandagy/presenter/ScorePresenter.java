@@ -1,6 +1,6 @@
 package com.shenhua.nandagy.presenter;
 
-import com.shenhua.nandagy.bean.ScoreData;
+import com.shenhua.nandagy.bean.scorebean.ScoreData;
 import com.shenhua.nandagy.callback.HttpCallback;
 import com.shenhua.nandagy.model.ScoreQueryModel;
 import com.shenhua.nandagy.model.ScoreQueryModelImpl;
@@ -27,7 +27,6 @@ public class ScorePresenter implements HttpCallback<ScoreData> {
     }
 
     @Override
-
     public void onPreRequest() {
         scoreQueryView.showProgress();
     }

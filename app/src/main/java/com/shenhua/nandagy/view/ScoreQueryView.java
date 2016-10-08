@@ -1,6 +1,6 @@
 package com.shenhua.nandagy.view;
 
-import com.shenhua.nandagy.bean.ScoreData;
+import com.shenhua.nandagy.bean.scorebean.ScoreData;
 
 /**
  * 查询成绩视图
