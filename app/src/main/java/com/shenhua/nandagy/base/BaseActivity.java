@@ -85,6 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         assert ab != null;
         ab.setTitle(title);
         ab.setDisplayHomeAsUpEnabled(showAsUpEnabled);
+        ab.setDisplayShowHomeEnabled(showAsUpEnabled);
         return ab;
     }
 

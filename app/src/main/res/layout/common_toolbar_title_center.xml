@@ -16,7 +16,8 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/toolbar_title_size" />
+        android:textSize="@dimen/toolbar_title_size"
+        android:transitionName="title" />
 
     <ProgressBar
         android:id="@+id/toolbar_pro"
