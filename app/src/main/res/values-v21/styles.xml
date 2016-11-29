@@ -1,24 +1,19 @@
-<resources>>
+<resources>
 
-    <style name="AppTheme.TranslucentStatus" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <!--<style name="AppTheme" parent="AppTheme.Base">-->
+        <!--<item name="android:windowContentTransitions">true</item>-->
+        <!--<item name="android:windowAllowEnterTransitionOverlap">true</item>-->
+        <!--<item name="android:windowAllowReturnTransitionOverlap">true</item>-->
+        <!--<item name="android:windowSharedElementEnterTransition">@android:transition/move</item>-->
+        <!--<item name="android:windowSharedElementExitTransition">@android:transition/move</item>-->
+    <!--</style>-->
 
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:statusBarColor">#00000000</item>
-        <!-- <item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
-        <!--<item name="android:colorControlHighlight">@color/material_transparent</item> -->
-        <!-- 使用内容转场动画 -->
-        <item name="android:windowContentTransitions">true</item>
-        <!--并且允许覆盖转场动画-->
-        <item name="android:windowAllowEnterTransitionOverlap">true</item>
-        <item name="android:windowAllowReturnTransitionOverlap">true</item>
-        <!-- 指定shared element transitions -->
-        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
-        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+    <style name="ToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:id">@id/toolbar_title</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/toolbar_title_size</item>
+        <item name="android:transitionName">title</item>
     </style>
 </resources>

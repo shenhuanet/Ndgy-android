@@ -2,9 +2,12 @@
 <resources>
 
     <item name="toolbar" type="id" />
-    <item name="ic_arrow_flag" type="id" />
+    <item name="toolbar_title" type="id" />
+    <item name="toolbar_layout" type="id" />
 
-    <item name="iv_sroce_yzm" type="id" />
+
+    <item name="ic_arrow_flag" type="id" />
+    <item name="iv_score_yzm" type="id" />
     <item name="btn_query" type="id" />
     <item name="layout_score_root" type="id" />
     <item name="til_zkzh" type="id" />

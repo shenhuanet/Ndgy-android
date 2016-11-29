@@ -106,7 +106,7 @@
 
             <TextView
                 android:id="@+id/sign_switch_to_signin"
-                style="@style/DialogTextActionSytle"
+                style="@style/DialogTextActionStyle"
                 android:text="@string/txt_to_signin" />
 
             <Button

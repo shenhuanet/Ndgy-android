@@ -54,13 +54,13 @@
 
         <TextView
             android:id="@+id/dialog_cancel"
-            style="@style/DialogTextActionSytle"
+            style="@style/DialogTextActionStyle"
             android:layout_marginTop="10dp"
             android:text="取消" />
 
         <TextView
             android:id="@+id/dialog_done"
-            style="@style/DialogTextActionSytle"
+            style="@style/DialogTextActionStyle"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp"
             android:padding="10dp"

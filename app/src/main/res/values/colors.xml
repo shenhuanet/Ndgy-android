@@ -28,7 +28,7 @@
     <color name="tablinecolor">#F5F5F5</color>
     <color name="gvitcolor">#FFFFFF</color>
     <color name="themecolor">#24C0E6</color>
-    <color name="colorgreen">#66CC22</color>
+    <color name="colorGreen">#66CC22</color>
 
     <color name="action_label_light">#b9e3d9</color>
     <color name="action_label_dark">#576069</color>

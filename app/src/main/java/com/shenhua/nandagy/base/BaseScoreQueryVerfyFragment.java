@@ -22,7 +22,7 @@ import butterknife.OnClick;
 public abstract class BaseScoreQueryVerfyFragment extends BaseScoreQueryFragment {
 
     protected View view;
-    @Bind(R.id.iv_sroce_yzm)
+    @Bind(R.id.iv_score_yzm)
     ImageView mVerifyCodeIv;
 
     @Nullable
@@ -54,7 +54,7 @@ public abstract class BaseScoreQueryVerfyFragment extends BaseScoreQueryFragment
                 .into(mVerifyCodeIv);
     }
 
-    @OnClick(R.id.iv_sroce_yzm)
+    @OnClick(R.id.iv_score_yzm)
     void clicks() {
         showVerifyCode();
     }

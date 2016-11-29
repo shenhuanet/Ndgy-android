@@ -95,11 +95,11 @@
         </android.support.design.widget.TextInputLayout>
 
         <ImageView
-            style="@style/verfyCode_style"
+            style="@style/verifyCode_style"
             android:contentDescription="@string/imgdec" />
 
     </LinearLayout>
 
-    <Button style="@style/ButtonStytle.ScoreQuery" />
+    <Button style="@style/ButtonStyle.ScoreQuery" />
 
 </LinearLayout>

@@ -22,7 +22,9 @@ import java.util.List;
 public class BaseFragment extends Fragment {
 
     public void makeToolView(AbsListView abs, int titlesResId, int imagesResId) {
-        abs.setNestedScrollingEnabled(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            abs.setNestedScrollingEnabled(false);
+        }
         List<BaseImageTextItem> items = new ArrayList<>();
         String[] titles = getResources().getStringArray(titlesResId);
         TypedArray ar = getResources().obtainTypedArray(imagesResId);

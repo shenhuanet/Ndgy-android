@@ -58,13 +58,9 @@
             android:name=".activity.LoginActivity"
             android:launchMode="singleTask" />
 
-        <activity
-            android:name=".activity.ContentDetailActivity"
-            android:theme="@style/AppTheme.TranslucentStatus" />
+        <activity android:name=".activity.ContentDetailActivity" />
 
-        <activity
-            android:name=".activity.UserZoneActivity"
-            android:theme="@style/AppTheme.TranslucentStatus" />
+        <activity android:name=".activity.UserZoneActivity" />
 
         <activity android:name=".activity.UserZoneEditActivity" />
         <activity android:name=".activity.UserAccountActivity" />
@@ -85,9 +81,9 @@
         <activity android:name=".activity.ScoreQueryResultActivity" />
         <activity android:name=".activity.FinanceActivity" />
         <activity android:name=".activity.EduAdminActivity" />
-        <activity android:name=".activity.GroupActivity"/>
-        <activity android:name=".activity.PartyActivity"/>
-        <activity android:name=".activity.LibraryActivity"/>
+        <activity android:name=".activity.GroupActivity" />
+        <activity android:name=".activity.PartyActivity" />
+        <activity android:name=".activity.LibraryActivity" />
         <!--tencent-->
         <activity
             android:name="com.tencent.tauth.AuthActivity"

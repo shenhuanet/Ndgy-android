@@ -301,7 +301,7 @@
 
             <Button
                 android:id="@+id/btn_logout"
-                style="@style/ButtonStytle.Primary"
+                style="@style/ButtonStyle.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"

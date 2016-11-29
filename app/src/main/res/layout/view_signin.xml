@@ -58,12 +58,12 @@
 
             <TextView
                 android:id="@+id/sign_switch_to_signup"
-                style="@style/DialogTextActionSytle"
+                style="@style/DialogTextActionStyle"
                 android:text="@string/txt_to_signup" />
 
             <TextView
                 android:id="@+id/sign_forget"
-                style="@style/DialogTextActionSytle"
+                style="@style/DialogTextActionStyle"
                 android:layout_toEndOf="@+id/sign_switch_to_signup"
                 android:layout_toRightOf="@+id/sign_switch_to_signup"
                 android:padding="10dp"

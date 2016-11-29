@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -17,6 +18,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initFitsWindow();
         Bmob.initialize(this, BombUtil.APP_KEY);
         receiver = new NetworkReceiver();
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -101,7 +105,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mToolbar == null) return null;
         if (title != null) {
             TextView toolBarTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
-            toolBarTitle.setText(title);
+            if (toolBarTitle != null)
+                toolBarTitle.setText(title);
         }
         setSupportActionBar(mToolbar);
         ActionBar ab = getSupportActionBar();
@@ -115,10 +120,27 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            // finish();
-			finishAfterTransition();
+            if (Build.VERSION.SDK_INT > 21)
+                finishAfterTransition();
+            else
+                finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initFitsWindow() {
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.setNavigationBarColor(Color.TRANSPARENT);
+        }
     }
 
     public void toast(String message) {
@@ -161,6 +183,13 @@ public abstract class BaseActivity extends AppCompatActivity {
                     view.getWidth() / 2, view.getHeight() / 2, 0, 0);
             ActivityCompat.startActivity(this, intent, options.toBundle());
         }
+    }
+
+    public void LollipopStartActivity() {
+//        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                activity, transitionView, DetailActivity.EXTRA_IMAGE);
+//        ActivityCompat.startActivity(activity, newIntent(activity, DetailActivity.class),
+//                options.toBundle());
     }
 
     public void hideKbTwo() {

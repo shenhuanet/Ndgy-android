@@ -14,7 +14,7 @@
 
     <Button
         android:id="@+id/btn_commit"
-        style="@style/ButtonStytle.ScoreQuery"
+        style="@style/ButtonStyle.ScoreQuery"
         android:layout_marginTop="10dp"
         android:text="提交" />
 

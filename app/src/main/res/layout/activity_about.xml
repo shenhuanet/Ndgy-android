@@ -42,17 +42,17 @@
 
             <TextView
                 android:id="@+id/tv_about_version"
-                style="@style/ActionLabelTextStytle"
+                style="@style/ActionLabelTextStyle"
                 android:text="当前版本 4.5.6" />
 
             <TextView
                 android:id="@+id/tv_about_update"
-                style="@style/ActionLabelTextStytle"
+                style="@style/ActionLabelTextStyle"
                 android:text="检测更新" />
 
             <TextView
                 android:id="@+id/tv_about_share"
-                style="@style/ActionLabelTextStytle"
+                style="@style/ActionLabelTextStyle"
                 android:text="分享app" />
 
         </android.support.v7.widget.LinearLayoutCompat>
