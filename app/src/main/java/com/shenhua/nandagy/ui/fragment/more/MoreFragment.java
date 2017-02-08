@@ -73,17 +73,13 @@ public class MoreFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final String[] images = {
-                "http://img1.3lian.com/img013/v4/57/d/111.jpg",
-                "http://pic.58pic.com/58pic/12/31/48/18658PICXxM.jpg",
-                "http://tupian.enterdesk.com/2013/lxy/",
-                "http://tupian.enterdesk.com/2013/mxy/12/07/3/9.jpg",
-                "http://img5.imgtn.bdimg.com/it/u=2071825957,3967640546&fm=21&gp=0.jpg"};
-        String[] titles = {
-                "支持SPDY",
-                "可以合并多个到同一个主机的请求",
-                "使用GZIP压缩减少传输的数据量",
-                "缓存响应避免重复的网络请求、拦截器",
-                "第一缺点是消息回来需要切到主线程，主线程要自己去写"};
+                "http://www.ndgy.cn/UploadFiles/2013-06/admin/2013060716091695372.jpg",
+                "http://www.ndgy.cn/UploadFiles/2013-06/admin/2013060716043094556.jpg",
+                "http://www.ndgy.cn/UploadFiles/2013-06/admin/201306071624476077.jpg",
+                "http://www.ndgy.cn/UploadFiles/2013-06/admin/2013060716251384101.jpg",
+                "http://www.ndgy.cn/UploadFiles/2013-06/admin/2013060716131218116.jpg",
+                "http://www.ndgy.cn/UploadFiles/2013-06/admin/2013060716152035466.jpg"
+        };
         bannerView.setBannerStyle(BannerView.BannerViewConfig.CIRCLE_INDICATOR);
         bannerView.setImageArray(images);
         bannerView.setDefaultErrorImage(R.drawable.img_default_error);

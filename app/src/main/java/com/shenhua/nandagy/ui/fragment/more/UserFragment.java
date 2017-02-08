@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -22,6 +21,10 @@ import com.bumptech.glide.Glide;
 import com.shenhua.floatingtextview.Animator.TranslateFloatingAnimator;
 import com.shenhua.floatingtextview.base.FloatingText;
 import com.shenhua.nandagy.R;
+import com.shenhua.nandagy.bean.bmobbean.MyUser;
+import com.shenhua.nandagy.bean.bmobbean.UserZone;
+import com.shenhua.nandagy.callback.NewMessageEventBus;
+import com.shenhua.nandagy.callback.ProgressEventBus;
 import com.shenhua.nandagy.ui.activity.me.AboutActivity;
 import com.shenhua.nandagy.ui.activity.me.LoginActivity;
 import com.shenhua.nandagy.ui.activity.me.MessageActivity;
@@ -29,10 +32,6 @@ import com.shenhua.nandagy.ui.activity.me.PublishDynamicActivity;
 import com.shenhua.nandagy.ui.activity.me.SettingActivity;
 import com.shenhua.nandagy.ui.activity.me.UserAccountActivity;
 import com.shenhua.nandagy.ui.activity.me.UserZoneActivity;
-import com.shenhua.nandagy.bean.bmobbean.MyUser;
-import com.shenhua.nandagy.bean.bmobbean.UserZone;
-import com.shenhua.nandagy.callback.NewMessageEventBus;
-import com.shenhua.nandagy.callback.ProgressEventBus;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
 
@@ -214,10 +213,10 @@ public class UserFragment extends Fragment {
         Intent intent;
         switch (v.getId()) {
             case R.id.rl_user_zone:
-                navtoUserZone();
+                navToUserZone();
                 break;
             case R.id.rl_account:
-                navtoUserAccount();
+                navToUserAccount();
                 break;
             case R.id.rl_publish:
                 intent = new Intent(getActivity(), PublishDynamicActivity.class);
@@ -241,7 +240,7 @@ public class UserFragment extends Fragment {
     /**
      * 进入用户主页
      */
-    private void navtoUserZone() {
+    private void navToUserZone() {
         Intent intent;
         if (UserUtils.getInstance().isLogin(getActivity())) {
             MyUser user = UserUtils.getInstance().getUserInfo(getActivity());
@@ -265,7 +264,7 @@ public class UserFragment extends Fragment {
     /**
      * 进入个人账户中心
      */
-    private void navtoUserAccount() {
+    private void navToUserAccount() {
         Intent intent;
         if (UserUtils.getInstance().isLogin(getContext())) {
             intent = new Intent(getActivity(), UserAccountActivity.class);
@@ -277,12 +276,13 @@ public class UserFragment extends Fragment {
     }
 
     private void crateUserZone() {
-        LoadingAlertDialog.showLoadDialog(getActivity(), "正在创建用户主页",true);
-        new Handler().postDelayed(new Runnable() {
+        // TODO: 2/8/2017 crateUserZone
+        LoadingAlertDialog.showLoadDialog(getActivity(), "正在创建用户主页", true);
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 UserZone userZone = new UserZone();
-                MyUser user = UserUtils.getInstance().getUserInfo(getActivity());
+                final MyUser user = UserUtils.getInstance().getUserInfo(getActivity());
                 userZone.setLevel(0);
                 userZone.setDynamic(0);
                 userZone.setMi(0);
@@ -292,33 +292,47 @@ public class UserFragment extends Fragment {
                 userZone.setSex(user.getSex());
                 userZone.save(new SaveListener<String>() {
                     @Override
-                    public void done(String objectId, BmobException e) {
+                    public void done(final String objectId, final BmobException e) {
                         if (e == null) {
-                            LoadingAlertDialog.dissmissLoadDialog();
-                            System.out.println("shenhua sout:creatUserZone   " + objectId);
-                            updateUserInfo(objectId);
-                            Intent intent = new Intent(getActivity(), UserZoneActivity.class);
-                            sceneTransitionTo(intent, 1, R.id.iv_user_photo, "photos");
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    System.out.println("shenhua sout:creatUserZone   " + objectId);
+
+                                    MyUser user = new MyUser();
+                                    user.setUserZoneObjID(objectId);
+                                    user.update(UserUtils.getInstance().getUserInfo(getContext()).getUserId(), new UpdateListener() {
+                                        @Override
+                                        public void done(BmobException e) {
+
+                                        }
+                                    });
+                                    UserUtils.getInstance().updateUserInfo(getContext(), "userzoneobjid", objectId);
+                                    LoadingAlertDialog.dissmissLoadDialog();
+                                    toast("用户空间创建成功");
+                                    Intent intent = new Intent(getActivity(), UserZoneActivity.class);
+                                    intent.putExtra("isMySelf", true);
+                                    intent.putExtra("zoneObjectId", objectId);
+                                    intent.putExtra("userObjectId", user.getUserId());
+                                    intent.putExtra("photo", user.getUrl_photo());
+                                    intent.putExtra("sex", user.getSex());
+                                    sceneTransitionTo(intent, 1, R.id.iv_user_photo, "photos");
+                                }
+                            });
                         } else {
-                            LoadingAlertDialog.dissmissLoadDialog();
-                            toast("用户空间创建失败：" + e.getMessage());
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    LoadingAlertDialog.dissmissLoadDialog();
+                                    toast("用户空间创建失败：" + e.getMessage());
+                                }
+                            });
+
                         }
                     }
                 });
             }
-        }, 1000);
-    }
-
-    private void updateUserInfo(String qobjectId) {
-        MyUser user = new MyUser();
-        user.setUserZoneObjID(qobjectId);
-        user.update(UserUtils.getInstance().getUserInfo(getContext()).getUserId(), new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-
-            }
-        });
-        UserUtils.getInstance().updateUserInfo(getContext(), "userzoneobjid", qobjectId);
+        }).start();
     }
 
     private void sceneTransitionTo(Intent intent, int resquestCode, int viewId, String sharedElementName) {
