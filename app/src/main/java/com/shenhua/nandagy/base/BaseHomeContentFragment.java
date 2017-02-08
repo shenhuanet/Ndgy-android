@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.activity.ContentDetailActivity;
+import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
 import com.shenhua.nandagy.adapter.HomeDataAdapter;
 import com.shenhua.nandagy.bean.HomeData;
 import com.shenhua.nandagy.callback.OnItemClickListener;

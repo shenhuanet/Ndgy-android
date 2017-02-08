@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="false"
     android:orientation="vertical"
-    tools:context=".activity.MoreStudyActivity">
+    tools:context=".ui.activity.more.StudyAreaActivity">
 
     <!--这里的paddingTop在5.0以上设置为25，以下需设置为0-->
     <android.support.v7.widget.Toolbar

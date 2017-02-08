@@ -43,7 +43,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,35 +55,35 @@
         <!--  android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"  -->
 
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".ui.activity.me.LoginActivity"
             android:launchMode="singleTask" />
 
-        <activity android:name=".activity.ContentDetailActivity" />
+        <activity android:name=".ui.activity.ContentDetailActivity" />
 
-        <activity android:name=".activity.UserZoneActivity" />
+        <activity android:name=".ui.activity.me.UserZoneActivity" />
 
-        <activity android:name=".activity.UserZoneEditActivity" />
-        <activity android:name=".activity.UserAccountActivity" />
-        <activity android:name=".activity.PublishDynamicActivity" />
-        <activity android:name=".activity.MessageActivity" />
-        <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.AboutActivity" />
-        <activity android:name=".activity.MoreScoreActivity" />
-        <activity android:name=".activity.MoreStudyActivity" />
-        <activity android:name=".activity.MoreEmployActivity" />
-        <activity android:name=".activity.MoreCircleActivity" />
-        <activity android:name=".activity.MoreCommunityActivity" />
-        <activity android:name=".activity.MoreLostActivity" />
-        <activity android:name=".activity.MorePaperActivity" />
-        <activity android:name=".activity.MorePoyangActivity" />
-        <activity android:name=".activity.FeedbackActivity" />
-        <activity android:name=".activity.WebActivity" />
-        <activity android:name=".activity.ScoreQueryResultActivity" />
-        <activity android:name=".activity.FinanceActivity" />
-        <activity android:name=".activity.EduAdminActivity" />
-        <activity android:name=".activity.GroupActivity" />
-        <activity android:name=".activity.PartyActivity" />
-        <activity android:name=".activity.LibraryActivity" />
+        <activity android:name=".ui.activity.me.UserZoneEditActivity" />
+        <activity android:name=".ui.activity.me.UserAccountActivity" />
+        <activity android:name=".ui.activity.me.PublishDynamicActivity" />
+        <activity android:name=".ui.activity.me.MessageActivity" />
+        <activity android:name=".ui.activity.me.SettingActivity" />
+        <activity android:name=".ui.activity.me.AboutActivity" />
+        <activity android:name=".ui.activity.more.ScoreQueryActivity" />
+        <activity android:name=".ui.activity.more.StudyAreaActivity" />
+        <activity android:name=".ui.activity.more.EmployActivity" />
+        <activity android:name=".ui.activity.more.CircleActivity" />
+        <activity android:name=".ui.activity.more.CommunityActivity" />
+        <activity android:name=".ui.activity.more.LostFoundActivity" />
+        <activity android:name=".ui.activity.more.PaperPlaneActivity" />
+        <activity android:name=".ui.activity.more.PoyangLakeActivity" />
+        <activity android:name=".ui.activity.me.FeedbackActivity" />
+        <activity android:name=".ui.activity.WebActivity" />
+        <activity android:name=".ui.activity.more.ScoreQueryResultActivity" />
+        <activity android:name=".ui.activity.xuegong.FinanceActivity" />
+        <activity android:name=".ui.activity.xuegong.EduAdminActivity" />
+        <activity android:name=".ui.activity.home.GroupActivity" />
+        <activity android:name=".ui.activity.home.PartyActivity" />
+        <activity android:name=".ui.activity.home.LibraryActivity" />
         <!--tencent-->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
