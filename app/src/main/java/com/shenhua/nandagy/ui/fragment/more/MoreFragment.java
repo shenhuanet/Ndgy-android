@@ -26,6 +26,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static u.aly.x.R;
+
 /**
  * 更多界面
  * Created by Shenhua on 8/28/2016.
@@ -61,7 +63,7 @@ public class MoreFragment extends BaseFragment {
         if (view == null) {
             view = inflater.inflate(R.layout.frag_more, container, false);
             ButterKnife.bind(this, view);
-            initTableView();
+            initTabView();
         }
         ViewGroup group = (ViewGroup) view.getParent();
         if (group != null)
@@ -91,24 +93,25 @@ public class MoreFragment extends BaseFragment {
         });
     }
 
-    private void initTableView() {
-        tvs[0] = (TextView) mScoreTabrow.findViewById(R.id.list_tv);
-        tvs[1] = (TextView) mStudyTabrow.findViewById(R.id.list_tv);
-        tvs[2] = (TextView) mEmployTabrow.findViewById(R.id.list_tv);
-        tvs[3] = (TextView) mCircleTabrow.findViewById(R.id.list_tv);
-        tvs[4] = (TextView) mCommunityTabrow.findViewById(R.id.list_tv);
-        tvs[5] = (TextView) mLostTabrow.findViewById(R.id.list_tv);
-        tvs[6] = (TextView) mPaperTabrow.findViewById(R.id.list_tv);
-        tvs[7] = (TextView) mPoyangTabrow.findViewById(R.id.list_tv);
+    private void initTabView() {
+        // TODO: 2/9/2017 android.support.v7.widget.AppCompatImageView cannot be cast to android.widget.TextView
+        tvs[0] = (TextView) mScoreTabrow.findViewById(R.id.list_tab_tv);
+        tvs[1] = (TextView) mStudyTabrow.findViewById(R.id.list_tab_tv);
+        tvs[2] = (TextView) mEmployTabrow.findViewById(R.id.list_tab_tv);
+        tvs[3] = (TextView) mCircleTabrow.findViewById(R.id.list_tab_tv);
+        tvs[4] = (TextView) mCommunityTabrow.findViewById(R.id.list_tab_tv);
+        tvs[5] = (TextView) mLostTabrow.findViewById(R.id.list_tab_tv);
+        tvs[6] = (TextView) mPaperTabrow.findViewById(R.id.list_tab_tv);
+        tvs[7] = (TextView) mPoyangTabrow.findViewById(R.id.list_tab_tv);
 
-        ivs[0] = (ImageView) mScoreTabrow.findViewById(R.id.list_iv);
-        ivs[1] = (ImageView) mStudyTabrow.findViewById(R.id.list_iv);
-        ivs[2] = (ImageView) mEmployTabrow.findViewById(R.id.list_iv);
-        ivs[3] = (ImageView) mCircleTabrow.findViewById(R.id.list_iv);
-        ivs[4] = (ImageView) mCommunityTabrow.findViewById(R.id.list_iv);
-        ivs[5] = (ImageView) mLostTabrow.findViewById(R.id.list_iv);
-        ivs[6] = (ImageView) mPaperTabrow.findViewById(R.id.list_iv);
-        ivs[7] = (ImageView) mPoyangTabrow.findViewById(R.id.list_iv);
+        ivs[0] = (ImageView) mScoreTabrow.findViewById(R.id.list_tab_iv);
+        ivs[1] = (ImageView) mStudyTabrow.findViewById(R.id.list_tab_iv);
+        ivs[2] = (ImageView) mEmployTabrow.findViewById(R.id.list_tab_iv);
+        ivs[3] = (ImageView) mCircleTabrow.findViewById(R.id.list_tab_iv);
+        ivs[4] = (ImageView) mCommunityTabrow.findViewById(R.id.list_tab_iv);
+        ivs[5] = (ImageView) mLostTabrow.findViewById(R.id.list_tab_iv);
+        ivs[6] = (ImageView) mPaperTabrow.findViewById(R.id.list_tab_iv);
+        ivs[7] = (ImageView) mPoyangTabrow.findViewById(R.id.list_tab_iv);
 
         tabTitles = getContext().getResources().getStringArray(R.array.more_tabs_titles);
         TypedArray ar = getResources().obtainTypedArray(R.array.more_tabs_images);
@@ -126,39 +129,39 @@ public class MoreFragment extends BaseFragment {
         switch (v.getId()) {
             case R.id.tabrow_score:
                 intent = new Intent(getActivity(), ScoreQueryActivity.class);
-                sceneTransitionTo(intent, 0, mScoreTabrow, R.id.list_iv, "list");
+                sceneTransitionTo(intent, 0, mScoreTabrow, R.id.list_tab_iv, "list");
                 break;
             case R.id.tabrow_study:
                 sceneTransitionTo(new Intent(getActivity(), StudyAreaActivity.class)
-                        , 0, mStudyTabrow, R.id.list_tv, "title");
+                        , 0, mStudyTabrow, R.id.list_tab_tv, "title");
                 break;
             case R.id.tabrow_employ:
                 intent = new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("title", tabTitles[2]);
                 intent.putExtra("url", "school-employment.html");
-                sceneTransitionTo(intent, 0, mEmployTabrow, R.id.list_tv, "title");
+                sceneTransitionTo(intent, 0, mEmployTabrow, R.id.list_tab_tv, "title");
                 break;
             case R.id.tabrow_circle:
                 sceneTransitionTo(new Intent(getActivity(), CircleActivity.class)
-                        , 0, mCircleTabrow, R.id.list_tv, "title");
+                        , 0, mCircleTabrow, R.id.list_tab_tv, "title");
                 break;
             case R.id.tabrow_community:
                 sceneTransitionTo(new Intent(getActivity(), CommunityActivity.class)
-                        , 0, mCommunityTabrow, R.id.list_tv, "title");
+                        , 0, mCommunityTabrow, R.id.list_tab_tv, "title");
                 break;
             case R.id.tabrow_lost:
                 sceneTransitionTo(new Intent(getActivity(), LostFoundActivity.class)
-                        , 0, mLostTabrow, R.id.list_tv, "title");
+                        , 0, mLostTabrow, R.id.list_tab_tv, "title");
                 break;
             case R.id.tabrow_paper:
                 sceneTransitionTo(new Intent(getActivity(), PaperPlaneActivity.class)
-                        , 0, mPaperTabrow, R.id.list_tv, "title");
+                        , 0, mPaperTabrow, R.id.list_tab_tv, "title");
                 break;
             case R.id.tabrow_poyang:
                 intent = new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("title", tabTitles[7]);
                 intent.putExtra("url", "school-poyang.html");
-                sceneTransitionTo(intent, 0, mPoyangTabrow, R.id.list_tv, "title");
+                sceneTransitionTo(intent, 0, mPoyangTabrow, R.id.list_tab_tv, "title");
                 break;
         }
     }

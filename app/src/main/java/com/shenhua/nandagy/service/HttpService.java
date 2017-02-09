@@ -41,4 +41,13 @@ public class HttpService {
 
     public static final String SCHOOL_WEB_HOST = "http://klxh.oschina.io/shenhuandgy-web/html/";
 
+    public static final String STUDY_HOST = "http://www.daxues.cn";
+    public static final String STUDY_YINGYU = "/xuexi/yingyu/";
+    public static final String STUDY_JISUANJI = "/xuexi/jisuanji/";
+    public static final String STUDY_DIANZI = "/xuexi/dianzi/";
+    public static final String STUDY_JIXIE = "/xuexi/jixie/";
+    public static final String STUDY_JINGGUAN = "/xuexi/jingguan/";
+    public static final String STUDY_JIANZHU = "/xuexi/jianzhu/";
+    public static final String STUDY_CAIKUAI = "/xuexi/caikuai/";
+
 }

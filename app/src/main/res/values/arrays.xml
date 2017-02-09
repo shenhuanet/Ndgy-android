@@ -238,4 +238,14 @@
         <item>更多</item>
     </string-array>
 
+    <string-array name="study_items">
+        <item>英语</item>
+        <item>计算机</item>
+        <item>电气电子</item>
+        <item>机械材料</item>
+        <item>经济管理</item>
+        <item>建筑土木</item>
+        <item>财务会计</item>
+    </string-array>
+
 </resources>
