@@ -26,8 +26,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static u.aly.x.R;
-
 /**
  * 更多界面
  * Created by Shenhua on 8/28/2016.
