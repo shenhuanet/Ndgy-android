@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETBean;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -24,25 +24,25 @@ public class ScoreCetResultFragment extends Fragment {
 
     private static ScoreCetResultFragment instance = null;
     private View view;
-    @Bind(R.id.cet_tv_name)
+    @BindView(R.id.cet_tv_name)
     TextView mNameTv;
-    @Bind(R.id.cet_tv_school)
+    @BindView(R.id.cet_tv_school)
     TextView mSchoolTv;
-    @Bind(R.id.cet_tv_exam_type)
+    @BindView(R.id.cet_tv_exam_type)
     TextView mExamTypeTv;
-    @Bind(R.id.cet_tv_exam_num)
+    @BindView(R.id.cet_tv_exam_num)
     TextView mExamNumTv;
-    @Bind(R.id.cet_tv_exam_time)
+    @BindView(R.id.cet_tv_exam_time)
     TextView mExamTimeTv;
-    @Bind(R.id.cet_tv_reading)
+    @BindView(R.id.cet_tv_reading)
     TextView mReadingTv;
-    @Bind(R.id.cet_tv_compos)
+    @BindView(R.id.cet_tv_compos)
     TextView mComposTv;
-    @Bind(R.id.cet_tv_listen)
+    @BindView(R.id.cet_tv_listen)
     TextView mListenTv;
-    @Bind(R.id.cet_tv_sum)
+    @BindView(R.id.cet_tv_sum)
     TextView mSumTv;
-    @Bind(R.id.iv_pass)
+    @BindView(R.id.iv_pass)
     ImageView mPassIv;
     private boolean isInit;
 

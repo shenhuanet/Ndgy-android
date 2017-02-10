@@ -1,1 +1,1 @@
-include ':app', 'library:Common', 'library:FloatingTextView', ':library:PhotoPicker', ':library:WheelPicker', ':library:SuperRecyclerView'
+include ':app', 'library:FloatingTextView', ':library:PhotoPicker', ':library:WheelPicker', ':library:SuperRecyclerView'

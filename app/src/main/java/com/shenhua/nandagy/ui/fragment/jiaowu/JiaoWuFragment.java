@@ -10,11 +10,11 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.shenhua.commonlibs.widget.InnerGridView;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseFragment;
-import com.shenhua.nandagy.widget.InnerGridView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -23,11 +23,11 @@ import butterknife.ButterKnife;
  */
 public class JiaoWuFragment extends BaseFragment implements GridView.OnItemClickListener {
 
-    @Bind(R.id.jw_tv_zc)
+    @BindView(R.id.jw_tv_zc)
     TextView mWeeks;
-    @Bind(R.id.gv_jiaowu_tool)
+    @BindView(R.id.gv_jiaowu_tool)
     InnerGridView mInnerGridView;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
     private View view;
 

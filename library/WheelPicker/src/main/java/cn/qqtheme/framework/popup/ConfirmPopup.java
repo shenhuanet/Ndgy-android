@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import cn.qqtheme.framework.util.ConvertUtils;
+import cn.qqtheme.framework.utils.ConvertUtils;
 
 /**
  * 带确定及取消按钮的
@@ -203,7 +203,7 @@ public abstract class ConfirmPopup<V extends View> extends BasicPopup<View> {
     @Nullable
     protected View makeHeaderView() {
         RelativeLayout topButtonLayout = new RelativeLayout(activity);
-        topButtonLayout.setLayoutParams(new RelativeLayout.LayoutParams(MATCH_PARENT, ConvertUtils.toPx(activity, 40)));
+        topButtonLayout.setLayoutParams(new RelativeLayout.LayoutParams(MATCH_PARENT, ConvertUtils.dp2px(activity, 40)));
         topButtonLayout.setBackgroundColor(topBackgroundColor);
         topButtonLayout.setGravity(Gravity.CENTER_VERTICAL);
 
@@ -230,7 +230,7 @@ public abstract class ConfirmPopup<V extends View> extends BasicPopup<View> {
 
         TextView titleView = new TextView(activity);
         RelativeLayout.LayoutParams titleLayoutParams = new RelativeLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
-        int margin = ConvertUtils.toPx(activity, 20);
+        int margin = ConvertUtils.dp2px(activity, 20);
         titleLayoutParams.leftMargin = margin;
         titleLayoutParams.rightMargin = margin;
         titleLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);

@@ -19,21 +19,20 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.shenhua.commonlibs.widget.InnerGridView;
+import com.shenhua.libs.bannerview.BannerView;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
-import com.shenhua.nandagy.ui.activity.xuegong.EduAdminActivity;
-import com.shenhua.nandagy.ui.activity.xuegong.FinanceActivity;
-import com.shenhua.nandagy.ui.activity.WebActivity;
 import com.shenhua.nandagy.adapter.XueGongDataAdapter;
 import com.shenhua.nandagy.base.BaseFragment;
 import com.shenhua.nandagy.bean.XueGongData;
-import com.shenhua.nandagy.callback.OnItemClickListener;
 import com.shenhua.nandagy.callback.ProgressEventBus;
 import com.shenhua.nandagy.manager.HttpManager;
 import com.shenhua.nandagy.presenter.XueGongPresenter;
+import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
+import com.shenhua.nandagy.ui.activity.WebActivity;
+import com.shenhua.nandagy.ui.activity.xuegong.EduAdminActivity;
+import com.shenhua.nandagy.ui.activity.xuegong.FinanceActivity;
 import com.shenhua.nandagy.view.XueGongView;
-import com.shenhua.nandagy.widget.BannerView;
-import com.shenhua.nandagy.widget.InnerGridView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
@@ -56,17 +55,17 @@ import okhttp3.Response;
  */
 public class XueGongFragment extends BaseFragment implements XueGongView, GridView.OnItemClickListener {
 
-    @Bind(R.id.banner)
+    @BindView(R.id.banner)
     BannerView bannerView;
-    @Bind(R.id.gv_xue_tool)
+    @BindView(R.id.gv_xue_tool)
     InnerGridView mInnerGridView;
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
-    @Bind(R.id.nestedScrollView)
+    @BindView(R.id.nestedScrollView)
     NestedScrollView mNestedScrollView;
-    @Bind(R.id.layout_empty)
+    @BindView(R.id.layout_empty)
     LinearLayout mEmptyLayout;
-    @Bind(R.id.progress_bar)
+    @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
     private View view;
     private boolean isInit;
@@ -175,12 +174,7 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             final XueGongDataAdapter adapter = new XueGongDataAdapter(getContext(), list);
             recyclerView.setAdapter(adapter);
-            adapter.setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void OnItemClick(View view, int position) {
-                    navToDetail(view, adapter.getDatas().get(position));
-                }
-            });
+            adapter.setOnItemClickListener((view1, i) -> navToDetail(view1, adapter.getDatas().get(i)));
         }
     }
 

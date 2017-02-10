@@ -31,19 +31,19 @@ public class StudyViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-//得到对应position的Fragment
+        //得到对应position的Fragment
         return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-//返回Fragment的数量
+        //返回Fragment的数量
         return mFragments.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-//得到对应position的Fragment的title
+        //得到对应position的Fragment的title
         return mFragmentsTitles.get(position);
     }
 }

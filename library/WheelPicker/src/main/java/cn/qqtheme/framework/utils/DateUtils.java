@@ -1,4 +1,4 @@
-package cn.qqtheme.framework.util;
+package cn.qqtheme.framework.utils;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
@@ -11,10 +11,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * 日期时间工具类
- *
- * @author 李玉江[QQ:1023694760]
- * @since 2015/8/5
+ * Created by shenhua on 2/10/2017.
+ * Email shenhuanet@126.com
  */
 public class DateUtils extends android.text.format.DateUtils {
 
@@ -253,7 +251,6 @@ public class DateUtils extends android.text.format.DateUtils {
      *
      * @param date 比较的日期
      * @return boolean 如果在返回true，否则返回false。
-     * @author 沙琪玛 QQ：862990787 Aug 21, 2013 7:15:53 AM
      */
     public static boolean isSameDay(Date date) {
         if (date == null) {
@@ -268,7 +265,7 @@ public class DateUtils extends android.text.format.DateUtils {
     }
 
     /**
-     * 将yyyy-MM-dd HH:mm:ss字符串转换成日期<br/>
+     * yyyy-MM-dd HH:mm:ss to date
      *
      * @param dateStr    时间字符串
      * @param dataFormat 当前时间字符串的格式。
@@ -287,7 +284,7 @@ public class DateUtils extends android.text.format.DateUtils {
     }
 
     /**
-     * 将yyyy-MM-dd HH:mm:ss字符串转换成日期<br/>
+     * 将yyyy-MM-dd HH:mm:ss字符串转换成日期
      *
      * @param dateStr yyyy-MM-dd HH:mm:ss字符串
      * @return Date 日期 ,转换异常时返回null。

@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shenhua.nandagy.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -22,7 +22,7 @@ import butterknife.OnClick;
 public abstract class BaseScoreQueryVerfyFragment extends BaseScoreQueryFragment {
 
     protected View view;
-    @Bind(R.id.iv_score_yzm)
+    @BindView(R.id.iv_score_yzm)
     ImageView mVerifyCodeIv;
 
     @Nullable

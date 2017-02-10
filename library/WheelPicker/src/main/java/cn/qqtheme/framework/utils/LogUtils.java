@@ -1,28 +1,63 @@
-package cn.qqtheme.framework.util;
-
-import java.io.File;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+package cn.qqtheme.framework.utils;
 
 import android.os.Debug;
 import android.os.Environment;
 import android.util.Log;
 
-import cn.qqtheme.framework.AppConfig;
+import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
- * 将信息记录到“LogCat”，显示调用方法及所在的文件、行号，方便调试查错。
- * 在Debug状态下开启，在Release状态下关闭以提高程序性能。
- *
- * @author 李玉江[QQ:1023694760]
- * @since 2013/11/2
+ * 日志工具类
+ * Created by shenhua on 8/22/2016.
  */
-public final class LogUtils {
+public class LogUtils {
+
+    public static final int V = 0x1;
+    private static final String NULL_TIPS = "Log with null object.";
+    private static final String PARAM = "Param";
     private static final int MIN_STACK_OFFSET = 3;// starts at this class after two native calls
     private static final int MAX_STACK_TRACE_SIZE = 131071; //128 KB - 1
     private static final int METHOD_COUNT = 2; // show method count in trace
-    private static boolean isDebug = AppConfig.DEBUG_ENABLE;// 是否调试模式
-    private static String debugTag = AppConfig.DEBUG_TAG;// LogCat的标记
+    private static boolean isDebug = true;// 是否调试模式
+    private static String debugTag = "shenhua_debug";// LogCat的标记
+
+    public static void v(Object msg) {
+        printLog(V, null, msg);
+    }
+
+    private static void printLog(int type, String tagStr, Object... objects) {
+        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+        int index = 5;
+        String className = stackTraceElements[index].getFileName();
+        String methodName = stackTraceElements[index].getMethodName();
+        int lineNum = stackTraceElements[index].getLineNumber();
+        String methodShortName = methodName.substring(0, 1).toUpperCase() + methodName.substring(1);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[").append(className).append(":").append(lineNum).append("]").append(" ## ").append(methodShortName);
+        String tag = tagStr == null ? className : tagStr;
+        String msg = objects == null ? NULL_TIPS : getObjectString(objects);
+        String log = stringBuilder.toString() + "  " + msg;
+        Log.v(tag, log);
+    }
+
+    private static String getObjectString(Object... objects) {
+        if (objects.length > 1) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("\n");
+            for (int i = 0; i < objects.length; i++) {
+                Object object = objects[i];
+                stringBuilder.append(PARAM).append("[").append(i).append("]").append(" = ");
+                if (object == null) stringBuilder.append("null").append("\n");
+                else stringBuilder.append(object.toString()).append("\n");
+            }
+            return stringBuilder.toString();
+        } else {
+            Object object = objects[0];
+            return object == null ? "null" : object.toString();
+        }
+    }
 
     /**
      * Verbose.
@@ -232,7 +267,6 @@ public final class LogUtils {
 
     /**
      * To stack trace string string.
-     * <p/>
      * 此方法参见：https://github.com/Ereza/CustomActivityOnCrash
      *
      * @param throwable the throwable
@@ -263,12 +297,10 @@ public final class LogUtils {
             int methodCount = METHOD_COUNT;
             StackTraceElement[] trace = Thread.currentThread().getStackTrace();
             int stackOffset = _getStackOffset(trace);
-
             //corresponding method count with the current stack may exceeds the stack trace. Trims the count
             if (methodCount + stackOffset > trace.length) {
                 methodCount = trace.length - stackOffset - 1;
             }
-
             String level = "    ";
             StringBuilder builder = new StringBuilder();
             for (int i = methodCount; i > 0; i--) {

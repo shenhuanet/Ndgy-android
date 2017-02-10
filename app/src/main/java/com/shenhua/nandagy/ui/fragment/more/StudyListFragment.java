@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.shenhua.nandagy.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  */
 public class StudyListFragment extends Fragment {
 
-    @Bind(R.id.tv_t)
+    @BindView(R.id.tv_t)
     TextView textView;
 
     public static StudyListFragment getInstance(int type) {

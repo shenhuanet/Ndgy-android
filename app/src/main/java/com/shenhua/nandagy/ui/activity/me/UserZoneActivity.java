@@ -15,19 +15,19 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.shenhua.commonlibs.widget.BaseShareView;
+import com.shenhua.commonlibs.widget.CircleImageView;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
-import com.shenhua.nandagy.widget.BaseShareView;
-import com.shenhua.nandagy.widget.CircleImageView;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
 import com.shenhua.photopicker.Crop;
 
 import java.io.File;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
@@ -43,36 +43,36 @@ import cn.bmob.v3.listener.UploadFileListener;
  */
 public class UserZoneActivity extends BaseActivity {
 
-    @Bind(R.id.iv_zone_photo)
+    @BindView(R.id.iv_zone_photo)
     CircleImageView mZonePhotoIv;
-    @Bind(R.id.iv_zone_gender)
+    @BindView(R.id.iv_zone_gender)
     ImageView mZoneGenderIv;
-    @Bind(R.id.tv_zone_id)
+    @BindView(R.id.tv_zone_id)
     TextView mZoneIdTv;
-    @Bind(R.id.tv_zone_exper)
+    @BindView(R.id.tv_zone_exper)
     TextView mZoneExperTv;
-    @Bind(R.id.tv_zone_mi)
+    @BindView(R.id.tv_zone_mi)
     TextView mZoneMiTv;
     private boolean accessFromMe;
-    @Bind(R.id.tv_zone_dynamic_str)
+    @BindView(R.id.tv_zone_dynamic_str)
     TextView mDynamicStrTv;
-    @Bind(R.id.tv_zone_name)
+    @BindView(R.id.tv_zone_name)
     TextView mNameTv;
-    @Bind(R.id.tv_zone_sign)
+    @BindView(R.id.tv_zone_sign)
     TextView mSignTv;
-    @Bind(R.id.tv_zone_birth)
+    @BindView(R.id.tv_zone_birth)
     TextView mBirthTv;
-    @Bind(R.id.tv_zone_locate)
+    @BindView(R.id.tv_zone_locate)
     TextView mLoctateTv;
-    @Bind(R.id.tv_zone_love)
+    @BindView(R.id.tv_zone_love)
     TextView mLoveTv;
-    @Bind(R.id.tv_zone_depart)
+    @BindView(R.id.tv_zone_depart)
     TextView mDepartTv;
-    @Bind(R.id.tv_zone_qual)
+    @BindView(R.id.tv_zone_qual)
     TextView mQuelTv;
-    @Bind(R.id.tv_zone_highSchool)
+    @BindView(R.id.tv_zone_highSchool)
     TextView mHighSchoolTv;
-    @Bind(R.id.bpv)
+    @BindView(R.id.bpv)
     BaseShareView mBpv;
     private UserZone userZoneBean;
     private String userObjectId;
@@ -243,7 +243,7 @@ public class UserZoneActivity extends BaseActivity {
     }
 
     private void upLoadPhoto(String filePath) {
-        LoadingAlertDialog.showLoadDialog(this, "头像更新中...",true);
+        LoadingAlertDialog.showLoadDialog(this, "头像更新中...", true);
         final BmobFile bmobFile = new BmobFile(new File(filePath));
         bmobFile.uploadblock(new UploadFileListener() {
 

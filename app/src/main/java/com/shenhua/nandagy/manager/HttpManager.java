@@ -3,9 +3,9 @@ package com.shenhua.nandagy.manager;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 
+import com.shenhua.commonlibs.utils.NetworkUtils;
 import com.shenhua.nandagy.App;
 import com.shenhua.nandagy.service.OkHttpService;
-import com.shenhua.nandagy.utils.NetworkUtils;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -96,7 +96,7 @@ public class HttpManager {
 
     @NonNull
     private String getCacheControl() {
-        return NetworkUtils.isConnected(App.getContext()) ? CACHE_CONTROL_NETWORK : CACHE_CONTROL_CACHE;
+        return NetworkUtils.isConnectedNet(App.getContext()) ? CACHE_CONTROL_NETWORK : CACHE_CONTROL_CACHE;
     }
 
     private class RewriteCacheControlIntercepter implements Interceptor {
@@ -104,10 +104,10 @@ public class HttpManager {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
-            if (!NetworkUtils.isConnected(App.getContext()))
+            if (!NetworkUtils.isConnectedNet(App.getContext()))
                 request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
             Response response = chain.proceed(request);
-            if (NetworkUtils.isConnected(App.getContext()))
+            if (NetworkUtils.isConnectedNet(App.getContext()))
                 return response.newBuilder().header("Cache-Control", request.cacheControl().toString()).removeHeader("Pragma").build();
             else
                 return response.newBuilder().header("Cache-Control", "public,only-if-cached," + CACHE_STALE_SEC).removeHeader("Pragma").build();

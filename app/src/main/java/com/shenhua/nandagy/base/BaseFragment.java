@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Toast;
 
+import com.shenhua.commonlibs.base.BaseImageTextItem;
+import com.shenhua.commonlibs.base.BaseListAdapter;
 import com.shenhua.nandagy.R;
 
 import java.util.ArrayList;
@@ -35,10 +37,11 @@ public class BaseFragment extends Fragment {
         ar.recycle();
         @SuppressWarnings("unchecked")
         BaseListAdapter adapter = new BaseListAdapter(getActivity(), items) {
+
             @Override
-            public void onBindItemView(BaseViewHolder holder, Object o) {
-                holder.setImageResource(R.id.iv_img, ((BaseImageTextItem) o).getDrawable());
-                holder.setText(R.id.tv_title, ((BaseImageTextItem) o).getTitle());
+            public void onBindItemView(BaseViewHolder baseViewHolder, Object o, int i) {
+                baseViewHolder.setImageResource(R.id.iv_img, ((BaseImageTextItem) o).getDrawable());
+                baseViewHolder.setText(R.id.tv_title, ((BaseImageTextItem) o).getTitle());
             }
 
             @Override

@@ -5,14 +5,14 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
+import com.shenhua.commonlibs.utils.ConvertUtils;
+import com.shenhua.commonlibs.widget.WordLimitEditText;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.bean.bmobbean.FeedBack;
-import com.shenhua.nandagy.utils.MeasureUtil;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
-import com.shenhua.nandagy.widget.WordLimitEditText;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.exception.BmobException;
@@ -24,7 +24,7 @@ import cn.bmob.v3.listener.SaveListener;
  */
 public class FeedbackActivity extends BaseActivity {
 
-    @Bind(R.id.edit_txt_feedback_content)
+    @BindView(R.id.edit_txt_feedback_content)
     WordLimitEditText mContentEditTv;
 
     @Override
@@ -33,7 +33,7 @@ public class FeedbackActivity extends BaseActivity {
         setContentView(R.layout.activity_feedback);
         ButterKnife.bind(this);
         setupActionBar("反馈意见", true);
-        mContentEditTv.setFrameLayoutHeight(MeasureUtil.dip2px(this, 150));
+        mContentEditTv.setFrameLayoutHeight(ConvertUtils.dp2px(this, 150));
         mContentEditTv.setMaxLengh(80);
     }
 

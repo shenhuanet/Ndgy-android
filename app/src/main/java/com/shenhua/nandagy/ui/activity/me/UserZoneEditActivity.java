@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.shenhua.commonlibs.utils.ConvertUtils;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
@@ -15,7 +16,7 @@ import com.shenhua.nandagy.widget.LoadingAlertDialog;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.exception.BmobException;
@@ -23,7 +24,6 @@ import cn.bmob.v3.listener.UpdateListener;
 import cn.qqtheme.framework.picker.AddressPicker;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.OptionPicker;
-import cn.qqtheme.framework.util.ConvertUtils;
 
 /**
  * 用户主页编辑界面
@@ -31,21 +31,21 @@ import cn.qqtheme.framework.util.ConvertUtils;
  */
 public class UserZoneEditActivity extends BaseActivity {
 
-    @Bind(R.id.et_edit_zone_name)
+    @BindView(R.id.et_edit_zone_name)
     EditText mNameEt;
-    @Bind(R.id.et_edit_zone_sign)
+    @BindView(R.id.et_edit_zone_sign)
     EditText mSignEt;
-    @Bind(R.id.tv_edit_zone_brith)
+    @BindView(R.id.tv_edit_zone_brith)
     TextView mBrithTv;
-    @Bind(R.id.tv_edit_zone_locate)
+    @BindView(R.id.tv_edit_zone_locate)
     TextView mLocateTv;
-    @Bind(R.id.tv_edit_zone_love)
+    @BindView(R.id.tv_edit_zone_love)
     TextView mLoveTv;
-    @Bind(R.id.tv_edit_zone_depart)
+    @BindView(R.id.tv_edit_zone_depart)
     TextView mDepartTv;
-    @Bind(R.id.tv_edit_zone_qual)
+    @BindView(R.id.tv_edit_zone_qual)
     TextView mQualTv;
-    @Bind(R.id.et_edit_zone_school)
+    @BindView(R.id.et_edit_zone_school)
     EditText mSchoolEt;
     private UserZone userZone;
 
@@ -86,7 +86,7 @@ public class UserZoneEditActivity extends BaseActivity {
                 break;
             case R.id.layout_edit_zone_brith:
                 hideKbTwo();
-                selectBrith();
+                selectBirth();
                 break;
             case R.id.layout_edit_zone_locate:
                 hideKbTwo();
@@ -116,7 +116,7 @@ public class UserZoneEditActivity extends BaseActivity {
         }
     }
 
-    private void selectBrith() {
+    private void selectBirth() {
         DatePicker picker = new DatePicker(this, DatePicker.YEAR_MONTH_DAY);
         picker.setRangeStart(1980, 1, 1);//开始范围
         picker.setRangeEnd(2020, 1, 1);//结束范围
@@ -130,7 +130,7 @@ public class UserZoneEditActivity extends BaseActivity {
     }
 
     private void selectLocate() {
-        ArrayList<AddressPicker.Province> data = new ArrayList<AddressPicker.Province>();
+        ArrayList<AddressPicker.Province> data = new ArrayList<>();
         String json = null;
         try {
             json = ConvertUtils.toString(getAssets().open("city.json"));
@@ -139,8 +139,8 @@ public class UserZoneEditActivity extends BaseActivity {
         }
         data.addAll(JSON.parseArray(json, AddressPicker.Province.class));
         AddressPicker picker = new AddressPicker(this, data);
-//        picker.setHideProvince(true);//加上此句举将只显示地级及县级
-        picker.setHideCounty(true);//加上此句举将只显示省级及地级
+//        picker.setHideProvince(true);//加上此句将只显示地级及县级
+        picker.setHideCounty(true);//加上此句将只显示省级及地级
         picker.setSelectedItem("江西省", "九江市", "");
         picker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {
             @Override

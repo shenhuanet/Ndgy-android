@@ -1,19 +1,79 @@
-package cn.qqtheme.framework.util;
+package cn.qqtheme.framework.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.Point;
 import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
+import cn.qqtheme.framework.wheelpicker.R;
+
 /**
+ * 屏幕工具类
  * 获取屏幕宽高等信息、全屏切换、保持屏幕常亮、截屏等
- *
- * @author liyujiang[QQ:1032694760]
- * @since 2015/11/26
+ * Created by shenhua on 8/22/2016.
  */
-public final class ScreenUtils {
+public class ScreenUtils {
+
     private static boolean isFullScreen = false;
+    private static final String TAG = "ScreenUtils";
+
+    /**
+     * 获取状态栏的高度
+     *
+     * @param context 上下文
+     * @return 状态栏高度
+     */
+    public static int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) result = context.getResources().getDimensionPixelSize(resourceId);
+        return result;
+    }
+
+    /**
+     * 获取ToolBar的高度
+     *
+     * @param context 上下文
+     * @return ToolBar高度
+     */
+    public static int getToolbarHeight(Context context) {
+        final TypedArray styledAttributes = context.getTheme().obtainStyledAttributes(new int[]{R.attr.actionBarSize});
+        int toolbarHeight = (int) styledAttributes.getDimension(0, 0);
+        styledAttributes.recycle();
+        return toolbarHeight;
+    }
+
+    /**
+     * 获取NavigationBar的高度
+     *
+     * @param activity activity
+     * @return NavigationBar高度
+     */
+    public static int getNavigationBarHeight(Activity activity) {
+        Resources resources = activity.getResources();
+        int rid = resources.getIdentifier("config_showNavigationBar", "bool", "android");
+        if (rid > 0) LogUtils.verbose(TAG, "导航栏是否显示?" + resources.getBoolean(rid));
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) return resources.getDimensionPixelSize(resourceId);
+        return 0;
+    }
+
+    /**
+     * 获取屏幕尺寸
+     *
+     * @param context 上下文
+     * @return 屏幕尺寸像素值，下标为0的值为宽，下标为1的值为高
+     */
+    public static Point getScreenSize(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Point screenSize = new Point();
+        wm.getDefaultDisplay().getSize(screenSize);
+        return screenSize;
+    }
 
     /**
      * Display metrics display metrics.
@@ -108,4 +168,5 @@ public final class ScreenUtils {
         activity.getWindow().setFlags(keepScreenOn, keepScreenOn);
     }
 
+    // TODO: 2/10/2017 截屏
 }

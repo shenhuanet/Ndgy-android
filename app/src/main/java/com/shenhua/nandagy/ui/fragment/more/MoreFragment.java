@@ -11,18 +11,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shenhua.libs.bannerview.BannerView;
 import com.shenhua.nandagy.R;
+import com.shenhua.nandagy.base.BaseFragment;
+import com.shenhua.nandagy.ui.activity.WebActivity;
 import com.shenhua.nandagy.ui.activity.more.CircleActivity;
 import com.shenhua.nandagy.ui.activity.more.CommunityActivity;
 import com.shenhua.nandagy.ui.activity.more.LostFoundActivity;
 import com.shenhua.nandagy.ui.activity.more.PaperPlaneActivity;
 import com.shenhua.nandagy.ui.activity.more.ScoreQueryActivity;
 import com.shenhua.nandagy.ui.activity.more.StudyAreaActivity;
-import com.shenhua.nandagy.ui.activity.WebActivity;
-import com.shenhua.nandagy.base.BaseFragment;
-import com.shenhua.nandagy.widget.BannerView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -32,23 +32,23 @@ import butterknife.OnClick;
  */
 public class MoreFragment extends BaseFragment {
 
-    @Bind(R.id.banner)
+    @BindView(R.id.banner)
     BannerView bannerView;
-    @Bind(R.id.tabrow_score)
+    @BindView(R.id.tabrow_score)
     View mScoreTabrow;
-    @Bind(R.id.tabrow_study)
+    @BindView(R.id.tabrow_study)
     View mStudyTabrow;
-    @Bind(R.id.tabrow_employ)
+    @BindView(R.id.tabrow_employ)
     View mEmployTabrow;
-    @Bind(R.id.tabrow_circle)
+    @BindView(R.id.tabrow_circle)
     View mCircleTabrow;
-    @Bind(R.id.tabrow_community)
+    @BindView(R.id.tabrow_community)
     View mCommunityTabrow;
-    @Bind(R.id.tabrow_lost)
+    @BindView(R.id.tabrow_lost)
     View mLostTabrow;
-    @Bind(R.id.tabrow_paper)
+    @BindView(R.id.tabrow_paper)
     View mPaperTabrow;
-    @Bind(R.id.tabrow_poyang)
+    @BindView(R.id.tabrow_poyang)
     View mPoyangTabrow;
     private View view;
     private String[] tabTitles;
@@ -82,17 +82,11 @@ public class MoreFragment extends BaseFragment {
         };
         bannerView.setBannerStyle(BannerView.BannerViewConfig.CIRCLE_INDICATOR);
         bannerView.setImageArray(images);
-        bannerView.setDefaultErrorImage(R.drawable.img_default_error);
-        bannerView.setOnBannerClickListener(new BannerView.OnBannerItemClickListener() {
-            @Override
-            public void OnBannerClick(View view, int position) {
-                Toast.makeText(getActivity(), images[position], Toast.LENGTH_SHORT).show();
-            }
-        });
+//        bannerView.setDefaultErrorImage(R.drawable.img_default_error);
+        bannerView.setOnBannerClickListener((view1, position) -> Toast.makeText(getActivity(), images[position], Toast.LENGTH_SHORT).show());
     }
 
     private void initTabView() {
-        // TODO: 2/9/2017 android.support.v7.widget.AppCompatImageView cannot be cast to android.widget.TextView
         tvs[0] = (TextView) mScoreTabrow.findViewById(R.id.list_tab_tv);
         tvs[1] = (TextView) mStudyTabrow.findViewById(R.id.list_tab_tv);
         tvs[2] = (TextView) mEmployTabrow.findViewById(R.id.list_tab_tv);

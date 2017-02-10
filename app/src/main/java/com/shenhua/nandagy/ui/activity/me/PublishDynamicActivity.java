@@ -11,7 +11,7 @@ import android.widget.EditText;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseActivity;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -21,9 +21,9 @@ import butterknife.OnClick;
  */
 public class PublishDynamicActivity extends BaseActivity implements TextWatcher {
 
-    @Bind(R.id.et_publish)
+    @BindView(R.id.et_publish)
     EditText mPublishEt;
-    @Bind(R.id.btn_publish)
+    @BindView(R.id.btn_publish)
     Button mPublishBtn;
 
     @Override

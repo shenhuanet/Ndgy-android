@@ -20,7 +20,7 @@ import com.shenhua.nandagy.ui.fragment.more.MoreFragment;
 import com.shenhua.nandagy.ui.fragment.more.UserFragment;
 import com.shenhua.nandagy.ui.fragment.xuegong.XueGongFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
@@ -30,9 +30,9 @@ import de.greenrobot.event.EventBus;
  */
 public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener {
 
-    @Bind(R.id.tab_host)
+    @BindView(R.id.tab_host)
     FragmentTabHost tabHost;
-    @Bind(R.id.toolbar_pro)
+    @BindView(R.id.toolbar_pro)
     ProgressBar progressBar;
     private static long firstTime;
 

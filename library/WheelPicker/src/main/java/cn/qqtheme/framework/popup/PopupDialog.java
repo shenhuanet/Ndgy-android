@@ -8,14 +8,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.annotation.CallSuper;
 import android.support.annotation.StyleRes;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
 
-import cn.qqtheme.framework.R;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.utils.LogUtils;
+import cn.qqtheme.framework.wheelpicker.R;
 
 /**
  * 弹窗
@@ -25,7 +24,7 @@ import cn.qqtheme.framework.util.LogUtils;
  * @since 2015-10-19
  */
 class PopupDialog {
-    private android.app.Dialog dialog;
+    private Dialog dialog;
     private FrameLayout contentLayout;
 
     /**

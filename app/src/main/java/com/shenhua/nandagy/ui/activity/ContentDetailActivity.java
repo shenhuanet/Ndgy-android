@@ -3,6 +3,7 @@ package com.shenhua.nandagy.ui.activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
@@ -13,11 +14,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shenhua.commonlibs.utils.ScreenUtils;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseActivity;
-import com.shenhua.nandagy.utils.MeasureUtil;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -26,15 +27,15 @@ import butterknife.ButterKnife;
  */
 public class ContentDetailActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar_layout)
+    @BindView(R.id.toolbar_layout)
     CollapsingToolbarLayout mToolbarLayout;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.iv_detail_photo)
+    @BindView(R.id.iv_detail_photo)
     ImageView mImageView;
-    @Bind(R.id.tv_detail_title)
+    @BindView(R.id.tv_detail_title)
     TextView mTitleTv;
-    @Bind(R.id.tv_detail_time)
+    @BindView(R.id.tv_detail_time)
     TextView mTimeTv;
 
     @Override
@@ -65,16 +66,17 @@ public class ContentDetailActivity extends BaseActivity {
             final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             assert toolbar != null;
             final FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) toolbar.getLayoutParams();
-            final int statusBarHeight = layoutParams.topMargin = MeasureUtil.getStatusBarHeight(this);
+            final int statusBarHeight = layoutParams.topMargin = ScreenUtils.getStatusBarHeight(this);
             // 算出伸缩移动的总距离
             final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
             final int[] verticalMoveDistance = new int[1];
             toolbarLayout.getViewTreeObserver()
                     .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                         @Override
                         public void onGlobalLayout() {
                             verticalMoveDistance[0] = toolbarLayout
-                                    .getMeasuredHeight() - MeasureUtil
+                                    .getMeasuredHeight() - ScreenUtils
                                     .getToolbarHeight(ContentDetailActivity.this);
                             toolbarLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                         }

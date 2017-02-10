@@ -11,15 +11,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.shenhua.commonlibs.utils.CheckUtils;
+import com.shenhua.commonlibs.widget.ClearEditText;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
-import com.shenhua.nandagy.utils.CommonUtil;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
-import com.shenhua.nandagy.widget.ClearEditText;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobUser;
@@ -33,23 +33,23 @@ import cn.bmob.v3.listener.UpdateListener;
 public class UserAccountActivity extends BaseActivity {
 
     public static final int LOGOUT_SUCCESS = 101;
-    @Bind(R.id.account_tv_id)
+    @BindView(R.id.account_tv_id)
     TextView mIdTv;
-    @Bind(R.id.account_tv_nick)
+    @BindView(R.id.account_tv_nick)
     TextView mNickTv;
-    @Bind(R.id.radiogroup)
+    @BindView(R.id.radiogroup)
     RadioGroup mSexRadioGroup;
-    @Bind(R.id.rb_man)
+    @BindView(R.id.rb_man)
     RadioButton mGenderMan;
-    @Bind(R.id.rb_woman)
+    @BindView(R.id.rb_woman)
     RadioButton mGenderWoman;
-    @Bind(R.id.account_tv_phone)
+    @BindView(R.id.account_tv_phone)
     TextView mPhoneTv;
-    @Bind(R.id.account_tv_mail)
+    @BindView(R.id.account_tv_mail)
     TextView mMailTv;
-    @Bind(R.id.account_tv_name)
+    @BindView(R.id.account_tv_name)
     TextView mNameTv;
-    @Bind(R.id.account_tv_num)
+    @BindView(R.id.account_tv_num)
     TextView mNumTv;
     private static final int TYPE_NICK = 1;
     private static final int TYPE_PHONE = 2;
@@ -259,7 +259,7 @@ public class UserAccountActivity extends BaseActivity {
     }
 
     private boolean updateEmail(final String value, MyUser user) {
-        if (CommonUtil.isEmail(value)) {
+        if (CheckUtils.isEmail(value)) {
             user.setEmail(value);
             mMailTv.setText(value);
             user.update(user.getUserId(), new UpdateListener() {
@@ -280,7 +280,7 @@ public class UserAccountActivity extends BaseActivity {
     }
 
     private boolean updatePhone(final String value, MyUser user) {
-        if (CommonUtil.isPhone(value)) {
+        if (CheckUtils.isPhone(value)) {
             user.setMobilePhoneNumber(value);
             mPhoneTv.setText(value);
             user.update(user.getUserId(), new UpdateListener() {

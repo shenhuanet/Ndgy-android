@@ -35,7 +35,7 @@ import com.shenhua.nandagy.ui.activity.me.UserZoneActivity;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
@@ -51,25 +51,25 @@ import de.greenrobot.event.EventBus;
  */
 public class UserFragment extends Fragment {
 
-    @Bind(R.id.iv_user_photo)
+    @BindView(R.id.iv_user_photo)
     ImageView mUserPhotoIv;
-    @Bind(R.id.tv_user_name)
+    @BindView(R.id.tv_user_name)
     TextView mUserNameTv;
-    @Bind(R.id.tv_user_level)
+    @BindView(R.id.tv_user_level)
     TextView mLevelTv;
-    @Bind(R.id.tv_user_dynamic)
+    @BindView(R.id.tv_user_dynamic)
     TextView mDynamicTv;
-    @Bind(R.id.tv_user_mi)
+    @BindView(R.id.tv_user_mi)
     TextView mMiTv;
-    @Bind(R.id.tv_user_exper)
+    @BindView(R.id.tv_user_exper)
     TextView mExperTv;
-    @Bind(R.id.rl_account)
+    @BindView(R.id.rl_account)
     RelativeLayout mAccountLayout;
-    @Bind(R.id.tag_tv_message)
+    @BindView(R.id.tag_tv_message)
     TextView mMessageTag;
-    @Bind(R.id.tag_tv_setting)
+    @BindView(R.id.tag_tv_setting)
     TextView mSettingTag;
-    @Bind(R.id.tag_tv_about)
+    @BindView(R.id.tag_tv_about)
     TextView mAboutTag;
     private View view;
     public static final int EVENT_TYPE_MESSAGE = 1;

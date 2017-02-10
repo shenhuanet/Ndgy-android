@@ -16,19 +16,19 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.shenhua.commonlibs.callback.OnItemClickListener;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
 import com.shenhua.nandagy.adapter.HomeDataAdapter;
 import com.shenhua.nandagy.bean.HomeData;
-import com.shenhua.nandagy.callback.OnItemClickListener;
 import com.shenhua.nandagy.callback.ProgressEventBus;
-import com.shenhua.nandagy.presenter.HomePresenter;
 import com.shenhua.nandagy.manager.HttpManager;
+import com.shenhua.nandagy.presenter.HomePresenter;
+import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
 import com.shenhua.nandagy.view.HomeView;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
@@ -39,11 +39,11 @@ import de.greenrobot.event.EventBus;
  */
 public abstract class BaseHomeContentFragment extends Fragment implements HomeView {
 
-    @Bind(R.id.recyclerview)
+    @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
-    @Bind(R.id.layout_empty)
+    @BindView(R.id.layout_empty)
     LinearLayout mEmptyLayout;
-    @Bind(R.id.progress_bar)
+    @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
     protected View view;
     protected HomePresenter presenter;

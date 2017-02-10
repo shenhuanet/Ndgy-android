@@ -18,9 +18,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.shenhua.commonlibs.base.BaseImageTextItem;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseActivity;
-import com.shenhua.nandagy.base.BaseImageTextItem;
 import com.shenhua.nandagy.bean.bmobbean.BombUtil;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreBecFragment;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreCAPFragment;
@@ -35,7 +35,7 @@ import com.shenhua.nandagy.ui.fragment.scorequery.ScorePETSFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bmob.v3.Bmob;
 
@@ -45,7 +45,7 @@ import cn.bmob.v3.Bmob;
  */
 public class ScoreQueryActivity extends BaseActivity {
 
-    @Bind(R.id.list_scroe_category)
+    @BindView(R.id.list_scroe_category)
     ListView mListView;
     public static final int DEFAULT_POSITION = 0;
     private int currentItem = -1;

@@ -12,17 +12,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.shenhua.commonlibs.widget.InnerGridView;
+import com.shenhua.libs.bannerview.BannerView;
 import com.shenhua.nandagy.R;
+import com.shenhua.nandagy.base.BaseFragment;
+import com.shenhua.nandagy.service.HttpService;
+import com.shenhua.nandagy.ui.activity.WebActivity;
 import com.shenhua.nandagy.ui.activity.home.GroupActivity;
 import com.shenhua.nandagy.ui.activity.home.LibraryActivity;
 import com.shenhua.nandagy.ui.activity.home.PartyActivity;
-import com.shenhua.nandagy.ui.activity.WebActivity;
-import com.shenhua.nandagy.base.BaseFragment;
-import com.shenhua.nandagy.service.HttpService;
-import com.shenhua.nandagy.widget.BannerView;
-import com.shenhua.nandagy.widget.InnerGridView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -31,11 +31,11 @@ import butterknife.ButterKnife;
  */
 public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelectedListener, GridView.OnItemClickListener {
 
-    @Bind(R.id.tablayout)
+    @BindView(R.id.tablayout)
     TabLayout mTabLayout;
-    @Bind(R.id.img_banner)
+    @BindView(R.id.img_banner)
     BannerView mHomeImgIv;
-    @Bind(R.id.gv_home_tool)
+    @BindView(R.id.gv_home_tool)
     InnerGridView mInnerGridView;
     private View view;
 

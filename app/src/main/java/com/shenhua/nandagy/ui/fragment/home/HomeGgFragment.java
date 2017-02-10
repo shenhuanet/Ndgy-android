@@ -12,16 +12,15 @@ public class HomeGgFragment extends BaseHomeContentFragment {
     private static HomeGgFragment instance = null;
 
     public static HomeGgFragment newInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new HomeGgFragment();
-        }
         return instance;
     }
 
     @Override
     public void init() {
         System.out.println("shenhua sout:" + "222222");
-        presenter = new HomePresenter(HomeGgFragment.this, "77");
+        presenter = new HomePresenter(this, "77");
         presenter.execute();
     }
 }

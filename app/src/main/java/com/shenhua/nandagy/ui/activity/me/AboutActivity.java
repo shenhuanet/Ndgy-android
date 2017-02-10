@@ -10,18 +10,18 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.shenhua.commonlibs.base.BaseImageTextItem;
+import com.shenhua.commonlibs.base.BaseListAdapter;
+import com.shenhua.commonlibs.widget.BaseShareView;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseActivity;
-import com.shenhua.nandagy.base.BaseImageTextItem;
-import com.shenhua.nandagy.base.BaseListAdapter;
 import com.shenhua.nandagy.callback.NewMessageEventBus;
 import com.shenhua.nandagy.ui.fragment.more.UserFragment;
-import com.shenhua.nandagy.widget.BaseShareView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.listener.BmobUpdateListener;
@@ -36,13 +36,13 @@ import de.greenrobot.event.EventBus;
  */
 public class AboutActivity extends BaseActivity {
 
-    @Bind(R.id.tv_about_version)
+    @BindView(R.id.tv_about_version)
     TextView mVersionTv;
-    @Bind(R.id.tv_about_update)
+    @BindView(R.id.tv_about_update)
     TextView mUpdateTv;
-    @Bind(R.id.tv_about_share)
+    @BindView(R.id.tv_about_share)
     TextView mShareTv;
-    @Bind(R.id.base_share_view)
+    @BindView(R.id.base_share_view)
     BaseShareView mShareView;
 
     @Override
@@ -83,9 +83,9 @@ public class AboutActivity extends BaseActivity {
         @SuppressWarnings("unchecked")
         BaseListAdapter adapter = new BaseListAdapter(this, items) {
             @Override
-            public void onBindItemView(BaseListAdapter.BaseViewHolder holder, Object o) {
-                holder.setImageResource(R.id.iv_img, ((BaseImageTextItem) o).getDrawable());
-                holder.setText(R.id.tv_title, ((BaseImageTextItem) o).getTitle());
+            public void onBindItemView(BaseViewHolder baseViewHolder, Object o, int i) {
+                baseViewHolder.setImageResource(R.id.iv_img, ((BaseImageTextItem) o).getDrawable());
+                baseViewHolder.setText(R.id.tv_title, ((BaseImageTextItem) o).getTitle());
             }
 
             @Override

@@ -9,12 +9,12 @@ import android.widget.ImageView;
 
 import com.shenhua.nandagy.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SplashActivity extends Activity {
 
-    @Bind(R.id.iv_shenhua_logo)
+    @BindView(R.id.iv_shenhua_logo)
     ImageView mShenhuaLogo;
 
     @Override

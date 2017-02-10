@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.shenhua.commonlibs.utils.CheckUtils;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETBean;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETParams;
 import com.shenhua.nandagy.bean.scorebean.ScoreMandarinParams;
@@ -11,7 +12,6 @@ import com.shenhua.nandagy.bean.scorebean.ScoreQueryResult;
 import com.shenhua.nandagy.callback.OnScoreQueryListener;
 import com.shenhua.nandagy.manager.HttpManager;
 import com.shenhua.nandagy.service.HttpService;
-import com.shenhua.nandagy.utils.CommonUtil;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
 
 import org.jsoup.Connection;
@@ -90,9 +90,9 @@ public class QueryTask<T> extends AsyncTask<Integer, Integer, ScoreQueryResult> 
             doc = Jsoup.connect(HttpService.SCORE_QUERY_URL_MANDARIN)
                     .data("__VIEWSTATE", __VIEWSTATE)
                     .data("txtStuID", "3242342443134232525")
-                    .data("txtName", CommonUtil.URLEncode(((ScoreMandarinParams) data).getName()))
+                    .data("txtName", CheckUtils.URLEncode(((ScoreMandarinParams) data).getName()))
                     .data("txtIDCard", "423423525252525252")
-                    .data("btnLogin", CommonUtil.URLEncode("查  询"))
+                    .data("btnLogin", CheckUtils.URLEncode("查  询"))
                     .data("txtCertificateNO", "")
                     .data("txtCardNO", "")
                     .timeout(5000)

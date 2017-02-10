@@ -2,9 +2,9 @@ package com.shenhua.nandagy.adapter;
 
 import android.content.Context;
 
+import com.shenhua.commonlibs.base.BaseRecyclerAdapter;
+import com.shenhua.commonlibs.base.BaseRecyclerViewHolder;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseRecyclerAdapter;
-import com.shenhua.nandagy.base.BaseRecyclerViewHolder;
 import com.shenhua.nandagy.bean.CircleData;
 
 import java.util.List;

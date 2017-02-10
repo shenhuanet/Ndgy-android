@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
@@ -13,13 +12,12 @@ import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.CircleAdapter;
 import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.bean.CircleData;
-import com.shenhua.nandagy.callback.OnItemClickListener;
 import com.shenhua.nandagy.presenter.CirclePresenterImpl;
 import com.shenhua.nandagy.view.CircleView;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -28,7 +26,7 @@ import butterknife.ButterKnife;
  */
 public class CircleActivity extends BaseActivity implements CircleView, SwipeRefreshLayout.OnRefreshListener, OnMoreListener {
 
-    @Bind(R.id.list)
+    @BindView(R.id.list)
     SuperRecyclerView recyclerView;
     CirclePresenterImpl circlePresenter;
 
@@ -71,11 +69,8 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
     public void updateList(List<CircleData> datas) {
         CircleAdapter adapter = new CircleAdapter(this, datas);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void OnItemClick(View view, int position) {
+        adapter.setOnItemClickListener((view, i) -> {
 
-            }
         });
     }
 

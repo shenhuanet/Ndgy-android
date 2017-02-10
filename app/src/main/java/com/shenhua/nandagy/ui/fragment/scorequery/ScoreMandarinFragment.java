@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.shenhua.commonlibs.utils.DESUtils;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseScoreQueryFragment;
 import com.shenhua.nandagy.bean.bmobbean.ScoreQuery;
@@ -14,9 +15,8 @@ import com.shenhua.nandagy.bean.scorebean.ScoreMandarinParams;
 import com.shenhua.nandagy.callback.OnScoreQueryListener;
 import com.shenhua.nandagy.callback.TextInputWatcher;
 import com.shenhua.nandagy.presenter.QueryTask;
-import com.shenhua.nandagy.utils.DESUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * 普通话水平
@@ -25,15 +25,15 @@ import butterknife.Bind;
 public class ScoreMandarinFragment extends BaseScoreQueryFragment {
 
     private static ScoreMandarinFragment instance = null;
-    @Bind(R.id.til_zkzh)
+    @BindView(R.id.til_zkzh)
     TextInputLayout mZkzhLayout;
-    @Bind(R.id.til_zjh)
+    @BindView(R.id.til_zjh)
     TextInputLayout mZJHLayout;
-    @Bind(R.id.et_zkzh)
+    @BindView(R.id.et_zkzh)
     EditText mZkzhEt;
-    @Bind(R.id.et_name)
+    @BindView(R.id.et_name)
     EditText mNameEt;
-    @Bind(R.id.et_zjh)
+    @BindView(R.id.et_zjh)
     EditText mZJHEt;
 
     public static ScoreMandarinFragment newInstance() {

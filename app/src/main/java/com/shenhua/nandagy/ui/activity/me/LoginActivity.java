@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import com.shenhua.commonlibs.widget.ClearEditText;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
@@ -21,7 +22,6 @@ import com.shenhua.nandagy.utils.Rotate3dAnimation;
 import com.shenhua.nandagy.utils.ShareUtils;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 import com.shenhua.nandagy.utils.bmobutils.UserZoneUtils;
-import com.shenhua.nandagy.widget.ClearEditText;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
 import com.tencent.connect.UserInfo;
 import com.tencent.tauth.IUiListener;
@@ -31,7 +31,7 @@ import com.tencent.tauth.UiError;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobUser;
@@ -46,11 +46,11 @@ import de.greenrobot.event.EventBus;
 public class LoginActivity extends BaseActivity {
 
     public static final int LOGIN_SUCCESS = 100;
-    @Bind(R.id.layout_sign_content)
+    @BindView(R.id.layout_sign_content)
     RelativeLayout mSignContent;
-    @Bind(R.id.view_signin)
+    @BindView(R.id.view_signin)
     View mSigninView;
-    @Bind(R.id.view_signup)
+    @BindView(R.id.view_signup)
     View mSignupView;
     private int centerX;
     private int centerY;
@@ -60,17 +60,17 @@ public class LoginActivity extends BaseActivity {
     private Rotate3dAnimation closeAnimation;
     private boolean isSignup = false;// 一开始显示登录页
 
-    @Bind(R.id.signup_et_username)
+    @BindView(R.id.signup_et_username)
     ClearEditText mUsernameEt;
-    @Bind(R.id.signup_et_password)
+    @BindView(R.id.signup_et_password)
     ClearEditText mPasswordEt;
-    @Bind(R.id.radiogroup)
+    @BindView(R.id.radiogroup)
     RadioGroup mSexRadioGroup;
     private boolean gender = false;//默认性别 男
 
-    @Bind(R.id.signin_et_username)
+    @BindView(R.id.signin_et_username)
     ClearEditText mUsernameSigninEt;
-    @Bind(R.id.signin_et_password)
+    @BindView(R.id.signin_et_password)
     ClearEditText mPasswordSigninEt;
 
     private Tencent mTencent;

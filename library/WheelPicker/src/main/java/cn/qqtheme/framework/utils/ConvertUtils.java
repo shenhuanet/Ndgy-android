@@ -1,30 +1,43 @@
-package cn.qqtheme.framework.util;
+package cn.qqtheme.framework.utils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.graphics.*;
-import android.graphics.drawable.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.NinePatchDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Build;
 import android.util.TypedValue;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Arrays;
 
 /**
- * 数据类型转换、单位转换
- *
- * @author 李玉江[QQ:1023694760]
- * @since 2014-4-18
+ * 转换工具类：包含 color date bitmap drawable shape byte等
+ * Created by shenhua on 2/10/2017.
+ * Email shenhuanet@126.com
  */
 public class ConvertUtils {
+
     /**
      * The constant GB.
      */
@@ -121,7 +134,7 @@ public class ConvertUtils {
      * @param dateStr 如：2014-04-08 23:02
      * @return long long
      */
-    public static long toTimemillis(String dateStr) {
+    public static long toTimeMillis(String dateStr) {
         return toDate(dateStr).getTime();
     }
 
@@ -164,7 +177,7 @@ public class ConvertUtils {
         try {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             byte[] buff = new byte[100];
-            int rc = 0;
+            int rc;
             while ((rc = is.read(buff, 0, 100)) > 0) {
                 os.write(buff, 0, rc);
             }
@@ -306,7 +319,7 @@ public class ConvertUtils {
      * @param dpValue the dp value
      * @return int int
      */
-    public static int toPx(Context context, float dpValue) {
+    public static int dp2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         int pxValue = (int) (dpValue * scale + 0.5f);
         LogUtils.verbose(dpValue + " dp == " + pxValue + " px");
@@ -319,7 +332,7 @@ public class ConvertUtils {
      * @param dpValue the dp value
      * @return the int
      */
-    public static int toPx(float dpValue) {
+    public static int dp2px(float dpValue) {
         Resources resources = Resources.getSystem();
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, resources.getDisplayMetrics());
         return (int) px;
@@ -332,7 +345,7 @@ public class ConvertUtils {
      * @param pxValue the px value
      * @return int int
      */
-    public static int toDp(Context context, float pxValue) {
+    public static int px2dp(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         int dpValue = (int) (pxValue / scale + 0.5f);
         LogUtils.verbose(pxValue + " px == " + dpValue + " dp");
@@ -346,11 +359,19 @@ public class ConvertUtils {
      * @param pxValue the px value
      * @return int int
      */
-    public static int toSp(Context context, float pxValue) {
+    public static int px2sp(Context context, float pxValue) {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         int spValue = (int) (pxValue / fontScale + 0.5f);
         LogUtils.verbose(pxValue + " px == " + spValue + " sp");
         return spValue;
+    }
+
+    /**
+     * 将sp值转换为px值，保证文字大小不变
+     */
+    public static int sp2px(Context context, float spValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
     }
 
     /**
@@ -418,7 +439,7 @@ public class ConvertUtils {
      * @return the shape drawable
      */
     public static ShapeDrawable toRoundDrawable(int color, int radius) {
-        int r = toPx(radius);
+        int r = dp2px(radius);
         float[] outerR = new float[]{r, r, r, r, r, r, r, r};
         RoundRectShape shape = new RoundRectShape(outerR, null, null);
         ShapeDrawable drawable = new ShapeDrawable(shape);
@@ -429,7 +450,6 @@ public class ConvertUtils {
     /**
      * 对TextView、Button等设置不同状态时其文字颜色。
      * 参见：http://blog.csdn.net/sodino/article/details/6797821
-     * Modified by liyujiang at 2015.08.13
      *
      * @param normalColor  the normal color
      * @param pressedColor the pressed color

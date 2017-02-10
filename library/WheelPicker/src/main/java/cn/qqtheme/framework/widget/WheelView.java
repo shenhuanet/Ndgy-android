@@ -22,7 +22,7 @@ import android.widget.TextView;
 import java.util.LinkedList;
 import java.util.List;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.utils.LogUtils;
 
 /**
  * 基于原版(https://github.com/wangjiegulu/WheelView)作了一下修改：

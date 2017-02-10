@@ -11,11 +11,11 @@ import android.widget.TextView;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.callback.NewMessageEventBus;
-import com.shenhua.nandagy.ui.fragment.more.UserFragment;
 import com.shenhua.nandagy.manager.DataCleanManager;
+import com.shenhua.nandagy.ui.fragment.more.UserFragment;
 import com.shenhua.nandagy.utils.SettingUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
@@ -26,11 +26,11 @@ import de.greenrobot.event.EventBus;
  */
 public class SettingActivity extends BaseActivity {
 
-    @Bind(R.id.tv_setting_cache)
+    @BindView(R.id.tv_setting_cache)
     TextView mCacheTv;
-    @Bind(R.id.switch_setting_nanwifi)
+    @BindView(R.id.switch_setting_nanwifi)
     Switch mNanWifiSc;
-    @Bind(R.id.switch_setting_nanpush)
+    @BindView(R.id.switch_setting_nanpush)
     Switch mNanPushSc;
 
     @Override

@@ -21,7 +21,7 @@ import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.service.HttpService;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -30,9 +30,9 @@ import butterknife.ButterKnife;
  */
 public class WebActivity extends BaseActivity {
 
-    @Bind(R.id.content_web)
+    @BindView(R.id.content_web)
     WebView mWebView;
-    @Bind(R.id.content_pro)
+    @BindView(R.id.content_pro)
     ProgressBar mProgressBar;
     private boolean isLoading, isInit;
     private String JsTag = "img_view";
