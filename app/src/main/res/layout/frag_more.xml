@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.shenhua.nandagy.widget.BannerView
+        <com.shenhua.libs.bannerview.BannerView
             android:id="@+id/banner"
             android:layout_width="match_parent"
             android:layout_height="150dp" />

@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="登录知乎"
+        android:text="登录南大共院app"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -37,13 +37,13 @@
         app:divider="@drawable/bg_divider_gray_vertical"
         app:showDividers="beginning|middle">
 
-        <com.shenhua.nandagy.widget.ClearEditText
+        <com.shenhua.commonlibs.widget.ClearEditText
             android:id="@+id/signin_et_username"
             style="@style/EditSignStyle"
             android:hint="@string/txt_hint_username"
             android:textColorHint="@color/colorPrimaryLight" />
 
-        <com.shenhua.nandagy.widget.ClearEditText
+        <com.shenhua.commonlibs.widget.ClearEditText
             android:id="@+id/signin_et_password"
             style="@style/EditSignStyle"
             android:hint="@string/txt_hint_password"

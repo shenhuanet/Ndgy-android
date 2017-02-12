@@ -43,16 +43,19 @@
             <TextView
                 android:id="@+id/tv_about_version"
                 style="@style/ActionLabelTextStyle"
+                android:background="?attr/selectableItemBackground"
                 android:text="当前版本 4.5.6" />
 
             <TextView
                 android:id="@+id/tv_about_update"
                 style="@style/ActionLabelTextStyle"
+                android:background="?attr/selectableItemBackground"
                 android:text="检测更新" />
 
             <TextView
                 android:id="@+id/tv_about_share"
                 style="@style/ActionLabelTextStyle"
+                android:background="?attr/selectableItemBackground"
                 android:text="分享app" />
 
         </android.support.v7.widget.LinearLayoutCompat>
@@ -84,7 +87,7 @@
 
     </LinearLayout>
 
-    <com.shenhua.nandagy.widget.BaseShareView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.shenhua.commonlibs.widget.BaseShareView
         android:id="@+id/base_share_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

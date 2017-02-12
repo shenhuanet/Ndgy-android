@@ -29,7 +29,7 @@
                 android:orientation="horizontal"
                 android:padding="6dp">
 
-                <com.shenhua.nandagy.widget.CircleImageView
+                <com.shenhua.commonlibs.widget.CircleImageView
                     android:id="@+id/iv_user_photo"
                     android:layout_width="60dp"
                     android:layout_height="60dp"

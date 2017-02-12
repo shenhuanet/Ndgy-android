@@ -6,7 +6,7 @@
 
     <include layout="@layout/common_toolbar_title_left" />
 
-    <com.shenhua.nandagy.widget.WordLimitEditText
+    <com.shenhua.commonlibs.widget.WordLimitEditText
         android:id="@+id/edit_txt_feedback_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

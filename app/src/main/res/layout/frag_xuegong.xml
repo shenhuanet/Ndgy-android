@@ -17,12 +17,12 @@
             android:background="@android:color/white"
             android:orientation="vertical">
 
-            <com.shenhua.nandagy.widget.BannerView
+            <com.shenhua.libs.bannerview.BannerView
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="150dp" />
 
-            <com.shenhua.nandagy.widget.InnerGridView
+            <com.shenhua.commonlibs.widget.InnerGridView
                 android:id="@+id/gv_xue_tool"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
