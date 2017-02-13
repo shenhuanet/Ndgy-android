@@ -4,28 +4,28 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical">
 
-    <com.shenhua.nandagy.widget.DrawableCenterTextView
+    <com.shenhua.commonlibs.widget.DrawableCenterTextView
         style="@style/CircleToolTextViewStyle"
         android:drawableLeft="@drawable/ic_great"
         android:text="30" />
 
     <View style="@style/DividerVertical" />
 
-    <com.shenhua.nandagy.widget.DrawableCenterTextView
+    <com.shenhua.commonlibs.widget.DrawableCenterTextView
         style="@style/CircleToolTextViewStyle"
         android:drawableLeft="@drawable/ic_great"
         android:text="30" />
 
     <View style="@style/DividerVertical" />
 
-    <com.shenhua.nandagy.widget.DrawableCenterTextView
+    <com.shenhua.commonlibs.widget.DrawableCenterTextView
         style="@style/CircleToolTextViewStyle"
         android:drawableLeft="@drawable/ic_great"
         android:text="30" />
 
     <View style="@style/DividerVertical" />
 
-    <com.shenhua.nandagy.widget.DrawableCenterTextView
+    <com.shenhua.commonlibs.widget.DrawableCenterTextView
         style="@style/CircleToolTextViewStyle"
         android:drawableLeft="@drawable/ic_great"
         android:text="30" />

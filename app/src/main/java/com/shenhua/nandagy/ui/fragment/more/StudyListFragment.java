@@ -6,11 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.shenhua.nandagy.R;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -18,9 +16,6 @@ import butterknife.ButterKnife;
  * e-mail shenhuanet@126.com
  */
 public class StudyListFragment extends Fragment {
-
-    @BindView(R.id.tv_t)
-    TextView textView;
 
     public static StudyListFragment getInstance(int type) {
         Bundle bundle = new Bundle();
@@ -42,7 +37,6 @@ public class StudyListFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         System.out.println("shenhua sout:" + "type:-" + getArguments().getInt("type"));
-        textView.setText("" + getArguments().getInt("type"));
     }
 
     @Override

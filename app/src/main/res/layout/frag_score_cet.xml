@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         app:hintTextAppearance="@style/ScoreTextInputLayoutHintTextStyle">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
             style="@style/ScoreTextInputEditTextStyle.ZhunKaoZheng"
             android:hint="请输入15位准考证号"
             android:text="360013161200621"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         app:hintTextAppearance="@style/ScoreTextInputLayoutHintTextStyle">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
             style="@style/ScoreEditTextStyle.XingMing"
             android:text="林慧"
             android:hint="请输入姓名,姓名超过3个字,可只输入前3个" />

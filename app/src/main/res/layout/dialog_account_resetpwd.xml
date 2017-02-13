@@ -17,7 +17,7 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <com.shenhua.nandagy.widget.ClearEditText
+    <com.shenhua.commonlibs.widget.ClearEditText
         android:id="@+id/editdialog_et_y"
         style="@style/EditSignStyle"
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
         android:maxLength="6"
         android:textColorHint="@color/colorPrimaryLight" />
 
-    <com.shenhua.nandagy.widget.ClearEditText
+    <com.shenhua.commonlibs.widget.ClearEditText
         android:id="@+id/editdialog_et_n"
         style="@style/EditSignStyle"
         android:layout_width="match_parent"

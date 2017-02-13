@@ -13,7 +13,7 @@ import com.shenhua.nandagy.base.BaseScoreQueryFragment;
 import com.shenhua.nandagy.bean.bmobbean.ScoreQuery;
 import com.shenhua.nandagy.bean.scorebean.ScoreMandarinParams;
 import com.shenhua.nandagy.callback.OnScoreQueryListener;
-import com.shenhua.nandagy.callback.TextInputWatcher;
+import com.shenhua.nandagy.callback.TextEnableInputWatcher;
 import com.shenhua.nandagy.presenter.QueryTask;
 
 import butterknife.BindView;
@@ -51,8 +51,8 @@ public class ScoreMandarinFragment extends BaseScoreQueryFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mZkzhEt.addTextChangedListener(new TextInputWatcher(mZkzhLayout));
-        mZJHEt.addTextChangedListener(new TextInputWatcher(mZJHLayout));
+        mZkzhEt.addTextChangedListener(new TextEnableInputWatcher(mZkzhLayout));
+        mZJHEt.addTextChangedListener(new TextEnableInputWatcher(mZJHLayout));
     }
 
     @Override

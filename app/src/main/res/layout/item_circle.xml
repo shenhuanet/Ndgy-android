@@ -17,7 +17,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <com.shenhua.nandagy.widget.CircleImageView
+        <com.shenhua.commonlibs.widget.CircleImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/img_beifeng" />
@@ -69,7 +69,7 @@
             android:textColor="@color/colorText"
             android:textSize="14sp" />
 
-        <com.shenhua.nandagy.widget.InnerGridView
+        <com.shenhua.commonlibs.widget.InnerGridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:numColumns="auto_fit"

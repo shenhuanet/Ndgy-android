@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="加入知乎"
+        android:text="加入南大共院app"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="5dp"
-        android:text="与世界分享你的知识、经验和见解"
+        android:text="与校友分享你的动态、经验和见解"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp" />
 
@@ -35,9 +35,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:divider="@drawable/bg_divider_gray_vertical"
-        app:showDividers="beginning|middle|end">
+        app:showDividers="beginning|middle">
 
-        <com.shenhua.nandagy.widget.ClearEditText
+        <com.shenhua.commonlibs.widget.ClearEditText
             android:id="@+id/signup_et_username"
             style="@style/EditSignStyle"
             android:layout_width="match_parent"
@@ -45,7 +45,7 @@
             android:hint="@string/txt_hint_username"
             android:textColorHint="@color/colorPrimaryLight" />
 
-        <com.shenhua.nandagy.widget.ClearEditText
+        <com.shenhua.commonlibs.widget.ClearEditText
             android:id="@+id/signup_et_password"
             style="@style/EditSignStyle"
             android:layout_width="match_parent"

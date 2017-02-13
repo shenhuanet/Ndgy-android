@@ -7,15 +7,13 @@ package com.shenhua.nandagy.bean;
  */
 public class StudyListData {
 
-    private int _id;
     private String title;
     private String description;
     private String href;
     private String time;
     private String content;
 
-    public StudyListData(int _id, String title, String href, String description) {
-        this._id = _id;
+    public StudyListData(String title, String href, String description) {
         this.title = title;
         this.href = href;
         this.description = description;
@@ -24,14 +22,6 @@ public class StudyListData {
     public StudyListData(String time, String content) {
         this.time = time;
         this.content = content;
-    }
-
-    public int get_id() {
-        return _id;
-    }
-
-    public void set_id(int _id) {
-        this._id = _id;
     }
 
     public String getTitle() {

@@ -16,7 +16,7 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <com.shenhua.nandagy.widget.ClearEditText
+    <com.shenhua.commonlibs.widget.ClearEditText
         android:id="@+id/editdialog_et"
         style="@style/EditSignStyle"
         android:layout_width="match_parent"

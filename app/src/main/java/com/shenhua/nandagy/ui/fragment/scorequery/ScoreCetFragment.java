@@ -15,7 +15,7 @@ import com.shenhua.nandagy.bean.bmobbean.ScoreQuery;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETBean;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETParams;
 import com.shenhua.nandagy.callback.OnScoreQueryListener;
-import com.shenhua.nandagy.callback.TextInputWatcher;
+import com.shenhua.nandagy.callback.TextEnableInputWatcher;
 import com.shenhua.nandagy.presenter.QueryTask;
 import com.shenhua.nandagy.ui.activity.more.ScoreQueryResultActivity;
 
@@ -54,8 +54,8 @@ public class ScoreCetFragment extends BaseScoreQueryFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mZkzhEt.addTextChangedListener(new TextInputWatcher(mZkzhLayout));
-        mNameEt.addTextChangedListener(new TextInputWatcher(mNameLayout));
+        mZkzhEt.addTextChangedListener(new TextEnableInputWatcher(mZkzhLayout));
+        mNameEt.addTextChangedListener(new TextEnableInputWatcher(mNameLayout));
     }
 
     @Override

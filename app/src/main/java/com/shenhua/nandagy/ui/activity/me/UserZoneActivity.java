@@ -105,12 +105,9 @@ public class UserZoneActivity extends BaseActivity {
             }
         });
         TextView pick = (TextView) content.findViewById(R.id.tv_pick_photo);
-        pick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBpv.hide();
-                Crop.pickImage(UserZoneActivity.this);
-            }
+        pick.setOnClickListener(v -> {
+            mBpv.hide();
+            Crop.pickImage(UserZoneActivity.this);
         });
         TextView cancel = (TextView) content.findViewById(R.id.tv_cancel);
         cancel.setOnClickListener(new View.OnClickListener() {

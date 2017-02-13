@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.shenhua.nandagy.widget.CircleImageView
+    <com.shenhua.commonlibs.widget.CircleImageView
         android:id="@+id/iv_zone_photo"
         android:layout_width="80dp"
         android:layout_height="80dp"
