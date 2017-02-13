@@ -11,7 +11,6 @@ import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.StudyViewPagerAdapter;
 import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.database.StudyDBDao;
-import com.shenhua.nandagy.database.StudyDBHelper;
 import com.shenhua.nandagy.ui.fragment.more.StudyListFragment;
 
 import butterknife.BindView;
@@ -45,7 +44,7 @@ public class StudyAreaActivity extends BaseActivity {
 
     private void initd() {
 
-        StudyDBDao dbDao = new StudyDBDao(this,new StudyDBHelper(this));
+        StudyDBDao dbDao = new StudyDBDao(this);
 
     }
 

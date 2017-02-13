@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +15,12 @@ import java.util.List;
  */
 public abstract class BaseSQLiteDao<T> {
 
-    private BaseSQLiteOpenHelper dbHelper;
+    private SQLiteOpenHelper dbHelper;
     private Context context;
 
-    public BaseSQLiteDao(Context context, BaseSQLiteOpenHelper dbHelper) {
+    public BaseSQLiteDao(Context context, SQLiteOpenHelper dbHelper) {
         this.context = context;
         this.dbHelper = dbHelper;
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        dbHelper.createDB(db);
     }
 
     public void insertAll(List<T> ts, ContentValues cv) {
@@ -105,10 +104,10 @@ public abstract class BaseSQLiteDao<T> {
      * 删除表后重建表，使自增_id重新计数
      */
     public void deleteAll() {
-        String sql = "drop table if exists tb_listItem;";
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL(sql);
-        db.close();
-        dbHelper.createDB(db);
+//        String sql = "drop table if exists tb_listItem;";
+//        SQLiteDatabase db = dbHelper.getWritableDatabase();
+//        db.execSQL(sql);
+//        db.close();
+//        dbHelper.createDB(db);
     }
 }

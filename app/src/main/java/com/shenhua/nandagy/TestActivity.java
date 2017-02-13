@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.shenhua.nandagy.database.StudyDBDao;
-import com.shenhua.nandagy.database.StudyDBHelper;
 
 /**
  * Created by shenhua on 2/13/2017.
@@ -19,6 +18,6 @@ public class TestActivity extends AppCompatActivity {
 
 
 
-        StudyDBDao dbDao = new StudyDBDao(this,new StudyDBHelper(this));
+        StudyDBDao dbDao = new StudyDBDao(this);
     }
 }

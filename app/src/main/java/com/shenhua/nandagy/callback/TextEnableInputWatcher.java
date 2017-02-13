@@ -8,11 +8,11 @@ import android.text.TextWatcher;
  * 编辑框变化监听器，主要用来清除TextInputLayout的error信息
  * Created by Shenhua on 9/29/2016.
  */
-public class TextInputWatcher implements TextWatcher {
+public class TextEnableInputWatcher implements TextWatcher {
 
     private TextInputLayout textInputLayout;
 
-    public TextInputWatcher(TextInputLayout textInputLayout) {
+    public TextEnableInputWatcher(TextInputLayout textInputLayout) {
         this.textInputLayout = textInputLayout;
     }
 

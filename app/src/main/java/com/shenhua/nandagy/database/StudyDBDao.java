@@ -3,7 +3,6 @@ package com.shenhua.nandagy.database;
 import android.content.Context;
 
 import com.shenhua.nandagy.base.BaseSQLiteDao;
-import com.shenhua.nandagy.base.BaseSQLiteOpenHelper;
 import com.shenhua.nandagy.bean.StudyListData;
 
 import static com.shenhua.nandagy.database.StudyDBHelper.TABLE_NAME;
@@ -14,8 +13,9 @@ import static com.shenhua.nandagy.database.StudyDBHelper.TABLE_NAME;
  */
 public class StudyDBDao extends BaseSQLiteDao<StudyListData> {
 
-    public StudyDBDao(Context context, BaseSQLiteOpenHelper dbHelper) {
-        super(context, dbHelper);
+    public StudyDBDao(Context context) {
+        super(context, new StudyDBHelper(context));
+        System.out.println("shenhua sout:" + "StudyDBDao.init");
     }
 
     @Override
