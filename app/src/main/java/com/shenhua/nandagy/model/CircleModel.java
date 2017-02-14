@@ -1,6 +1,6 @@
 package com.shenhua.nandagy.model;
 
-import com.shenhua.nandagy.callback.HttpCallback;
+import com.shenhua.commonlibs.callback.HttpCallback;
 
 /**
  * Created by MVPHelper on 2016/10/06

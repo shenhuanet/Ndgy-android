@@ -1,7 +1,7 @@
 package com.shenhua.nandagy.model;
 
+import com.shenhua.commonlibs.callback.HttpCallback;
 import com.shenhua.nandagy.bean.scorebean.ScoreData;
-import com.shenhua.nandagy.callback.HttpCallback;
 
 /**
  * 查询成绩数据接口实现

@@ -1,12 +1,5 @@
 package com.shenhua.nandagy.base;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,99 +8,25 @@ import java.util.List;
  */
 public abstract class BaseSQLiteDao<T> {
 
-    private SQLiteOpenHelper dbHelper;
-    private Context context;
+    protected BaseSQLiteOpenHelper dbHelper;
 
-    public BaseSQLiteDao(Context context, SQLiteOpenHelper dbHelper) {
-        this.context = context;
+    /**
+     * must add egg: super(new StudyDBHelper(context));
+     *
+     * @param dbHelper dbHelper that extents BaseSQLiteOpenHelper.
+     */
+    public BaseSQLiteDao(BaseSQLiteOpenHelper dbHelper) {
         this.dbHelper = dbHelper;
     }
 
-    public void insertAll(List<T> ts, ContentValues cv) {
-        for (T list : ts) {
-            insert(setTableName(), null, cv);
-        }
-    }
+    public abstract long add(T t);
 
-    public abstract String setTableName();
+    public abstract void deleteTable();
 
-    public long insert(String table, String nullColumnHack, ContentValues values) {
-        long ret = 0;
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
-        database.beginTransaction();
-        try {
-            ret = database.insert(table, nullColumnHack, values);
-            database.setTransactionSuccessful();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-        } finally {
-            database.endTransaction();
-        }
-        return ret;
-    }
+    public abstract void update(T t, int _id);
 
-    public <T> List<T> query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, Integer limit) {
-        List<T> results = new ArrayList<>();
-        Cursor cursor = null;
-        try {
-            if (limit != null) {
-                cursor = dbHelper.getReadableDatabase().query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limit + "");
-            } else {
-                cursor = dbHelper.getReadableDatabase().query(table, columns, selection, selectionArgs, groupBy, having, orderBy);
-            }
-            results = queryResult(cursor);
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-        return results;
-    }
+    public abstract List<T> listAll();
 
-    public <T> List<T> queryResult(Cursor cursor) {
-        throw new RuntimeException("Please overwrite method.");
-    }
+    public abstract T query(int _id);
 
-    public int update(String table, ContentValues values, String whereClause, String[] whereArgs) {
-        int ret = 0;
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
-        database.beginTransaction();
-        try {
-            ret = database.update(table, values, whereClause, whereArgs);
-            database.setTransactionSuccessful();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-        } finally {
-            database.endTransaction();
-        }
-        return ret;
-    }
-
-    public int delete(String table, String whereClause, String[] whereArgs) {
-        int ret = 0;
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
-        database.beginTransaction();
-        try {
-            ret = database.delete(table, whereClause, whereArgs);
-            database.setTransactionSuccessful();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-        } finally {
-            database.endTransaction();
-        }
-        return ret;
-    }
-
-    /**
-     * 删除表后重建表，使自增_id重新计数
-     */
-    public void deleteAll() {
-//        String sql = "drop table if exists tb_listItem;";
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        db.execSQL(sql);
-//        db.close();
-//        dbHelper.createDB(db);
-    }
 }

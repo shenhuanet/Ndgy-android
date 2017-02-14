@@ -1,7 +1,7 @@
 package com.shenhua.nandagy.presenter;
 
+import com.shenhua.commonlibs.callback.HttpCallback;
 import com.shenhua.nandagy.bean.scorebean.ScoreData;
-import com.shenhua.nandagy.callback.HttpCallback;
 import com.shenhua.nandagy.model.ScoreQueryModel;
 import com.shenhua.nandagy.model.ScoreQueryModelImpl;
 import com.shenhua.nandagy.view.ScoreQueryView;

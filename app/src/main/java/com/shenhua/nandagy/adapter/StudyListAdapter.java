@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.shenhua.commonlibs.base.BaseRecyclerAdapter;
 import com.shenhua.commonlibs.base.BaseRecyclerViewHolder;
+import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.StudyListData;
 
 import java.util.List;
@@ -20,11 +21,12 @@ public class StudyListAdapter extends BaseRecyclerAdapter<StudyListData> {
 
     @Override
     public int getItemViewId() {
-        return 0;
+        return R.layout.item_study_list;
     }
 
     @Override
     public void bindData(BaseRecyclerViewHolder holder, int position, StudyListData item) {
-
+        holder.setText(R.id.tv_title, item.getTitle());
+        holder.setText(R.id.tv_des, item.getDescription());
     }
 }

@@ -2,8 +2,8 @@ package com.shenhua.nandagy.model;
 
 import android.text.TextUtils;
 
+import com.shenhua.commonlibs.callback.HttpCallback;
 import com.shenhua.nandagy.bean.HomeData;
-import com.shenhua.nandagy.callback.HttpCallback;
 import com.shenhua.nandagy.manager.HttpManager;
 import com.shenhua.nandagy.service.HttpService;
 

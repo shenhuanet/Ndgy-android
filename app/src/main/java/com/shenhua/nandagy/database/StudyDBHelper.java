@@ -2,30 +2,63 @@ package com.shenhua.nandagy.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+
+import com.shenhua.nandagy.base.BaseSQLiteOpenHelper;
+
+import static com.shenhua.nandagy.service.Constants.DATABASE_NAME;
 
 /**
  * Created by shenhua on 2/13/2017.
  * Email shenhuanet@126.com
  */
-public class StudyDBHelper extends SQLiteOpenHelper {
+public class StudyDBHelper extends BaseSQLiteOpenHelper {
 
-    public static final int DB_VERSION = 2;
-    public static final String TABLE_NAME = "table_study";
-    // SQLite没有单独的布尔存储类型，它使用INTEGER作为存储类型，0为false，1为true
-    public static final String TYPE_NULL = " null ";// 值是NULL
-    public static final String TYPE_INT = " integer ";// 值是有符号整形，根据值的大小以1,2,3,4,6或8字节存放
-    public static final String TYPE_STRING = " text ";// 值是文本字符串，使用数据库编码（UTF-8，UTF-16BE或者UTF-16LE）存放
-    public static final String TYPE_REAL = " real ";// 值是浮点型值，以8字节IEEE浮点数存放
-    public static final String TYPE_BLOB = " blob ";// 只是一个数据块，完全按照输入存放（即没有准换）
+    private static final int DB_VERSION = 1;
+    private static final String TABLE_NAME_YINGYU = "table_study_yingyu";
+    private static final String TABLE_NAME_JISUANJI = "table_study_jisuanji";
+    private static final String TABLE_NAME_DIANZI = "table_study_dianzi";
+    private static final String TABLE_NAME_JIXIE = "table_study_jixie";
+    private static final String TABLE_NAME_JINGGUAN = "table_study_jingguan";
+    private static final String TABLE_NAME_JIANZHU = "table_study_jianzhu";
+    private static final String TABLE_NAME_CAIKUAI = "table_study_caikuai";
+    private int type;
 
-    public StudyDBHelper(Context context) {
-        super(context, TABLE_NAME, null, DB_VERSION);
-        System.out.println("shenhua sout:" + "StudyDBHelper.init");
+    StudyDBHelper(Context context, int type) {
+        super(context, DATABASE_NAME, getTableName(type), DB_VERSION);
+        this.type = type;
+    }
+
+    static String getTableName(int type) {
+        switch (type) {
+            case 0:
+                return TABLE_NAME_YINGYU;
+            case 1:
+                return TABLE_NAME_JISUANJI;
+            case 2:
+                return TABLE_NAME_DIANZI;
+            case 3:
+                return TABLE_NAME_JIXIE;
+            case 4:
+                return TABLE_NAME_JINGGUAN;
+            case 5:
+                return TABLE_NAME_JIANZHU;
+            case 6:
+                return TABLE_NAME_CAIKUAI;
+        }
+        return null;
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void createDB(SQLiteDatabase db) {
+        createTable(db);
+    }
+
+    @Override
+    public void upgradeDB(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+
+    private void createTable(SQLiteDatabase db) {
         try {
             String sql = buildCreateSQL(
                     new String[]{
@@ -33,32 +66,11 @@ public class StudyDBHelper extends SQLiteOpenHelper {
                     }, new String[]{
                             TYPE_STRING, TYPE_STRING, TYPE_STRING, TYPE_STRING, TYPE_STRING
                     });
-            System.out.println("shenhua sout:222:" + sql);
             db.execSQL(sql);
-            System.out.println("shenhua sout:" + "创建成功");
+            System.out.println("shenhua sout:" + getTableName(type) + ":创建成功");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
-    }
-
-    private String buildCreateSQL(String[] columns, String[] types) throws Exception {
-        if (columns.length <= 0) return "";
-        if (columns.length != types.length) {
-            throw new Exception("please sure the columns size is same as types...");
-        }
-        String sql = "create table " + TABLE_NAME + "(_id integer primary key autoincrement,";
-        for (int i = 0; i < columns.length; i++) {
-            sql = sql + columns[i] + types[i] + ",";
-        }
-        StringBuffer sb = new StringBuffer(sql);
-        sb.deleteCharAt(sql.length() - 1);
-        sb = sb.append(");");
-        System.out.println("shenhua sout:" + sb);
-        return sb.toString();
-    }
 }

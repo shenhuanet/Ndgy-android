@@ -1,10 +1,10 @@
 package com.shenhua.nandagy.presenter;
 
+import com.shenhua.commonlibs.callback.HttpCallback;
 import com.shenhua.nandagy.bean.HomeData;
-import com.shenhua.nandagy.callback.HttpCallback;
+import com.shenhua.nandagy.manager.HttpManager;
 import com.shenhua.nandagy.model.HomeModel;
 import com.shenhua.nandagy.model.HomeModelImpl;
-import com.shenhua.nandagy.manager.HttpManager;
 import com.shenhua.nandagy.view.HomeView;
 
 import java.util.List;

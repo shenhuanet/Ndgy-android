@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.StudyViewPagerAdapter;
 import com.shenhua.nandagy.base.BaseActivity;
-import com.shenhua.nandagy.database.StudyDBDao;
 import com.shenhua.nandagy.ui.fragment.more.StudyListFragment;
 
 import butterknife.BindView;
@@ -38,14 +37,6 @@ public class StudyAreaActivity extends BaseActivity {
         ButterKnife.bind(this);
         setupActionBar("学习专区", true);
         initViewPager();
-
-        initd();
-    }
-
-    private void initd() {
-
-        StudyDBDao dbDao = new StudyDBDao(this);
-
     }
 
     private void initViewPager() {

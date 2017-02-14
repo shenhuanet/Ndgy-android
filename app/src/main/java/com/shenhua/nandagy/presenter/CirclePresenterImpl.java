@@ -1,7 +1,7 @@
 package com.shenhua.nandagy.presenter;
 
+import com.shenhua.commonlibs.callback.HttpCallback;
 import com.shenhua.nandagy.bean.CircleData;
-import com.shenhua.nandagy.callback.HttpCallback;
 import com.shenhua.nandagy.model.CircleModel;
 import com.shenhua.nandagy.model.CircleModelImpl;
 import com.shenhua.nandagy.view.CircleView;

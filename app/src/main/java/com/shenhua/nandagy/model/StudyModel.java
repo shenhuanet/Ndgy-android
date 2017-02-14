@@ -1,6 +1,8 @@
 package com.shenhua.nandagy.model;
 
-import com.shenhua.nandagy.callback.HttpCallback;
+import android.content.Context;
+
+import com.shenhua.commonlibs.callback.HttpCallback;
 
 /**
  * Created by Shenhua on 2/9/2017.
@@ -8,7 +10,7 @@ import com.shenhua.nandagy.callback.HttpCallback;
  */
 public interface StudyModel<T> {
 
-    void toGetList(int type, HttpCallback<T> callback);
+    void toGetList(Context context, int type, HttpCallback<T> callback);
 
-    void toGetDetail(String url, HttpCallback<T> callback);
+    void toGetDetail(Context context, int type, int position, String url, HttpCallback<T> callback);
 }

@@ -1,6 +1,6 @@
 package com.shenhua.nandagy.model;
 
-import com.shenhua.nandagy.callback.HttpCallback;
+import com.shenhua.commonlibs.callback.HttpCallback;
 
 /**
  * 查询成绩数据接口

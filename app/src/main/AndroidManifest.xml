@@ -85,6 +85,7 @@
         <activity android:name=".ui.activity.home.GroupActivity" />
         <activity android:name=".ui.activity.home.PartyActivity" />
         <activity android:name=".ui.activity.home.LibraryActivity" />
+        <activity android:name=".ui.activity.more.StudyAreaDetailActivity" />
         <!--tencent-->
         <activity
             android:name="com.tencent.tauth.AuthActivity"

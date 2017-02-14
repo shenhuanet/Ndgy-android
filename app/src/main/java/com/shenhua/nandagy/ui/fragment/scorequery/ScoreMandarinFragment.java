@@ -7,13 +7,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.shenhua.commonlibs.callback.TextEnableInputWatcher;
 import com.shenhua.commonlibs.utils.DESUtils;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseScoreQueryFragment;
 import com.shenhua.nandagy.bean.bmobbean.ScoreQuery;
 import com.shenhua.nandagy.bean.scorebean.ScoreMandarinParams;
 import com.shenhua.nandagy.callback.OnScoreQueryListener;
-import com.shenhua.nandagy.callback.TextEnableInputWatcher;
 import com.shenhua.nandagy.presenter.QueryTask;
 
 import butterknife.BindView;

@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.malinskiy.superrecyclerview.SuperRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/recyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@android:color/white"
+    app:layout_empty="@layout/view_emptyview"
+    app:layout_moreProgress="@layout/view_more_progress"
+    app:mainLayoutId="@layout/layout_recyclerview_verticalscroll"
+    app:recyclerClipToPadding="false"
+    app:scrollbarStyle="insideInset">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.malinskiy.superrecyclerview.SuperRecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </com.malinskiy.superrecyclerview.SuperRecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-</LinearLayout>
+</com.malinskiy.superrecyclerview.SuperRecyclerView>

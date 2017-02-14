@@ -20,16 +20,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.shenhua.nandagy.R.id.recyclerView;
+
 /**
  * 校内圈子
  * Created by Shenhua on 9/7/2016.
  */
 public class CircleActivity extends BaseActivity implements CircleView, SwipeRefreshLayout.OnRefreshListener, OnMoreListener {
 
-    @BindView(R.id.list)
-    SuperRecyclerView recyclerView;
+    @BindView(recyclerView)
+    SuperRecyclerView mSwipeRefreshLayout;
     CirclePresenterImpl circlePresenter;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,9 +39,9 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
         ButterKnife.bind(this);
         setupActionBar("校内圈子", true);
 
-        recyclerView.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setRefreshListener(this);
+        mSwipeRefreshLayout.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
+        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(this));
+        mSwipeRefreshLayout.setRefreshListener(this);
 
         circlePresenter = new CirclePresenterImpl(this);
         circlePresenter.execute();
@@ -54,7 +55,7 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
             @Override
             public void run() {
                 toast("ok");
-                recyclerView.setRefreshing(false);
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         }, 2000);
     }
@@ -68,7 +69,7 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
     @Override
     public void updateList(List<CircleData> datas) {
         CircleAdapter adapter = new CircleAdapter(this, datas);
-        recyclerView.setAdapter(adapter);
+        mSwipeRefreshLayout.setAdapter(adapter);
         adapter.setOnItemClickListener((view, i) -> {
 
         });
@@ -81,11 +82,11 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
 
     @Override
     public void showProgress() {
-        recyclerView.showProgress();
+        mSwipeRefreshLayout.showProgress();
     }
 
     @Override
     public void hideProgress() {
-        recyclerView.hideProgress();
+        mSwipeRefreshLayout.hideProgress();
     }
 }
