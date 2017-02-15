@@ -10,6 +10,10 @@
 
     <style name="AppTheme" parent="AppTheme.Base" />
 
+    <style name="AppWelcome" parent="AppTheme.Base" >
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+
     <style name="ToolbarStyle">
         <item name="android:id">@id/toolbar</item>
         <item name="android:layout_width">match_parent</item>

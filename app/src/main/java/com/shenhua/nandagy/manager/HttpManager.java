@@ -48,7 +48,7 @@ public class HttpManager {
     public static final String ACCEPTENCODING = "gzip, deflate, sdch";
     public static final String ACCEPTLANGUAGE = "zh-CN,zh;q=0.8";
 
-    public static HttpManager instance = null;
+    private static HttpManager instance = null;
     private static ExecutorService executorService;
     private static volatile OkHttpClient mOkHttpClient;
     private OkHttpService okHttpService;
@@ -84,9 +84,9 @@ public class HttpManager {
             synchronized (HttpManager.class) {
                 Cache cache = new Cache(new File(App.getContext().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
                 mOkHttpClient = new OkHttpClient.Builder()
-                        .addNetworkInterceptor(new RewriteCacheControlIntercepter())
-                        .addInterceptor(new RewriteCacheControlIntercepter())
-                        .addInterceptor(new ResultIntercepter())
+                        .addNetworkInterceptor(new RewriteCacheControlInterceptor())
+                        .addInterceptor(new RewriteCacheControlInterceptor())
+                        .addInterceptor(new ResultInterceptor())
                         .connectTimeout(30, TimeUnit.SECONDS)
                         .cache(cache)
                         .build();
@@ -99,7 +99,7 @@ public class HttpManager {
         return NetworkUtils.isConnectedNet(App.getContext()) ? CACHE_CONTROL_NETWORK : CACHE_CONTROL_CACHE;
     }
 
-    private class RewriteCacheControlIntercepter implements Interceptor {
+    private class RewriteCacheControlInterceptor implements Interceptor {
 
         @Override
         public Response intercept(Chain chain) throws IOException {
@@ -115,7 +115,7 @@ public class HttpManager {
 
     }
 
-    private class ResultIntercepter implements Interceptor {
+    private class ResultInterceptor implements Interceptor {
 
         @Override
         public Response intercept(Chain chain) throws IOException {

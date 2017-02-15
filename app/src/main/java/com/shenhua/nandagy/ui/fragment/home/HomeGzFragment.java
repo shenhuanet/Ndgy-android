@@ -9,12 +9,8 @@ import com.shenhua.nandagy.presenter.HomePresenter;
  */
 public class HomeGzFragment extends BaseHomeContentFragment {
 
-    private static HomeGzFragment instance = null;
-
     public static HomeGzFragment newInstance() {
-        if (instance == null)
-            instance = new HomeGzFragment();
-        return instance;
+        return new HomeGzFragment();
     }
 
     @Override

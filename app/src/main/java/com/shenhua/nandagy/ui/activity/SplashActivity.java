@@ -1,8 +1,8 @@
 package com.shenhua.nandagy.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -12,7 +12,7 @@ import com.shenhua.nandagy.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends AppCompatActivity {
 
     @BindView(R.id.iv_shenhua_logo)
     ImageView mShenhuaLogo;
@@ -24,12 +24,7 @@ public class SplashActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        mShenhuaLogo.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                navTo();
-            }
-        }, 3000);
+        mShenhuaLogo.postDelayed(this::navTo, 3000);
     }
 
     private void navTo() {

@@ -52,15 +52,15 @@ public class BaseFragment extends Fragment {
         abs.setAdapter(adapter);
     }
 
-    public void sceneTransitionTo(Intent intent, int resquestCode, View v, int viewId, String sharedElementName) {
+    public void sceneTransitionTo(Intent intent, int requestCode, View v, int viewId, String sharedElementName) {
         if (Build.VERSION.SDK_INT > 21) {
             ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(),
                     v.findViewById(viewId), sharedElementName);
-            startActivityForResult(intent, resquestCode, options.toBundle());
+            startActivityForResult(intent, requestCode, options.toBundle());
         } else {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeScaleUpAnimation(v,
                     v.getWidth() / 2, v.getHeight() / 2, 0, 0);
-            startActivityForResult(intent, resquestCode, options.toBundle());
+            startActivityForResult(intent, requestCode, options.toBundle());
         }
     }
 

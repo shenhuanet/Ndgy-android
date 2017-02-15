@@ -14,7 +14,8 @@
 
         <android.support.v7.widget.Toolbar
             style="@style/ToolbarStyle"
-            android:paddingTop="0dp">
+            android:paddingTop="0dp"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
             <TextView style="@style/ToolbarTitle.Center" />
 

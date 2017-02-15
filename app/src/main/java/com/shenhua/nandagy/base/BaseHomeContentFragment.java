@@ -1,12 +1,8 @@
 package com.shenhua.nandagy.base;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.shenhua.commonlibs.callback.OnItemClickListener;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.HomeDataAdapter;
 import com.shenhua.nandagy.bean.HomeData;
@@ -37,7 +32,7 @@ import de.greenrobot.event.EventBus;
  * 首页两块fragment 基类
  * Created by shenhua on 8/30/2016.
  */
-public abstract class BaseHomeContentFragment extends Fragment implements HomeView {
+public abstract class BaseHomeContentFragment extends BaseFragment implements HomeView {
 
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
@@ -78,12 +73,7 @@ public abstract class BaseHomeContentFragment extends Fragment implements HomeVi
                     final HomeDataAdapter adapter = new HomeDataAdapter(getContext(), datas);
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     mRecyclerView.setAdapter(adapter);
-                    adapter.setOnItemClickListener(new OnItemClickListener() {
-                        @Override
-                        public void OnItemClick(View view, int position) {
-                            navToDetail(view, adapter.getDatas().get(position));
-                        }
-                    });
+                    adapter.setOnItemClickListener((view1, position) -> navToDetail(view1, adapter.getDatas().get(position)));
                 }
             }
         });
@@ -94,56 +84,39 @@ public abstract class BaseHomeContentFragment extends Fragment implements HomeVi
         intent.putExtra("photo", homeData.getImgUrl());
         intent.putExtra("title", homeData.getTitle());
         intent.putExtra("time", homeData.getTime());
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions options = ActivityOptions
-                    .makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.iv_home_list_img), "photos");
-            getActivity().startActivity(intent, options.toBundle());
-        } else {
-            ActivityOptionsCompat options = ActivityOptionsCompat
-                    .makeScaleUpAnimation(view, view.getWidth() / 2, view.getHeight() / 2, 0, 0);
-            ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
-        }
+        sceneTransitionTo(intent, 0, view, R.id.iv_home_list_img, "photos");
     }
 
     @Override
     public void showToast(final String msg) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-                mEmptyLayout.setVisibility(View.VISIBLE);
-            }
+        getActivity().runOnUiThread(() -> {
+            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+            mEmptyLayout.setVisibility(View.VISIBLE);
         });
     }
 
     @Override
     public void showProgress() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                EventBus.getDefault().post(new ProgressEventBus(true));
-                mProgressBar.setVisibility(View.VISIBLE);
-            }
+        getActivity().runOnUiThread(() -> {
+            EventBus.getDefault().post(new ProgressEventBus(true));
+            mProgressBar.setVisibility(View.VISIBLE);
         });
     }
 
     @Override
     public void hideProgress() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                EventBus.getDefault().post(new ProgressEventBus(false));
-                mProgressBar.setVisibility(View.GONE);
-            }
+        getActivity().runOnUiThread(() -> {
+            EventBus.getDefault().post(new ProgressEventBus(false));
+            mProgressBar.setVisibility(View.GONE);
         });
     }
 
     @OnClick(R.id.layout_empty_reload)
     void onClick(View v) {
-        onRead();
+        onReload();
     }
 
-    public void onRead() {
+    public void onReload() {
         System.out.println("shenhua sout:" + "重新加载");
         presenter.execute();
     }
