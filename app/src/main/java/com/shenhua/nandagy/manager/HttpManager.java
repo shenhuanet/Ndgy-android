@@ -1,35 +1,32 @@
 package com.shenhua.nandagy.manager;
 
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
+import android.content.Context;
 
 import com.shenhua.commonlibs.utils.NetworkUtils;
-import com.shenhua.nandagy.App;
-import com.shenhua.nandagy.service.OkHttpService;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.nio.charset.Charset;
-import java.nio.charset.UnsupportedCharsetException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.CacheControl;
+import okhttp3.Call;
 import okhttp3.Interceptor;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
-import okio.Buffer;
-import okio.BufferedSource;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  * Http管理类
@@ -37,125 +34,107 @@ import okio.BufferedSource;
  */
 public class HttpManager {
 
-    public static final long CACHE_STALE_SEC = 60 * 60 * 24 * 2;// 缓存有效期为2天
-    // 查询缓存的Cache-Control设置，为if-only-cache时只查询缓存而不会请求服务器，max-stale可以配合设置缓存失效时间
-    public static final String CACHE_CONTROL_CACHE = "only-if-cached,max-stale=" + CACHE_STALE_SEC;
-    public static final String CACHE_CONTROL_NETWORK = "max-age=0";
-
-    public static final String CONNECTION = "keep-alive";
-    public static final String ACCEPT = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-    public static final String USERAGENT = "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36 QQBrowser/9.3.6581.400";
-    public static final String ACCEPTENCODING = "gzip, deflate, sdch";
-    public static final String ACCEPTLANGUAGE = "zh-CN,zh;q=0.8";
-
     private static HttpManager instance = null;
+    public static final String USER_AGENT = "MQQBrowser/26 Mozilla/5.0 (Linux; U; Android 2.3.7; zh-cn; MB200 Build/GRJ22; CyanogenMod-7) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1";
+    public static final String CONNECTION = "keep-alive";
+    private Retrofit retrofit;
+    private static volatile OkHttpClient okHttpClient;
     private static ExecutorService executorService;
-    private static volatile OkHttpClient mOkHttpClient;
-    private OkHttpService okHttpService;
 
     public static HttpManager getInstance() {
         if (instance == null) {
-            instance = new HttpManager(0);
+            instance = new HttpManager();
         }
         if (executorService == null)
             executorService = Executors.newSingleThreadExecutor();
         return instance;
     }
 
-    public static HttpManager getInstance(int useOkHttpClient) {
-        if (instance == null) {
-            instance = new HttpManager(useOkHttpClient);
+    public Retrofit getRetrofit(Context context, String url) {
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(url)
+                    .client(getOkHttpClient(context))
+                    //增加返回值为String的支持
+                    .addConverterFactory(ScalarsConverterFactory.create())
+                    //增加返回值为Gson的支持(以实体类返回)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    //增加返回值为Oservable<T>的支持
+                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .build();
         }
-        return instance;
+        return retrofit;
     }
 
-    public HttpManager(int useOkHttpClient) {
-        if (useOkHttpClient == 1) {
-            initOkHttpClient();
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl("http://www.baidu.com").client(mOkHttpClient)
-//                    .build();
-//            okHttpService = retrofit.create(OkHttpService.class);
-        }
-    }
-
-    private void initOkHttpClient() {
-        if (mOkHttpClient == null) {
+    public OkHttpClient getOkHttpClient(Context context) {
+        if (okHttpClient == null) {
             synchronized (HttpManager.class) {
-                Cache cache = new Cache(new File(App.getContext().getCacheDir(), "HttpCache"), 1024 * 1024 * 100);
-                mOkHttpClient = new OkHttpClient.Builder()
-                        .addNetworkInterceptor(new RewriteCacheControlInterceptor())
-                        .addInterceptor(new RewriteCacheControlInterceptor())
-                        .addInterceptor(new ResultInterceptor())
-                        .connectTimeout(30, TimeUnit.SECONDS)
-                        .cache(cache)
-                        .build();
+                OkHttpClient.Builder builder = new OkHttpClient.Builder();
+                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                builder.addInterceptor(loggingInterceptor);
+                File cacheDir = new File(context.getExternalCacheDir(), "myCache");
+                int cacheSize = 10 * 1024 * 1024; //10MB
+                Cache cache = new Cache(cacheDir, cacheSize);
+                builder.cache(cache);
+                builder.addInterceptor(new RewriteCacheControlInterceptor(context));
+                okHttpClient = builder.build();
             }
         }
-    }
-
-    @NonNull
-    private String getCacheControl() {
-        return NetworkUtils.isConnectedNet(App.getContext()) ? CACHE_CONTROL_NETWORK : CACHE_CONTROL_CACHE;
+        return okHttpClient;
     }
 
     private class RewriteCacheControlInterceptor implements Interceptor {
 
+        Context context;
+
+        RewriteCacheControlInterceptor(Context context) {
+            this.context = context;
+        }
+
         @Override
         public Response intercept(Chain chain) throws IOException {
+            CacheControl.Builder cb = new CacheControl.Builder();
+            cb.maxAge(0, TimeUnit.SECONDS);
+            cb.maxStale(365, TimeUnit.DAYS);
+            CacheControl cacheControl = cb.build();
             Request request = chain.request();
-            if (!NetworkUtils.isConnectedNet(App.getContext()))
-                request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
-            Response response = chain.proceed(request);
-            if (NetworkUtils.isConnectedNet(App.getContext()))
-                return response.newBuilder().header("Cache-Control", request.cacheControl().toString()).removeHeader("Pragma").build();
-            else
-                return response.newBuilder().header("Cache-Control", "public,only-if-cached," + CACHE_STALE_SEC).removeHeader("Pragma").build();
+            if (!NetworkUtils.isConnectedNet(context)) {
+                request = request.newBuilder().cacheControl(cacheControl).build();
+            }
+            Response originalResponse = chain.proceed(request);
+            if (NetworkUtils.isConnectedNet(context)) {
+                int maxAge = 0; // read from cache
+                return originalResponse.newBuilder().removeHeader("Pragma")
+                        .header("Cache-Control", "public,max-age=" + maxAge)
+                        .build();
+            } else {
+                int maxStale = 60 * 60 * 24 * 7;// 7days
+                return originalResponse.newBuilder().removeHeader("Pragma")
+                        .header("Cache-Control", "public,only-if-xcached,max-stale=" + maxStale)
+                        .build();
+            }
         }
 
     }
 
-    private class ResultInterceptor implements Interceptor {
-
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Request request = chain.request();
-            Response response = chain.proceed(request);
-            ResponseBody body = response.body();
-            long length = body.contentLength();
-            BufferedSource source = body.source();
-            source.request(Long.MAX_VALUE);
-            Buffer buffer = source.buffer();
-            Charset charset = Charset.forName("UTF-8");
-            MediaType type = body.contentType();
-            if (type != null) {
+    public Observable createHtmlGetObservable(Context context, final String url) {
+        return Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                subscriber.onStart();
+                Request request = new Request.Builder().url(url).build();
+                Call call = getOkHttpClient(context).newCall(request);
                 try {
-                    charset = type.charset(charset);
-                } catch (UnsupportedCharsetException e) {
+                    Response response = call.execute();
+                    subscriber.onNext(response.body().string());
+                    subscriber.onCompleted();
+                } catch (IOException e) {
                     e.printStackTrace();
+                    subscriber.onError(e);
                 }
             }
-            if (length != 0) {
-                System.out.println("shenhua sout:--------------------------------------------开始打印返回数据----------------------------------------------------");
-                System.out.println("shenhua sout:" + buffer.clone().readString(charset));
-            }
-            return response;
-        }
-    }
-
-    public static class DataLoadType {
-
-        @DataLoadTypeChecker
-        public static final int DATA_TYPE_SUCCESS = 1;
-
-        @DataLoadTypeChecker
-        public static final int DATA_TYPE_ERROR = 2;
-
-        @IntDef({DATA_TYPE_SUCCESS, DATA_TYPE_ERROR})
-        @Retention(RetentionPolicy.SOURCE)
-        public @interface DataLoadTypeChecker {
-
-        }
+        });
     }
 
     public void sendRequest(Runnable runnable) {
@@ -167,12 +146,8 @@ public class HttpManager {
         return Jsoup.connect(host + param)
                 .header("Host", host.replace("http://", ""))
                 .header("Connection", CONNECTION)
-                .header("Accept", ACCEPT)
-                .header("Upgrade-Insecure-Requests", "1")
-                .header("Accept-Encoding", ACCEPTENCODING)
-                .header("Accept-Language", ACCEPTLANGUAGE)
-                .timeout(5000)
-                .header("User-Agent", USERAGENT)
+                .timeout(30000)
+                .header("User-Agent", USER_AGENT)
                 .method(method)
                 .followRedirects(false);
     }

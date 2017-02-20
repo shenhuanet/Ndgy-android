@@ -1,7 +1,6 @@
 package com.shenhua.nandagy.ui.fragment.home;
 
 import com.shenhua.nandagy.base.BaseHomeContentFragment;
-import com.shenhua.nandagy.presenter.HomePresenter;
 
 /**
  * 工作动态
@@ -16,8 +15,6 @@ public class HomeGzFragment extends BaseHomeContentFragment {
     @Override
     public void init() {
         System.out.println("shenhua sout:" + "111111");
-        presenter = new HomePresenter(this, "");
         presenter.execute();
     }
-
 }

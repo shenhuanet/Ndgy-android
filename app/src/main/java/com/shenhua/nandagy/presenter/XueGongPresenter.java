@@ -1,7 +1,6 @@
 package com.shenhua.nandagy.presenter;
 
 import com.shenhua.commonlibs.callback.HttpCallback;
-import com.shenhua.nandagy.manager.HttpManager;
 import com.shenhua.nandagy.model.XueGongModel;
 import com.shenhua.nandagy.model.XueGongModelImpl;
 import com.shenhua.nandagy.view.XueGongView;
@@ -41,7 +40,7 @@ public class XueGongPresenter implements HttpCallback<ArrayList[]> {
 
     @Override
     public void onSuccess(ArrayList[] data) {
-        xueGongView.updateList(data, HttpManager.DataLoadType.DATA_TYPE_SUCCESS);
+        xueGongView.updateList(data);
     }
 
     @Override

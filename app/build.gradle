@@ -24,13 +24,20 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
 }
 
 dependencies {
+    compile(name: 'commonlibs-release', ext: 'aar')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     //    compile files('libs/umeng-analytics-v5.6.4.jar')
@@ -40,13 +47,19 @@ dependencies {
     //    compile files('libs/jsoup-1.8.3.jar')
     //    compile files('libs/mta-sdk-1.6.2.jar')
     //    compile files('libs/open_sdk_r5043.jar')
-    //    compile files('libs/universal-image-loader-1.8.6-with-sources.jar')
     //    compile files('libs/eventbus.jar')
     //    compile 'com.squareup.okhttp3:okhttp:3.4.1'
-    //    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务
-    compile 'cn.bmob.android:bmob-sdk:3.5.1'
-    compile 'com.umeng.analytics:analytics:latest.integration'
+    compile('cn.bmob.android:bmob-sdk:3.5.1') {
+        exclude(group: 'cn.bmob.android', module: 'gson-2.6.2')
+        exclude(group: 'cn.bmob.android', module: 'okhttp-3.3.1')
+        exclude(group: 'cn.bmob.android', module: 'okio-1.7.0')
+        exclude(group: 'cn.bmob.android', module: 'rxjava-1.1.6')
+        exclude(group: 'cn.bmob.android', module: 'rxandroid-1.2.0')
+    }
+//    compile 'com.umeng.analytics:analytics:latest.integration'
     //bmob-push：Bmob的推送包
     //compile 'cn.bmob.android:bmob-push:0.8'
     //bmob-im：Bmob的即时通讯包，注意每个版本的im依赖特定版本的bmob-sdk
@@ -70,7 +83,10 @@ dependencies {
     compile 'com.alibaba:fastjson:1.2.24'
     compile 'com.shenhua.libs:bannerview:1.0'
     compile 'com.shenhua.libs:slidinglayout:1.1'
-    compile 'com.shenhua.libs:commonlibs:1.0.0'
+//    compile 'com.shenhua.libs:commonlibs:1.0.2'
     compile 'com.malinskiy:superrecyclerview:1.1.4'
     compile 'com.android.support:cardview-v7:25.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
 }

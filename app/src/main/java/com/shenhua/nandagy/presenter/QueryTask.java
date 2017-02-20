@@ -128,7 +128,7 @@ public class QueryTask<T> extends AsyncTask<Integer, Integer, ScoreQueryResult> 
                     .data("zkzh", ((ScoreCETParams) data).getZkzh())
                     .data("xm", ((ScoreCETParams) data).getName())
                     .cookie("auth", "token")
-                    .userAgent(HttpManager.USERAGENT)
+                    .userAgent(HttpManager.USER_AGENT)
                     .timeout(5000)
                     .header("Referer", "http://www.chsi.com.cn/cet/")
                     .post();

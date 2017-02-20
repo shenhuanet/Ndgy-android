@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.BombUtil;
-import com.umeng.analytics.MobclickAgent;
 
 import cn.bmob.v3.Bmob;
 
@@ -58,13 +57,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
+//        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
+//        MobclickAgent.onPause(this);
     }
 
     protected ActionBar setupActionBar(int titleResId) {
