@@ -4,13 +4,13 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.shenhua.commonlibs.mvp.HttpManager;
 import com.shenhua.commonlibs.utils.CheckUtils;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETBean;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETParams;
 import com.shenhua.nandagy.bean.scorebean.ScoreMandarinParams;
 import com.shenhua.nandagy.bean.scorebean.ScoreQueryResult;
 import com.shenhua.nandagy.callback.OnScoreQueryListener;
-import com.shenhua.nandagy.manager.HttpManager;
 import com.shenhua.nandagy.service.HttpService;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
 
@@ -128,7 +128,7 @@ public class QueryTask<T> extends AsyncTask<Integer, Integer, ScoreQueryResult> 
                     .data("zkzh", ((ScoreCETParams) data).getZkzh())
                     .data("xm", ((ScoreCETParams) data).getName())
                     .cookie("auth", "token")
-                    .userAgent(HttpManager.USERAGENT)
+                    .userAgent(HttpManager.USER_AGENT)
                     .timeout(5000)
                     .header("Referer", "http://www.chsi.com.cn/cet/")
                     .post();

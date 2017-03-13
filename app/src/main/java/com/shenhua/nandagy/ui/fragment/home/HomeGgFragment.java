@@ -23,4 +23,9 @@ public class HomeGgFragment extends BaseHomeContentFragment {
         presenter = new HomePresenter(getContext(),this, "77");
         presenter.execute();
     }
+
+    @Override
+    public HomePresenter createPresenter() {
+        return null;
+    }
 }

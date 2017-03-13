@@ -1,7 +1,6 @@
 package com.shenhua.nandagy.view;
 
 import com.shenhua.nandagy.bean.HomeData;
-import com.shenhua.nandagy.manager.HttpManager;
 
 import java.util.List;
 
@@ -11,8 +10,8 @@ import java.util.List;
  */
 public interface HomeView extends com.shenhua.commonlibs.mvp.BaseView {
 
-    void showToast(String str);
+    void showToast(String msg);
 
-    void updateList(List<HomeData> datas, @HttpManager.DataLoadType.DataLoadTypeChecker int type);
+    void updateList(List<HomeData> datas);
 
 }

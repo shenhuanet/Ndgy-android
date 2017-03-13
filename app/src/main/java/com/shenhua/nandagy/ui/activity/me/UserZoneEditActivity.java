@@ -6,7 +6,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.shenhua.commonlibs.utils.ConvertUtils;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseActivity;
@@ -15,6 +16,7 @@ import com.shenhua.nandagy.widget.LoadingAlertDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -130,14 +132,17 @@ public class UserZoneEditActivity extends BaseActivity {
     }
 
     private void selectLocate() {
-        ArrayList<AddressPicker.Province> data = new ArrayList<>();
+        ArrayList<AddressPicker.Province> data;
         String json = null;
         try {
             json = ConvertUtils.toString(getAssets().open("city.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        data.addAll(JSON.parseArray(json, AddressPicker.Province.class));
+        Gson gson = new Gson();
+        data = gson.fromJson(json, new TypeToken<List<AddressPicker.Province>>() {
+        }.getType());
+        data.addAll(data);
         AddressPicker picker = new AddressPicker(this, data);
 //        picker.setHideProvince(true);//加上此句将只显示地级及县级
         picker.setHideCounty(true);//加上此句将只显示省级及地级

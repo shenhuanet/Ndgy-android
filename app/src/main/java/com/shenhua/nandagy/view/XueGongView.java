@@ -1,7 +1,5 @@
 package com.shenhua.nandagy.view;
 
-import com.shenhua.nandagy.manager.HttpManager;
-
 import java.util.ArrayList;
 
 /**
@@ -10,5 +8,5 @@ import java.util.ArrayList;
  */
 public interface XueGongView extends BaseView {
 
-    void updateList(ArrayList[] lists, @HttpManager.DataLoadType.DataLoadTypeChecker int type);
+    void updateList(ArrayList[] lists);
 }

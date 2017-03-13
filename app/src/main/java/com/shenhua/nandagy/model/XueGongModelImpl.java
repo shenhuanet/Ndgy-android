@@ -1,9 +1,9 @@
 package com.shenhua.nandagy.model;
 
 import com.shenhua.commonlibs.callback.HttpCallback;
+import com.shenhua.commonlibs.mvp.HttpManager;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.XueGongData;
-import com.shenhua.nandagy.manager.HttpManager;
 
 import java.util.ArrayList;
 

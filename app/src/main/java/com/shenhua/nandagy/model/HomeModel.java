@@ -1,8 +1,7 @@
 package com.shenhua.nandagy.model;
 
-import android.content.Context;
-
 import com.shenhua.commonlibs.callback.HttpCallback;
+import com.shenhua.commonlibs.mvp.BasePresenter;
 
 /**
  * 首页数据接口
@@ -10,5 +9,5 @@ import com.shenhua.commonlibs.callback.HttpCallback;
  */
 public interface HomeModel<T> {
 
-    void toGetHomeData(Context context, String url, HttpCallback<T> callback);
+    void toGetHomeData(BasePresenter basePresenter,String url, HttpCallback<T> callback);
 }

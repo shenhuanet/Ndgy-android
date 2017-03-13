@@ -12,11 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.shenhua.commonlibs.mvp.BaseMvpFragment;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.HomeDataAdapter;
 import com.shenhua.nandagy.bean.HomeData;
 import com.shenhua.nandagy.callback.ProgressEventBus;
-import com.shenhua.nandagy.manager.HttpManager;
 import com.shenhua.nandagy.presenter.HomePresenter;
 import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
 import com.shenhua.nandagy.view.HomeView;
@@ -32,7 +32,7 @@ import de.greenrobot.event.EventBus;
  * 首页两块fragment 基类
  * Created by shenhua on 8/30/2016.
  */
-public abstract class BaseHomeContentFragment extends BaseFragment implements HomeView {
+public abstract class BaseHomeContentFragment extends BaseMvpFragment<HomePresenter, HomeView> implements HomeView {
 
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
@@ -62,19 +62,22 @@ public abstract class BaseHomeContentFragment extends BaseFragment implements Ho
     protected abstract void init();
 
     @Override
-    public void updateList(final List<HomeData> datas, @HttpManager.DataLoadType.DataLoadTypeChecker int type) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (datas == null) {
-                    mEmptyLayout.setVisibility(View.VISIBLE);
-                } else {
-                    mEmptyLayout.setVisibility(View.GONE);
-                    final HomeDataAdapter adapter = new HomeDataAdapter(getContext(), datas);
-                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    mRecyclerView.setAdapter(adapter);
-                    adapter.setOnItemClickListener((view1, position) -> navToDetail(view1, adapter.getDatas().get(position)));
-                }
+    public HomePresenter createPresenter() {
+        presenter = new HomePresenter(this, "http://www.daxues.cn/xuexi/yingyu/");
+        return presenter;
+    }
+
+    @Override
+    public void updateList(final List<HomeData> datas) {
+        getActivity().runOnUiThread(() -> {
+            if (datas == null) {
+                mEmptyLayout.setVisibility(View.VISIBLE);
+            } else {
+                mEmptyLayout.setVisibility(View.GONE);
+                final HomeDataAdapter adapter = new HomeDataAdapter(getContext(), datas);
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mRecyclerView.setAdapter(adapter);
+                adapter.setOnItemClickListener((view1, position) -> navToDetail(view1, adapter.getDatas().get(position)));
             }
         });
     }
@@ -84,7 +87,7 @@ public abstract class BaseHomeContentFragment extends BaseFragment implements Ho
         intent.putExtra("photo", homeData.getImgUrl());
         intent.putExtra("title", homeData.getTitle());
         intent.putExtra("time", homeData.getTime());
-        sceneTransitionTo(intent, 0, view, R.id.iv_home_list_img, "photos");
+//        sceneTransitionTo(intent, 0, view, R.id.iv_home_list_img, "photos");
     }
 
     @Override

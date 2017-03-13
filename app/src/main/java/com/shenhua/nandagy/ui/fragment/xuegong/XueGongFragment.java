@@ -26,7 +26,6 @@ import com.shenhua.nandagy.adapter.XueGongDataAdapter;
 import com.shenhua.nandagy.base.BaseFragment;
 import com.shenhua.nandagy.bean.XueGongData;
 import com.shenhua.nandagy.callback.ProgressEventBus;
-import com.shenhua.nandagy.manager.HttpManager;
 import com.shenhua.nandagy.presenter.XueGongPresenter;
 import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
 import com.shenhua.nandagy.ui.activity.WebActivity;
@@ -130,7 +129,7 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
     }
 
     @Override
-    public void updateList(final ArrayList[] lists, @HttpManager.DataLoadType.DataLoadTypeChecker int type) {
+    public void updateList(final ArrayList[] lists) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
