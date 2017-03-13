@@ -44,13 +44,7 @@ dependencies {
     // shenhua
     compile 'com.shenhua.libs:bannerview:1.0'
     compile 'com.shenhua.libs:slidinglayout:1.1'
-    compile('com.shenhua.libs:commonlibs:1.0.3') {
-        exclude(group: 'com.squareup.retrofit2', module: 'retrofit')
-        exclude(group: 'com.squareup.retrofit2', module: 'converter-gson')
-        exclude(group: 'com.squareup.okhttp3', module: 'logging-interceptor')
-        exclude(group: 'io.reactivex', module: 'rxjava')
-        exclude(group: 'io.reactivex', module: 'rxandroid')
-    }
+    compile 'com.shenhua.libs:commonlibs:1.0.3'
 
     // segmented
     compile 'info.hoang8f:android-segmented:1.0.6'
@@ -69,8 +63,7 @@ dependencies {
     compile 'com.malinskiy:superrecyclerview:1.1.4'
 
     // BMob
-    compile 'cn.bmob.android:bmob-sdk:3.5.3'
-
+    // compile 'cn.bmob.android:bmob-sdk:3.5.3'
     //    compile files('libs/umeng-analytics-v5.6.4.jar')
     //    compile files('libs/umeng-update-v2.6.0.1.jar')
     //    compile files('libs/httpclient-4.2.5.jar')

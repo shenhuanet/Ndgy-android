@@ -20,7 +20,7 @@ public class HomeGgFragment extends BaseHomeContentFragment {
     @Override
     public void init() {
         System.out.println("shenhua sout:" + "222222");
-        presenter = new HomePresenter(getContext(),this, "77");
+        presenter = new HomePresenter(this, "77");
         presenter.execute();
     }
 
