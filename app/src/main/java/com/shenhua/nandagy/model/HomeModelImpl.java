@@ -18,7 +18,8 @@ public class HomeModelImpl implements HomeModel<List<HomeData>> {
     public void toGetHomeData(BasePresenter basePresenter, final String url, final HttpCallback<List<HomeData>> callback) {
         callback.onPreRequest();
         System.out.println("shenhua sout:" + url);
-        basePresenter.addSubscription(com.shenhua.commonlibs.mvp.HttpManager.getInstance().createHtmlGetObservable(App.getContext(), url), new ApiCallback<String>() {
+        basePresenter.addSubscription(com.shenhua.commonlibs.mvp.HttpManager.getInstance()
+                .createHtmlGetObservable(App.getContext(), url), new ApiCallback<String>() {
             @Override
             public void onPreExecute() {
                 System.out.println("shenhua sout:" + "开始");

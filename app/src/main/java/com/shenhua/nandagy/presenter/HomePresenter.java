@@ -26,7 +26,7 @@ public class HomePresenter extends BasePresenter<HomeView> implements HttpCallba
     }
 
     public void execute() {
-        homeModel.toGetHomeData(this,url, this);
+        homeModel.toGetHomeData(this, url, this);
 
 //        addSubscription();
     }

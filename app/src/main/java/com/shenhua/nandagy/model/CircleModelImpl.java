@@ -1,8 +1,8 @@
 package com.shenhua.nandagy.model;
 
 import com.shenhua.commonlibs.callback.HttpCallback;
+import com.shenhua.commonlibs.mvp.HttpManager;
 import com.shenhua.nandagy.bean.CircleData;
-import com.shenhua.nandagy.manager.HttpManager;
 
 import java.util.List;
 

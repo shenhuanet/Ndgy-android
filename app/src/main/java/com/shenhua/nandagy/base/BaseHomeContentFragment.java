@@ -69,18 +69,15 @@ public abstract class BaseHomeContentFragment extends BaseMvpFragment<HomePresen
 
     @Override
     public void updateList(final List<HomeData> datas) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (datas == null) {
-                    mEmptyLayout.setVisibility(View.VISIBLE);
-                } else {
-                    mEmptyLayout.setVisibility(View.GONE);
-                    final HomeDataAdapter adapter = new HomeDataAdapter(getContext(), datas);
-                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    mRecyclerView.setAdapter(adapter);
-                    adapter.setOnItemClickListener((view1, position) -> navToDetail(view1, adapter.getDatas().get(position)));
-                }
+        getActivity().runOnUiThread(() -> {
+            if (datas == null) {
+                mEmptyLayout.setVisibility(View.VISIBLE);
+            } else {
+                mEmptyLayout.setVisibility(View.GONE);
+                final HomeDataAdapter adapter = new HomeDataAdapter(getContext(), datas);
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mRecyclerView.setAdapter(adapter);
+                adapter.setOnItemClickListener((view1, position) -> navToDetail(view1, adapter.getDatas().get(position)));
             }
         });
     }
