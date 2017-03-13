@@ -1,5 +1,7 @@
 package com.shenhua.nandagy.model;
 
+import android.content.Context;
+
 import com.shenhua.commonlibs.callback.HttpCallback;
 
 /**
@@ -8,5 +10,5 @@ import com.shenhua.commonlibs.callback.HttpCallback;
  */
 public interface HomeModel<T> {
 
-    void toGetHomeData(String url, HttpCallback<T> callback);
+    void toGetHomeData(Context context, String url, HttpCallback<T> callback);
 }

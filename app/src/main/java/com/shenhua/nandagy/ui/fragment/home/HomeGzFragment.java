@@ -16,7 +16,7 @@ public class HomeGzFragment extends BaseHomeContentFragment {
     @Override
     public void init() {
         System.out.println("shenhua sout:" + "111111");
-        presenter = new HomePresenter(this, "");
+        presenter = new HomePresenter(getContext(),this, "http://www.ndgy.cn");
         presenter.execute();
     }
 
