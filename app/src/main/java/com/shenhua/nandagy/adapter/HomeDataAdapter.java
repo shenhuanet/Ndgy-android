@@ -1,12 +1,8 @@
 package com.shenhua.nandagy.adapter;
 
 import android.content.Context;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.shenhua.commonlibs.base.BaseRecyclerAdapter;
-import com.shenhua.commonlibs.base.BaseRecyclerViewHolder;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.HomeData;
 
@@ -23,19 +19,15 @@ public class HomeDataAdapter extends BaseRecyclerAdapter<HomeData> {
     }
 
     @Override
-    public int getItemViewId() {
+    public int getItemViewId(int viewType) {
         return R.layout.item_data_home;
     }
 
     @Override
-    public void bindData(BaseRecyclerViewHolder holder, int position, HomeData item) {
-        final TextView title = (TextView) holder.getView(R.id.tv_home_list_title);
-        final TextView detail = (TextView) holder.getView(R.id.tv_home_list_detail);
-        final TextView time = (TextView) holder.getView(R.id.tv_home_list_time);
-        final ImageView image = (ImageView) holder.getView(R.id.iv_home_list_img);
-        title.setText(item.getTitle());
-        detail.setText(item.getDetail());
-        time.setText(item.getTime());
-        Glide.with(mContext).load(item.getImgUrl()).centerCrop().crossFade().into(image);
+    public void bindData(BaseRecyclerAdapter.BaseRecyclerViewHolder holder, int position, HomeData item) {
+        holder.setText(R.id.tv_home_list_title,item.getTitle());
+        holder.setText(R.id.tv_home_list_detail,item.getDetail());
+        holder.setText(R.id.tv_home_list_time,item.getTime());
+        holder.setImage(R.id.iv_home_list_img,item.getImgUrl());
     }
 }

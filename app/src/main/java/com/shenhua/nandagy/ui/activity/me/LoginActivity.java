@@ -1,8 +1,6 @@
 package com.shenhua.nandagy.ui.activity.me;
 
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -12,9 +10,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.widget.ClearEditText;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.callback.NewMessageEventBus;
 import com.shenhua.nandagy.ui.fragment.more.UserFragment;
@@ -43,6 +42,12 @@ import de.greenrobot.event.EventBus;
  * 注册登录界面
  * Created by shenhua on 9/9/2016.
  */
+@ActivityFragmentInject(
+        contentViewId = R.layout.activity_login,
+        toolbarId = R.id.common_toolbar,
+        toolbarHomeAsUp = true,
+        toolbarTitle = R.string.toolbar_title_login
+)
 public class LoginActivity extends BaseActivity {
 
     public static final int LOGIN_SUCCESS = 100;
@@ -77,30 +82,21 @@ public class LoginActivity extends BaseActivity {
     private String openID;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initView(BaseActivity baseActivity) {
         mTencent = Tencent.createInstance(ShareUtils.QQ_APPID, this);
-        setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        setupActionBar("登录注册", true);
-        initView();
-    }
-
-    private void initView() {
-        mSexRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                int radioButtonId = group.getCheckedRadioButtonId();
-                RadioButton rb = (RadioButton) findViewById(radioButtonId);
-                assert rb != null;
-                switch (rb.getText().toString()) {
-                    case "男":
-                        gender = false;
-                        break;
-                    case "女":
-                        gender = true;
-                        break;
-                }
+        setToolbarTitle(R.id.toolbar_title);
+        mSexRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            int radioButtonId = group.getCheckedRadioButtonId();
+            RadioButton rb = (RadioButton) findViewById(radioButtonId);
+            assert rb != null;
+            switch (rb.getText().toString()) {
+                case "男":
+                    gender = false;
+                    break;
+                case "女":
+                    gender = true;
+                    break;
             }
         });
     }
@@ -116,10 +112,10 @@ public class LoginActivity extends BaseActivity {
                 onSwitchView();
                 break;
             case R.id.sign_layout_root:
-                hideKbTwo();
+                hideKeyboard();
                 break;
             case R.id.sign_btn_signup:
-                hideKbTwo();
+                hideKeyboard();
                 String username = mUsernameEt.getText().toString();
                 String password = mPasswordEt.getText().toString();
                 if (!isReady(username, password))
@@ -127,7 +123,7 @@ public class LoginActivity extends BaseActivity {
                 doSignup(username, password);
                 break;
             case R.id.sign_btn_signin:
-                hideKbTwo();
+                hideKeyboard();
                 String username1 = mUsernameSigninEt.getText().toString();
                 String password1 = mPasswordSigninEt.getText().toString();
                 if (!isReady(username1, password1))
@@ -194,31 +190,28 @@ public class LoginActivity extends BaseActivity {
 
     private void doSignin(final String username, final String password) {
         LoadingAlertDialog.showLoadDialog(LoginActivity.this, "登录中，请稍后", false);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                MyUser user = new MyUser();
-                user.setUsername(username);
-                user.setPassword(password);
-                user.login(new SaveListener<MyUser>() {
+        new Handler().postDelayed(() -> {
+            MyUser user = new MyUser();
+            user.setUsername(username);
+            user.setPassword(password);
+            user.login(new SaveListener<MyUser>() {
 
-                    @Override
-                    public void done(MyUser bmobUser, BmobException e) {
-                        if (e == null) {
-                            LoadingAlertDialog.dissmissLoadDialog();
-                            toast("登录成功！");
-                            onLoginSuccess();
-                            //通过BmobUser user = BmobUser.getCurrentUser()获取登录成功后的本地用户信息
-                            //如果是自定义用户对象MyUser，可通过MyUser user = BmobUser.getCurrentUser(MyUser.class)获取自定义用户信息
-                        } else {
-                            LoadingAlertDialog.dissmissLoadDialog();
-                            if (e.getErrorCode() == 101)
-                                toast("登录失败，用户名或密码错误");
-                            else toast("登录失败，错误代码" + e.getErrorCode());
-                        }
+                @Override
+                public void done(MyUser bmobUser, BmobException e) {
+                    if (e == null) {
+                        LoadingAlertDialog.dissmissLoadDialog();
+                        toast("登录成功！");
+                        onLoginSuccess();
+                        //通过BmobUser user = BmobUser.getCurrentUser()获取登录成功后的本地用户信息
+                        //如果是自定义用户对象MyUser，可通过MyUser user = BmobUser.getCurrentUser(MyUser.class)获取自定义用户信息
+                    } else {
+                        LoadingAlertDialog.dissmissLoadDialog();
+                        if (e.getErrorCode() == 101)
+                            toast("登录失败，用户名或密码错误");
+                        else toast("登录失败，错误代码" + e.getErrorCode());
                     }
-                });
-            }
+                }
+            });
         }, 2000);
     }
 
@@ -365,32 +358,29 @@ public class LoginActivity extends BaseActivity {
     private void doSignup(final String username, final String password,
                           final String imgUrl, final String nick) {
         LoadingAlertDialog.showLoadDialog(LoginActivity.this, "授权验证中...", false);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                MyUser user = new MyUser();
-                user.setUsername(username);
-                user.setPassword(password);
-                user.setSex(gender);
-                user.setUrl_photo(imgUrl);
-                user.setNick(nick);
-                user.signUp(new SaveListener<MyUser>() {
-                    @Override
-                    public void done(MyUser s, BmobException e) {
-                        if (e == null) {
-                            LoadingAlertDialog.dissmissLoadDialog();
-                            toast("授权成功！");
+        new Handler().postDelayed(() -> {
+            MyUser user = new MyUser();
+            user.setUsername(username);
+            user.setPassword(password);
+            user.setSex(gender);
+            user.setUrl_photo(imgUrl);
+            user.setNick(nick);
+            user.signUp(new SaveListener<MyUser>() {
+                @Override
+                public void done(MyUser s, BmobException e) {
+                    if (e == null) {
+                        LoadingAlertDialog.dissmissLoadDialog();
+                        toast("授权成功！");
+                        doSignin(username, password);
+                    } else {
+                        LoadingAlertDialog.dissmissLoadDialog();
+                        if (e.getErrorCode() == 202) {
+                            System.out.println("shenhua sout:" + username);
                             doSignin(username, password);
-                        } else {
-                            LoadingAlertDialog.dissmissLoadDialog();
-                            if (e.getErrorCode() == 202) {
-                                System.out.println("shenhua sout:" + username);
-                                doSignin(username, password);
-                            }
                         }
                     }
-                });
-            }
+                }
+            });
         }, 2000);
     }
 

@@ -1,16 +1,15 @@
 package com.shenhua.nandagy.ui.activity.me;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.utils.ConvertUtils;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
 
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
@@ -31,6 +29,12 @@ import cn.qqtheme.framework.picker.OptionPicker;
  * 用户主页编辑界面
  * Created by Shenhua on 9/4/2016.
  */
+@ActivityFragmentInject(
+        contentViewId = R.layout.activity_user_zone_edit,
+        toolbarId = R.id.common_toolbar,
+        toolbarHomeAsUp = true,
+        toolbarTitle = R.string.toolbar_title_user_zone_edit
+)
 public class UserZoneEditActivity extends BaseActivity {
 
     @BindView(R.id.et_edit_zone_name)
@@ -52,16 +56,7 @@ public class UserZoneEditActivity extends BaseActivity {
     private UserZone userZone;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_zone_edit);
-        ButterKnife.bind(this);
-        setupActionBar("编辑空间", true);
-
-        initView();
-    }
-
-    private void initView() {
+    protected void initView(BaseActivity baseActivity) {
         userZone = (UserZone) getIntent().getSerializableExtra("userZoneInfo");
         mNameEt.setText(userZone.getName());
         mSignEt.setText(userZone.getSign());
@@ -81,31 +76,31 @@ public class UserZoneEditActivity extends BaseActivity {
         String[] items;
         switch (v.getId()) {
             case R.id.layout_edit_zone_name:
-                hideKbTwo();
+                hideKeyboard();
                 break;
             case R.id.layout_edit_zone_sign:
-                hideKbTwo();
+                hideKeyboard();
                 break;
             case R.id.layout_edit_zone_brith:
-                hideKbTwo();
+                hideKeyboard();
                 selectBirth();
                 break;
             case R.id.layout_edit_zone_locate:
-                hideKbTwo();
+                hideKeyboard();
                 selectLocate();
                 break;
             case R.id.layout_edit_zone_love:
-                hideKbTwo();
+                hideKeyboard();
                 items = getResources().getStringArray(R.array.dialog_choice_love_items);
                 showSelectStateDialog(items, mLoveTv);
                 break;
             case R.id.layout_edit_zone_depart:
-                hideKbTwo();
+                hideKeyboard();
                 items = getResources().getStringArray(R.array.dialog_choice_depart_items);
                 showSelectStateDialog(items, mDepartTv);
                 break;
             case R.id.layout_edit_zone_qual:
-                hideKbTwo();
+                hideKeyboard();
                 items = getResources().getStringArray(R.array.dialog_choice_qual_items);
                 showSelectStateDialog(items, mQualTv);
                 break;
@@ -113,7 +108,7 @@ public class UserZoneEditActivity extends BaseActivity {
                 doUpdateInfo();
                 break;
             case R.id.layout_edit_zone_rootview:
-                hideKbTwo();
+                hideKeyboard();
                 break;
         }
     }

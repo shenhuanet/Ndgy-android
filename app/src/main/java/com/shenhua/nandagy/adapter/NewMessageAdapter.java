@@ -1,10 +1,8 @@
 package com.shenhua.nandagy.adapter;
 
 import android.content.Context;
-import android.widget.TextView;
 
 import com.shenhua.commonlibs.base.BaseRecyclerAdapter;
-import com.shenhua.commonlibs.base.BaseRecyclerViewHolder;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.NewMessageData;
 
@@ -21,19 +19,15 @@ public class NewMessageAdapter extends BaseRecyclerAdapter<NewMessageData> {
     }
 
     @Override
-    public int getItemViewId() {
+    public int getItemViewId(int viewType) {
         return R.layout.item_new_message;
     }
 
     @Override
-    public void bindData(BaseRecyclerViewHolder holder, int position, NewMessageData item) {
-        TextView title = (TextView) holder.getView(R.id.msg_title);
-        TextView content = (TextView) holder.getView(R.id.msg_content);
-        TextView from = (TextView) holder.getView(R.id.msg_from);
-        TextView time = (TextView) holder.getView(R.id.msg_time);
-        title.setText(item.getTitle());
-        content.setText(item.getContent());
-        from.setText(item.getFrom());
-        time.setText(item.getTime());
+    public void bindData(BaseRecyclerAdapter.BaseRecyclerViewHolder holder, int position, NewMessageData item) {
+        holder.setText(R.id.msg_title,item.getTitle());
+        holder.setText(R.id.msg_content,item.getContent());
+        holder.setText(R.id.msg_from,item.getFrom());
+        holder.setText(R.id.msg_time,item.getTime());
     }
 }

@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
@@ -17,8 +15,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.service.HttpService;
 
 import butterknife.BindView;
@@ -28,6 +27,11 @@ import butterknife.ButterKnife;
  * 网页浏览的web
  * Created by Shenhua on 9/19/2016.
  */
+@ActivityFragmentInject(
+        contentViewId = R.layout.activity_web,
+        toolbarId = R.id.common_toolbar,
+        toolbarHomeAsUp = true
+)
 public class WebActivity extends BaseActivity {
 
     @BindView(R.id.content_web)
@@ -40,12 +44,10 @@ public class WebActivity extends BaseActivity {
     private String imgUrl;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
+    protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
         Intent intent = getIntent();
-        setupActionBar(intent.getStringExtra("title"), true);
+        setToolbarTitle(intent.getStringExtra("title"), R.id.toolbar_title);
         url = intent.getStringExtra("url");
     }
 

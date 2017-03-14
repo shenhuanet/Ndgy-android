@@ -1,15 +1,14 @@
 package com.shenhua.nandagy.ui.activity.me;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +18,12 @@ import butterknife.OnClick;
  * 发布动态界面
  * Created by Shenhua on 9/4/2016.
  */
+@ActivityFragmentInject(
+        contentViewId = R.layout.activity_publish_dynamic,
+        toolbarId = R.id.common_toolbar,
+        toolbarHomeAsUp = true,
+        toolbarTitle = R.string.toolbar_title_publish_dynamic
+)
 public class PublishDynamicActivity extends BaseActivity implements TextWatcher {
 
     @BindView(R.id.et_publish)
@@ -27,11 +32,9 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
     Button mPublishBtn;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_publish_dynamic);
+    protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setupActionBar("发布动态", true);
+        setToolbarTitle(R.id.toolbar_title);
         mPublishBtn.setEnabled(false);
         mPublishBtn.setClickable(false);
         mPublishEt.addTextChangedListener(this);
@@ -42,10 +45,10 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
     void clicks(View v) {
         switch (v.getId()) {
             case R.id.rootview:
-                hideKbTwo();
+                hideKeyboard();
                 break;
             case R.id.btn_publish:
-                hideKbTwo();
+                hideKeyboard();
                 doPublish();
                 break;
         }

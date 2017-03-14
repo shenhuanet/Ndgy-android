@@ -1,13 +1,12 @@
 package com.shenhua.nandagy.ui.activity.more;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.ui.fragment.more.PagerFriendsFragment;
 import com.shenhua.nandagy.ui.fragment.more.PagerMessageFragment;
 
@@ -18,16 +17,18 @@ import butterknife.OnClick;
  * 纸飞机
  * Created by Shenhua on 9/7/2016.
  */
+@ActivityFragmentInject(
+        contentViewId = R.layout.activity_more_pager,
+        toolbarId = R.id.common_toolbar,
+        toolbarHomeAsUp = true
+)
 public class PaperPlaneActivity extends BaseActivity {
 
     private int current;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_more_pager);
+    protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setupActionBar(null, true);
         PagerMessageFragment fragment = PagerMessageFragment.getInstance();
         setFragment(fragment);
         current = 1;

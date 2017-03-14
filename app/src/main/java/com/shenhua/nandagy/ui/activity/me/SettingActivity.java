@@ -1,15 +1,14 @@
 package com.shenhua.nandagy.ui.activity.me;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.callback.NewMessageEventBus;
 import com.shenhua.nandagy.manager.DataCleanManager;
 import com.shenhua.nandagy.ui.fragment.more.UserFragment;
@@ -24,6 +23,13 @@ import de.greenrobot.event.EventBus;
  * 通用设置界面
  * Created by Shenhua on 9/4/2016.
  */
+@ActivityFragmentInject(
+        contentViewId = R.layout.activity_setting,
+        toolbarId = R.id.common_toolbar,
+        toolbarHomeAsUp = true,
+        toolbarTitle = R.string.toolbar_title_setting
+)
+// TODO: 3/14/2017  useBusEvent()
 public class SettingActivity extends BaseActivity {
 
     @BindView(R.id.tv_setting_cache)
@@ -33,13 +39,11 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.switch_setting_nanpush)
     Switch mNanPushSc;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
-        ButterKnife.bind(this);
-        setupActionBar("通用设置", true);
 
+    @Override
+    protected void initView(BaseActivity baseActivity) {
+        ButterKnife.bind(this);
+        setToolbarTitle(R.id.toolbar_title);
         EventBus.getDefault().post(new NewMessageEventBus(true, UserFragment.EVENT_TYPE_SETTING));
     }
 

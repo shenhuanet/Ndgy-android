@@ -74,10 +74,10 @@ public class StudyListFragment extends BaseFragment implements SwipeRefreshLayou
             sba.put(type, true);
         }
 
-        mAdapter.setOnItemClickListener((view1, position) -> {
+        mAdapter.setOnItemClickListener((view1, position, data) -> {
             sceneTransitionTo(new Intent(getActivity(), StudyAreaDetailActivity.class)
-                    .putExtra("title", mDatas.get(position).getTitle())
-                    .putExtra("href", mDatas.get(position).getHref())
+                    .putExtra("title", data.getTitle())
+                    .putExtra("href", data.getHref())
                     .putExtra("type", type)
                     .putExtra("position", position), 0, view1, R.id.tv_title, "title");
         });

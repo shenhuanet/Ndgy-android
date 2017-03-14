@@ -2,7 +2,6 @@
     <string name="app_name">ndgy</string>
     <string name="action_settings">Settings</string>
     <string name="imgdec">imgdec</string>
-    <string name="home">首页</string>
 
     <string name="xcj_string_xn">%s学年</string>
     <string name="xcj_string_xq">第%s学期</string>
@@ -43,4 +42,24 @@
     <string name="txt_hint_username">邮箱/用户名/手机号</string>
     <string name="txt_hint_password">6位数字密码</string>
     <string name="txt_forget_password">忘记密码？</string>
+
+    <string name="home">首页</string>
+    <string name="toolbar_title_score_query">成绩查询</string>
+    <string name="toolbar_title_content_detail">正文详情</string>
+    <string name="toolbar_title_about">关于本软件</string>
+    <string name="toolbar_title_feedback">反馈意见</string>
+    <string name="toolbar_title_login">登录注册</string>
+    <string name="toolbar_title_message">消息中心</string>
+    <string name="toolbar_title_publish_dynamic">发布动态</string>
+    <string name="toolbar_title_setting">通用设置</string>
+    <string name="toolbar_title_user_account">我的账号</string>
+    <string name="toolbar_title_user_zone">主页详情</string>
+    <string name="toolbar_title_user_zone_edit">编辑空间</string>
+    <string name="toolbar_title_more_circle">校内圈子</string>
+    <string name="toolbar_title_more_community">社团百态</string>
+    <string name="toolbar_title_more_lost">失物招领</string>
+    <string name="toolbar_title_more_pager">纸飞机</string>
+    <string name="toolbar_title_more_study">学习专区</string>
+    <string name="toolbar_title_score_query_result">成绩查询结果</string>
+    <string name="toolbar_title_study_detail">详情</string>
 </resources>

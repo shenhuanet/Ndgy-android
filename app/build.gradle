@@ -44,7 +44,7 @@ dependencies {
     // shenhua
     compile 'com.shenhua.libs:bannerview:1.0'
     compile 'com.shenhua.libs:slidinglayout:1.1'
-    compile 'com.shenhua.libs:commonlibs:1.0.3'
+    compile 'com.shenhua.libs:commonlibs:1.0.5-alpha'
 
     // segmented
     compile 'info.hoang8f:android-segmented:1.0.6'

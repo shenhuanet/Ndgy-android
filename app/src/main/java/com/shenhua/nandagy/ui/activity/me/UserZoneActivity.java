@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,10 +14,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.widget.BaseShareView;
 import com.shenhua.commonlibs.widget.CircleImageView;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
@@ -41,6 +41,12 @@ import cn.bmob.v3.listener.UploadFileListener;
  * 用户主页或个人主页界面
  * Created by Shenhua on 9/3/2016.
  */
+@ActivityFragmentInject(
+        contentViewId = R.layout.activity_user_zone,
+        toolbarId = R.id.common_toolbar,
+        toolbarHomeAsUp = true,
+        toolbarTitle = R.string.toolbar_title_user_zone
+)
 public class UserZoneActivity extends BaseActivity {
 
     @BindView(R.id.iv_zone_photo)
@@ -81,11 +87,9 @@ public class UserZoneActivity extends BaseActivity {
     private String cacheHou = ".nui";
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_zone);
+    protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setupActionBar("主页详情", true);
+        setToolbarTitle(R.id.toolbar_title);
         accessFromMe = getIntent().getBooleanExtra("isMySelf", false);
         if (accessFromMe) {
             setPhotoView(getIntent().getStringExtra("photo"), getIntent().getBooleanExtra("sex", false));

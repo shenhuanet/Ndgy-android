@@ -173,7 +173,7 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             final XueGongDataAdapter adapter = new XueGongDataAdapter(getContext(), list);
             recyclerView.setAdapter(adapter);
-            adapter.setOnItemClickListener((view1, i) -> navToDetail(view1, adapter.getDatas().get(i)));
+            adapter.setOnItemClickListener((view1, i, data) -> navToDetail(view1, data));
         }
     }
 

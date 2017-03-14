@@ -3,7 +3,6 @@ package com.shenhua.nandagy.adapter;
 import android.content.Context;
 
 import com.shenhua.commonlibs.base.BaseRecyclerAdapter;
-import com.shenhua.commonlibs.base.BaseRecyclerViewHolder;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.CircleData;
 
@@ -20,12 +19,13 @@ public class CircleAdapter extends BaseRecyclerAdapter<CircleData> {
     }
 
     @Override
-    public int getItemViewId() {
+        public int getItemViewId(int viewType) {
         return R.layout.item_circle;
     }
 
     @Override
-    public void bindData(BaseRecyclerViewHolder holder, int position, CircleData item) {
+    public void bindData(BaseRecyclerAdapter.BaseRecyclerViewHolder holder, int position, CircleData item) {
 
     }
+
 }

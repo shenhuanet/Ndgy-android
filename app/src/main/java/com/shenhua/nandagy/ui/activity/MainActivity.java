@@ -1,8 +1,6 @@
 package com.shenhua.nandagy.ui.activity;
 
 import android.content.res.TypedArray;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +9,9 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.callback.ProgressEventBus;
 import com.shenhua.nandagy.ui.fragment.home.HomeFragment;
 import com.shenhua.nandagy.ui.fragment.jiaowu.JiaoWuFragment;
@@ -28,6 +27,11 @@ import de.greenrobot.event.EventBus;
  * MainActivity
  * Created by Shenhua on 8/28/2016.
  */
+@ActivityFragmentInject(
+        contentViewId = R.layout.activity_main,
+        toolbarId = R.id.common_toolbar,
+        toolbarTitle = R.string.home
+)
 public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener {
 
     @BindView(R.id.tab_host)
@@ -37,12 +41,11 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     private static long firstTime;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+    protected void initView(BaseActivity baseActivity) {
 //        BmobUpdateAgent.update(this);
 //        BmobUpdateAgent.setUpdateOnlyWifi(false);
+        ButterKnife.bind(this);
+        setToolbarTitle(R.id.toolbar_title);
         setupTabHost();
         EventBus.getDefault().register(this);
     }
@@ -79,7 +82,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void onTabChanged(String tabId) {
-        setupActionBar(tabId, false);
+        setToolbarTitle(tabId, R.id.toolbar_title);
     }
 
     public void onEventMainThread(ProgressEventBus event) {

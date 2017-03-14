@@ -1,13 +1,12 @@
 package com.shenhua.nandagy.ui.activity.more;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETBean;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreBecFragment;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreCAPFragment;
@@ -27,14 +26,18 @@ import butterknife.OnClick;
  * 成绩查询结果
  * Created by Shenhua on 9/25/2016.
  */
+@ActivityFragmentInject(
+        contentViewId = R.layout.activity_score_query_result,
+        toolbarId = R.id.common_toolbar,
+        toolbarHomeAsUp = true,
+        toolbarTitle = R.string.toolbar_title_score_query_result
+)
 public class ScoreQueryResultActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_score_query_result);
+    protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setupActionBar("成绩查询结果", true);
+        setToolbarTitle(R.id.toolbar_title);
         navFragment(getIntent().getIntExtra("type", -1), getIntent().getSerializableExtra("result"));
     }
 

@@ -1,8 +1,6 @@
 package com.shenhua.nandagy.ui.activity;
 
 import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -14,9 +12,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.utils.ScreenUtils;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,12 +24,17 @@ import butterknife.ButterKnife;
  * 正文详情界面
  * Created by shenhua on 8/31/2016.
  */
+@ActivityFragmentInject(
+        contentViewId = R.layout.activity_content_detail,
+        toolbarId = R.id.common_toolbar,
+        toolbarHomeAsUp = true,
+        toolbarTitle = R.string.toolbar_title_content_detail
+)
 public class ContentDetailActivity extends BaseActivity {
 
     @BindView(R.id.toolbar_layout)
     CollapsingToolbarLayout mToolbarLayout;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+
     @BindView(R.id.iv_detail_photo)
     ImageView mImageView;
     @BindView(R.id.tv_detail_title)
@@ -38,16 +42,27 @@ public class ContentDetailActivity extends BaseActivity {
     @BindView(R.id.tv_detail_time)
     TextView mTimeTv;
 
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_content_detail);
+//        ButterKnife.bind(this);
+//        mToolbarLayout.setTitle("正文详情");
+//        mToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this, R.color.colorPrimary));
+//        mToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite));
+//        materialCollapsingForKitkat(mToolbarLayout);
+//        setupActionBar("正文详情", true);
+//        mImageView.setImageResource(getIntent().getIntExtra("photo", R.drawable.img_default));
+//        mTitleTv.setText(getIntent().getStringExtra("title"));
+//        mTimeTv.setText(getIntent().getStringExtra("time"));
+//    }
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_content_detail);
+    protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        mToolbarLayout.setTitle("正文详情");
         mToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this, R.color.colorPrimary));
         mToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite));
         materialCollapsingForKitkat(mToolbarLayout);
-        setupActionBar("正文详情", true);
         mImageView.setImageResource(getIntent().getIntExtra("photo", R.drawable.img_default));
         mTitleTv.setText(getIntent().getStringExtra("title"));
         mTimeTv.setText(getIntent().getStringExtra("time"));
@@ -63,7 +78,7 @@ public class ContentDetailActivity extends BaseActivity {
             // 设置全屏
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             // 设置Toolbar对顶部的距离
-            final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            final Toolbar toolbar = (Toolbar) findViewById(R.id.common_toolbar);
             assert toolbar != null;
             final FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) toolbar.getLayoutParams();
             final int statusBarHeight = layoutParams.topMargin = ScreenUtils.getStatusBarHeight(this);

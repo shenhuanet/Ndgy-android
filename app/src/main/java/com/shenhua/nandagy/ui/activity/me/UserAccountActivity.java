@@ -1,8 +1,6 @@
 package com.shenhua.nandagy.ui.activity.me;
 
 import android.app.Dialog;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -11,10 +9,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.utils.CheckUtils;
 import com.shenhua.commonlibs.widget.ClearEditText;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseActivity;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
@@ -30,6 +29,12 @@ import cn.bmob.v3.listener.UpdateListener;
  * 我的账号界面
  * Created by Shenhua on 9/4/2016.
  */
+@ActivityFragmentInject(
+        contentViewId = R.layout.activity_user_account,
+        toolbarId = R.id.common_toolbar,
+        toolbarHomeAsUp = true,
+        toolbarTitle = R.string.toolbar_title_user_account
+)
 public class UserAccountActivity extends BaseActivity {
 
     public static final int LOGOUT_SUCCESS = 101;
@@ -58,15 +63,9 @@ public class UserAccountActivity extends BaseActivity {
     // R.id.account_layout_id,R.id.account_layout_nick,R.id.account_layout_password,R.id.account_layout_phone,R.id.account_layout_mail,R.id.account_layout_name,R.id.account_layout_num
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_account);
+    protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setupActionBar("我的账号", true);
-        initView();
-    }
-
-    private void initView() {
+        setToolbarTitle(R.id.toolbar_title);
         final MyUser user = UserUtils.getInstance().getUserInfo(this);
 //        final MyUser user = BmobUser.getCurrentUser(MyUser.class);
         mIdTv.setText(user.getUserName());
@@ -124,40 +123,31 @@ public class UserAccountActivity extends BaseActivity {
         TextView doneTv = (TextView) view.findViewById(R.id.dialog_done);
         builder.setView(view);
         final Dialog dialog = builder.show();
-        cancelTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+        cancelTv.setOnClickListener(v -> dialog.dismiss());
+        doneTv.setOnClickListener(v -> {
+            String oldP = conYEv.getText().toString();
+            String newP = conNEv.getText().toString();
+            if (oldP.length() != 6 || newP.length() != 6) {
+                toast("请确认密码为6位数");
+                return;
             }
-        });
-        doneTv.setOnClickListener(new View.OnClickListener() {
+            BmobUser.updateCurrentUserPassword(oldP, newP, new UpdateListener() {
 
-            @Override
-            public void onClick(View v) {
-                String oldP = conYEv.getText().toString();
-                String newP = conNEv.getText().toString();
-                if (oldP.length() != 6 || newP.length() != 6) {
-                    toast("请确认密码为6位数");
-                    return;
-                }
-                BmobUser.updateCurrentUserPassword(oldP, newP, new UpdateListener() {
-
-                    @Override
-                    public void done(BmobException e) {
-                        if (e == null) {
-                            toast("密码修改成功，请使用新密码进行登录！");
-                            BmobUser.logOut();
-                            UserUtils.getInstance().logout(UserAccountActivity.this);
-                            setResult(LOGOUT_SUCCESS);
-                            UserAccountActivity.this.finish();
-                        } else {
-                            toast("密码修改失败:" + e.getMessage());
-                        }
+                @Override
+                public void done(BmobException e) {
+                    if (e == null) {
+                        toast("密码修改成功，请使用新密码进行登录！");
+                        BmobUser.logOut();
+                        UserUtils.getInstance().logout(UserAccountActivity.this);
+                        setResult(LOGOUT_SUCCESS);
+                        UserAccountActivity.this.finish();
+                    } else {
+                        toast("密码修改失败:" + e.getMessage());
                     }
+                }
 
-                });
-                dialog.dismiss();
-            }
+            });
+            dialog.dismiss();
         });
     }
 

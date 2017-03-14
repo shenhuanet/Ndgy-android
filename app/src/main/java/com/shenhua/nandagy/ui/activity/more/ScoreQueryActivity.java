@@ -1,26 +1,16 @@
 package com.shenhua.nandagy.ui.activity.more;
 
-import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.base.BaseImageTextItem;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseActivity;
+import com.shenhua.nandagy.adapter.ScoreQueryCategoryAdapter;
 import com.shenhua.nandagy.bean.bmobbean.BombUtil;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreBecFragment;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreCAPFragment;
@@ -43,6 +33,12 @@ import cn.bmob.v3.Bmob;
  * 成绩查询界面
  * Created by Shenhua on 9/7/2016.
  */
+@ActivityFragmentInject(
+        contentViewId = R.layout.activity_more_score,
+        toolbarId = R.id.common_toolbar,
+        toolbarHomeAsUp = true,
+        toolbarTitle = R.string.toolbar_title_score_query
+)
 public class ScoreQueryActivity extends BaseActivity {
 
     @BindView(R.id.list_scroe_category)
@@ -51,12 +47,10 @@ public class ScoreQueryActivity extends BaseActivity {
     private int currentItem = -1;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initView(BaseActivity baseActivity) {
         Bmob.initialize(this, BombUtil.APP_KEY);
-        setContentView(R.layout.activity_more_score);
         ButterKnife.bind(this);
-        setupActionBar("成绩查询", true);
+        setToolbarTitle(R.id.toolbar_title);
         makeCategoryView(R.array.category_score_item, R.array.category_score_images);
     }
 
@@ -69,14 +63,12 @@ public class ScoreQueryActivity extends BaseActivity {
             items.add(item);
         }
         ar.recycle();
-        Adapter adapter = new Adapter(this, items);
+        ScoreQueryCategoryAdapter adapter = new ScoreQueryCategoryAdapter(this, items);
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         mListView.setAdapter(adapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onCategoryClicked(position);
-            }
+        mListView.setOnItemClickListener((parent, view, position, id) -> {
+            onCategoryClicked(position);
+            hideKeyboard();
         });
         onCategoryClicked(DEFAULT_POSITION);
     }
@@ -128,58 +120,6 @@ public class ScoreQueryActivity extends BaseActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_score, newFragment);
         ft.commit();
-    }
-
-    private class Adapter extends BaseAdapter {
-
-        private Context context;
-        private List<BaseImageTextItem> lists;
-
-        public Adapter(Context context, List<BaseImageTextItem> lists) {
-            this.context = context;
-            this.lists = lists;
-        }
-
-        @Override
-        public int getCount() {
-            return lists.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return lists.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            if (convertView == null) {
-                holder = new ViewHolder();
-                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_common_score_category, parent, false);
-                holder.mListViewItem = (LinearLayout) convertView.findViewById(R.id.common_layout_item);
-                holder.nameTv = (TextView) convertView.findViewById(R.id.common_txt_name);
-                holder.nameIv = (ImageView) convertView.findViewById(R.id.common_iv_img);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            holder.mListViewItem.setBackground(context.getResources().getDrawable(R.drawable.bg_score_category_item));
-            BaseImageTextItem t = lists.get(position);
-            holder.nameTv.setText(t.getTitle());
-            Glide.with(context).load(t.getDrawable()).centerCrop().into(holder.nameIv);
-            return convertView;
-        }
-
-        private class ViewHolder {
-            LinearLayout mListViewItem;
-            ImageView nameIv;
-            TextView nameTv;
-        }
     }
 
 }

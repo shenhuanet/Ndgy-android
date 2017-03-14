@@ -77,7 +77,8 @@ public abstract class BaseHomeContentFragment extends BaseMvpFragment<HomePresen
                 final HomeDataAdapter adapter = new HomeDataAdapter(getContext(), datas);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 mRecyclerView.setAdapter(adapter);
-                adapter.setOnItemClickListener((view1, position) -> navToDetail(view1, adapter.getDatas().get(position)));
+                adapter.setOnItemClickListener((view1, position, data) -> navToDetail(view1, data));
+//                adapter.setOnItemClickListener((view1, position) -> navToDetail(view1, adapter.getDatas().get(position)));
             }
         });
     }
