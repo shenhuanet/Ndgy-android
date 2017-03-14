@@ -13,10 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.shenhua.commonlibs.mvp.BaseMvpFragment;
+import com.shenhua.commonlibs.utils.BusBooleanEvent;
+import com.shenhua.commonlibs.utils.BusProvider;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.HomeDataAdapter;
 import com.shenhua.nandagy.bean.HomeData;
-import com.shenhua.nandagy.callback.ProgressEventBus;
 import com.shenhua.nandagy.presenter.HomePresenter;
 import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
 import com.shenhua.nandagy.view.HomeView;
@@ -26,7 +27,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 /**
  * 首页两块fragment 基类
@@ -102,7 +102,7 @@ public abstract class BaseHomeContentFragment extends BaseMvpFragment<HomePresen
     @Override
     public void showProgress() {
         getActivity().runOnUiThread(() -> {
-            EventBus.getDefault().post(new ProgressEventBus(true));
+            BusProvider.getInstance().post(new BusBooleanEvent(true));
             mProgressBar.setVisibility(View.VISIBLE);
         });
     }
@@ -110,7 +110,7 @@ public abstract class BaseHomeContentFragment extends BaseMvpFragment<HomePresen
     @Override
     public void hideProgress() {
         getActivity().runOnUiThread(() -> {
-            EventBus.getDefault().post(new ProgressEventBus(false));
+            BusProvider.getInstance().post(new BusBooleanEvent(false));
             mProgressBar.setVisibility(View.GONE);
         });
     }

@@ -2,9 +2,7 @@ package com.shenhua.nandagy.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -12,7 +10,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shenhua.nandagy.R;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -21,22 +18,8 @@ import butterknife.OnClick;
  */
 public abstract class BaseScoreQueryVerfyFragment extends BaseScoreQueryFragment {
 
-    protected View view;
     @BindView(R.id.iv_score_yzm)
     ImageView mVerifyCodeIv;
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(getViewLayoutId(), container, false);
-            ButterKnife.bind(this, view);
-        }
-        ViewGroup group = (ViewGroup) view.getParent();
-        if (group != null)
-            group.removeView(view);
-        return view;
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -45,7 +28,7 @@ public abstract class BaseScoreQueryVerfyFragment extends BaseScoreQueryFragment
     }
 
     public void showVerifyCode() {
-        Glide.with(this).load(getVerfyCodeUrl())
+        Glide.with(this).load(getVerifyCodeUrl())
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .placeholder(R.drawable.ic_score_yzm)
@@ -59,8 +42,6 @@ public abstract class BaseScoreQueryVerfyFragment extends BaseScoreQueryFragment
         showVerifyCode();
     }
 
-    public abstract int getViewLayoutId();
-
-    public abstract String getVerfyCodeUrl();
+    public abstract String getVerifyCodeUrl();
 
 }

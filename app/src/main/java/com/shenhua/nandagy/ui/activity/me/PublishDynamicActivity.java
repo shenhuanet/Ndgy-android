@@ -22,7 +22,8 @@ import butterknife.OnClick;
         contentViewId = R.layout.activity_publish_dynamic,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_publish_dynamic
+        toolbarTitle = R.string.toolbar_title_publish_dynamic,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class PublishDynamicActivity extends BaseActivity implements TextWatcher {
 
@@ -34,7 +35,6 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
     @Override
     protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
         mPublishBtn.setEnabled(false);
         mPublishBtn.setClickable(false);
         mPublishEt.addTextChangedListener(this);

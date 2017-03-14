@@ -33,7 +33,8 @@ import cn.qqtheme.framework.picker.OptionPicker;
         contentViewId = R.layout.activity_user_zone_edit,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_user_zone_edit
+        toolbarTitle = R.string.toolbar_title_user_zone_edit,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class UserZoneEditActivity extends BaseActivity {
 

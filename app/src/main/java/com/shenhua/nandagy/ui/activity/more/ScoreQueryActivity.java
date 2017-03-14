@@ -37,7 +37,8 @@ import cn.bmob.v3.Bmob;
         contentViewId = R.layout.activity_more_score,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_score_query
+        toolbarTitle = R.string.toolbar_title_score_query,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class ScoreQueryActivity extends BaseActivity {
 
@@ -50,7 +51,6 @@ public class ScoreQueryActivity extends BaseActivity {
     protected void initView(BaseActivity baseActivity) {
         Bmob.initialize(this, BombUtil.APP_KEY);
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
         makeCategoryView(R.array.category_score_item, R.array.category_score_images);
     }
 

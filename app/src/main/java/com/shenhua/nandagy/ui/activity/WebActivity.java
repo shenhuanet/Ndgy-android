@@ -30,7 +30,8 @@ import butterknife.ButterKnife;
 @ActivityFragmentInject(
         contentViewId = R.layout.activity_web,
         toolbarId = R.id.common_toolbar,
-        toolbarHomeAsUp = true
+        toolbarHomeAsUp = true,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class WebActivity extends BaseActivity {
 
@@ -47,7 +48,7 @@ public class WebActivity extends BaseActivity {
     protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
         Intent intent = getIntent();
-        setToolbarTitle(intent.getStringExtra("title"), R.id.toolbar_title);
+        setupToolbarTitle(intent.getStringExtra("title"));
         url = intent.getStringExtra("url");
     }
 

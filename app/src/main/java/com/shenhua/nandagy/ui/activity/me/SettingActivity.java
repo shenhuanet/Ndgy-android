@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
+import com.shenhua.commonlibs.utils.BusProvider;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.callback.NewMessageEventBus;
 import com.shenhua.nandagy.manager.DataCleanManager;
@@ -17,7 +18,6 @@ import com.shenhua.nandagy.utils.SettingUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 /**
  * 通用设置界面
@@ -27,9 +27,9 @@ import de.greenrobot.event.EventBus;
         contentViewId = R.layout.activity_setting,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_setting
+        toolbarTitle = R.string.toolbar_title_setting,
+        toolbarTitleId = R.id.toolbar_title
 )
-// TODO: 3/14/2017  useBusEvent()
 public class SettingActivity extends BaseActivity {
 
     @BindView(R.id.tv_setting_cache)
@@ -39,12 +39,10 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.switch_setting_nanpush)
     Switch mNanPushSc;
 
-
     @Override
     protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
-        EventBus.getDefault().post(new NewMessageEventBus(true, UserFragment.EVENT_TYPE_SETTING));
+        BusProvider.getInstance().post(new NewMessageEventBus(true, UserFragment.EVENT_TYPE_SETTING));
     }
 
     @Override

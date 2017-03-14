@@ -30,14 +30,14 @@ import butterknife.OnClick;
         contentViewId = R.layout.activity_score_query_result,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_score_query_result
+        toolbarTitle = R.string.toolbar_title_score_query_result,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class ScoreQueryResultActivity extends BaseActivity {
 
     @Override
     protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
         navFragment(getIntent().getIntExtra("type", -1), getIntent().getSerializableExtra("result"));
     }
 

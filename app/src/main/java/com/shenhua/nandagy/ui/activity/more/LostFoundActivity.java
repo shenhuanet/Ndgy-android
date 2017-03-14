@@ -14,14 +14,13 @@ import butterknife.ButterKnife;
         contentViewId = R.layout.activity_more_lost,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_more_lost
+        toolbarTitle = R.string.toolbar_title_more_lost,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class LostFoundActivity extends BaseActivity {
-
 
     @Override
     protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
     }
 }

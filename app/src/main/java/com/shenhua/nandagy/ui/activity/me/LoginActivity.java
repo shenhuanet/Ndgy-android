@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
+import com.shenhua.commonlibs.utils.BusProvider;
 import com.shenhua.commonlibs.widget.ClearEditText;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
@@ -36,7 +37,6 @@ import butterknife.OnClick;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
-import de.greenrobot.event.EventBus;
 
 /**
  * 注册登录界面
@@ -46,7 +46,8 @@ import de.greenrobot.event.EventBus;
         contentViewId = R.layout.activity_login,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_login
+        toolbarTitle = R.string.toolbar_title_login,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class LoginActivity extends BaseActivity {
 
@@ -85,7 +86,6 @@ public class LoginActivity extends BaseActivity {
     protected void initView(BaseActivity baseActivity) {
         mTencent = Tencent.createInstance(ShareUtils.QQ_APPID, this);
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
         mSexRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonId = group.getCheckedRadioButtonId();
             RadioButton rb = (RadioButton) findViewById(radioButtonId);
@@ -233,7 +233,7 @@ public class LoginActivity extends BaseActivity {
         UserUtils.getInstance().setUser(this, user);
         if (!TextUtils.isEmpty(myUser.getUserZoneObjID())) {
             UserZoneUtils.getInstance().updateZoneStatis(myUser.getUserZoneObjID(), "exper", 2);
-            EventBus.getDefault().post(new NewMessageEventBus(true, UserFragment.EVENT_TYPE_EXPER_ADD_2));
+            BusProvider.getInstance().post(new NewMessageEventBus(true, UserFragment.EVENT_TYPE_EXPER_ADD_2));
         }
         setResult(LOGIN_SUCCESS);
         this.finish();

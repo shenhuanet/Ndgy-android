@@ -3,13 +3,12 @@ package com.shenhua.nandagy.ui.fragment.scorequery;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseFragment;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETBean;
 
@@ -20,10 +19,9 @@ import butterknife.ButterKnife;
  * 四六级英语结果
  * Created by Shenhua on 9/7/2016.
  */
-public class ScoreCetResultFragment extends Fragment {
+@ActivityFragmentInject(contentViewId = R.layout.score_frag_cet_result)
+public class ScoreCetResultFragment extends BaseFragment {
 
-    private static ScoreCetResultFragment instance = null;
-    private View view;
     @BindView(R.id.cet_tv_name)
     TextView mNameTv;
     @BindView(R.id.cet_tv_school)
@@ -47,26 +45,16 @@ public class ScoreCetResultFragment extends Fragment {
     private boolean isInit;
 
     public static ScoreCetResultFragment newInstance(ScoreCETBean data) {
-        if (instance == null) {
-            Bundle args = new Bundle();
-            args.putSerializable("data", data);
-            instance = new ScoreCetResultFragment();
-            instance.setArguments(args);
-        }
+        Bundle args = new Bundle();
+        args.putSerializable("data", data);
+        ScoreCetResultFragment instance = new ScoreCetResultFragment();
+        instance.setArguments(args);
         return instance;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.score_frag_cet_result, container, false);
-            ButterKnife.bind(this, view);
-        }
-        ViewGroup group = (ViewGroup) view.getParent();
-        if (group != null)
-            group.removeView(view);
-        return view;
+    public void initView(View rootView) {
+        ButterKnife.bind(this, rootView);
     }
 
     @Override

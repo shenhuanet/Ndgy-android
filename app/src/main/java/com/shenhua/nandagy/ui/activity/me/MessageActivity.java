@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
+import com.shenhua.commonlibs.utils.BusProvider;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.NewMessageAdapter;
 import com.shenhua.nandagy.bean.NewMessageData;
@@ -19,7 +20,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 /**
  * 消息中心界面
@@ -29,9 +29,9 @@ import de.greenrobot.event.EventBus;
         contentViewId = R.layout.activity_message,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_message
+        toolbarTitle = R.string.toolbar_title_message,
+        toolbarTitleId = R.id.toolbar_title
 )
-// TODO: 3/14/2017  useBusEvent()
 public class MessageActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.swipeRefreshLayout)
@@ -43,12 +43,11 @@ public class MessageActivity extends BaseActivity implements SwipeRefreshLayout.
     @Override
     protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
         mSwipRefereshLayout.setColorSchemeColors(Color.parseColor("#1DBFD8"));
         mSwipRefereshLayout.setOnRefreshListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(new NewMessageAdapter(this, getDatas()));
-        EventBus.getDefault().post(new NewMessageEventBus(true, UserFragment.EVENT_TYPE_MESSAGE));
+        BusProvider.getInstance().post(new NewMessageEventBus(true, UserFragment.EVENT_TYPE_MESSAGE));
     }
 
     private List<NewMessageData> getDatas() {

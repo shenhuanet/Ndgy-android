@@ -12,6 +12,7 @@ import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.base.BaseImageTextItem;
 import com.shenhua.commonlibs.base.BaseListAdapter;
+import com.shenhua.commonlibs.utils.BusProvider;
 import com.shenhua.commonlibs.widget.BaseShareView;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.callback.NewMessageEventBus;
@@ -27,7 +28,6 @@ import cn.bmob.v3.listener.BmobUpdateListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
 import cn.bmob.v3.update.UpdateResponse;
 import cn.bmob.v3.update.UpdateStatus;
-import de.greenrobot.event.EventBus;
 
 /**
  * 关于本软件界面
@@ -37,9 +37,9 @@ import de.greenrobot.event.EventBus;
         contentViewId = R.layout.activity_about,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_about
+        toolbarTitle = R.string.toolbar_title_about,
+        toolbarTitleId = R.id.toolbar_title
 )
-// TODO: 3/14/2017 useBusEvent()
 public class AboutActivity extends BaseActivity {
 
     @BindView(R.id.tv_about_version)
@@ -54,8 +54,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
-        EventBus.getDefault().post(new NewMessageEventBus(true, UserFragment.EVENT_TYPE_ABOUT));
+        BusProvider.getInstance().post(new NewMessageEventBus(true, UserFragment.EVENT_TYPE_ABOUT));
     }
 
     @Override

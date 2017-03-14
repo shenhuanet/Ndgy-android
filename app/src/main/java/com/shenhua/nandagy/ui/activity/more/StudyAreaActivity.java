@@ -22,7 +22,8 @@ import butterknife.ButterKnife;
         contentViewId = R.layout.activity_more_study,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_more_study
+        toolbarTitle = R.string.toolbar_title_more_study,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class StudyAreaActivity extends BaseActivity {
 
@@ -38,7 +39,6 @@ public class StudyAreaActivity extends BaseActivity {
     @Override
     protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
         initViewPager();
     }
 

@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.callback.TextEnableInputWatcher;
 import com.shenhua.commonlibs.utils.DESUtils;
 import com.shenhua.nandagy.R;
@@ -22,14 +23,15 @@ import com.shenhua.nandagy.ui.activity.more.ScoreQueryResultActivity;
 import java.io.Serializable;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 四六级英语
  * Created by Shenhua on 9/7/2016.
  */
+@ActivityFragmentInject(contentViewId = R.layout.frag_score_cet)
 public class ScoreCetFragment extends BaseScoreQueryFragment {
 
-    private static ScoreCetFragment instance = null;
     @BindView(R.id.til_zkzh)
     TextInputLayout mZkzhLayout;
     @BindView(R.id.til_name)
@@ -40,15 +42,12 @@ public class ScoreCetFragment extends BaseScoreQueryFragment {
     EditText mNameEt;
 
     public static ScoreCetFragment newInstance() {
-        if (instance == null) {
-            instance = new ScoreCetFragment();
-        }
-        return instance;
+        return new ScoreCetFragment();
     }
 
     @Override
-    protected int getViewLayoutId() {
-        return R.layout.frag_score_cet;
+    public void initView(View rootView) {
+        ButterKnife.bind(this, rootView);
     }
 
     @Override

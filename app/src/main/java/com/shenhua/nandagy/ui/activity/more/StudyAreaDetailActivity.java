@@ -23,7 +23,8 @@ import butterknife.ButterKnife;
         contentViewId = R.layout.activity_study_detail,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_study_detail
+        toolbarTitle = R.string.toolbar_title_study_detail,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class StudyAreaDetailActivity extends BaseActivity implements StudyDetailView {
 
@@ -44,7 +45,6 @@ public class StudyAreaDetailActivity extends BaseActivity implements StudyDetail
     protected void initView(BaseActivity baseActivity) {
 //        supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_MODE_OVERLAY);
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
         initView();
     }
 

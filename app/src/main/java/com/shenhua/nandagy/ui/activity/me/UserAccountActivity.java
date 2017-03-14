@@ -33,7 +33,8 @@ import cn.bmob.v3.listener.UpdateListener;
         contentViewId = R.layout.activity_user_account,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_user_account
+        toolbarTitle = R.string.toolbar_title_user_account,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class UserAccountActivity extends BaseActivity {
 
@@ -65,7 +66,6 @@ public class UserAccountActivity extends BaseActivity {
     @Override
     protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
         final MyUser user = UserUtils.getInstance().getUserInfo(this);
 //        final MyUser user = BmobUser.getCurrentUser(MyUser.class);
         mIdTv.setText(user.getUserName());

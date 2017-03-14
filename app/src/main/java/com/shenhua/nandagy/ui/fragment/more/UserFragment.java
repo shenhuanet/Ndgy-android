@@ -1,30 +1,29 @@
 package com.shenhua.nandagy.ui.fragment.more;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
+import com.shenhua.commonlibs.base.BaseFragment;
+import com.shenhua.commonlibs.utils.BusBooleanEvent;
+import com.shenhua.commonlibs.utils.BusProvider;
 import com.shenhua.floatingtextview.Animator.TranslateFloatingAnimator;
 import com.shenhua.floatingtextview.base.FloatingText;
 import com.shenhua.nandagy.R;
+import com.shenhua.nandagy.bean.bmobbean.BombUtil;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
 import com.shenhua.nandagy.callback.NewMessageEventBus;
-import com.shenhua.nandagy.callback.ProgressEventBus;
 import com.shenhua.nandagy.ui.activity.me.AboutActivity;
 import com.shenhua.nandagy.ui.activity.me.LoginActivity;
 import com.shenhua.nandagy.ui.activity.me.MessageActivity;
@@ -34,23 +33,28 @@ import com.shenhua.nandagy.ui.activity.me.UserAccountActivity;
 import com.shenhua.nandagy.ui.activity.me.UserZoneActivity;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
+import com.squareup.otto.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
-import de.greenrobot.event.EventBus;
 
 /**
  * 用户
  * Created by Shenhua on 8/28/2016.
  */
-public class UserFragment extends Fragment {
-
+@ActivityFragmentInject(
+        contentViewId = R.layout.frag_user,
+        useBusEvent = true
+)
+public class UserFragment extends BaseFragment {
+    private static final String TAG = "UserFragment";
     @BindView(R.id.iv_user_photo)
     ImageView mUserPhotoIv;
     @BindView(R.id.tv_user_name)
@@ -71,7 +75,6 @@ public class UserFragment extends Fragment {
     TextView mSettingTag;
     @BindView(R.id.tag_tv_about)
     TextView mAboutTag;
-    private View view;
     public static final int EVENT_TYPE_MESSAGE = 1;
     public static final int EVENT_TYPE_SETTING = 2;
     public static final int EVENT_TYPE_ABOUT = 3;
@@ -80,20 +83,25 @@ public class UserFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
+        Log.d(TAG, "onCreate: ");
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.frag_user, container, false);
-            ButterKnife.bind(this, view);
-        }
-        ViewGroup group = (ViewGroup) view.getParent();
-        if (group != null)
-            group.removeView(view);
-        return view;
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(TAG, "onDestroyView: ");
+    }
+
+    @Override
+    public void initView(View rootView) {
+        Bmob.initialize(getContext(), BombUtil.APP_KEY);
+        ButterKnife.bind(this, rootView);
     }
 
     @Override
@@ -107,7 +115,7 @@ public class UserFragment extends Fragment {
 
     private void updateUserView() {
         // 用户展示区
-        EventBus.getDefault().post(new ProgressEventBus(true));
+        BusProvider.getInstance().post(new BusBooleanEvent(true));
         UserUtils instance = UserUtils.getInstance();
         if (instance.isLogin(getActivity())) {// 已登录
             MyUser user = instance.getUserInfo(getActivity());
@@ -123,7 +131,7 @@ public class UserFragment extends Fragment {
                 mDynamicTv.setText("-");
                 mMiTv.setText("-");
                 mExperTv.setText("-");
-                EventBus.getDefault().post(new ProgressEventBus(false));
+                BusProvider.getInstance().post(new BusBooleanEvent(false));
                 return;
             }
             zone.getObject(user.getUserZoneObjID(), new QueryListener<UserZone>() {
@@ -143,7 +151,7 @@ public class UserFragment extends Fragment {
                     }
                 }
             });
-            EventBus.getDefault().post(new ProgressEventBus(false));
+            BusProvider.getInstance().post(new BusBooleanEvent(false));
         } else {
             Glide.with(this).load("").centerCrop().placeholder(R.drawable.img_photo_man)
                     .error(R.drawable.img_photo_man).into(mUserPhotoIv);
@@ -152,7 +160,7 @@ public class UserFragment extends Fragment {
             mDynamicTv.setText("-");
             mMiTv.setText("-");
             mExperTv.setText("-");
-            EventBus.getDefault().post(new ProgressEventBus(false));
+            BusProvider.getInstance().post(new BusBooleanEvent(false));
         }
     }
 
@@ -168,13 +176,8 @@ public class UserFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    public void onEventMainThread(NewMessageEventBus event) {
+    @Subscribe
+    public void onMessageReadChanged(NewMessageEventBus event) {
         switch (event.getType()) {
             case EVENT_TYPE_MESSAGE:
                 if (event.unShow())
@@ -189,20 +192,17 @@ public class UserFragment extends Fragment {
                     mAboutTag.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 break;
             case EVENT_TYPE_EXPER_ADD_2:
-                mExperTv.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        FloatingText floatingText = new FloatingText.FloatingTextBuilder(getActivity())
-                                .textColor(Color.parseColor("#1DBFD8"))
-                                .textSize(30)
-                                .textContent("个人经验+2")
-                                .offsetX(0)
-                                .offsetY(0)
-                                .floatingAnimatorEffect(new TranslateFloatingAnimator())
-                                .build();
-                        floatingText.attach2Window();
-                        floatingText.startFloating(mExperTv);
-                    }
+                mExperTv.postDelayed(() -> {
+                    FloatingText floatingText = new FloatingText.FloatingTextBuilder(getActivity())
+                            .textColor(Color.parseColor("#1DBFD8"))
+                            .textSize(30)
+                            .textContent("个人经验+2")
+                            .offsetX(0)
+                            .offsetY(0)
+                            .floatingAnimatorEffect(new TranslateFloatingAnimator())
+                            .build();
+                    floatingText.attach2Window();
+                    floatingText.startFloating(mExperTv);
                 }, 2000);
                 break;
         }
@@ -211,6 +211,7 @@ public class UserFragment extends Fragment {
     @OnClick({R.id.rl_user_zone, R.id.rl_account, R.id.rl_publish, R.id.rl_message, R.id.rl_setting, R.id.rl_about})
     void clicks(View v) {
         Intent intent;
+        int viewId;
         switch (v.getId()) {
             case R.id.rl_user_zone:
                 navToUserZone();
@@ -220,19 +221,19 @@ public class UserFragment extends Fragment {
                 break;
             case R.id.rl_publish:
                 intent = new Intent(getActivity(), PublishDynamicActivity.class);
-                sceneTransitionTo(intent, 4, R.id.tag_tv_publish, "title");
+                ((BaseActivity) getActivity()).sceneTransitionTo(intent, 4, rootView, R.id.tag_tv_publish, "title");
                 break;
             case R.id.rl_message:
                 intent = new Intent(getActivity(), MessageActivity.class);
-                sceneTransitionTo(intent, 5, R.id.tag_tv_message, "title");
+                ((BaseActivity) getActivity()).sceneTransitionTo(intent, 5, rootView, R.id.tag_tv_message, "title");
                 break;
             case R.id.rl_setting:
                 intent = new Intent(getActivity(), SettingActivity.class);
-                sceneTransitionTo(intent, 6, R.id.tag_tv_setting, "title");
+                ((BaseActivity) getActivity()).sceneTransitionTo(intent, 6, rootView, R.id.tag_tv_setting, "title");
                 break;
             case R.id.rl_about:
                 intent = new Intent(getActivity(), AboutActivity.class);
-                sceneTransitionTo(intent, 7, R.id.tag_tv_about, "title");
+                ((BaseActivity) getActivity()).sceneTransitionTo(intent, 7, rootView, R.id.tag_tv_about, "title");
                 break;
         }
     }
@@ -253,11 +254,11 @@ public class UserFragment extends Fragment {
                 intent.putExtra("userObjectId", user.getUserId());
                 intent.putExtra("photo", user.getUrl_photo());
                 intent.putExtra("sex", user.getSex());
-                sceneTransitionTo(intent, 1, R.id.iv_user_photo, "photos");
+                ((BaseActivity) getActivity()).sceneTransitionTo(intent, 1, rootView, R.id.iv_user_photo, "photos");
             }
         } else {
             intent = new Intent(getActivity(), LoginActivity.class);
-            sceneTransitionTo(intent, 3, R.id.tag_tv_acconut, "content");
+            ((BaseActivity) getActivity()).sceneTransitionTo(intent, 3, rootView, R.id.tag_tv_acconut, "content");
         }
     }
 
@@ -268,10 +269,10 @@ public class UserFragment extends Fragment {
         Intent intent;
         if (UserUtils.getInstance().isLogin(getContext())) {
             intent = new Intent(getActivity(), UserAccountActivity.class);
-            sceneTransitionTo(intent, 2, R.id.tag_tv_acconut, "title");
+            ((BaseActivity) getActivity()).sceneTransitionTo(intent, 2, rootView, R.id.tag_tv_acconut, "title");
         } else {
             intent = new Intent(getActivity(), LoginActivity.class);
-            sceneTransitionTo(intent, 3, R.id.tag_tv_acconut, "content");
+            ((BaseActivity) getActivity()).sceneTransitionTo(intent, 3, rootView, R.id.tag_tv_acconut, "content");
         }
     }
 
@@ -316,35 +317,19 @@ public class UserFragment extends Fragment {
                                     intent.putExtra("userObjectId", user.getUserId());
                                     intent.putExtra("photo", user.getUrl_photo());
                                     intent.putExtra("sex", user.getSex());
-                                    sceneTransitionTo(intent, 1, R.id.iv_user_photo, "photos");
+                                    ((BaseActivity) getActivity()).sceneTransitionTo(intent, 1, rootView, R.id.iv_user_photo, "photos");
                                 }
                             });
                         } else {
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    LoadingAlertDialog.dissmissLoadDialog();
-                                    toast("用户空间创建失败：" + e.getMessage());
-                                }
+                            getActivity().runOnUiThread(() -> {
+                                LoadingAlertDialog.dissmissLoadDialog();
+                                toast("用户空间创建失败：" + e.getMessage());
                             });
-
                         }
                     }
                 });
             }
         }).start();
-    }
-
-    private void sceneTransitionTo(Intent intent, int resquestCode, int viewId, String sharedElementName) {
-        if (Build.VERSION.SDK_INT > 21) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(),
-                    view.findViewById(viewId), sharedElementName);
-            startActivityForResult(intent, resquestCode, options.toBundle());
-        } else {
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeScaleUpAnimation(view,
-                    view.getWidth() / 2, view.getHeight() / 2, 0, 0);
-            startActivityForResult(intent, resquestCode, options.toBundle());
-        }
     }
 
     @Override
@@ -360,7 +345,4 @@ public class UserFragment extends Fragment {
         }
     }
 
-    public void toast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
 }

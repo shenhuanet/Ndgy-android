@@ -6,15 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
+import com.shenhua.commonlibs.base.BaseFragment;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.StudyListAdapter;
-import com.shenhua.nandagy.base.BaseFragment;
 import com.shenhua.nandagy.bean.StudyListData;
 import com.shenhua.nandagy.presenter.StudyListPresenter;
 import com.shenhua.nandagy.ui.activity.more.StudyAreaDetailActivity;
@@ -32,6 +32,7 @@ import static com.shenhua.nandagy.R.id.recyclerView;
  * Created by Shenhua on 2/9/2017.
  * e-mail shenhuanet@126.com
  */
+@ActivityFragmentInject(contentViewId = R.layout.frag_study)
 public class StudyListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, OnMoreListener, StudyListView {
 
     @BindView(recyclerView)
@@ -49,12 +50,9 @@ public class StudyListFragment extends BaseFragment implements SwipeRefreshLayou
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_study, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    public void initView(View rootView) {
+        ButterKnife.bind(this, rootView);
     }
 
     @Override
@@ -75,7 +73,7 @@ public class StudyListFragment extends BaseFragment implements SwipeRefreshLayou
         }
 
         mAdapter.setOnItemClickListener((view1, position, data) -> {
-            sceneTransitionTo(new Intent(getActivity(), StudyAreaDetailActivity.class)
+            ((BaseActivity) getActivity()).sceneTransitionTo(new Intent(getActivity(), StudyAreaDetailActivity.class)
                     .putExtra("title", data.getTitle())
                     .putExtra("href", data.getHref())
                     .putExtra("type", type)

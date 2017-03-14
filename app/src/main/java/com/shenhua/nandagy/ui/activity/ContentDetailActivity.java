@@ -34,28 +34,12 @@ public class ContentDetailActivity extends BaseActivity {
 
     @BindView(R.id.toolbar_layout)
     CollapsingToolbarLayout mToolbarLayout;
-
     @BindView(R.id.iv_detail_photo)
     ImageView mImageView;
     @BindView(R.id.tv_detail_title)
     TextView mTitleTv;
     @BindView(R.id.tv_detail_time)
     TextView mTimeTv;
-
-//    @Override
-//    protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_content_detail);
-//        ButterKnife.bind(this);
-//        mToolbarLayout.setTitle("正文详情");
-//        mToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this, R.color.colorPrimary));
-//        mToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite));
-//        materialCollapsingForKitkat(mToolbarLayout);
-//        setupActionBar("正文详情", true);
-//        mImageView.setImageResource(getIntent().getIntExtra("photo", R.drawable.img_default));
-//        mTitleTv.setText(getIntent().getStringExtra("title"));
-//        mTimeTv.setText(getIntent().getStringExtra("time"));
-//    }
 
     @Override
     protected void initView(BaseActivity baseActivity) {

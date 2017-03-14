@@ -45,7 +45,8 @@ import cn.bmob.v3.listener.UploadFileListener;
         contentViewId = R.layout.activity_user_zone,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_user_zone
+        toolbarTitle = R.string.toolbar_title_user_zone,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class UserZoneActivity extends BaseActivity {
 
@@ -89,7 +90,6 @@ public class UserZoneActivity extends BaseActivity {
     @Override
     protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
         accessFromMe = getIntent().getBooleanExtra("isMySelf", false);
         if (accessFromMe) {
             setPhotoView(getIntent().getStringExtra("photo"), getIntent().getBooleanExtra("sex", false));

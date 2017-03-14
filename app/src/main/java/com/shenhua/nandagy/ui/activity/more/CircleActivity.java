@@ -29,7 +29,8 @@ import static com.shenhua.nandagy.R.id.recyclerView;
         contentViewId = R.layout.activity_more_circle,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_more_circle
+        toolbarTitle = R.string.toolbar_title_more_circle,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class CircleActivity extends BaseActivity implements CircleView, SwipeRefreshLayout.OnRefreshListener, OnMoreListener {
 
@@ -40,8 +41,6 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
     @Override
     protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
-
         mSwipeRefreshLayout.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(this));
         mSwipeRefreshLayout.setRefreshListener(this);

@@ -14,13 +14,13 @@ import butterknife.ButterKnife;
         contentViewId = R.layout.activity_more_community,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_more_community
+        toolbarTitle = R.string.toolbar_title_more_community,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class CommunityActivity extends BaseActivity {
 
     @Override
     protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
     }
 }

@@ -2,6 +2,7 @@ package com.shenhua.nandagy.ui.fragment.xuegong;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,22 +11,26 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
+import com.shenhua.commonlibs.base.BaseActivity;
+import com.shenhua.commonlibs.base.BaseFragment;
+import com.shenhua.commonlibs.base.BaseImageTextItem;
+import com.shenhua.commonlibs.base.BaseListAdapter;
+import com.shenhua.commonlibs.utils.BusBooleanEvent;
+import com.shenhua.commonlibs.utils.BusProvider;
 import com.shenhua.commonlibs.widget.InnerGridView;
 import com.shenhua.libs.bannerview.BannerView;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.XueGongDataAdapter;
-import com.shenhua.nandagy.base.BaseFragment;
 import com.shenhua.nandagy.bean.XueGongData;
-import com.shenhua.nandagy.callback.ProgressEventBus;
 import com.shenhua.nandagy.presenter.XueGongPresenter;
 import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
 import com.shenhua.nandagy.ui.activity.WebActivity;
@@ -43,7 +48,6 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -52,6 +56,7 @@ import okhttp3.Response;
  * 学工
  * Created by Shenhua on 8/28/2016.
  */
+@ActivityFragmentInject(contentViewId = R.layout.frag_xuegong)
 public class XueGongFragment extends BaseFragment implements XueGongView, GridView.OnItemClickListener {
 
     @BindView(R.id.banner)
@@ -66,21 +71,12 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
     LinearLayout mEmptyLayout;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
-    private View view;
     private boolean isInit;
     private XueGongPresenter presenter;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.frag_xuegong, container, false);
-            ButterKnife.bind(this, view);
-        }
-        ViewGroup group = (ViewGroup) view.getParent();
-        if (group != null)
-            group.removeView(view);
-        return view;
+    public void initView(View rootView) {
+        ButterKnife.bind(this, rootView);
     }
 
     @Override
@@ -209,7 +205,7 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                EventBus.getDefault().post(new ProgressEventBus(true));
+                BusProvider.getInstance().post(new BusBooleanEvent(true));
                 mProgressBar.setVisibility(View.VISIBLE);
             }
         });
@@ -220,7 +216,7 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                EventBus.getDefault().post(new ProgressEventBus(false));
+                BusProvider.getInstance().post(new BusBooleanEvent(false));
                 mProgressBar.setVisibility(View.GONE);
             }
         });
@@ -238,22 +234,48 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent;
+        Intent intent = null;
         switch (position) {
             case 0:
                 intent = new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("title", "部门概况");
                 intent.putExtra("url", "school-xuegong-survey.html");
-                sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
                 break;
             case 1:
                 intent = new Intent(getActivity(), EduAdminActivity.class);
-                sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
                 break;
             case 2:
                 intent = new Intent(getActivity(), FinanceActivity.class);
-                sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
                 break;
         }
+        ((BaseActivity) getActivity()).sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
+    }
+
+    public void makeToolView(AbsListView abs, int titlesResId, int imagesResId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            abs.setNestedScrollingEnabled(false);
+        }
+        List<BaseImageTextItem> items = new ArrayList<>();
+        String[] titles = getResources().getStringArray(titlesResId);
+        TypedArray ar = getResources().obtainTypedArray(imagesResId);
+        for (int i = 0; i < titles.length; i++) {
+            BaseImageTextItem item = new BaseImageTextItem(ar.getResourceId(i, 0), titles[i]);
+            items.add(item);
+        }
+        ar.recycle();
+        BaseListAdapter adapter = new BaseListAdapter<BaseImageTextItem>(getActivity(), items) {
+
+            @Override
+            public void onBindItemView(BaseViewHolder baseViewHolder, BaseImageTextItem item, int i) {
+                baseViewHolder.setImageResource(R.id.iv_img, item.getDrawable());
+                baseViewHolder.setText(R.id.tv_title, item.getTitle());
+            }
+
+            @Override
+            public int getItemViewId() {
+                return R.layout.item_common_imgtv;
+            }
+        };
+        abs.setAdapter(adapter);
     }
 }

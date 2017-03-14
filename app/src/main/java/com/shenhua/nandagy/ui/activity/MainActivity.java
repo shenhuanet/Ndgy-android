@@ -11,17 +11,17 @@ import android.widget.Toast;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
+import com.shenhua.commonlibs.utils.BusBooleanEvent;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.callback.ProgressEventBus;
 import com.shenhua.nandagy.ui.fragment.home.HomeFragment;
 import com.shenhua.nandagy.ui.fragment.jiaowu.JiaoWuFragment;
 import com.shenhua.nandagy.ui.fragment.more.MoreFragment;
 import com.shenhua.nandagy.ui.fragment.more.UserFragment;
 import com.shenhua.nandagy.ui.fragment.xuegong.XueGongFragment;
+import com.squareup.otto.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 /**
  * MainActivity
@@ -30,7 +30,9 @@ import de.greenrobot.event.EventBus;
 @ActivityFragmentInject(
         contentViewId = R.layout.activity_main,
         toolbarId = R.id.common_toolbar,
-        toolbarTitle = R.string.home
+        toolbarTitle = R.string.home,
+        toolbarTitleId = R.id.toolbar_title,
+        useBusEvent = true
 )
 public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener {
 
@@ -45,15 +47,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 //        BmobUpdateAgent.update(this);
 //        BmobUpdateAgent.setUpdateOnlyWifi(false);
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
         setupTabHost();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
     }
 
     private void setupTabHost() {
@@ -82,11 +76,12 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void onTabChanged(String tabId) {
-        setToolbarTitle(tabId, R.id.toolbar_title);
+        setupToolbarTitle(tabId);
     }
 
-    public void onEventMainThread(ProgressEventBus event) {
-        if (event.show()) progressBar.setVisibility(View.VISIBLE);
+    @Subscribe
+    public void onProgressBarEvent(BusBooleanEvent event) {
+        if (event.isBoolean()) progressBar.setVisibility(View.VISIBLE);
         else progressBar.setVisibility(View.GONE);
     }
 

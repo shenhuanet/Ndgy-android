@@ -24,7 +24,8 @@ import cn.bmob.v3.listener.SaveListener;
         contentViewId = R.layout.activity_feedback,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
-        toolbarTitle = R.string.toolbar_title_feedback
+        toolbarTitle = R.string.toolbar_title_feedback,
+        toolbarTitleId = R.id.toolbar_title
 )
 public class FeedbackActivity extends BaseActivity {
 
@@ -34,7 +35,6 @@ public class FeedbackActivity extends BaseActivity {
     @Override
     protected void initView(BaseActivity baseActivity) {
         ButterKnife.bind(this);
-        setToolbarTitle(R.id.toolbar_title);
         mContentEditTv.setFrameLayoutHeight(ConvertUtils.dp2px(this, 150));
         mContentEditTv.setMaxLengh(80);
     }

@@ -1,31 +1,32 @@
 package com.shenhua.nandagy.ui.fragment.scorequery;
 
+import android.view.View;
+
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseScoreQueryVerfyFragment;
 import com.shenhua.nandagy.service.HttpService;
+
+import butterknife.ButterKnife;
 
 /**
  * 计算机二级
  * Created by Shenhua on 9/7/2016.
  */
+@ActivityFragmentInject(contentViewId = R.layout.frag_score_computer)
 public class ScoreComputerFragment extends BaseScoreQueryVerfyFragment {
 
-    private static ScoreComputerFragment instance = null;
-
     public static ScoreComputerFragment newInstance() {
-        if (instance == null) {
-            instance = new ScoreComputerFragment();
-        }
-        return instance;
+        return new ScoreComputerFragment();
     }
 
     @Override
-    public int getViewLayoutId() {
-        return R.layout.frag_score_computer;
+    public void initView(View rootView) {
+        ButterKnife.bind(this, rootView);
     }
 
     @Override
-    public String getVerfyCodeUrl() {
+    public String getVerifyCodeUrl() {
         return HttpService.VERFY_CODE_COMPUTER;
     }
 

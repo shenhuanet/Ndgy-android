@@ -1,33 +1,34 @@
 package com.shenhua.nandagy.ui.fragment.scorequery;
 
+import android.view.View;
+
+import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseScoreQueryVerfyFragment;
 import com.shenhua.nandagy.bean.scorebean.ScoreData;
 import com.shenhua.nandagy.service.HttpService;
 import com.shenhua.nandagy.view.ScoreQueryView;
 
+import butterknife.ButterKnife;
+
 /**
  * 剑桥商务英语
  * Created by Shenhua on 9/7/2016.
  */
+@ActivityFragmentInject(contentViewId = R.layout.frag_score_bec)
 public class ScoreBecFragment extends BaseScoreQueryVerfyFragment implements ScoreQueryView {
 
-    private static ScoreBecFragment instance = null;
-
     public static ScoreBecFragment newInstance() {
-        if (instance == null) {
-            instance = new ScoreBecFragment();
-        }
-        return instance;
+        return new ScoreBecFragment();
     }
 
     @Override
-    public int getViewLayoutId() {
-        return R.layout.frag_score_bec;
+    public void initView(View rootView) {
+        ButterKnife.bind(this, rootView);
     }
 
     @Override
-    public String getVerfyCodeUrl() {
+    public String getVerifyCodeUrl() {
         return HttpService.VERFY_CODE_BEC;
     }
 
