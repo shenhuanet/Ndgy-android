@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
@@ -45,7 +46,7 @@ public class WebActivity extends BaseActivity {
     private String imgUrl;
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         setupToolbarTitle(intent.getStringExtra("title"));

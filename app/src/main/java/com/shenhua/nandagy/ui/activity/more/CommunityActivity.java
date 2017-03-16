@@ -1,5 +1,7 @@
 package com.shenhua.nandagy.ui.activity.more;
 
+import android.os.Bundle;
+
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.nandagy.R;
@@ -20,7 +22,7 @@ import butterknife.ButterKnife;
 public class CommunityActivity extends BaseActivity {
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
     }
 }

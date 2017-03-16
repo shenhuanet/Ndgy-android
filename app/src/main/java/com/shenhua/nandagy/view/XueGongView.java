@@ -1,5 +1,7 @@
 package com.shenhua.nandagy.view;
 
+import com.shenhua.commonlibs.mvp.BaseView;
+
 import java.util.ArrayList;
 
 /**
@@ -7,6 +9,8 @@ import java.util.ArrayList;
  * Created by shenhua on 8/31/2016.
  */
 public interface XueGongView extends BaseView {
+
+    void showToast(String msg);
 
     void updateList(ArrayList[] lists);
 }

@@ -14,34 +14,38 @@ import java.util.List;
  */
 public class HomeModelImpl implements HomeModel<List<HomeData>> {
 
+    private static final String TAG = "HomeModelImpl";
+
     @Override
     public void toGetHomeData(BasePresenter basePresenter, final String url, final HttpCallback<List<HomeData>> callback) {
-        callback.onPreRequest();
-        System.out.println("shenhua sout:" + url);
         basePresenter.addSubscription(com.shenhua.commonlibs.mvp.HttpManager.getInstance()
                 .createHtmlGetObservable(App.getContext(), url), new ApiCallback<String>() {
             @Override
             public void onPreExecute() {
-                System.out.println("shenhua sout:" + "开始");
+                callback.onPreRequest();
             }
 
             @Override
             public void onSuccess(String o) {
-                System.out.println("shenhua sout:" + o);
+//                Log.d(TAG, "onSuccess: " + o);
+                // TODO: 3/16/2017  parseHomeDada();  有乱码
+//                parseDada();
+                callback.onSuccess(null);
+
+//                Response response;
+//                response.body().bytes();
             }
 
             @Override
             public void onFailure(String s) {
-                System.out.println("shenhua sout:" + "失败");
+                callback.onError(s);
             }
 
             @Override
             public void onFinish() {
-                System.out.println("shenhua sout:" + "结束");
+                callback.onPostRequest();
             }
         });
-
-
     }
 
 //    private void onStatusOK(Connection.Response response, String url, HttpCallback<List<HomeData>> callback) {
@@ -56,7 +60,6 @@ public class HomeModelImpl implements HomeModel<List<HomeData>> {
 //            callback.onError("特殊错误:" + response.statusCode());
 //        }
 //    }
-
 
     private void parseDada() {
     }

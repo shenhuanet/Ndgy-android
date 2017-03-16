@@ -1,6 +1,7 @@
 package com.shenhua.nandagy.ui.activity;
 
 import android.content.res.TypedArray;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import butterknife.ButterKnife;
 )
 public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener {
 
+    private static final String TAG = "MainActivity";
     @BindView(R.id.tab_host)
     FragmentTabHost tabHost;
     @BindView(R.id.toolbar_pro)
@@ -43,7 +45,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     private static long firstTime;
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
 //        BmobUpdateAgent.update(this);
 //        BmobUpdateAgent.setUpdateOnlyWifi(false);
         ButterKnife.bind(this);

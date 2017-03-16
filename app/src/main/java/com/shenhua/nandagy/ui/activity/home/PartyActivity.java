@@ -1,5 +1,7 @@
 package com.shenhua.nandagy.ui.activity.home;
 
+import android.os.Bundle;
+
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.nandagy.R;
@@ -17,7 +19,7 @@ import butterknife.ButterKnife;
 public class PartyActivity extends BaseActivity {
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
     }
 }

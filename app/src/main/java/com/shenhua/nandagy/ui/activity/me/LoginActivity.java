@@ -1,5 +1,6 @@
 package com.shenhua.nandagy.ui.activity.me;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
@@ -83,7 +84,7 @@ public class LoginActivity extends BaseActivity {
     private String openID;
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         mTencent = Tencent.createInstance(ShareUtils.QQ_APPID, this);
         ButterKnife.bind(this);
         mSexRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {

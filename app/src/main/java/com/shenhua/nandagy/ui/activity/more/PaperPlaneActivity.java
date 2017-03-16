@@ -1,5 +1,6 @@
 package com.shenhua.nandagy.ui.activity.more;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -27,7 +28,7 @@ public class PaperPlaneActivity extends BaseActivity {
     private int current;
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
         PagerMessageFragment fragment = PagerMessageFragment.getInstance();
         setFragment(fragment);

@@ -88,7 +88,7 @@ public class UserZoneActivity extends BaseActivity {
     private String cacheHou = ".nui";
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
         accessFromMe = getIntent().getBooleanExtra("isMySelf", false);
         if (accessFromMe) {

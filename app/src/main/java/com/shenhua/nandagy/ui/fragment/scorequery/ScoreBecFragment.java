@@ -1,6 +1,10 @@
 package com.shenhua.nandagy.ui.fragment.scorequery;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.nandagy.R;
@@ -23,7 +27,7 @@ public class ScoreBecFragment extends BaseScoreQueryVerfyFragment implements Sco
     }
 
     @Override
-    public void initView(View rootView) {
+    public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
         ButterKnife.bind(this, rootView);
     }
 

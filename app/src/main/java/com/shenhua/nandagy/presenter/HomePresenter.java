@@ -27,36 +27,28 @@ public class HomePresenter extends BasePresenter<HomeView> implements HttpCallba
 
     public void execute() {
         homeModel.toGetHomeData(this, url, this);
-
-//        addSubscription();
     }
 
     @Override
     public void onPreRequest() {
-        System.out.println("shenhua sout:" + "onPreRequest");
-//        mvpView.showProgress();
+        mvpView.showProgress();
     }
 
     @Override
     public void onSuccess(List<HomeData> data) {
-        System.out.println("shenhua sout:" + "onSuccess");
         mHasInit = true;
-//        if (data != null)
-//        mvpView.updateList(data, HttpManager.DataLoadType.DATA_TYPE_SUCCESS);
+        mvpView.updateList(null);
     }
 
     @Override
     public void onError(String errorInfo) {
-        System.out.println("shenhua sout: onError: " + errorInfo);
         mHasInit = false;
-//        homeView.updateList(null, HttpManager.DataLoadType.DATA_TYPE_ERROR);
-//        mvpView.showToast(errorInfo);
+        mvpView.showToast(errorInfo);
     }
 
     @Override
     public void onPostRequest() {
-        System.out.println("shenhua sout:" + "onPostRequest");
-//        mvpView.hideProgress();
+        mvpView.hideProgress();
     }
 
 }

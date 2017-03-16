@@ -42,7 +42,7 @@ public class StudyAreaDetailActivity extends BaseActivity implements StudyDetail
     }
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
 //        supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_MODE_OVERLAY);
         ButterKnife.bind(this);
         initView();

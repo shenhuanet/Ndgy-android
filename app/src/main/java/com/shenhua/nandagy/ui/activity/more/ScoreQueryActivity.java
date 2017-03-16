@@ -1,6 +1,7 @@
 package com.shenhua.nandagy.ui.activity.more;
 
 import android.content.res.TypedArray;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.AbsListView;
@@ -48,7 +49,7 @@ public class ScoreQueryActivity extends BaseActivity {
     private int currentItem = -1;
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         Bmob.initialize(this, BombUtil.APP_KEY);
         ButterKnife.bind(this);
         makeCategoryView(R.array.category_score_item, R.array.category_score_images);

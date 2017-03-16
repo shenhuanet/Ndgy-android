@@ -5,8 +5,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -54,6 +55,7 @@ import cn.bmob.v3.listener.UpdateListener;
         useBusEvent = true
 )
 public class UserFragment extends BaseFragment {
+
     private static final String TAG = "UserFragment";
     @BindView(R.id.iv_user_photo)
     ImageView mUserPhotoIv;
@@ -81,25 +83,7 @@ public class UserFragment extends BaseFragment {
     public static final int EVENT_TYPE_EXPER_ADD_2 = 4;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: ");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d(TAG, "onDestroyView: ");
-    }
-
-    @Override
-    public void initView(View rootView) {
+    public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
         Bmob.initialize(getContext(), BombUtil.APP_KEY);
         ButterKnife.bind(this, rootView);
     }

@@ -1,5 +1,6 @@
 package com.shenhua.nandagy.ui.activity.more;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,7 +40,7 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
     CirclePresenterImpl circlePresenter;
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
         mSwipeRefreshLayout.setRefreshingColorResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(this));

@@ -1,5 +1,7 @@
 package com.shenhua.nandagy.ui.activity.more;
 
+import android.os.Bundle;
+
 import com.shenhua.commonlibs.base.BaseActivity;
 
 /**
@@ -8,7 +10,7 @@ import com.shenhua.commonlibs.base.BaseActivity;
  */
 public class PoyangLakeActivity extends BaseActivity {
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
 
     }
 }

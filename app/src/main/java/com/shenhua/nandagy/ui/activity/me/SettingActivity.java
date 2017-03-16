@@ -1,6 +1,7 @@
 package com.shenhua.nandagy.ui.activity.me;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -40,7 +41,7 @@ public class SettingActivity extends BaseActivity {
     Switch mNanPushSc;
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
         BusProvider.getInstance().post(new NewMessageEventBus(true, UserFragment.EVENT_TYPE_SETTING));
     }

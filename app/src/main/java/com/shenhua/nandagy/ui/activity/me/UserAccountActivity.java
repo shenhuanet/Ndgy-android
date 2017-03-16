@@ -1,6 +1,7 @@
 package com.shenhua.nandagy.ui.activity.me;
 
 import android.app.Dialog;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -64,7 +65,7 @@ public class UserAccountActivity extends BaseActivity {
     // R.id.account_layout_id,R.id.account_layout_nick,R.id.account_layout_password,R.id.account_layout_phone,R.id.account_layout_mail,R.id.account_layout_name,R.id.account_layout_num
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
         final MyUser user = UserUtils.getInstance().getUserInfo(this);
 //        final MyUser user = BmobUser.getCurrentUser(MyUser.class);

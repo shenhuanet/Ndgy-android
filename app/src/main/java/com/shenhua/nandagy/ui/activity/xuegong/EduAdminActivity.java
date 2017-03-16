@@ -1,5 +1,7 @@
 package com.shenhua.nandagy.ui.activity.xuegong;
 
+import android.os.Bundle;
+
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
 
@@ -14,7 +16,7 @@ import butterknife.ButterKnife;
 public class EduAdminActivity extends BaseActivity {
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
     }
 }

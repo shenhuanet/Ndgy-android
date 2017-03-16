@@ -168,5 +168,4 @@ public class ScreenUtils {
         activity.getWindow().setFlags(keepScreenOn, keepScreenOn);
     }
 
-    // TODO: 2/10/2017 截屏
 }

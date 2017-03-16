@@ -1,5 +1,6 @@
 package com.shenhua.nandagy.ui.activity.me;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -57,7 +58,7 @@ public class UserZoneEditActivity extends BaseActivity {
     private UserZone userZone;
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         userZone = (UserZone) getIntent().getSerializableExtra("userZoneInfo");
         mNameEt.setText(userZone.getName());
         mSignEt.setText(userZone.getSign());

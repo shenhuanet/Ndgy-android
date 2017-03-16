@@ -1,5 +1,6 @@
 package com.shenhua.nandagy.ui.activity.more;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -36,7 +37,7 @@ import butterknife.OnClick;
 public class ScoreQueryResultActivity extends BaseActivity {
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
         navFragment(getIntent().getIntExtra("type", -1), getIntent().getSerializableExtra("result"));
     }

@@ -1,5 +1,6 @@
 package com.shenhua.nandagy.ui.activity.me;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
@@ -33,7 +34,7 @@ public class FeedbackActivity extends BaseActivity {
     WordLimitEditText mContentEditTv;
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
         mContentEditTv.setFrameLayoutHeight(ConvertUtils.dp2px(this, 150));
         mContentEditTv.setMaxLengh(80);

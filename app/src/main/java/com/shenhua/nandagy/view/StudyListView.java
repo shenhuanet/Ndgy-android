@@ -1,5 +1,6 @@
 package com.shenhua.nandagy.view;
 
+import com.shenhua.commonlibs.mvp.BaseView;
 import com.shenhua.nandagy.bean.StudyListData;
 
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.List;
  * e-mail shenhuanet@126.com
  */
 public interface StudyListView extends BaseView {
+
+    void showToast(String msg);
 
     void updateList(List<StudyListData> datas);
 }

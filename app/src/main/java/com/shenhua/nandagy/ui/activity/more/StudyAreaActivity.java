@@ -1,5 +1,6 @@
 package com.shenhua.nandagy.ui.activity.more;
 
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -37,7 +38,7 @@ public class StudyAreaActivity extends BaseActivity {
     ViewPager mViewPager;
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
         initViewPager();
     }

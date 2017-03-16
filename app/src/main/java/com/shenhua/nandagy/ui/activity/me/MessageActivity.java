@@ -1,6 +1,7 @@
 package com.shenhua.nandagy.ui.activity.me;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,7 +42,7 @@ public class MessageActivity extends BaseActivity implements SwipeRefreshLayout.
     private List<NewMessageData> datas;
 
     @Override
-    protected void initView(BaseActivity baseActivity) {
+    protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
         mSwipRefereshLayout.setColorSchemeColors(Color.parseColor("#1DBFD8"));
         mSwipRefereshLayout.setOnRefreshListener(this);
