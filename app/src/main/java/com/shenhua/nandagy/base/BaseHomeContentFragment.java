@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.mvp.BaseMvpFragment;
 import com.shenhua.commonlibs.utils.BusBooleanEvent;
 import com.shenhua.commonlibs.utils.BusProvider;
@@ -27,7 +26,6 @@ import butterknife.OnClick;
  * 首页两块fragment 基类
  * Created by shenhua on 8/30/2016.
  */
-@ActivityFragmentInject(contentViewId = R.layout.frag_home_content)
 public abstract class BaseHomeContentFragment extends BaseMvpFragment<HomePresenter, HomeView> implements HomeView {
 
     @BindView(R.id.recyclerview)
@@ -40,11 +38,10 @@ public abstract class BaseHomeContentFragment extends BaseMvpFragment<HomePresen
 
     @Override
     public void updateList(final List<HomeData> datas) {
-        toast("BaseHomeContentFragment：数据请求成功！");
         if (datas == null) {
             mEmptyLayout.setVisibility(View.VISIBLE);
         } else {
-            mEmptyLayout.setVisibility(View.GONE);
+            mEmptyLayout.setVisibility(View.INVISIBLE);
             final HomeDataAdapter adapter = new HomeDataAdapter(getContext(), datas);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mRecyclerView.setAdapter(adapter);
@@ -76,7 +73,7 @@ public abstract class BaseHomeContentFragment extends BaseMvpFragment<HomePresen
     @Override
     public void hideProgress() {
         BusProvider.getInstance().post(new BusBooleanEvent(false));
-        mProgressBar.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.layout_empty_reload)

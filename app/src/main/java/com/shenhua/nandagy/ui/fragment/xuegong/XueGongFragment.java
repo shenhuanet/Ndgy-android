@@ -22,7 +22,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
-import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.base.BaseFragment;
 import com.shenhua.commonlibs.base.BaseImageTextItem;
 import com.shenhua.commonlibs.base.BaseListAdapter;
@@ -250,7 +249,7 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
                 intent = new Intent(getActivity(), FinanceActivity.class);
                 break;
         }
-        ((BaseActivity) getActivity()).sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
+        sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
     }
 
     public void makeToolView(AbsListView abs, int titlesResId, int imagesResId) {

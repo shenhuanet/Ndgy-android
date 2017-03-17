@@ -6,6 +6,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
@@ -51,6 +52,9 @@ public class ContentDetailActivity extends BaseActivity {
         mImageView.setImageResource(getIntent().getIntExtra("photo", R.drawable.img_default));
         mTitleTv.setText(getIntent().getStringExtra("title"));
         mTimeTv.setText(getIntent().getStringExtra("time"));
+
+        ActionBar actionBar = getToolbar();
+        actionBar.setTitle(getIntent().getStringExtra("title"));
     }
 
     /**
@@ -97,14 +101,6 @@ public class ContentDetailActivity extends BaseActivity {
                     lastVerticalOffset = verticalOffset;
                 }
             });
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            finishAfterTransition();
         }
     }
 }

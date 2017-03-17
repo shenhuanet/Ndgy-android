@@ -30,8 +30,6 @@ public class HomeGgFragment extends BaseHomeContentFragment {
     @Override
     public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
         ButterKnife.bind(this, rootView);
-        mRecyclerView.setNestedScrollingEnabled(false);
-        mProgressBar.setVisibility(View.VISIBLE);
         Log.d(TAG, "onCreateView: 公告公示");
         presenter.execute();
     }

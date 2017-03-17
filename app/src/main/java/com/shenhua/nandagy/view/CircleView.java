@@ -10,8 +10,6 @@ import java.util.List;
  */
 public interface CircleView extends BaseView {
 
-    void showToast(String msg);
-
     void updateList(List<CircleData> datas);
 
 }

@@ -9,8 +9,6 @@ import com.shenhua.nandagy.bean.scorebean.ScoreData;
  */
 public interface ScoreQueryView extends BaseView {
 
-    void showToast(String msg);
-
     void onGetQueryResult(ScoreData data);
 
 }

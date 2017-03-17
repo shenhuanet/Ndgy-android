@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
-import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.base.BaseFragment;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.StudyListAdapter;
@@ -75,7 +74,7 @@ public class StudyListFragment extends BaseFragment implements SwipeRefreshLayou
         }
 
         mAdapter.setOnItemClickListener((view1, position, data) -> {
-            ((BaseActivity) getActivity()).sceneTransitionTo(new Intent(getActivity(), StudyAreaDetailActivity.class)
+            sceneTransitionTo(new Intent(getActivity(), StudyAreaDetailActivity.class)
                     .putExtra("title", data.getTitle())
                     .putExtra("href", data.getHref())
                     .putExtra("type", type)

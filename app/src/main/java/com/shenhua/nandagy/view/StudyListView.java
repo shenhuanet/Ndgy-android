@@ -11,7 +11,5 @@ import java.util.List;
  */
 public interface StudyListView extends BaseView {
 
-    void showToast(String msg);
-
     void updateList(List<StudyListData> datas);
 }

@@ -2,9 +2,10 @@ package com.shenhua.nandagy.ui.activity.me;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,8 +49,12 @@ import cn.bmob.v3.listener.UploadFileListener;
         toolbarTitle = R.string.toolbar_title_user_zone,
         toolbarTitleId = R.id.toolbar_title
 )
-public class UserZoneActivity extends BaseActivity {
+public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOffsetChangedListener {
 
+    @BindView(R.id.appbar)
+    AppBarLayout mAppBarLayout;
+    @BindView(R.id.toolbar_title)
+    TextView mToolbarTitle;
     @BindView(R.id.iv_zone_photo)
     CircleImageView mZonePhotoIv;
     @BindView(R.id.iv_zone_gender)
@@ -60,7 +65,6 @@ public class UserZoneActivity extends BaseActivity {
     TextView mZoneExperTv;
     @BindView(R.id.tv_zone_mi)
     TextView mZoneMiTv;
-    private boolean accessFromMe;
     @BindView(R.id.tv_zone_dynamic_str)
     TextView mDynamicStrTv;
     @BindView(R.id.tv_zone_name)
@@ -81,9 +85,12 @@ public class UserZoneActivity extends BaseActivity {
     TextView mHighSchoolTv;
     @BindView(R.id.bpv)
     BaseShareView mBpv;
+    private static final String TAG = "UserZoneActivity";
     private UserZone userZoneBean;
+    private boolean accessFromMe;
     private String userObjectId;
     private String finalPhotoPath;
+    // TODO: 3/17/2017 cacheDir
     private String cacheDir = "Ndgy/temp";
     private String cacheHou = ".nui";
 
@@ -95,6 +102,7 @@ public class UserZoneActivity extends BaseActivity {
             setPhotoView(getIntent().getStringExtra("photo"), getIntent().getBooleanExtra("sex", false));
         }
         initSelectPhotoView();
+        mAppBarLayout.addOnOffsetChangedListener(this);
     }
 
     private void initSelectPhotoView() {
@@ -208,13 +216,15 @@ public class UserZoneActivity extends BaseActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        if (mBpv.getIsShowing()) {
-            mBpv.hide();
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            finishAfterTransition();
-            super.onBackPressed();
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if (mBpv.getIsShowing()) {
+                mBpv.hide();
+            } else {
+                return super.onKeyDown(keyCode, event);
+            }
         }
+        return true;
     }
 
     @Override
@@ -243,6 +253,11 @@ public class UserZoneActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 上传头像
+     *
+     * @param filePath
+     */
     private void upLoadPhoto(String filePath) {
         LoadingAlertDialog.showLoadDialog(this, "头像更新中...", true);
         final BmobFile bmobFile = new BmobFile(new File(filePath));
@@ -273,5 +288,10 @@ public class UserZoneActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        mToolbarTitle.setAlpha((float) Math.abs(verticalOffset) / (float) appBarLayout.getTotalScrollRange());
     }
 }

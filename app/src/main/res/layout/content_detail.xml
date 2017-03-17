@@ -7,51 +7,104 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_content_detail">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
-        <TextView
-            android:id="@+id/tv_detail_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="8dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@color/colorText" />
-
-        <TextView
-            android:id="@+id/tv_detail_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_detail_title"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/colorText" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:layout_below="@+id/tv_detail_time" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <!--<zhou.widget.RichText-->
-        <!--android:id="@+id/tv_news_detail_body"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/tv_news_detail_from"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:paddingLeft="8dp"-->
-        <!--android:paddingRight="8dp"-->
-        <!--android:textAppearance="@style/TextAppearance.AppCompat.Body1"-->
-        <!--android:textColor="?android:textColorPrimary"-->
-        <!--android:textSize="16sp"-->
-        <!--tools:text="@string/large_text" />-->
+            <TextView
+                android:id="@+id/tv_detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/colorPrimary"
+                android:textIsSelectable="true"
+                android:textSize="20sp" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_detail_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textIsSelectable="true"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_margin="10dp"
+                android:background="@color/colorDivider" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textIsSelectable="true" />
+
+        </LinearLayout>
+
+        <WebView
+            android:id="@+id/content_web"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
+    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingTop="@dimen/activity_vertical_margin">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_detail_title"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_margin="8dp"-->
+    <!--android:textAppearance="@style/TextAppearance.AppCompat.Title"-->
+    <!--android:textColor="@color/colorText" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_detail_time"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/tv_detail_title"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:textAppearance="@style/TextAppearance.AppCompat.Body1"-->
+    <!--android:textColor="@color/colorText" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="500dp"-->
+    <!--android:layout_below="@+id/tv_detail_time" />-->
+
+    <!--&lt;!&ndash;<zhou.widget.RichText&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/tv_news_detail_body"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_below="@+id/tv_news_detail_from"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginTop="8dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:paddingLeft="8dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:paddingRight="8dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textAppearance="@style/TextAppearance.AppCompat.Body1"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textColor="?android:textColorPrimary"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textSize="16sp"&ndash;&gt;-->
+    <!--&lt;!&ndash;tools:text="@string/large_text" />&ndash;&gt;-->
+
+    <!--</RelativeLayout>-->
 
 </android.support.v4.widget.NestedScrollView>

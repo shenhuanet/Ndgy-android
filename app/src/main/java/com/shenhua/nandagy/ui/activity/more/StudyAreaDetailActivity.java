@@ -1,12 +1,12 @@
 package com.shenhua.nandagy.ui.activity.more;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.Html;
 import android.widget.TextView;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
+import com.shenhua.libs.selectabletextprovider.SelectableTextProvider;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.StudyListData;
 import com.shenhua.nandagy.presenter.StudyDetailPresenter;
@@ -28,22 +28,15 @@ import butterknife.ButterKnife;
 )
 public class StudyAreaDetailActivity extends BaseActivity implements StudyDetailView {
 
-    @BindView(R.id.tv_time)
-    TextView mTimeTv;
     @BindView(R.id.tv_title)
     TextView mTitleTv;
+    @BindView(R.id.tv_time)
+    TextView mTimeTv;
     @BindView(R.id.tv_content)
     TextView mContentTv;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_MODE_OVERLAY);
-    }
-
-    @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
-//        supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_MODE_OVERLAY);
         ButterKnife.bind(this);
         initView();
     }
@@ -54,9 +47,12 @@ public class StudyAreaDetailActivity extends BaseActivity implements StudyDetail
         int type = getIntent().getIntExtra("type", 0);
         int position = getIntent().getIntExtra("position", 0);
         mTitleTv.setText(title);
-
+        setupToolbarTitle(title);
         StudyDetailPresenter studyDetailPresenter = new StudyDetailPresenter(this, this, type);
         studyDetailPresenter.execute(position, href);
+        new SelectableTextProvider.Builder(mTitleTv).build();
+        new SelectableTextProvider.Builder(mTimeTv).build();
+        new SelectableTextProvider.Builder(mContentTv).build();
     }
 
     @Override

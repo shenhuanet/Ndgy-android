@@ -13,12 +13,9 @@ import android.widget.RelativeLayout;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
-import com.shenhua.commonlibs.utils.BusProvider;
 import com.shenhua.commonlibs.widget.ClearEditText;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
-import com.shenhua.nandagy.callback.NewMessageEventBus;
-import com.shenhua.nandagy.ui.fragment.more.UserFragment;
 import com.shenhua.nandagy.utils.Rotate3dAnimation;
 import com.shenhua.nandagy.utils.ShareUtils;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
@@ -234,7 +231,6 @@ public class LoginActivity extends BaseActivity {
         UserUtils.getInstance().setUser(this, user);
         if (!TextUtils.isEmpty(myUser.getUserZoneObjID())) {
             UserZoneUtils.getInstance().updateZoneStatis(myUser.getUserZoneObjID(), "exper", 2);
-            BusProvider.getInstance().post(new NewMessageEventBus(true, UserFragment.EVENT_TYPE_EXPER_ADD_2));
         }
         setResult(LOGIN_SUCCESS);
         this.finish();

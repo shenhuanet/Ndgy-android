@@ -16,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
-import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.base.BaseFragment;
 import com.shenhua.commonlibs.base.BaseImageTextItem;
 import com.shenhua.commonlibs.base.BaseListAdapter;
@@ -126,7 +125,7 @@ public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelecte
                 break;
         }
         if (intent != null)
-            ((BaseActivity) getActivity()).sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
+            sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
     }
 
     public void makeToolView(AbsListView abs, int titlesResId, int imagesResId) {

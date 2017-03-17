@@ -11,8 +11,6 @@ import java.util.List;
  */
 public interface HomeView extends BaseView {
 
-    void showToast(String msg);
-
     void updateList(List<HomeData> datas);
 
 }

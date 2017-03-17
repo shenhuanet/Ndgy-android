@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/layout_score_root_style">
+    style="@style/LayoutScoreRootStyle">
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
 
         <Spinner
             android:id="@+id/bec_sp_kssj"
-            style="@style/spinner_style"
+            style="@style/SpinnerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/computer_spinner_time" />
@@ -45,7 +45,7 @@
 
         <Spinner
             android:id="@+id/bec_sp_bkjb"
-            style="@style/spinner_style"
+            style="@style/SpinnerStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/computer_spinner_level" />
@@ -95,7 +95,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <ImageView
-            style="@style/verifyCode_style"
+            style="@style/VerifyCodeStyle"
             android:contentDescription="@string/imgdec" />
 
     </LinearLayout>

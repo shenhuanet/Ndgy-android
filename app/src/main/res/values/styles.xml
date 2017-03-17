@@ -14,19 +14,6 @@
         <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
 
-    <!--<style name="ToolbarStyle">-->
-        <!--<item name="android:id">@id/common_toolbar</item>-->
-        <!--<item name="android:layout_width">match_parent</item>-->
-        <!--<item name="android:layout_height">wrap_content</item>-->
-        <!--<item name="android:minHeight">?attr/actionBarSize</item>-->
-        <!--<item name="android:paddingTop">@dimen/toolbar_podding_top</item>-->
-        <!--<item name="android:background">@color/colorPrimary</item>-->
-        <!--<item name="title">@null</item>-->
-        <!--<item name="contentInsetStart">0dp</item>-->
-        <!--<item name="theme">@style/LightToolbarTheme</item>-->
-        <!--<item name="popupTheme">@style/AppTheme.PopupOverlay</item>-->
-    <!--</style>-->
-
     <style name="ToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:id">@id/toolbar_title</item>
         <item name="android:layout_width">wrap_content</item>
@@ -38,36 +25,6 @@
 
     <style name="ToolbarTitle.Center">
         <item name="android:layout_gravity">center</item>
-    </style>
-
-    <!--<style name="CommonToolbar.Light">-->
-        <!--<item name="title">@null</item>-->
-        <!--<item name="theme">@style/LightToolbarTheme</item>-->
-        <!--<item name="popupTheme">@style/AppTheme.PopupOverlay</item>-->
-    <!--</style>-->
-
-    <!--<style name="LightToolbarTheme" parent="@style/Widget.AppCompat.Light.ActionBar">-->
-        <!--<item name="actionMenuTextColor">@android:color/white</item>-->
-        <!--<item name="android:textColorPrimary">@android:color/white</item>-->
-        <!--<item name="android:textColorSecondary">@android:color/white</item>-->
-        <!--<item name="actionOverflowButtonStyle">@style/ActionButton.Overflow</item>-->
-    <!--</style>-->
-
-    <!--<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
-
-    <!--<style name="ActionButton.Overflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">-->
-        <!--<item name="android:src">@drawable/ic_menu_over_flow</item>-->
-    <!--</style>-->
-
-    <style name="CollapsingToolbarStyle">
-        <item name="android:id">@id/toolbar_layout</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="contentScrim">?attr/colorPrimary</item>
-        <item name="expandedTitleGravity">bottom</item>
-        <item name="expandedTitleMarginStart">25dp</item>
-        <item name="expandedTitleTextAppearance">@style/ToolbarTitle</item>
-        <item name="layout_scrollFlags">scroll|exitUntilCollapsed</item>
     </style>
 
     <style name="ButtonStyle" parent="Widget.AppCompat.Button">
@@ -136,7 +93,7 @@
         <item name="android:maxLength">4</item>
     </style>
 
-    <style name="spinner_style">
+    <style name="SpinnerStyle">
         <item name="android:animationCache">true</item>
         <item name="android:drawSelectorOnTop">true</item>
         <item name="android:textColor">@color/colorText</item>
@@ -144,7 +101,7 @@
         <item name="android:layout_margin">5dp</item>
     </style>
 
-    <style name="verifyCode_style">
+    <style name="VerifyCodeStyle">
         <item name="android:id">@id/iv_score_yzm</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">30dp</item>
@@ -154,7 +111,7 @@
         <item name="android:src">@drawable/ic_score_yzm</item>
     </style>
 
-    <style name="layout_score_root_style">
+    <style name="LayoutScoreRootStyle">
         <item name="android:id">@id/layout_score_root</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -259,31 +216,5 @@
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingRight">5dp</item>
     </style>
-
-    <!--  分割线45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-
-
-    <!--<style name="dot_style">-->
-    <!--<item name="android:layout_width">5dip</item>-->
-    <!--<item name="android:layout_height">5dip</item>-->
-    <!--<item name="android:background">@drawable/dot_normal</item>-->
-    <!--<item name="android:layout_marginLeft">1.5dip</item>-->
-    <!--<item name="android:layout_marginRight">1.5dip</item>-->
-    <!--</style>-->
-
-    <!--<style name="bangding_btn_style">-->
-    <!--<item name="android:background">@drawable/bangding_btn_bd_bg</item>-->
-    <!--<item name="android:padding">6.0dip</item>-->
-    <!--<item name="android:textColor">@android:color/white</item>-->
-    <!--<item name="android:layout_gravity">center_horizontal</item>-->
-    <!--</style>-->
-
-    <!--<style name="cet_btn_style">-->
-    <!--<item name="android:background">@drawable/cet_btn_bd_bg</item>-->
-    <!--<item name="android:padding">6.0dip</item>-->
-    <!--<item name="android:textColor">@android:color/white</item>-->
-    <!--<item name="android:layout_gravity">center_horizontal</item>-->
-    <!--</style>-->
-
 
 </resources>

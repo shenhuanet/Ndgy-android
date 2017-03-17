@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
-import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.base.BaseFragment;
 import com.shenhua.libs.bannerview.BannerView;
 import com.shenhua.nandagy.R;
@@ -117,7 +116,7 @@ public class MoreFragment extends BaseFragment {
             case R.id.tabrow_score:
                 intent = new Intent(getActivity(), ScoreQueryActivity.class);
                 view = mScoreTabRow;
-                ((BaseActivity) getActivity()).sceneTransitionTo(intent, 0, view, R.id.list_tab_iv, "list");
+                sceneTransitionTo(intent, 0, view, R.id.list_tab_iv, "list");
                 return;
             case R.id.tabrow_study:
                 intent = new Intent(getActivity(), StudyAreaActivity.class);
@@ -153,7 +152,7 @@ public class MoreFragment extends BaseFragment {
                 break;
         }
         if (view != null) {
-            ((BaseActivity) getActivity()).sceneTransitionTo(intent, 0, view, R.id.list_tab_tv, "title");
+            sceneTransitionTo(intent, 0, view, R.id.list_tab_tv, "title");
         }
     }
 }

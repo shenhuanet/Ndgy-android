@@ -9,8 +9,6 @@ import com.shenhua.nandagy.bean.StudyListData;
  */
 public interface StudyDetailView extends BaseView {
 
-    void showToast(String msg);
-
     void showDetail(StudyListData data);
 
 }

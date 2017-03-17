@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
@@ -59,6 +60,7 @@ public class UserZoneEditActivity extends BaseActivity {
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
+        ButterKnife.bind(this);
         userZone = (UserZone) getIntent().getSerializableExtra("userZoneInfo");
         mNameEt.setText(userZone.getName());
         mSignEt.setText(userZone.getSign());

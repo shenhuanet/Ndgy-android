@@ -3,6 +3,7 @@ package com.shenhua.nandagy.ui.activity.me;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.AdapterView;
@@ -152,11 +153,15 @@ public class AboutActivity extends BaseActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        if (mShareView.getIsShowing()) {
-            mShareView.hide();
-        } else
-            super.onBackPressed();
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if (mShareView.getIsShowing()) {
+                mShareView.hide();
+            } else {
+                return super.onKeyDown(keyCode, event);
+            }
+        }
+        return true;
     }
 
     private void shareAppAsFb() {

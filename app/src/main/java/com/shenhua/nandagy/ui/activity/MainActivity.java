@@ -3,12 +3,12 @@ package com.shenhua.nandagy.ui.activity;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
@@ -53,8 +53,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
     private void setupTabHost() {
-        Class[] fragments = new Class[]{HomeFragment.class, XueGongFragment.class,
-                JiaoWuFragment.class, MoreFragment.class, UserFragment.class};
+        final Class[] fragments = {HomeFragment.class, XueGongFragment.class, JiaoWuFragment.class, MoreFragment.class, UserFragment.class};
         final String titles[] = getResources().getStringArray(R.array.main_tabs_titles);
         int[] icons = new int[titles.length];
         TypedArray ar = getResources().obtainTypedArray(R.array.main_tabs_images);
@@ -88,16 +87,14 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
     @Override
-    public void onBackPressed() {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (firstTime + 2000 > System.currentTimeMillis()) {
-            super.onBackPressed();
-            MainActivity.this.finish();
-            System.exit(0);
+            super.onKeyDown(keyCode, event);
         } else {
-            Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_LONG)
-                    .show();
+            toast("再按一次退出程序");
         }
         firstTime = System.currentTimeMillis();
+        return true;
     }
 
 }

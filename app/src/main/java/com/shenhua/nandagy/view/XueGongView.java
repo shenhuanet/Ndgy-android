@@ -10,7 +10,5 @@ import java.util.ArrayList;
  */
 public interface XueGongView extends BaseView {
 
-    void showToast(String msg);
-
     void updateList(ArrayList[] lists);
 }

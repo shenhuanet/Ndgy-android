@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
-import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.base.BaseFragment;
 import com.shenhua.commonlibs.utils.BusBooleanEvent;
 import com.shenhua.commonlibs.utils.BusProvider;
@@ -80,20 +80,22 @@ public class UserFragment extends BaseFragment {
     public static final int EVENT_TYPE_MESSAGE = 1;
     public static final int EVENT_TYPE_SETTING = 2;
     public static final int EVENT_TYPE_ABOUT = 3;
-    public static final int EVENT_TYPE_EXPER_ADD_2 = 4;
+    private static final int REQUEST_CODE_NAV_TO_USER_ZONE = 1;
+    private static final int REQUEST_CODE_NAV_TO_USER_ACCOUNT = 2;
+    private static final int REQUEST_CODE_NAV_TO_LOGIN = 3;
+    private static final int REQUEST_CODE_NAV_TO_PUBLISH_DYNAMIC = 4;
+    private static final int REQUEST_CODE_NAV_TO_MESSAGE = 5;
+    private static final int REQUEST_CODE_NAV_TO_SETTING = 6;
+    private static final int REQUEST_CODE_NAV_TO_ABOUT = 7;
 
     @Override
     public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
         Bmob.initialize(getContext(), BombUtil.APP_KEY);
         ButterKnife.bind(this, rootView);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         // 红点提示
         mMessageTag.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.dot_new_red, 0);
         mAboutTag.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.dot_new_red, 0);
+
         updateUserView();
     }
 
@@ -103,7 +105,6 @@ public class UserFragment extends BaseFragment {
         UserUtils instance = UserUtils.getInstance();
         if (instance.isLogin(getActivity())) {// 已登录
             MyUser user = instance.getUserInfo(getActivity());
-            System.out.println("shenhua sout:QQ photo:" + user.getUrl_photo());
             String imgUrl = user.getUrl_photo();
             boolean sex = user.getSex();
             setPhotoView(imgUrl, sex);
@@ -175,50 +176,20 @@ public class UserFragment extends BaseFragment {
                 if (event.unShow())
                     mAboutTag.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                 break;
-            case EVENT_TYPE_EXPER_ADD_2:
-                mExperTv.postDelayed(() -> {
-                    FloatingText floatingText = new FloatingText.FloatingTextBuilder(getActivity())
-                            .textColor(Color.parseColor("#1DBFD8"))
-                            .textSize(30)
-                            .textContent("个人经验+2")
-                            .offsetX(0)
-                            .offsetY(0)
-                            .floatingAnimatorEffect(new TranslateFloatingAnimator())
-                            .build();
-                    floatingText.attach2Window();
-                    floatingText.startFloating(mExperTv);
-                }, 2000);
-                break;
         }
     }
 
-    @OnClick({R.id.rl_user_zone, R.id.rl_account, R.id.rl_publish, R.id.rl_message, R.id.rl_setting, R.id.rl_about})
-    void clicks(View v) {
+    /**
+     * 进入个人账户中心
+     */
+    private void navToUserAccount() {
         Intent intent;
-        int viewId;
-        switch (v.getId()) {
-            case R.id.rl_user_zone:
-                navToUserZone();
-                break;
-            case R.id.rl_account:
-                navToUserAccount();
-                break;
-            case R.id.rl_publish:
-                intent = new Intent(getActivity(), PublishDynamicActivity.class);
-                ((BaseActivity) getActivity()).sceneTransitionTo(intent, 4, rootView, R.id.tag_tv_publish, "title");
-                break;
-            case R.id.rl_message:
-                intent = new Intent(getActivity(), MessageActivity.class);
-                ((BaseActivity) getActivity()).sceneTransitionTo(intent, 5, rootView, R.id.tag_tv_message, "title");
-                break;
-            case R.id.rl_setting:
-                intent = new Intent(getActivity(), SettingActivity.class);
-                ((BaseActivity) getActivity()).sceneTransitionTo(intent, 6, rootView, R.id.tag_tv_setting, "title");
-                break;
-            case R.id.rl_about:
-                intent = new Intent(getActivity(), AboutActivity.class);
-                ((BaseActivity) getActivity()).sceneTransitionTo(intent, 7, rootView, R.id.tag_tv_about, "title");
-                break;
+        if (UserUtils.getInstance().isLogin(getContext())) {
+            intent = new Intent(getActivity(), UserAccountActivity.class);
+            sceneTransitionTo(intent, REQUEST_CODE_NAV_TO_USER_ACCOUNT, rootView, R.id.tag_tv_acconut, "title");
+        } else {
+            intent = new Intent(getActivity(), LoginActivity.class);
+            sceneTransitionTo(intent, REQUEST_CODE_NAV_TO_LOGIN, rootView, R.id.tag_tv_acconut, "content");
         }
     }
 
@@ -238,28 +209,17 @@ public class UserFragment extends BaseFragment {
                 intent.putExtra("userObjectId", user.getUserId());
                 intent.putExtra("photo", user.getUrl_photo());
                 intent.putExtra("sex", user.getSex());
-                ((BaseActivity) getActivity()).sceneTransitionTo(intent, 1, rootView, R.id.iv_user_photo, "photos");
+                sceneTransitionTo(intent, REQUEST_CODE_NAV_TO_USER_ZONE, rootView, R.id.iv_user_photo, "photos");
             }
         } else {
             intent = new Intent(getActivity(), LoginActivity.class);
-            ((BaseActivity) getActivity()).sceneTransitionTo(intent, 3, rootView, R.id.tag_tv_acconut, "content");
+            sceneTransitionTo(intent, REQUEST_CODE_NAV_TO_LOGIN, rootView, R.id.tag_tv_acconut, "content");
         }
     }
 
     /**
-     * 进入个人账户中心
+     * 创建用户主页
      */
-    private void navToUserAccount() {
-        Intent intent;
-        if (UserUtils.getInstance().isLogin(getContext())) {
-            intent = new Intent(getActivity(), UserAccountActivity.class);
-            ((BaseActivity) getActivity()).sceneTransitionTo(intent, 2, rootView, R.id.tag_tv_acconut, "title");
-        } else {
-            intent = new Intent(getActivity(), LoginActivity.class);
-            ((BaseActivity) getActivity()).sceneTransitionTo(intent, 3, rootView, R.id.tag_tv_acconut, "content");
-        }
-    }
-
     private void crateUserZone() {
         // TODO: 2/8/2017 crateUserZone
         LoadingAlertDialog.showLoadDialog(getActivity(), "正在创建用户主页", true);
@@ -273,7 +233,6 @@ public class UserFragment extends BaseFragment {
                 userZone.setMi(0);
                 userZone.setExper(0);
                 userZone.setPhotoUrl(user.getUrl_photo());
-                System.out.println("shenhua sout:" + user.getUrl_photo());
                 userZone.setSex(user.getSex());
                 userZone.save(new SaveListener<String>() {
                     @Override
@@ -282,8 +241,6 @@ public class UserFragment extends BaseFragment {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    System.out.println("shenhua sout:creatUserZone   " + objectId);
-
                                     MyUser user = new MyUser();
                                     user.setUserZoneObjID(objectId);
                                     user.update(UserUtils.getInstance().getUserInfo(getContext()).getUserId(), new UpdateListener() {
@@ -301,7 +258,7 @@ public class UserFragment extends BaseFragment {
                                     intent.putExtra("userObjectId", user.getUserId());
                                     intent.putExtra("photo", user.getUrl_photo());
                                     intent.putExtra("sex", user.getSex());
-                                    ((BaseActivity) getActivity()).sceneTransitionTo(intent, 1, rootView, R.id.iv_user_photo, "photos");
+                                    sceneTransitionTo(intent, 1, rootView, R.id.iv_user_photo, "photos");
                                 }
                             });
                         } else {
@@ -318,14 +275,56 @@ public class UserFragment extends BaseFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("shenhua sout: UserFragment  requestCode ---->" + requestCode);
-        System.out.println("shenhua sout: UserFragment  resultCode ---->" + resultCode);
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 3 && resultCode == LoginActivity.LOGIN_SUCCESS) {
+        // 用户修改了某些资料，需要更新界面
+        if (requestCode == REQUEST_CODE_NAV_TO_USER_ZONE || requestCode == REQUEST_CODE_NAV_TO_USER_ACCOUNT) {
             updateUserView();
         }
-        if (requestCode == 1 || requestCode == 2) {
+        // 用户登录成功
+        if (requestCode == REQUEST_CODE_NAV_TO_LOGIN && resultCode == LoginActivity.LOGIN_SUCCESS) {
+            Log.d(TAG, "onActivityResult: 用户登录成功");
             updateUserView();
+            mExperTv.postDelayed(() -> {
+                FloatingText floatingText = new FloatingText.FloatingTextBuilder(getActivity())
+                        .textColor(Color.parseColor("#1DBFD8"))
+                        .textSize(30)
+                        .textContent("个人经验+2")
+                        .offsetX(0)
+                        .offsetY(0)
+                        .floatingAnimatorEffect(new TranslateFloatingAnimator())
+                        .build();
+                floatingText.attach2Window();
+                floatingText.startFloating(mExperTv);
+            }, 2000);
+        }
+    }
+
+    @OnClick({R.id.rl_user_zone, R.id.rl_account, R.id.rl_publish, R.id.rl_message, R.id.rl_setting, R.id.rl_about})
+    void clicks(View v) {
+        Intent intent;
+        switch (v.getId()) {
+            case R.id.rl_user_zone:
+                navToUserZone();
+                break;
+            case R.id.rl_account:
+                navToUserAccount();
+                break;
+            case R.id.rl_publish:
+                intent = new Intent(getActivity(), PublishDynamicActivity.class);
+                sceneTransitionTo(intent, REQUEST_CODE_NAV_TO_PUBLISH_DYNAMIC, rootView, R.id.tag_tv_publish, "title");
+                break;
+            case R.id.rl_message:
+                intent = new Intent(getActivity(), MessageActivity.class);
+                sceneTransitionTo(intent, REQUEST_CODE_NAV_TO_MESSAGE, rootView, R.id.tag_tv_message, "title");
+                break;
+            case R.id.rl_setting:
+                intent = new Intent(getActivity(), SettingActivity.class);
+                sceneTransitionTo(intent, REQUEST_CODE_NAV_TO_SETTING, rootView, R.id.tag_tv_setting, "title");
+                break;
+            case R.id.rl_about:
+                intent = new Intent(getActivity(), AboutActivity.class);
+                sceneTransitionTo(intent, REQUEST_CODE_NAV_TO_ABOUT, rootView, R.id.tag_tv_about, "title");
+                break;
         }
     }
 

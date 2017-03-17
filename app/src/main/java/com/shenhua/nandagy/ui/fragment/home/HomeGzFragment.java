@@ -30,8 +30,6 @@ public class HomeGzFragment extends BaseHomeContentFragment {
     @Override
     public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
         ButterKnife.bind(this, rootView);
-        mRecyclerView.setNestedScrollingEnabled(false);
-        mProgressBar.setVisibility(View.VISIBLE);
         Log.d(TAG, "onCreateView: 工作动态");
         presenter.execute();
     }
