@@ -17,7 +17,6 @@ public class HomePresenter extends BasePresenter<HomeView> implements HttpCallba
 
     private HomeModel<List<HomeData>> homeModel;
     private String url;
-    private boolean mHasInit;
 
     public HomePresenter(HomeView homeView, String url) {
         attachView(homeView);
@@ -25,8 +24,8 @@ public class HomePresenter extends BasePresenter<HomeView> implements HttpCallba
         homeModel = new HomeModelImpl();
     }
 
-    public void execute() {
-        homeModel.toGetHomeData(this, url, this);
+    public void execute(int type) {
+        homeModel.toGetHomeData(this, url, this, type);
     }
 
     @Override
@@ -36,13 +35,11 @@ public class HomePresenter extends BasePresenter<HomeView> implements HttpCallba
 
     @Override
     public void onSuccess(List<HomeData> data) {
-        mHasInit = true;
-        mvpView.updateList(null);
+        mvpView.updateList(data);
     }
 
     @Override
     public void onError(String errorInfo) {
-        mHasInit = false;
         mvpView.showToast(errorInfo);
     }
 

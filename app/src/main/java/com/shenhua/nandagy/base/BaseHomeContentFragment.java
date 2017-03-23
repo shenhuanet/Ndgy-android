@@ -1,6 +1,7 @@
 package com.shenhua.nandagy.base;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -45,21 +46,19 @@ public abstract class BaseHomeContentFragment extends BaseMvpFragment<HomePresen
             final HomeDataAdapter adapter = new HomeDataAdapter(getContext(), datas);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mRecyclerView.setAdapter(adapter);
-            adapter.setOnItemClickListener((view1, position, data) -> navToDetail(view1, data));
-//                adapter.setOnItemClickListener((view1, position) -> navToDetail(view1, adapter.getDatas().get(position)));
+            adapter.setOnItemClickListener((view1, position, data) -> {
+                Intent intent = new Intent(getContext(), ContentDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("data", data);
+                intent.putExtras(bundle);
+                sceneTransitionTo(intent, 0, view1, R.id.iv_home_list_img, "photos");
+            });
+
         }
     }
 
-    private void navToDetail(View view, HomeData homeData) {
-        Intent intent = new Intent(getActivity(), ContentDetailActivity.class);
-        intent.putExtra("photo", homeData.getImgUrl());
-        intent.putExtra("title", homeData.getTitle());
-        intent.putExtra("time", homeData.getTime());
-//        sceneTransitionTo(intent, 0, view, R.id.iv_home_list_img, "photos");
-    }
-
     @Override
-    public void showToast(final String msg) {
+    public void showToast(String msg) {
         toast(msg);
         mEmptyLayout.setVisibility(View.VISIBLE);
     }
@@ -82,7 +81,7 @@ public abstract class BaseHomeContentFragment extends BaseMvpFragment<HomePresen
     }
 
     public void onReload() {
-        presenter.execute();
+
     }
 
 }

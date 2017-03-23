@@ -1,7 +1,9 @@
 package com.shenhua.nandagy.adapter;
 
 import android.content.Context;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.shenhua.commonlibs.base.BaseRecyclerAdapter;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.HomeData;
@@ -25,9 +27,11 @@ public class HomeDataAdapter extends BaseRecyclerAdapter<HomeData> {
 
     @Override
     public void bindData(BaseRecyclerAdapter.BaseRecyclerViewHolder holder, int position, HomeData item) {
-        holder.setText(R.id.tv_home_list_title,item.getTitle());
-        holder.setText(R.id.tv_home_list_detail,item.getDetail());
-        holder.setText(R.id.tv_home_list_time,item.getTime());
-        holder.setImage(R.id.iv_home_list_img,item.getImgUrl());
+        holder.setText(R.id.tv_home_list_title, item.getTitle());
+        holder.setText(R.id.tv_home_list_detail, item.getDetail());
+        holder.setText(R.id.tv_home_list_time, item.getTime());
+        ImageView imageView = (ImageView) holder.getView(R.id.iv_home_list_img);
+        Glide.with(mContext).load(item.getImgUrl()).error(R.drawable.about_logo_pic)
+                .centerCrop().into(imageView);
     }
 }

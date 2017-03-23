@@ -1,5 +1,9 @@
 package com.shenhua.nandagy.bean;
 
+import android.text.TextUtils;
+
+import com.shenhua.nandagy.service.Constants;
+
 import java.io.Serializable;
 
 /**
@@ -16,7 +20,10 @@ public class HomeData implements Serializable {
     }
 
     public void setDetail(String detail) {
-        this.detail = detail;
+        if (TextUtils.isEmpty(detail))
+            this.detail = "暂无描述";
+        else
+            this.detail = detail + "...";
     }
 
     public String getHref() {
@@ -32,7 +39,7 @@ public class HomeData implements Serializable {
     }
 
     public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+        this.imgUrl = Constants.HOME_URL_GZDT + imgUrl;
     }
 
     public String getTime() {

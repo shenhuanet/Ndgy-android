@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 )
 public class WebActivity extends BaseActivity {
 
-    @BindView(R.id.content_web)
+    @BindView(R.id.web_content)
     WebView mWebView;
     @BindView(R.id.content_pro)
     ProgressBar mProgressBar;

@@ -9,5 +9,5 @@ import com.shenhua.commonlibs.mvp.BasePresenter;
  */
 public interface HomeModel<T> {
 
-    void toGetHomeData(BasePresenter basePresenter,String url, HttpCallback<T> callback);
+    void toGetHomeData(BasePresenter basePresenter, String url, HttpCallback<T> callback, int type);
 }

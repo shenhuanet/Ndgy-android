@@ -23,6 +23,7 @@
                 android:id="@+id/iv_detail_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:contentDescription="@string/img_background"
                 android:scaleType="centerCrop"
                 android:src="@drawable/about_logo_pic"
@@ -55,5 +56,13 @@
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|end"
         app:rippleColor="@android:color/white" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
+        android:visibility="invisible" />
 
 </android.support.design.widget.CoordinatorLayout>
