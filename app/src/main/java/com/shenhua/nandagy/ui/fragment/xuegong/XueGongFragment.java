@@ -1,13 +1,10 @@
 package com.shenhua.nandagy.ui.fragment.xuegong;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,46 +16,41 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
-import com.shenhua.commonlibs.base.BaseFragment;
 import com.shenhua.commonlibs.base.BaseImageTextItem;
 import com.shenhua.commonlibs.base.BaseListAdapter;
+import com.shenhua.commonlibs.mvp.BaseMvpFragment;
 import com.shenhua.commonlibs.utils.BusBooleanEvent;
 import com.shenhua.commonlibs.utils.BusProvider;
 import com.shenhua.commonlibs.widget.InnerGridView;
 import com.shenhua.libs.bannerview.BannerView;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.XueGongDataAdapter;
+import com.shenhua.nandagy.bean.ContentPassesData;
 import com.shenhua.nandagy.bean.XueGongData;
 import com.shenhua.nandagy.presenter.XueGongPresenter;
+import com.shenhua.nandagy.service.Constants;
+import com.shenhua.nandagy.service.ContentDetailType;
 import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
 import com.shenhua.nandagy.ui.activity.WebActivity;
 import com.shenhua.nandagy.ui.activity.xuegong.EduAdminActivity;
 import com.shenhua.nandagy.ui.activity.xuegong.FinanceActivity;
 import com.shenhua.nandagy.view.XueGongView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * 学工
  * Created by Shenhua on 8/28/2016.
  */
 @ActivityFragmentInject(contentViewId = R.layout.frag_xuegong)
-public class XueGongFragment extends BaseFragment implements XueGongView, GridView.OnItemClickListener {
+public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongView> implements XueGongView, GridView.OnItemClickListener {
 
     @BindView(R.id.banner)
     BannerView bannerView;
@@ -84,65 +76,38 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (!isInit) {
-            System.out.println("shenhua sout:" + "xuexuexue");
-            presenter = new XueGongPresenter(this, "");
             presenter.execute();
-            makeToolView(mInnerGridView, R.array.xuegong_tabs_titles, R.array.xuegong_tabs_images);
+            setupToolView(mInnerGridView, R.array.xuegong_tabs_titles, R.array.xuegong_tabs_images);
             mInnerGridView.setOnItemClickListener(this);
             isInit = true;
         }
     }
 
-    private void textOkhttp() {
-        OkHttpClient client = new OkHttpClient();
-        Request request;
-        request = new Request.Builder().url("http://www.ndgy.cn").build();
-        try {
-            Response response;
-            response = client.newCall(request).execute();
-            System.out.println("shenhua sout:ok http code:" + response.code());
-            String result;
-            result = new String(response.body().bytes());
-            if (response.code() == 200) {
-                if (result.contains("location")) {
-                    Pattern p = Pattern.compile("location=\"(.*?)\"");
-                    Matcher m = p.matcher(result);
-                    String verify = "";
-                    while (m.find()) {
-                        MatchResult mr = m.toMatchResult();
-                        verify = mr.group(1);
-                    }
-                    request = new Request.Builder().url("http://www.ndgy.cn" + verify).build();
-                    response = client.newCall(request).execute();
-                    System.out.println("shenhua sout:ok http code:" + response.code());
-                    result = new String(response.body().bytes());
-                    System.out.println("shenhua sout:2--->" + result);
-                }
-                System.out.println("shenhua sout:1-->" + result);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public XueGongPresenter createPresenter() {
+        presenter = new XueGongPresenter(this, Constants.XUEGONG_URL);
+        return presenter;
     }
 
     @Override
     public void updateList(final ArrayList[] lists) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (lists == null) {
-                    mNestedScrollView.setVisibility(View.GONE);
-                    mEmptyLayout.setVisibility(View.VISIBLE);
-                } else {
-                    mNestedScrollView.setVisibility(View.VISIBLE);
-                    updataBanner(lists[0]);
-                    updateDatas(lists[1]);
-                }
-            }
-        });
+        if (lists == null) {
+            mNestedScrollView.setVisibility(View.INVISIBLE);
+            mEmptyLayout.setVisibility(View.VISIBLE);
+        } else {
+            mNestedScrollView.setVisibility(View.VISIBLE);
+            updateBanner(lists[0]);
+            updateDatas(lists[1]);
+            mEmptyLayout.setVisibility(View.INVISIBLE);
+        }
     }
 
-    private void updataBanner(List<XueGongData.BannerData> list) {
+    /**
+     * 显示banner
+     *
+     * @param list List<XueGongData.BannerData>
+     */
+    private void updateBanner(List<XueGongData.BannerData> list) {
         if (list != null) {
             String[] imgs = new String[list.size()];
             String[] titles = new String[list.size()];
@@ -155,15 +120,16 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
             bannerView.setBannerStyle(BannerView.BannerViewConfig.CIRCLE_INDICATOR_TITLE_HORIZONTAL);
             bannerView.setImageArray(imgs);
             bannerView.setBannerTitleArray(titles);
-            bannerView.setOnBannerClickListener(new BannerView.OnBannerItemClickListener() {
-                @Override
-                public void OnBannerClick(View view, int position) {
-                    Toast.makeText(getActivity(), hrefs[position - 1], Toast.LENGTH_SHORT).show();
-                }
-            });
+            bannerView.setOnBannerClickListener((view, position) ->
+                    toast(hrefs[position - 1]));
         }
     }
 
+    /**
+     * 显示列表
+     *
+     * @param list List<XueGongData>
+     */
     private void updateDatas(List<XueGongData> list) {
         if (list != null) {
             recyclerView.setNestedScrollingEnabled(false);
@@ -174,62 +140,39 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
         }
     }
 
-    private void navToDetail(View view, XueGongData xueGongData) {
-        // http://blog.csdn.net/jxxfzgy/article/details/44515351
+    private void navToDetail(View view, XueGongData data) {
         Intent intent = new Intent(getActivity(), ContentDetailActivity.class);
-        intent.putExtra("photo", xueGongData.getNewsType());
-        intent.putExtra("title", xueGongData.getTitle());
-        intent.putExtra("time", xueGongData.getTime());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions options = ActivityOptions
-                    .makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.iv_xuegong_img), "photos");
-            getActivity().startActivity(intent, options.toBundle());
-        } else {
-            ActivityOptionsCompat options = ActivityOptionsCompat
-                    .makeScaleUpAnimation(view, view.getWidth() / 2, view.getHeight() / 2, 0, 0);
-            ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
-        }
+        ContentPassesData contentPassesData = new ContentPassesData(
+                ContentDetailType.TYPE_JIAOWU,
+                data.getTitle(),
+                data.getNewsType(),
+                data.getTime(),
+                data.getHref());
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("data", contentPassesData);
+        intent.putExtras(bundle);
+        sceneTransitionTo(intent, 0, view, R.id.iv_xuegong_img, "photos");
     }
 
     @Override
     public void showToast(final String msg) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-            }
-        });
+        toast(msg);
     }
 
     @Override
     public void showProgress() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                BusProvider.getInstance().post(new BusBooleanEvent(true));
-                mProgressBar.setVisibility(View.VISIBLE);
-            }
-        });
+        BusProvider.getInstance().post(new BusBooleanEvent(true));
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                BusProvider.getInstance().post(new BusBooleanEvent(false));
-                mProgressBar.setVisibility(View.GONE);
-            }
-        });
+        BusProvider.getInstance().post(new BusBooleanEvent(false));
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.layout_empty_reload)
     void onClick(View v) {
-        onRead();
-    }
-
-    public void onRead() {
-        System.out.println("shenhua sout:" + "重新加载");
         presenter.execute();
     }
 
@@ -252,7 +195,14 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
         sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
     }
 
-    public void makeToolView(AbsListView abs, int titlesResId, int imagesResId) {
+    /**
+     * 设置中间的3个toolView
+     *
+     * @param abs         listView
+     * @param titlesResId titlesId
+     * @param imagesResId imagesId
+     */
+    public void setupToolView(AbsListView abs, int titlesResId, int imagesResId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             abs.setNestedScrollingEnabled(false);
         }
@@ -279,4 +229,5 @@ public class XueGongFragment extends BaseFragment implements XueGongView, GridVi
         };
         abs.setAdapter(adapter);
     }
+
 }

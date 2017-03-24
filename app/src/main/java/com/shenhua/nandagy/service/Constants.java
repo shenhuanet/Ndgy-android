@@ -9,6 +9,8 @@ public class Constants {
     public static final String DATABASE_NAME = "list_db";
     public static final String HOME_URL_GZDT = "http://www.ndgy.cn";
     public static final String HOME_URL_GGGS = HOME_URL_GZDT + "/Item/list.asp?id=1268";
+    public static final String XUEGONG_URL = "http://xgc.ndgy.cn";
+	public static final String JIAOWU_URL = "http://www.ncupyh.cn";
 
     public static class HtmlString {
         public static final String HTML_HEAD = "<html>\n" +

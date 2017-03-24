@@ -1,7 +1,7 @@
 package com.shenhua.nandagy.view;
 
 import com.shenhua.commonlibs.mvp.BaseView;
-import com.shenhua.nandagy.bean.scorebean.ContentDetailData;
+import com.shenhua.nandagy.bean.ContentDetailData;
 
 /**
  * Created by Shenhua on 3/23/2017.

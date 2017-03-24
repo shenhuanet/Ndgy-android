@@ -25,11 +25,11 @@ import java.util.regex.Pattern;
 public class HomeModelImpl implements HomeModel<List<HomeData>> {
 
     private static final String TAG = "HomeModelImpl";
+    private HttpManager httpManager = HttpManager.getInstance();
 
     @Override
     public void toGetHomeData(BasePresenter basePresenter, final String url, final HttpCallback<List<HomeData>> callback, final int type) {
-        basePresenter.addSubscription(HttpManager.getInstance()
-                .createHtmlGetObservable(App.getContext(), url, "gb2312", false), new ApiCallback<String>() {
+        basePresenter.addSubscription(httpManager.createHtmlGetObservable(App.getContext(), url, "gb2312", false), new ApiCallback<String>() {
             @Override
             public void onPreExecute() {
                 callback.onPreRequest();

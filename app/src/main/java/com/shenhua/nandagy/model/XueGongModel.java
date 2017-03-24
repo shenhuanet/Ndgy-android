@@ -1,6 +1,7 @@
 package com.shenhua.nandagy.model;
 
 import com.shenhua.commonlibs.callback.HttpCallback;
+import com.shenhua.commonlibs.mvp.BasePresenter;
 
 /**
  * 学工处数据接口
@@ -8,5 +9,5 @@ import com.shenhua.commonlibs.callback.HttpCallback;
  */
 public interface XueGongModel<T> {
 
-    void toGetXueGongData(String url, HttpCallback<T> callback);
+    void toGetXueGongData(BasePresenter basePresenter, String url, HttpCallback<T> callback);
 }

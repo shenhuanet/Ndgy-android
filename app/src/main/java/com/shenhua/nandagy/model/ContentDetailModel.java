@@ -10,5 +10,9 @@ import com.shenhua.commonlibs.mvp.BasePresenter;
  */
 public interface ContentDetailModel<T> {
 
-    void getDetail(BasePresenter basePresenter, String url, HttpCallback<T> callback);
+    void getHomeDetail(BasePresenter basePresenter,String url, HttpCallback<T> callback);
+
+    void getXuegongDetail(BasePresenter basePresenter,String url, HttpCallback<T> callback);
+
+    void getJiaowuDetail(BasePresenter basePresenter,String url, HttpCallback<T> callback);
 }

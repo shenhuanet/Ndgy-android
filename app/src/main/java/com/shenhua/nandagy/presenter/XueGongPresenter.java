@@ -1,6 +1,7 @@
 package com.shenhua.nandagy.presenter;
 
 import com.shenhua.commonlibs.callback.HttpCallback;
+import com.shenhua.commonlibs.mvp.BasePresenter;
 import com.shenhua.nandagy.model.XueGongModel;
 import com.shenhua.nandagy.model.XueGongModelImpl;
 import com.shenhua.nandagy.view.XueGongView;
@@ -11,10 +12,9 @@ import java.util.ArrayList;
  * 学工数据代理
  * Created by shenhua on 8/31/2016.
  */
-public class XueGongPresenter implements HttpCallback<ArrayList[]> {
+public class XueGongPresenter extends BasePresenter<XueGongView> implements HttpCallback<ArrayList[]> {
 
     private XueGongModel<ArrayList[]> model;
-    private XueGongView xueGongView;
     private String url;
 
     /**
@@ -24,32 +24,32 @@ public class XueGongPresenter implements HttpCallback<ArrayList[]> {
      * @param url         url，非host
      */
     public XueGongPresenter(XueGongView xueGongView, String url) {
-        this.xueGongView = xueGongView;
+        attachView(xueGongView);
         this.url = url;
         model = new XueGongModelImpl();
     }
 
     public void execute() {
-        model.toGetXueGongData(url, this);
+        model.toGetXueGongData(this, url, this);
     }
 
     @Override
     public void onPreRequest() {
-        xueGongView.showProgress();
+        mvpView.showProgress();
     }
 
     @Override
     public void onSuccess(ArrayList[] data) {
-        xueGongView.updateList(data);
+        mvpView.updateList(data);
     }
 
     @Override
     public void onError(String errorInfo) {
-        xueGongView.showToast(errorInfo);
+        mvpView.showToast(errorInfo);
     }
 
     @Override
     public void onPostRequest() {
-        xueGongView.hideProgress();
+        mvpView.hideProgress();
     }
 }

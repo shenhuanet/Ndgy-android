@@ -5,7 +5,7 @@ import com.shenhua.commonlibs.mvp.ApiCallback;
 import com.shenhua.commonlibs.mvp.BasePresenter;
 import com.shenhua.commonlibs.mvp.HttpManager;
 import com.shenhua.nandagy.App;
-import com.shenhua.nandagy.bean.scorebean.ContentDetailData;
+import com.shenhua.nandagy.bean.ContentDetailData;
 import com.shenhua.nandagy.service.Constants;
 
 import org.jsoup.Jsoup;
@@ -21,11 +21,14 @@ import org.jsoup.select.Elements;
 public class ContentDetailModelImpl implements ContentDetailModel<ContentDetailData> {
 
     private static final String TAG = "ContentDetailModelImpl";
+    private HttpManager httpManager = HttpManager.getInstance();
 
+    /**
+     * 获取主页详情数据
+     */
     @Override
-    public void getDetail(BasePresenter basePresenter, String url, HttpCallback<ContentDetailData> callback) {
-        basePresenter.addSubscription(HttpManager.getInstance()
-                .createHtmlGetObservable(App.getContext(), url, "gb2312", false), new ApiCallback<String>() {
+    public void getHomeDetail(BasePresenter basePresenter, String url, HttpCallback<ContentDetailData> callback) {
+        basePresenter.addSubscription(httpManager.createHtmlGetObservable(App.getContext(), url, "gb2312", false), new ApiCallback<String>() {
             @Override
             public void onPreExecute() {
                 callback.onPreRequest();
@@ -58,6 +61,111 @@ public class ContentDetailModelImpl implements ContentDetailModel<ContentDetailD
                     detailData.setContent(Constants.HtmlString.HTML_HEAD + content + Constants.HtmlString.HTML_END);
                     callback.onSuccess(detailData);
                 } catch (Exception e) {
+                    callback.onError("数据解析失败");
+                }
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                callback.onError(msg);
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onPostRequest();
+            }
+        });
+    }
+
+    /**
+     * 获取学工详情数据
+     */
+    @Override
+    public void getXuegongDetail(BasePresenter basePresenter, String url, HttpCallback<ContentDetailData> callback) {
+        basePresenter.addSubscription(httpManager.createHtmlGetObservable(App.getContext(), url, "gb2312", false), new ApiCallback<String>() {
+            @Override
+            public void onPreExecute() {
+                callback.onPreRequest();
+            }
+
+            @Override
+            public void onSuccess(String model) {
+                Document document = Jsoup.parse(model);
+                try {
+                    Element tables = document.select("table").get(3);
+                    String title = tables.getElementsByAttributeValue("height", "30").text();
+                    Element content = tables.getElementById("MyContent");
+                    // 去除href标签，使本身图片失去点击
+                    Elements hrefs = content.select("a[href]");
+                    for (Element el : hrefs) {
+                        el.removeAttr("href");
+                    }
+                    // 增加图片的host前缀
+                    Elements imgs = content.select("img[src]");
+                    for (Element element : imgs) {
+                        String imgUrl = element.attr("src");
+                        if (imgUrl.trim().startsWith("/")) {
+                            imgUrl = Constants.XUEGONG_URL + imgUrl;
+                            element.attr("src", imgUrl);
+                        }
+                    }
+                    // 设置数据
+                    ContentDetailData detailData = new ContentDetailData();
+                    detailData.setTitle(title);
+                    detailData.setContent(Constants.HtmlString.HTML_HEAD + content + Constants.HtmlString.HTML_END);
+                    callback.onSuccess(detailData);
+                } catch (Exception e) {
+                    callback.onError("数据解析失败");
+                }
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                callback.onError(msg);
+            }
+
+            @Override
+            public void onFinish() {
+                callback.onPostRequest();
+            }
+        });
+    }
+
+    /**
+     * 获取教务详情数据
+     */
+    @Override
+    public void getJiaowuDetail(BasePresenter basePresenter, String url, HttpCallback<ContentDetailData> callback) {
+        basePresenter.addSubscription(httpManager.createHtmlGetObservable(App.getContext(), url, "gb2312", false), new ApiCallback<String>() {
+            @Override
+            public void onPreExecute() {
+                callback.onPreRequest();
+            }
+
+            @Override
+            public void onSuccess(String model) {
+                try {
+                    Document document = Jsoup.parse(model);
+                    Element element = document.select("table").get(18);
+                    Elements hrefs = element.select("a[href]");
+                    for (Element el : hrefs) {
+                        el.removeAttr("href");
+                    }
+                    // 增加图片的host前缀
+                    Elements imgs = element.select("img[src]");
+                    for (Element e : imgs) {
+                        String imgUrl = e.attr("src");
+                        if (imgUrl.trim().startsWith("/")) {
+                            imgUrl = Constants.JIAOWU_URL + imgUrl;
+                            e.attr("src", imgUrl);
+                        }
+                    }
+                    ContentDetailData detailData = new ContentDetailData();
+                    detailData.setTitle(element.getElementsByAttributeValue("height", "60").text());
+                    detailData.setContent(Constants.HtmlString.HTML_HEAD + element.getElementsByClass("MsoNormal").html() + Constants.HtmlString.HTML_END);
+                    callback.onSuccess(detailData);
+                } catch (Exception e) {
+                    e.printStackTrace();
                     callback.onError("数据解析失败");
                 }
             }

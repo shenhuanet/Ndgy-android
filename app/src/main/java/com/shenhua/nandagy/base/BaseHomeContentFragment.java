@@ -13,8 +13,10 @@ import com.shenhua.commonlibs.utils.BusBooleanEvent;
 import com.shenhua.commonlibs.utils.BusProvider;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.HomeDataAdapter;
+import com.shenhua.nandagy.bean.ContentPassesData;
 import com.shenhua.nandagy.bean.HomeData;
 import com.shenhua.nandagy.presenter.HomePresenter;
+import com.shenhua.nandagy.service.ContentDetailType;
 import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
 import com.shenhua.nandagy.view.HomeView;
 
@@ -48,8 +50,14 @@ public abstract class BaseHomeContentFragment extends BaseMvpFragment<HomePresen
             mRecyclerView.setAdapter(adapter);
             adapter.setOnItemClickListener((view1, position, data) -> {
                 Intent intent = new Intent(getContext(), ContentDetailActivity.class);
+                ContentPassesData contentPassesData = new ContentPassesData(
+                        ContentDetailType.TYPE_HOME,
+                        data.getTitle(),
+                        data.getImgUrl(),
+                        data.getTime(),
+                        data.getHref());
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("data", data);
+                bundle.putSerializable("data", contentPassesData);
                 intent.putExtras(bundle);
                 sceneTransitionTo(intent, 0, view1, R.id.iv_home_list_img, "photos");
             });

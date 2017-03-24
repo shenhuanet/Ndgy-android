@@ -27,9 +27,10 @@ import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.mvp.BaseMvpActivity;
 import com.shenhua.commonlibs.utils.ScreenUtils;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.bean.HomeData;
-import com.shenhua.nandagy.bean.scorebean.ContentDetailData;
+import com.shenhua.nandagy.bean.ContentDetailData;
+import com.shenhua.nandagy.bean.ContentPassesData;
 import com.shenhua.nandagy.presenter.ContentDetailPresenter;
+import com.shenhua.nandagy.service.ContentDetailType;
 import com.shenhua.nandagy.view.ContentDetailView;
 
 import org.jsoup.Jsoup;
@@ -68,25 +69,33 @@ public class ContentDetailActivity extends BaseMvpActivity<ContentDetailPresente
     WebView mWebView;
     protected ContentDetailPresenter mContentDetailPresenter;
     private String detail;
+    private ContentDetailType type;
     private String mUrl;
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        HomeData data = (HomeData) getIntent().getExtras().getSerializable("data");
         initWebView();
-        if (data == null) return;
-        Glide.with(this).load(data.getImgUrl()).error(R.drawable.about_logo_pic).centerCrop().into(mImageView);
-        mTitleTv.setText(data.getTitle());
-        mTimeTv.setText(data.getTime());
-        ActionBar actionBar = getToolbar();
-        actionBar.setTitle(data.getTitle());
-        mUrl = data.getHref();
+        try {
+            ContentPassesData data = (ContentPassesData) getIntent().getExtras().getSerializable("data");
+            if (data == null) return;
+            type = data.getType();
+            Glide.with(this).load(data.getImage()).error(R.drawable.about_logo_pic)
+                    .centerCrop().into(mImageView);
+            mTitleTv.setText(data.getTitle());
+            mTimeTv.setText(data.getTime());
+            ActionBar actionBar = getToolbar();
+            actionBar.setTitle(data.getTitle());
+            mUrl = data.getUrl();
+        } catch (Exception e) {
+            e.printStackTrace();
+            toast("未传递参数");
+        }
     }
 
     @Override
     public ContentDetailPresenter createPresenter() {
-        mContentDetailPresenter = new ContentDetailPresenter(this, mUrl);
+        mContentDetailPresenter = new ContentDetailPresenter(this, type, mUrl);
         mContentDetailPresenter.execute();
         return mContentDetailPresenter;
     }

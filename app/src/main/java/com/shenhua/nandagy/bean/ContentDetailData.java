@@ -1,4 +1,4 @@
-package com.shenhua.nandagy.bean.scorebean;
+package com.shenhua.nandagy.bean;
 
 /**
  * Created by Shenhua on 3/23/2017.
