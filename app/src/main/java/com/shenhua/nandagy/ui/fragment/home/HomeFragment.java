@@ -39,7 +39,7 @@ import butterknife.ButterKnife;
  * 首页
  * Created by Shenhua on 8/28/2016.
  */
-@ActivityFragmentInject(contentViewId = R.layout.frag_home)
+@ActivityFragmentInject(contentViewId = R.layout.frag_home_collapsing)
 public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelectedListener, GridView.OnItemClickListener {
 
     @BindView(R.id.tablayout)

@@ -9,10 +9,23 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.shenhua.libs.bannerview.BannerView
-            android:id="@+id/banner"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp" />
+            android:layout_height="wrap_content">
+
+            <com.shenhua.libs.bannerview.BannerView
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="150dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/img_p"
+                android:rotation="180" />
+
+        </FrameLayout>
 
         <View
             android:layout_width="match_parent"
