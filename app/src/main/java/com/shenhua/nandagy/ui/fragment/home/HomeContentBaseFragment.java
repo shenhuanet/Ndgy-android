@@ -1,4 +1,4 @@
-package com.shenhua.nandagy.base;
+package com.shenhua.nandagy.ui.fragment.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,7 +29,7 @@ import butterknife.OnClick;
  * 首页两块fragment 基类
  * Created by shenhua on 8/30/2016.
  */
-public abstract class BaseHomeContentFragment extends BaseMvpFragment<HomePresenter, HomeView> implements HomeView {
+public abstract class HomeContentBaseFragment extends BaseMvpFragment<HomePresenter, HomeView> implements HomeView {
 
     @BindView(R.id.recyclerview)
     public RecyclerView mRecyclerView;

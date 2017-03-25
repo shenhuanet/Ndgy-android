@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.base.BaseHomeContentFragment;
 import com.shenhua.nandagy.presenter.HomePresenter;
 import com.shenhua.nandagy.service.Constants;
 
@@ -19,9 +18,7 @@ import butterknife.ButterKnife;
  * Created by shenhua on 8/29/2016.
  */
 @ActivityFragmentInject(contentViewId = R.layout.frag_home_content)
-public class HomeGzFragment extends BaseHomeContentFragment {
-
-    private static final String TAG = "HomeGzFragment";
+public class HomeGzFragment extends HomeContentBaseFragment {
 
     public static HomeGzFragment newInstance() {
         return new HomeGzFragment();
@@ -30,7 +27,7 @@ public class HomeGzFragment extends BaseHomeContentFragment {
     @Override
     public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
         ButterKnife.bind(this, rootView);
-//        presenter.execute(1);
+        presenter.execute(0);
     }
 
     @Override
@@ -42,6 +39,6 @@ public class HomeGzFragment extends BaseHomeContentFragment {
     @Override
     public void onReload() {
         super.onReload();
-        presenter.execute(1);
+        presenter.execute(0);
     }
 }

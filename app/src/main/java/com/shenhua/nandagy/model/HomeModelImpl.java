@@ -63,16 +63,16 @@ public class HomeModelImpl implements HomeModel<List<HomeData>> {
         List<HomeData> datas = new ArrayList<>();
         try {
             Document document = Jsoup.parse(html);
-            Elements tables = document.select(type == 1 ? "div[onclick]" : "table[onclick]");
+            Elements tables = document.select(type == 0 ? "div[onclick]" : "table[onclick]");
             String href;
             for (Element element : tables) {
                 HomeData data = new HomeData();
-                href = element.getElementsByTag(type == 1 ? "div" : "table").attr("onclick");
-                Matcher matcher = Pattern.compile(type == 1 ? "\\('(.*?)'," : "'(.*?)'").matcher(href);
+                href = element.getElementsByTag(type == 0 ? "div" : "table").attr("onclick");
+                Matcher matcher = Pattern.compile(type == 0 ? "\\('(.*?)'," : "'(.*?)'").matcher(href);
                 if (matcher.find())
                     href = matcher.toMatchResult().group(1);
                 data.setImgUrl(element.getElementsByTag("img").attr("src").trim());
-                if (type == 1) {
+                if (type == 0) {
                     data.setHref(Constants.HOME_URL_GZDT + href);
                     data.setTime(element.getElementsByAttributeValue("width", "236").text().trim());
                     data.setTitle(element.getElementsByAttributeValue("height", "30").text().trim() + "...");

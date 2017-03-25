@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +39,7 @@ import butterknife.ButterKnife;
  * 首页
  * Created by Shenhua on 8/28/2016.
  */
-@ActivityFragmentInject(
-        contentViewId = R.layout.frag_home
-)
+@ActivityFragmentInject(contentViewId = R.layout.frag_home)
 public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelectedListener, GridView.OnItemClickListener {
 
     @BindView(R.id.tablayout)
@@ -49,10 +48,14 @@ public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelecte
     BannerView mHomeImgIv;
     @BindView(R.id.gv_home_tool)
     InnerGridView mInnerGridView;
+    private Fragment[] fragments = new Fragment[2];
+    private SparseBooleanArray sba = new SparseBooleanArray(2);
 
     @Override
     public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
         ButterKnife.bind(this, rootView);
+        sba.put(0, false);
+        sba.put(1, false);
         String[] titles = getActivity().getResources().getStringArray(R.array.home_items_titles);
         for (String t : titles) {
             mTabLayout.addTab(mTabLayout.newTab().setText(t));
@@ -84,14 +87,16 @@ public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelecte
     }
 
     private void onTabUpdate(int tab) {
-        Fragment fragment;
-        if (tab == 0) {
-            fragment = HomeGzFragment.newInstance();
-        } else {
-            fragment = HomeGgFragment.newInstance();
+        if (tab == 0 && !sba.get(0)) {
+            fragments[0] = HomeGzFragment.newInstance();
+            sba.put(0, true);
+        }
+        if (tab == 1 && !sba.get(1)) {
+            fragments[1] = HomeGgFragment.newInstance();
+            sba.put(1, true);
         }
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_content, fragment);
+        ft.replace(R.id.frame_content, fragments[tab]);
         ft.commit();
     }
 
