@@ -6,18 +6,20 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ScrollView;
-import android.widget.SimpleAdapter;
 
+import com.shenhua.commonlibs.base.BaseImageTextItem;
+import com.shenhua.commonlibs.base.BaseListAdapter;
 import com.shenhua.nandagy.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by shenhua on 3/25/2017.
@@ -25,32 +27,11 @@ import java.util.HashMap;
  */
 public class NineGridView extends GridView {
 
-    private int[] images = {
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher,
-            R.mipmap.ic_launcher
-    };
-    private String[] titles = {
-            "O2O收款",
-            "订单查询",
-            "转账",
-            "手机充值",
-            "信用卡还款",
-            "水电煤",
-            "违章代缴",
-            "888",
-            "更多"
-    };
-    private static final String TAG = "NineGridView";
-    private boolean drawStroke = false;
+    private int[] images;
+    private String[] titles;
     private int strokeColor = 0x8355802;
     private int strokeWidth = 1;
+    private OnItemClickListener listener;
 
     public NineGridView(Context context) {
         this(context, null);
@@ -62,7 +43,6 @@ public class NineGridView extends GridView {
 
     public NineGridView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
         setNumColumns(3);
         setHorizontalSpacing(0);
         setVerticalSpacing(0);
@@ -71,28 +51,52 @@ public class NineGridView extends GridView {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setNestedScrollingEnabled(false);
         }
+    }
 
+    public void setupNineGridView(int[] images, String[] titles) {
+        this.images = images;
+        this.titles = titles;
+        setupNiniGridView();
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onClick(View view, int position);
+    }
+
+    private void setupNiniGridView() {
         int length = images.length;
-        ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+        List<BaseImageTextItem> list = new ArrayList<>();
         for (int i = 0; i < length; i++) {
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("ItemImage", images[i]);
-            map.put("ItemText", titles[i]);
-            list.add(map);
+            BaseImageTextItem item = new BaseImageTextItem(images[i], titles[i]);
+            list.add(item);
         }
-        SimpleAdapter adapter = new SimpleAdapter(context, list, R.layout.common_item_base_image_text,
-                new String[]{"ItemImage", "ItemText"}, new int[]{R.id.imageView, R.id.textView});
+        BaseListAdapter<BaseImageTextItem> adapter = new BaseListAdapter<BaseImageTextItem>(getContext(), list) {
+            @Override
+            public void onBindItemView(BaseViewHolder holder, BaseImageTextItem baseImageTextItem, int position) {
+                holder.setText(R.id.textView, baseImageTextItem.getTitle());
+                holder.setImageResource(R.id.imageView, baseImageTextItem.getDrawable());
+                holder.getView(R.id.rootView).setOnClickListener(view -> {
+                    if (listener != null)
+                        listener.onClick(view, position);
+                });
+            }
+
+            @Override
+            public int getItemViewId() {
+                return R.layout.common_item_base_image_text;
+            }
+        };
         setAdapter(adapter);
     }
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (getViews((ViewGroup) getRootView())) {
-            int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
-            super.onMeasure(widthMeasureSpec, expandSpec);
-        } else {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        }
+        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+        super.onMeasure(widthMeasureSpec, expandSpec);
     }
 
     private boolean getViews(ViewGroup viewGroup) {
@@ -121,30 +125,11 @@ public class NineGridView extends GridView {
 
         Paint localPaint = new Paint();
         localPaint.setStyle(Paint.Style.STROKE);
-        localPaint.setColor(strokeColor);
+        localPaint.setColor(ContextCompat.getColor(getContext(), R.color.colorDivider));
         localPaint.setStrokeWidth(strokeWidth);
 
         for (int i = 0; i < childCount; i++) {
             View cellView = getChildAt(i);
-
-            if (drawStroke) {
-                // 第一行
-                if (i < 3)
-                    canvas.drawLine(cellView.getLeft(), cellView.getTop(), cellView.getRight(), cellView.getTop(), localPaint);
-                // 第一列
-                if (i % column == 0) {
-                    canvas.drawLine(cellView.getLeft(), cellView.getTop(), cellView.getLeft(), cellView.getBottom(), localPaint);
-                }
-                // 最后一列
-                if ((i + 1) % column == 0)
-                    canvas.drawLine(cellView.getRight(), cellView.getTop(), cellView.getRight(), cellView.getBottom(), localPaint);
-                // 最右一行
-                if ((i + 1) > (childCount - (childCount % column))) {
-                    canvas.drawLine(cellView.getLeft(), cellView.getBottom(), cellView.getRight(), cellView.getBottom(), localPaint);
-                }
-            }
-
-            // 无边框
             if ((i + 1) % column == 0) {
                 canvas.drawLine(cellView.getLeft(), cellView.getBottom(), cellView.getRight(), cellView.getBottom(), localPaint);// 底部
             } else if ((i + 1) > (childCount - (childCount % column))) {// 最后一行的item
@@ -155,10 +140,6 @@ public class NineGridView extends GridView {
             }
         }
         super.dispatchDraw(canvas);
-    }
-
-    public void setDrawStroke(boolean drawStroke) {
-        this.drawStroke = drawStroke;
     }
 
     public void setTitles(String[] titles) {
@@ -175,5 +156,21 @@ public class NineGridView extends GridView {
 
     public void setImages(int[] images) {
         this.images = images;
+    }
+
+    public int[] getImages() {
+        return images;
+    }
+
+    public int getStrokeColor() {
+        return strokeColor;
+    }
+
+    public int getStrokeWidth() {
+        return strokeWidth;
+    }
+
+    public String[] getTitles() {
+        return titles;
     }
 }

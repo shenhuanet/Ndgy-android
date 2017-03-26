@@ -13,8 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseFragment;
@@ -40,7 +38,7 @@ import butterknife.ButterKnife;
  * Created by Shenhua on 8/28/2016.
  */
 @ActivityFragmentInject(contentViewId = R.layout.frag_home_collapsing)
-public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelectedListener, GridView.OnItemClickListener {
+public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelectedListener {
 
     @BindView(R.id.tablayout)
     TabLayout mTabLayout;
@@ -68,8 +66,7 @@ public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelecte
     private void toGetHomeImg() {
         mHomeImgIv.setImageArray(HttpService.HOME_IMG_URL);
         mHomeImgIv.setDelayTime(20000);
-        makeToolView(mInnerGridView, R.array.home_tabs_titles, R.array.home_tabs_images);
-        mInnerGridView.setOnItemClickListener(this);
+        setupToolView(mInnerGridView, R.array.home_tabs_titles, R.array.home_tabs_images);
     }
 
     @Override
@@ -100,40 +97,7 @@ public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelecte
         ft.commit();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = null;
-        switch (position) {
-            case 0:
-                intent = new Intent(getActivity(), WebActivity.class);
-                intent.putExtra("title", "学院简介");
-                intent.putExtra("url", "school-briefing.html");
-                break;
-            case 1:
-                intent = new Intent(getActivity(), WebActivity.class);
-                intent.putExtra("title", "学院风景");
-                intent.putExtra("url", "school-scenery.html");
-                break;
-            case 2:
-                intent = new Intent(getActivity(), WebActivity.class);
-                intent.putExtra("title", "学院地图");
-                intent.putExtra("url", "school-map.html");
-                break;
-            case 3:
-                intent = new Intent(getActivity(), GroupActivity.class);
-                break;
-            case 4:
-                intent = new Intent(getActivity(), PartyActivity.class);
-                break;
-            case 5:
-                intent = new Intent(getActivity(), LibraryActivity.class);
-                break;
-        }
-        if (intent != null)
-            sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
-    }
-
-    public void makeToolView(AbsListView abs, int titlesResId, int imagesResId) {
+    public void setupToolView(AbsListView abs, int titlesResId, int imagesResId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             abs.setNestedScrollingEnabled(false);
         }
@@ -145,12 +109,28 @@ public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelecte
             items.add(item);
         }
         ar.recycle();
-        BaseListAdapter adapter = new BaseListAdapter<BaseImageTextItem>(getActivity(), items) {
+        Class[] classes = {WebActivity.class, WebActivity.class, WebActivity.class,
+                GroupActivity.class, PartyActivity.class, LibraryActivity.class};
+        BaseListAdapter adapter = new BaseListAdapter<BaseImageTextItem>(getContext(), items) {
 
             @Override
-            public void onBindItemView(BaseViewHolder baseViewHolder, BaseImageTextItem item, int i) {
+            public void onBindItemView(BaseViewHolder baseViewHolder, BaseImageTextItem item, int position) {
                 baseViewHolder.setImageResource(R.id.iv_img, item.getDrawable());
                 baseViewHolder.setText(R.id.tv_title, item.getTitle());
+                baseViewHolder.getView(R.id.rootView).setOnClickListener(view -> {
+                    Intent intent = new Intent(getContext(), classes[position]);
+                    if (position == 0) {
+                        intent.putExtra("title", "学院简介");
+                        intent.putExtra("url", "school-briefing.html");
+                    } else if (position == 1) {
+                        intent.putExtra("title", "学院风景");
+                        intent.putExtra("url", "school-scenery.html");
+                    } else if (position == 2) {
+                        intent.putExtra("title", "学院地图");
+                        intent.putExtra("url", "school-map.html");
+                    }
+                    sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
+                });
             }
 
             @Override

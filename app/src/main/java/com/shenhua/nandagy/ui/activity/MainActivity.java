@@ -53,7 +53,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
     private void setupTabHost() {
-        final Class[] fragments = {HomeFragment.class, XueGongFragment.class, JiaoWuFragment.class, MoreFragment.class, UserFragment.class};
+        final Class[] fragments = {HomeFragment.class, XueGongFragment.class,
+                JiaoWuFragment.class, MoreFragment.class, UserFragment.class};
         final String titles[] = getResources().getStringArray(R.array.main_tabs_titles);
         int[] icons = new int[titles.length];
         TypedArray ar = getResources().obtainTypedArray(R.array.main_tabs_images);

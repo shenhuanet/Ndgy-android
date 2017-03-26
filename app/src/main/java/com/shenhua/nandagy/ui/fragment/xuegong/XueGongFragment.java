@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -50,7 +48,7 @@ import butterknife.OnClick;
  * Created by Shenhua on 8/28/2016.
  */
 @ActivityFragmentInject(contentViewId = R.layout.frag_xuegong)
-public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongView> implements XueGongView, GridView.OnItemClickListener {
+public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongView> implements XueGongView {
 
     @BindView(R.id.banner)
     BannerView bannerView;
@@ -78,7 +76,6 @@ public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongVi
         if (!isInit) {
             presenter.execute();
             setupToolView(mInnerGridView, R.array.xuegong_tabs_titles, R.array.xuegong_tabs_images);
-            mInnerGridView.setOnItemClickListener(this);
             isInit = true;
         }
     }
@@ -176,25 +173,6 @@ public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongVi
         presenter.execute();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = null;
-        switch (position) {
-            case 0:
-                intent = new Intent(getActivity(), WebActivity.class);
-                intent.putExtra("title", "部门概况");
-                intent.putExtra("url", "school-xuegong-survey.html");
-                break;
-            case 1:
-                intent = new Intent(getActivity(), EduAdminActivity.class);
-                break;
-            case 2:
-                intent = new Intent(getActivity(), FinanceActivity.class);
-                break;
-        }
-        sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
-    }
-
     /**
      * 设置中间的3个toolView
      *
@@ -214,12 +192,21 @@ public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongVi
             items.add(item);
         }
         ar.recycle();
-        BaseListAdapter adapter = new BaseListAdapter<BaseImageTextItem>(getActivity(), items) {
+        Class[] classes = {WebActivity.class, EduAdminActivity.class, FinanceActivity.class};
+        BaseListAdapter adapter = new BaseListAdapter<BaseImageTextItem>(getContext(), items) {
 
             @Override
-            public void onBindItemView(BaseViewHolder baseViewHolder, BaseImageTextItem item, int i) {
+            public void onBindItemView(BaseViewHolder baseViewHolder, BaseImageTextItem item, int position) {
                 baseViewHolder.setImageResource(R.id.iv_img, item.getDrawable());
                 baseViewHolder.setText(R.id.tv_title, item.getTitle());
+                baseViewHolder.getView(R.id.rootView).setOnClickListener(view -> {
+                    Intent intent = new Intent(getContext(), classes[position]);
+                    if (position == 0) {
+                        intent.putExtra("title", "部门概况");
+                        intent.putExtra("url", "school-xuegong-survey.html");
+                    }
+                    sceneTransitionTo(intent, 0, view, R.id.tv_title, "title");
+                });
             }
 
             @Override

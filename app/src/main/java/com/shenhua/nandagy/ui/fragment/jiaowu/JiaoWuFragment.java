@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,6 +31,9 @@ import com.shenhua.nandagy.presenter.JiaowuPresenter;
 import com.shenhua.nandagy.service.Constants;
 import com.shenhua.nandagy.service.ContentDetailType;
 import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
+import com.shenhua.nandagy.ui.activity.WebActivity;
+import com.shenhua.nandagy.ui.activity.xuegong.EduAdminActivity;
+import com.shenhua.nandagy.ui.activity.xuegong.FinanceActivity;
 import com.shenhua.nandagy.view.JiaowuView;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ import butterknife.ButterKnife;
  * Created by Shenhua on 8/28/2016.
  */
 @ActivityFragmentInject(contentViewId = R.layout.frag_jiaowu)
-public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView> implements JiaowuView, GridView.OnItemClickListener {
+public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView> implements JiaowuView {
 
     private static final String TAG = "JiaoWuFragment";
     @BindView(R.id.jw_tv_zc)
@@ -75,23 +76,7 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
         if (!isInit) {
             presenter.execute();
             setupToolView(mInnerGridView, R.array.jiaowu_tabs_titles, R.array.jiaowu_tabs_images);
-            mInnerGridView.setOnItemClickListener(this);
             isInit = true;
-        }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (position) {
-            case 0:
-                toast("000");
-                break;
-            case 1:
-                toast("111");
-                break;
-            case 2:
-                toast("222");
-                break;
         }
     }
 
@@ -107,12 +92,14 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
             items.add(item);
         }
         ar.recycle();
+        Class[] classes = {WebActivity.class, EduAdminActivity.class, FinanceActivity.class};
         BaseListAdapter adapter = new BaseListAdapter<BaseImageTextItem>(getActivity(), items) {
 
             @Override
-            public void onBindItemView(BaseViewHolder baseViewHolder, BaseImageTextItem item, int i) {
+            public void onBindItemView(BaseViewHolder baseViewHolder, BaseImageTextItem item, int position) {
                 baseViewHolder.setImageResource(R.id.iv_img, item.getDrawable());
                 baseViewHolder.setText(R.id.tv_title, item.getTitle());
+                baseViewHolder.getView(R.id.rootView).setOnClickListener(view -> toast("" + position));
             }
 
             @Override
