@@ -199,7 +199,7 @@ public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongVi
             public void onBindItemView(BaseViewHolder baseViewHolder, BaseImageTextItem item, int position) {
                 baseViewHolder.setImageResource(R.id.iv_img, item.getDrawable());
                 baseViewHolder.setText(R.id.tv_title, item.getTitle());
-                baseViewHolder.getView(R.id.rootView).setOnClickListener(view -> {
+                baseViewHolder.setOnListItemClickListener(view -> {
                     Intent intent = new Intent(getContext(), classes[position]);
                     if (position == 0) {
                         intent.putExtra("title", "部门概况");

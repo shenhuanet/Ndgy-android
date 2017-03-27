@@ -80,36 +80,6 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
         }
     }
 
-    public void setupToolView(AbsListView abs, int titlesResId, int imagesResId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            abs.setNestedScrollingEnabled(false);
-        }
-        List<BaseImageTextItem> items = new ArrayList<>();
-        String[] titles = getResources().getStringArray(titlesResId);
-        TypedArray ar = getResources().obtainTypedArray(imagesResId);
-        for (int i = 0; i < titles.length; i++) {
-            BaseImageTextItem item = new BaseImageTextItem(ar.getResourceId(i, 0), titles[i]);
-            items.add(item);
-        }
-        ar.recycle();
-        Class[] classes = {WebActivity.class, EduAdminActivity.class, FinanceActivity.class};
-        BaseListAdapter adapter = new BaseListAdapter<BaseImageTextItem>(getActivity(), items) {
-
-            @Override
-            public void onBindItemView(BaseViewHolder baseViewHolder, BaseImageTextItem item, int position) {
-                baseViewHolder.setImageResource(R.id.iv_img, item.getDrawable());
-                baseViewHolder.setText(R.id.tv_title, item.getTitle());
-                baseViewHolder.getView(R.id.rootView).setOnClickListener(view -> toast("" + position));
-            }
-
-            @Override
-            public int getItemViewId() {
-                return R.layout.item_common_imgtv;
-            }
-        };
-        abs.setAdapter(adapter);
-    }
-
     @Override
     public JiaowuPresenter createPresenter() {
         presenter = new JiaowuPresenter(this, Constants.JIAOWU_URL);
@@ -166,6 +136,38 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
     @Override
     public void showToast(String msg) {
         toast(msg);
+    }
+
+    public void setupToolView(AbsListView abs, int titlesResId, int imagesResId) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            abs.setNestedScrollingEnabled(false);
+        }
+        List<BaseImageTextItem> items = new ArrayList<>();
+        String[] titles = getResources().getStringArray(titlesResId);
+        TypedArray ar = getResources().obtainTypedArray(imagesResId);
+        for (int i = 0; i < titles.length; i++) {
+            BaseImageTextItem item = new BaseImageTextItem(ar.getResourceId(i, 0), titles[i]);
+            items.add(item);
+        }
+        ar.recycle();
+        Class[] classes = {WebActivity.class, EduAdminActivity.class, FinanceActivity.class};
+        BaseListAdapter adapter = new BaseListAdapter<BaseImageTextItem>(getActivity(), items) {
+
+            @Override
+            public void onBindItemView(BaseViewHolder baseViewHolder, BaseImageTextItem item, int position) {
+                baseViewHolder.setImageResource(R.id.iv_img, item.getDrawable());
+                baseViewHolder.setText(R.id.tv_title, item.getTitle());
+                baseViewHolder.setOnListItemClickListener((view -> {
+                    toast("" + position);
+                }));
+            }
+
+            @Override
+            public int getItemViewId() {
+                return R.layout.item_common_imgtv;
+            }
+        };
+        abs.setAdapter(adapter);
     }
 
 }

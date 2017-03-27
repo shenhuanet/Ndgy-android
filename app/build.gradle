@@ -44,7 +44,7 @@ dependencies {
     // shenhua
     compile 'com.shenhua.libs:bannerview:1.0'
     compile 'com.shenhua.libs:slidinglayout:1.1'
-    compile 'com.shenhua.libs:commonlibs:1.1.1'
+    compile 'com.shenhua.libs:commonlibs:1.1.2'
     compile 'com.shenhua.libs:library:1.0.0'
 
     // segmented
