@@ -50,6 +50,9 @@ public class ScoreCetFragment extends BaseScoreQueryFragment {
     @Override
     public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
         ButterKnife.bind(this, rootView);
+
+        mZkzhEt.setText("");
+        mNameEt.setText("");
     }
 
     @Override

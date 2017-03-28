@@ -49,11 +49,7 @@
 
 -dontskipnonpubliclibraryclassmembers
 -libraryjars libs/jsoup-1.8.3.jar
--libraryjars libs/mta-sdk-1.6.2.jar
 -libraryjars libs/open_sdk_r5043.jar
--libraryjars libs/universal-image-loader-1.8.6-with-sources.jar
--libraryjars libs/httpcore-4.2.4.jar
--libraryjars libs/httpclient-4.2.5.jar
 
 -dontwarn com.tencent.**
 -keep class com.tencent.** {*;}

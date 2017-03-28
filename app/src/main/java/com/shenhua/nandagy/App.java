@@ -14,7 +14,7 @@ public class App extends Application {
 
     private static Context mApplicationContext;
 
-    public static final boolean DEBUG_MODE = true;
+    public static final boolean DEBUG_MODE = false;
 
     @Override
     public void onCreate() {
