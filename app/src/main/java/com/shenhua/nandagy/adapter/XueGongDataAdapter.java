@@ -12,9 +12,9 @@ import java.util.List;
  * 首页数据适配器
  * Created by shenhua on 8/30/2016.
  */
-public class XueGongDataAdapter extends BaseRecyclerAdapter<XueGongData> {
+public class XueGongDataAdapter extends BaseRecyclerAdapter<XueGongData.XuegongListData> {
 
-    public XueGongDataAdapter(Context context, List<XueGongData> datas) {
+    public XueGongDataAdapter(Context context, List<XueGongData.XuegongListData> datas) {
         super(context, datas);
     }
 
@@ -24,9 +24,9 @@ public class XueGongDataAdapter extends BaseRecyclerAdapter<XueGongData> {
     }
 
     @Override
-    public void bindData(BaseRecyclerAdapter.BaseRecyclerViewHolder holder, int position, XueGongData item) {
-        holder.setText(R.id.tv_xuegong_title,item.getTitle());
-        holder.setText(R.id.tv_xuegong_time,item.getTime());
-        holder.setImage(R.id.iv_xuegong_img,item.getNewsType());
+    public void bindData(BaseRecyclerAdapter.BaseRecyclerViewHolder holder, int position, XueGongData.XuegongListData item) {
+        holder.setText(R.id.tv_xuegong_title, item.getTitle());
+        holder.setText(R.id.tv_xuegong_time, item.getTime());
+        holder.setImage(R.id.iv_xuegong_img, item.getNewsType());
     }
 }

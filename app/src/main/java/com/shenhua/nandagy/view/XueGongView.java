@@ -1,8 +1,7 @@
 package com.shenhua.nandagy.view;
 
 import com.shenhua.commonlibs.mvp.BaseView;
-
-import java.util.ArrayList;
+import com.shenhua.nandagy.bean.XueGongData;
 
 /**
  * 学工视图
@@ -10,5 +9,5 @@ import java.util.ArrayList;
  */
 public interface XueGongView extends BaseView {
 
-    void updateList(ArrayList[] lists);
+    void updateList(XueGongData lists);
 }

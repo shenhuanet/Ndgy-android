@@ -3,7 +3,6 @@ package com.shenhua.nandagy.ui.activity.me;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -13,7 +12,7 @@ import com.shenhua.commonlibs.utils.BusProvider;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.callback.NewMessageEventBus;
 import com.shenhua.nandagy.manager.DataCleanManager;
-import com.shenhua.nandagy.ui.fragment.more.UserFragment;
+import com.shenhua.nandagy.ui.fragment.me.UserFragment;
 import com.shenhua.nandagy.utils.SettingUtils;
 
 import butterknife.BindView;
@@ -55,18 +54,10 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void setListener() {
-        mNanWifiSc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SettingUtils.getInstance().setConfig(SettingActivity.this, "nanWifi", isChecked);
-            }
-        });
-        mNanPushSc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SettingUtils.getInstance().setConfig(SettingActivity.this, "nanPush", isChecked);
-            }
-        });
+        mNanWifiSc.setOnCheckedChangeListener((buttonView, isChecked) ->
+                SettingUtils.getInstance().setConfig(SettingActivity.this, "nanWifi", isChecked));
+        mNanPushSc.setOnCheckedChangeListener((buttonView, isChecked) ->
+                SettingUtils.getInstance().setConfig(SettingActivity.this, "nanPush", isChecked));
     }
 
     @OnClick({R.id.layout_setting_feedback, R.id.layout_setting_cache})

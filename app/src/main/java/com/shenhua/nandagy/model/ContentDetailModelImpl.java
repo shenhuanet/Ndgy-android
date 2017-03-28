@@ -7,6 +7,7 @@ import com.shenhua.commonlibs.mvp.HttpManager;
 import com.shenhua.nandagy.App;
 import com.shenhua.nandagy.bean.ContentDetailData;
 import com.shenhua.nandagy.service.Constants;
+import com.shenhua.nandagy.service.ExceptionMessage;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -61,7 +62,7 @@ public class ContentDetailModelImpl implements ContentDetailModel<ContentDetailD
                     detailData.setContent(Constants.HtmlString.HTML_HEAD + content + Constants.HtmlString.HTML_END);
                     callback.onSuccess(detailData);
                 } catch (Exception e) {
-                    callback.onError("数据解析失败");
+                    callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
                 }
             }
 
@@ -115,7 +116,7 @@ public class ContentDetailModelImpl implements ContentDetailModel<ContentDetailD
                     detailData.setContent(Constants.HtmlString.HTML_HEAD + content + Constants.HtmlString.HTML_END);
                     callback.onSuccess(detailData);
                 } catch (Exception e) {
-                    callback.onError("数据解析失败");
+                    callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
                 }
             }
 
@@ -166,7 +167,7 @@ public class ContentDetailModelImpl implements ContentDetailModel<ContentDetailD
                     callback.onSuccess(detailData);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    callback.onError("数据解析失败");
+                    callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
                 }
             }
 

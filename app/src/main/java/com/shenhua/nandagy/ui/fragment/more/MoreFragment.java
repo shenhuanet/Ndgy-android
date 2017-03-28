@@ -58,7 +58,7 @@ public class MoreFragment extends BaseFragment {
                 "http://www.ndgy.cn/UploadFiles/2013-06/admin/2013060716152035466.jpg"
         };
         bannerView.setBannerStyle(BannerView.BannerViewConfig.CIRCLE_INDICATOR);
-        bannerView.setImageArray(images);
+        bannerView.setBannerImageArray(images);
         bannerView.setOnBannerClickListener((view1, position) -> {
             toast(images[position]);
         });

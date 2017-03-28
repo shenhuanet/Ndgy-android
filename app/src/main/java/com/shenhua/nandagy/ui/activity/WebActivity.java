@@ -1,7 +1,6 @@
 package com.shenhua.nandagy.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,12 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
+import com.shenhua.commonlibs.base.BaseWebViewClient;
 import com.shenhua.nandagy.R;
+import com.shenhua.nandagy.callback.WebImageJSInterface;
 import com.shenhua.nandagy.service.HttpService;
 
 import butterknife.BindView;
@@ -41,9 +41,7 @@ public class WebActivity extends BaseActivity {
     @BindView(R.id.content_pro)
     ProgressBar mProgressBar;
     private boolean isLoading, isInit;
-    private String JsTag = "img_view";
-    private String url;
-    private String imgUrl;
+    private String url, imgUrl;
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
@@ -53,7 +51,7 @@ public class WebActivity extends BaseActivity {
         url = intent.getStringExtra("url");
     }
 
-    @SuppressLint("JavascriptInterface")
+    @SuppressLint({"JavascriptInterface", "SetJavaScriptEnabled", "AddJavascriptInterface"})
     @Override
     protected void onResume() {
         super.onResume();
@@ -65,40 +63,14 @@ public class WebActivity extends BaseActivity {
             settings.setBuiltInZoomControls(false);
             settings.setSupportZoom(true);
             mWebView.setDrawingCacheEnabled(true);
-            mWebView.addJavascriptInterface(new JavascriptInterface(this), JsTag);
+            mWebView.addJavascriptInterface(new WebImageJSInterface(this), "imgClickListener");
             mWebView.setWebViewClient(new MyWebViewClient());
             mWebView.loadUrl(HttpService.SCHOOL_WEB_HOST + url);
             isInit = true;
         }
     }
 
-    public class JavascriptInterface {
-        private Context context;
-
-        public JavascriptInterface(Context context) {
-            this.context = context;
-        }
-
-        public void openImage(String img) {
-            System.out.println("clickImgUrl:" + img);
-            context.startActivity(new Intent(context, WebActivity.class).putExtra("url", img));
-        }
-    }
-
-    private void addImageClickListner() {
-        // 这段js函数的功能就是，遍历所有的img几点，并添加onclick函数，函数的功能是在图片点击的时候调用本地java接口并传递url过去
-        mWebView.loadUrl("javascript:(function(){" +
-                "var objs = document.getElementsByTagName(\"img\"); " +
-                "for(var i=0;i<objs.length;i++)  " +
-                "{"
-                + "    objs[i].onclick=function()  " +
-                "    {  "
-                + "        window." + JsTag + ".openImage(this.src);  " +
-                "    }  " +
-                "}" +
-                "})()");
-    }
-
+    // TODO: 3/28/2017 shouldn't use
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -106,6 +78,7 @@ public class WebActivity extends BaseActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == 0) {
+                    toast("还未实现");
 //                    startActivity(new Intent(ContentActivity.this, ViewImgActivity.class).putExtra("url", imgUrl));
                 } else {
                     toast("还未实现");
@@ -152,7 +125,7 @@ public class WebActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class MyWebViewClient extends WebViewClient {
+    private class MyWebViewClient extends BaseWebViewClient {
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -163,10 +136,10 @@ public class WebActivity extends BaseActivity {
 
         @Override
         public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
             isLoading = false;
             invalidateOptionsMenu();
             mProgressBar.setVisibility(View.GONE);
-            addImageClickListner();
         }
 
         @Override

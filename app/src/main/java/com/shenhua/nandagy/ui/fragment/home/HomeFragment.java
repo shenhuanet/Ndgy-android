@@ -64,7 +64,7 @@ public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelecte
     }
 
     private void toGetHomeImg() {
-        mHomeImgIv.setImageArray(HttpService.HOME_IMG_URL);
+        mHomeImgIv.setBannerImageArray(HttpService.HOME_IMG_URL);
         mHomeImgIv.setDelayTime(20000);
         setupToolView(mInnerGridView, R.array.home_tabs_titles, R.array.home_tabs_images);
     }

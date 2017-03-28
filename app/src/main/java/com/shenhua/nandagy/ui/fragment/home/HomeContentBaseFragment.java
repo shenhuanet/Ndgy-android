@@ -45,7 +45,7 @@ public abstract class HomeContentBaseFragment extends BaseMvpFragment<HomePresen
             mEmptyLayout.setVisibility(View.VISIBLE);
         } else {
             mEmptyLayout.setVisibility(View.INVISIBLE);
-            final HomeDataAdapter adapter = new HomeDataAdapter(getContext(), datas);
+            HomeDataAdapter adapter = new HomeDataAdapter(getContext(), datas);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mRecyclerView.setAdapter(adapter);
             adapter.setOnItemClickListener((view1, position, data) -> {

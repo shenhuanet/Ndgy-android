@@ -1,6 +1,9 @@
 package com.shenhua.nandagy.bean;
 
+import com.shenhua.libs.bannerview.BannerData;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 学工处数据实体
@@ -8,73 +11,63 @@ import java.io.Serializable;
  */
 public class XueGongData implements Serializable {
 
-    private static final long serialVersionUID = -353400109541085240L;
-    private String title;
-    private String time;
-    private String href;
-    private int newsType;
+    private BannerData bannerData;
+    private List<XuegongListData> xuegongListDatas;
 
-    public class BannerData implements Serializable {
+    public BannerData getBannerData() {
+        return bannerData;
+    }
 
-        private static final long serialVersionUID = -6328108404454839746L;
-        private String bTitle;
-        private String bImage;
-        private String bHref;
+    public void setBannerData(BannerData bannerData) {
+        this.bannerData = bannerData;
+    }
 
-        public String getbHref() {
-            return bHref;
+    public List<XuegongListData> getXuegongListDatas() {
+        return xuegongListDatas;
+    }
+
+    public void setXuegongListDatas(List<XuegongListData> xuegongListDatas) {
+        this.xuegongListDatas = xuegongListDatas;
+    }
+
+    public class XuegongListData implements Serializable{
+        private static final long serialVersionUID = -353400109541085240L;
+        private String title;
+        private String time;
+        private String href;
+        private int newsType;
+
+        public String getHref() {
+            return href;
         }
 
-        public void setbHref(String bHref) {
-            this.bHref = bHref;
+        public void setHref(String href) {
+            this.href = href;
         }
 
-        public String getbImage() {
-            return bImage;
+        public int getNewsType() {
+            return newsType;
         }
 
-        public void setbImage(String bImage) {
-            this.bImage = bImage;
+        public void setNewsType(int newsType) {
+            this.newsType = newsType;
         }
 
-        public String getbTitle() {
-            return bTitle;
+        public String getTime() {
+            return time;
         }
 
-        public void setbTitle(String bTitle) {
-            this.bTitle = bTitle;
+        public void setTime(String time) {
+            this.time = time;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
         }
     }
 
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-    public int getNewsType() {
-        return newsType;
-    }
-
-    public void setNewsType(int newsType) {
-        this.newsType = newsType;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 }

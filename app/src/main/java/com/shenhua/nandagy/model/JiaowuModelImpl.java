@@ -10,6 +10,7 @@ import com.shenhua.nandagy.App;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.JiaowuData;
 import com.shenhua.nandagy.service.Constants;
+import com.shenhua.nandagy.service.ExceptionMessage;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -40,10 +41,10 @@ public class JiaowuModelImpl implements JiaowuModel<JiaowuData> {
                 new Thread(() -> {
                     JiaowuData data = parseHtml(model);
                     handler.post(() -> {
-                        if (data != null) {
-                            callback.onSuccess(data);
+                        if (data == null) {
+                            callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
                         } else {
-                            callback.onError("数据解析失败");
+                            callback.onSuccess(data);
                         }
                     });
                 }).start();
@@ -51,23 +52,28 @@ public class JiaowuModelImpl implements JiaowuModel<JiaowuData> {
 
             @Override
             public void onFailure(String msg) {
-                if (msg.equals("error")) {
-                    new Thread(() -> {
-                        try {
-                            String html = httpManager.getCache(App.getContext(), url, "gb2312");
+                if (msg.equals(ExceptionMessage.MSG_ERROR)) {
+                    try {
+                        String html = httpManager.getCache(App.getContext(), url, "gb2312");
+                        if (html == null) {
+                            callback.onError(ExceptionMessage.MSG_DATA_NULL);
+                            return;
+                        }
+                        new Thread(() -> {
                             JiaowuData data = parseHtml(html);
                             handler.post(() -> {
                                 if (data == null) {
-                                    callback.onError("数据解析错误");
+                                    callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
                                 } else {
                                     callback.onSuccess(data);
                                 }
                             });
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            callback.onError("数据为空");
-                        }
-                    }).start();
+
+                        }).start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        callback.onError(ExceptionMessage.MSG_DATA_NULL);
+                    }
                 } else {
                     callback.onError(msg);
                 }

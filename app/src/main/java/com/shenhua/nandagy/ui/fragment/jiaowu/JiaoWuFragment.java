@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +40,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 教务处
@@ -56,8 +56,6 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
     InnerGridView mInnerGridView;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
-    @BindView(R.id.nestedScrollView)
-    NestedScrollView mNestedScrollView;
     @BindView(R.id.layout_empty)
     LinearLayout mEmptyLayout;
     @BindView(R.id.progress_bar)
@@ -91,20 +89,15 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
         String week = data.getWeek();
         mWeeks.setText(week);
         List<JiaowuData.JiaowuList> lists = data.getList();
-        if (lists != null) {
-            mNestedScrollView.setVisibility(View.VISIBLE);
-            mEmptyLayout.setVisibility(View.INVISIBLE);
-            recyclerView.setNestedScrollingEnabled(false);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            JiaowuDataAdapter adapter = new JiaowuDataAdapter(getContext(), lists);
-            recyclerView.setAdapter(adapter);
-            adapter.setOnItemClickListener((view, position, data1) -> {
-                navToDetail(view, data.getList().get(position));
-            });
-        } else {
-            mNestedScrollView.setVisibility(View.INVISIBLE);
-            mEmptyLayout.setVisibility(View.VISIBLE);
-        }
+
+        mEmptyLayout.setVisibility(View.INVISIBLE);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        JiaowuDataAdapter adapter = new JiaowuDataAdapter(getContext(), lists);
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener((view, position, data1) -> {
+            navToDetail(view, data.getList().get(position));
+        });
     }
 
     private void navToDetail(View view, JiaowuData.JiaowuList data) {
@@ -135,7 +128,13 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
 
     @Override
     public void showToast(String msg) {
+        mEmptyLayout.setVisibility(View.VISIBLE);
         toast(msg);
+    }
+
+    @OnClick(R.id.layout_empty_reload)
+    void onClick(View v) {
+        presenter.execute();
     }
 
     public void setupToolView(AbsListView abs, int titlesResId, int imagesResId) {

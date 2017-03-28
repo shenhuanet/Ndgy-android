@@ -1,4 +1,4 @@
-package com.shenhua.nandagy.ui.fragment.more;
+package com.shenhua.nandagy.ui.fragment.me;
 
 import android.content.Intent;
 import android.graphics.Color;

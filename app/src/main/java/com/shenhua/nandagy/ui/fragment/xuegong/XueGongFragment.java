@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,6 +21,7 @@ import com.shenhua.commonlibs.mvp.BaseMvpFragment;
 import com.shenhua.commonlibs.utils.BusBooleanEvent;
 import com.shenhua.commonlibs.utils.BusProvider;
 import com.shenhua.commonlibs.widget.InnerGridView;
+import com.shenhua.libs.bannerview.BannerData;
 import com.shenhua.libs.bannerview.BannerView;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.XueGongDataAdapter;
@@ -56,8 +56,6 @@ public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongVi
     InnerGridView mInnerGridView;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
-    @BindView(R.id.nestedScrollView)
-    NestedScrollView mNestedScrollView;
     @BindView(R.id.layout_empty)
     LinearLayout mEmptyLayout;
     @BindView(R.id.progress_bar)
@@ -68,6 +66,14 @@ public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongVi
     @Override
     public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
         ButterKnife.bind(this, rootView);
+        showDefaultBanner();
+    }
+
+    private void showDefaultBanner() {
+        BannerData bannerData = new BannerData();
+        bannerData.setaTitle(new String[]{""});
+        bannerData.setaImage(new String[]{"http://klxh.oschina.io/shenhuandgy-web/imgs/img_default.png"});
+        bannerView.setBannerDataA(bannerData);
     }
 
     @Override
@@ -87,39 +93,22 @@ public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongVi
     }
 
     @Override
-    public void updateList(final ArrayList[] lists) {
-        if (lists == null) {
-            mNestedScrollView.setVisibility(View.INVISIBLE);
-            mEmptyLayout.setVisibility(View.VISIBLE);
-        } else {
-            mNestedScrollView.setVisibility(View.VISIBLE);
-            updateBanner(lists[0]);
-            updateDatas(lists[1]);
-            mEmptyLayout.setVisibility(View.INVISIBLE);
-        }
+    public void updateList(XueGongData xueGongData) {
+        mEmptyLayout.setVisibility(View.INVISIBLE);
+        updateBanner(xueGongData.getBannerData());
+        updateDatas(xueGongData.getXuegongListDatas());
     }
 
     /**
      * 显示banner
      *
-     * @param list List<XueGongData.BannerData>
+     * @param bannerData BannerData bannerData
      */
-    private void updateBanner(List<XueGongData.BannerData> list) {
-        if (list != null) {
-            String[] imgs = new String[list.size()];
-            String[] titles = new String[list.size()];
-            final String[] hrefs = new String[list.size()];
-            for (int i = 0; i < list.size(); i++) {
-                imgs[i] = list.get(i).getbImage();
-                titles[i] = list.get(i).getbTitle();
-                hrefs[i] = list.get(i).getbHref();
-            }
-            bannerView.setBannerStyle(BannerView.BannerViewConfig.CIRCLE_INDICATOR_TITLE_HORIZONTAL);
-            bannerView.setImageArray(imgs);
-            bannerView.setBannerTitleArray(titles);
-            bannerView.setOnBannerClickListener((view, position) ->
-                    toast(hrefs[position - 1]));
-        }
+    private void updateBanner(BannerData bannerData) {
+        bannerView.setBannerStyle(BannerView.BannerViewConfig.CIRCLE_INDICATOR_TITLE_HORIZONTAL);
+        bannerView.setBannerDataA(bannerData);
+        bannerView.setOnBannerClickListener((view, position) ->
+                toast(bannerData.getaHref()[position - 1]));
     }
 
     /**
@@ -127,20 +116,20 @@ public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongVi
      *
      * @param list List<XueGongData>
      */
-    private void updateDatas(List<XueGongData> list) {
+    private void updateDatas(List<XueGongData.XuegongListData> list) {
         if (list != null) {
             recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            final XueGongDataAdapter adapter = new XueGongDataAdapter(getContext(), list);
+            XueGongDataAdapter adapter = new XueGongDataAdapter(getContext(), list);
             recyclerView.setAdapter(adapter);
             adapter.setOnItemClickListener((view1, i, data) -> navToDetail(view1, data));
         }
     }
 
-    private void navToDetail(View view, XueGongData data) {
+    private void navToDetail(View view, XueGongData.XuegongListData data) {
         Intent intent = new Intent(getActivity(), ContentDetailActivity.class);
         ContentPassesData contentPassesData = new ContentPassesData(
-                ContentDetailType.TYPE_JIAOWU,
+                ContentDetailType.TYPE_XUEGONG,
                 data.getTitle(),
                 data.getNewsType(),
                 data.getTime(),
@@ -153,6 +142,7 @@ public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongVi
 
     @Override
     public void showToast(final String msg) {
+        mEmptyLayout.setVisibility(View.VISIBLE);
         toast(msg);
     }
 

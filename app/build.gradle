@@ -42,7 +42,7 @@ dependencies {
     compile project(':library:FloatingTextView')
 
     // shenhua
-    compile 'com.shenhua.libs:bannerview:1.0'
+    compile 'com.shenhua.libs:bannerview:1.0.1'
     compile 'com.shenhua.libs:slidinglayout:1.1'
     compile 'com.shenhua.libs:commonlibs:1.1.2'
     compile 'com.shenhua.libs:library:1.0.0'
@@ -62,6 +62,12 @@ dependencies {
 
     // superRecyclerview
     compile 'com.malinskiy:superrecyclerview:1.1.4'
+
+    // leakcanary
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
 
     // BMob
     // compile 'cn.bmob.android:bmob-sdk:3.5.3'

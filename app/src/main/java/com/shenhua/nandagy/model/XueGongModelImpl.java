@@ -6,10 +6,12 @@ import com.shenhua.commonlibs.callback.HttpCallback;
 import com.shenhua.commonlibs.mvp.ApiCallback;
 import com.shenhua.commonlibs.mvp.BasePresenter;
 import com.shenhua.commonlibs.mvp.HttpManager;
+import com.shenhua.libs.bannerview.BannerData;
 import com.shenhua.nandagy.App;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.XueGongData;
 import com.shenhua.nandagy.service.Constants;
+import com.shenhua.nandagy.service.ExceptionMessage;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,6 +19,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,13 +27,13 @@ import java.util.regex.Pattern;
  * 学工处数据实现者
  * Created by shenhua on 8/31/2016.
  */
-public class XueGongModelImpl implements XueGongModel<ArrayList[]> {
+public class XueGongModelImpl implements XueGongModel<XueGongData> {
 
     private HttpManager httpManager = HttpManager.getInstance();
     private Handler handler = new Handler();
 
     @Override
-    public void toGetXueGongData(BasePresenter basePresenter, String url, final HttpCallback<ArrayList[]> callback) {
+    public void toGetXueGongData(BasePresenter basePresenter, String url, final HttpCallback<XueGongData> callback) {
         basePresenter.addSubscription(httpManager.createHtmlGetObservable(App.getContext(), url, "gb2312", false), new ApiCallback<String>() {
             @Override
             public void onPreExecute() {
@@ -40,10 +43,10 @@ public class XueGongModelImpl implements XueGongModel<ArrayList[]> {
             @Override
             public void onSuccess(String model) {
                 new Thread(() -> {
-                    ArrayList[] datas = parseHtml(model);
+                    XueGongData datas = parseHtml(model);
                     handler.post(() -> {
                         if (datas == null) {
-                            callback.onError("数据解析错误");
+                            callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
                         } else {
                             callback.onSuccess(datas);
                         }
@@ -53,23 +56,28 @@ public class XueGongModelImpl implements XueGongModel<ArrayList[]> {
 
             @Override
             public void onFailure(String msg) {
-                if (msg.equals("error")) {
-                    new Thread(() -> {
-                        try {
-                            String html = httpManager.getCache(App.getContext(), url, "gb2312");
-                            ArrayList[] datas = parseHtml(html);
+                if (msg.equals(ExceptionMessage.MSG_ERROR)) {
+                    try {
+                        String html = httpManager.getCache(App.getContext(), url, "gb2312");
+                        if (html == null) {
+                            callback.onError(ExceptionMessage.MSG_DATA_NULL);
+                            return;
+                        }
+                        new Thread(() -> {
+                            XueGongData datas = parseHtml(html);
                             handler.post(() -> {
                                 if (datas == null) {
-                                    callback.onError("数据解析错误");
+                                    callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
                                 } else {
                                     callback.onSuccess(datas);
                                 }
                             });
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            callback.onError("数据为空");
-                        }
-                    }).start();
+
+                        }).start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        callback.onError(ExceptionMessage.MSG_DATA_NULL);
+                    }
                 } else {
                     callback.onError(msg);
                 }
@@ -82,9 +90,10 @@ public class XueGongModelImpl implements XueGongModel<ArrayList[]> {
         });
     }
 
-    private ArrayList[] parseHtml(String html) {
-        ArrayList<XueGongData> datas = new ArrayList<>();
-        ArrayList<XueGongData.BannerData> banners = new ArrayList<>();
+    private XueGongData parseHtml(String html) {
+        XueGongData xueGongData = new XueGongData();
+        BannerData bannerData = new BannerData();
+        List<XueGongData.XuegongListData> listDatas = new ArrayList<>();
         Document document = Jsoup.parse(html);
         try {
             Elements scripts = document.getElementsByTag("script").eq(4);
@@ -96,45 +105,44 @@ public class XueGongModelImpl implements XueGongModel<ArrayList[]> {
             }
             // 装载banner数据
             for (int i = 0; i < images.length; i++) {
-                XueGongData data = new XueGongData();
-                XueGongData.BannerData bannerData = data.new BannerData();
-                bannerData.setbImage(Constants.XUEGONG_URL + images[i]);
-                bannerData.setbTitle(titles[i]);
-                bannerData.setbHref(Constants.XUEGONG_URL + hrefs[i]);
-                banners.add(bannerData);
+                images[i] = Constants.XUEGONG_URL + images[i];
+                hrefs[i] = Constants.XUEGONG_URL + hrefs[i];
             }
+            bannerData.setaImage(images);
+            bannerData.setaTitle(titles);
+            bannerData.setaHref(hrefs);
             // 4
             Elements elements = document.select("table").eq(4);
             Elements xuegongyaowen = elements.select("td").get(3).select("tbody");
             for (Element element : xuegongyaowen) {
-                XueGongData data = new XueGongData();
+                XueGongData.XuegongListData data = xueGongData.new XuegongListData();
                 data.setTitle(element.select("a[href]").text());
                 data.setNewsType(R.drawable.ic_xuegong_yw);
                 data.setHref(Constants.XUEGONG_URL + element.getElementsByTag("a").attr("href"));
                 data.setTime(element.getElementsByAttributeValue("align", "right").text());
-                datas.add(data);
+                listDatas.add(data);
             }
             // 14  15  18  19
-            getListSingle(document.select("table").eq(14), datas, 14);
-            getListSingle(document.select("table").eq(15), datas, 15);
-            getListSingle(document.select("table").eq(18), datas, 18);
-            getListSingle(document.select("table").eq(19), datas, 19);
+            getListSingle(document.select("table").eq(14), listDatas, 14);
+            getListSingle(document.select("table").eq(15), listDatas, 15);
+            getListSingle(document.select("table").eq(18), listDatas, 18);
+            getListSingle(document.select("table").eq(19), listDatas, 19);
             // 装载ArrayList
-            ArrayList[] lists = new ArrayList[2];
-            lists[0] = banners;
-            lists[1] = datas;
-            return lists;
+            xueGongData.setBannerData(bannerData);
+            xueGongData.setXuegongListDatas(listDatas);
+            return xueGongData;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private void getListSingle(Elements elements, ArrayList<XueGongData> datas, int type) {
+    private void getListSingle(Elements elements, List<XueGongData.XuegongListData> datas, int type) {
         elements.select("tr").first().remove();
         elements = elements.select("tr");
+        XueGongData xueGongData = new XueGongData();
         for (Element element : elements) {
-            XueGongData data = new XueGongData();
+            XueGongData.XuegongListData data = xueGongData.new XuegongListData();
             data.setTitle(element.select("a[href]").text());
             data.setHref(Constants.XUEGONG_URL + element.getElementsByTag("a").attr("href"));
             data.setTime(element.getElementsByAttributeValue("align", "right").text());

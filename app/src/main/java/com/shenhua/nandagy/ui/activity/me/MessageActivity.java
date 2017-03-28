@@ -14,7 +14,7 @@ import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.NewMessageAdapter;
 import com.shenhua.nandagy.bean.NewMessageData;
 import com.shenhua.nandagy.callback.NewMessageEventBus;
-import com.shenhua.nandagy.ui.fragment.more.UserFragment;
+import com.shenhua.nandagy.ui.fragment.me.UserFragment;
 
 import java.util.ArrayList;
 import java.util.List;

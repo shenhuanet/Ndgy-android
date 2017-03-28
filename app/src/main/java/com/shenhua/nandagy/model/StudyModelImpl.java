@@ -7,6 +7,7 @@ import com.shenhua.commonlibs.callback.HttpCallback;
 import com.shenhua.commonlibs.utils.NetworkUtils;
 import com.shenhua.nandagy.bean.StudyListData;
 import com.shenhua.nandagy.database.StudyDBDao;
+import com.shenhua.nandagy.service.ExceptionMessage;
 import com.shenhua.nandagy.service.HttpService;
 
 import org.jsoup.Jsoup;
@@ -24,10 +25,10 @@ import static com.shenhua.nandagy.service.HttpService.STUDY_HOST;
  * Created by Shenhua on 2/9/2017.
  * e-mail shenhuanet@126.com
  */
-public class StudyModelImpl implements StudyModel<List<StudyListData>> {
+public class StudyModelImpl implements StudyModel {
 
     @Override
-    public void toGetList(Context context, int type, HttpCallback callback) {
+    public void toGetList(Context context, int type, HttpCallback<List<StudyListData>> callback) {
         StudyDBDao studyDBDao = new StudyDBDao(context, type);
         new AsyncTask<Void, Void, List<StudyListData>>() {
 
@@ -67,7 +68,7 @@ public class StudyModelImpl implements StudyModel<List<StudyListData>> {
             protected void onPostExecute(List<StudyListData> datas) {
                 super.onPostExecute(datas);
                 if (datas == null || datas.size() == 0) {
-                    callback.onError("数据为空");
+                    callback.onError(ExceptionMessage.MSG_DATA_NULL);
                     callback.onPostRequest();
                     return;
                 }
@@ -80,7 +81,7 @@ public class StudyModelImpl implements StudyModel<List<StudyListData>> {
     }
 
     @Override
-    public void toGetDetail(Context context, int type, int position, String url, HttpCallback callback) {
+    public void toGetDetail(Context context, int type, int position, String url, HttpCallback<StudyListData> callback) {
         StudyDBDao studyDBDao = new StudyDBDao(context, type);
         new AsyncTask<Integer, Void, StudyListData>() {
 
@@ -112,7 +113,7 @@ public class StudyModelImpl implements StudyModel<List<StudyListData>> {
             protected void onPostExecute(StudyListData data) {
                 super.onPostExecute(data);
                 if (data == null) {
-                    callback.onError("数据获取失败");
+                    callback.onError(ExceptionMessage.MSG_DATA_NULL);
                     callback.onPostRequest();
                     return;
                 }

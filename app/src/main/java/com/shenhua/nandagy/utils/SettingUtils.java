@@ -2,12 +2,6 @@ package com.shenhua.nandagy.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.SparseBooleanArray;
-
-import com.shenhua.nandagy.bean.bmobbean.MyUser;
-import com.shenhua.nandagy.utils.bmobutils.UserUtils;
-
-import java.util.List;
 
 /**
  * 设置相关的工具类，非wifi下不加载图片，推送相关配置
@@ -16,10 +10,9 @@ import java.util.List;
 public class SettingUtils {
 
     private static final String PREF_SETTING = "pref_setting";
-    private static SettingUtils userUtils = new SettingUtils();
 
     public static SettingUtils getInstance() {
-        return userUtils;
+        return new SettingUtils();
     }
 
     public Config getConfig(Context context) {

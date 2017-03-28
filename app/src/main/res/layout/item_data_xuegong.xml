@@ -35,8 +35,7 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="2"
-                android:textColor="@color/themecolor"
-                android:textSize="18sp" />
+                android:textColor="@color/themecolor" />
 
             <TextView
                 android:id="@+id/tv_xuegong_time"

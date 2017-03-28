@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class StudyListPresenter implements HttpCallback<List<StudyListData>> {
 
-    private StudyModel<List<StudyListData>> studyModel;
+    private StudyModel studyModel;
     private StudyListView studyListView;
     private Context context;
     private int type;

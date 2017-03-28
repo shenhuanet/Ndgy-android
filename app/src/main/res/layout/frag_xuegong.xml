@@ -1,51 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:background="@android:color/white">
 
-    <include
-        layout="@layout/view_empty_reload"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp" />
+        android:orientation="vertical">
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <com.shenhua.libs.bannerview.BannerView
+            android:id="@+id/banner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white"
-            android:orientation="vertical">
+            android:layout_height="150dp" />
 
-            <com.shenhua.libs.bannerview.BannerView
-                android:id="@+id/banner"
-                android:layout_width="match_parent"
-                android:layout_height="150dp" />
+        <com.shenhua.commonlibs.widget.InnerGridView
+            android:id="@+id/gv_xue_tool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            android:scrollbars="none" />
 
-            <com.shenhua.commonlibs.widget.InnerGridView
-                android:id="@+id/gv_xue_tool"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="3"
-                android:scrollbars="none" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorPrimary" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/colorPrimary" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white" />
+                android:layout_height="wrap_content" />
 
-        </LinearLayout>
+            <include
+                layout="@layout/view_empty_reload"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
 
-    </android.support.v4.widget.NestedScrollView>
+        </FrameLayout>
 
-</FrameLayout>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -18,7 +17,7 @@ import com.shenhua.commonlibs.utils.BusProvider;
 import com.shenhua.commonlibs.widget.BaseShareView;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.callback.NewMessageEventBus;
-import com.shenhua.nandagy.ui.fragment.more.UserFragment;
+import com.shenhua.nandagy.ui.fragment.me.UserFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.bmob.v3.listener.BmobUpdateListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
-import cn.bmob.v3.update.UpdateResponse;
 import cn.bmob.v3.update.UpdateStatus;
 
 /**
@@ -84,12 +81,15 @@ public class AboutActivity extends BaseActivity {
             BaseImageTextItem item = new BaseImageTextItem(resIds[i], titles[i]);
             items.add(item);
         }
-        @SuppressWarnings("unchecked")
-        BaseListAdapter adapter = new BaseListAdapter(this, items) {
+
+        BaseListAdapter adapter = new BaseListAdapter<BaseImageTextItem>(this, items) {
             @Override
-            public void onBindItemView(BaseViewHolder baseViewHolder, Object o, int i) {
-                baseViewHolder.setImageResource(R.id.iv_img, ((BaseImageTextItem) o).getDrawable());
-                baseViewHolder.setText(R.id.tv_title, ((BaseImageTextItem) o).getTitle());
+            public void onBindItemView(BaseViewHolder baseViewHolder, BaseImageTextItem item, int position) {
+                baseViewHolder.setImageResource(R.id.iv_img, item.getDrawable());
+                baseViewHolder.setText(R.id.tv_title, item.getTitle());
+                baseViewHolder.setOnListItemClickListener((view -> {
+                    onShareItem(position);
+                }));
             }
 
             @Override
@@ -98,32 +98,30 @@ public class AboutActivity extends BaseActivity {
             }
         };
         gridView.setAdapter(adapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mShareView.hide();
-                switch (position) {
-                    case 0:
-                        shareAppAsQQ();
-                        break;
-                    case 1:
-                        shareAppAsWechat();
-                        break;
-                    case 2:
-                        shareAppAsMonment();
-                        break;
-                    case 3:
-                        shareAppAsWeibo();
-                        break;
-                    case 4:
-                        shareAppAsFb();
-                        break;
-                    case 5:
-                        shareAppAsMore();
-                        break;
-                }
-            }
-        });
+    }
+
+    private void onShareItem(int position) {
+        mShareView.hide();
+        switch (position) {
+            case 0:
+                shareAppAsQQ();
+                break;
+            case 1:
+                shareAppAsWechat();
+                break;
+            case 2:
+                shareAppAsMonment();
+                break;
+            case 3:
+                shareAppAsWeibo();
+                break;
+            case 4:
+                shareAppAsFb();
+                break;
+            case 5:
+                shareAppAsMore();
+                break;
+        }
     }
 
     @OnClick({R.id.tv_about_update, R.id.tv_about_share})
@@ -131,17 +129,13 @@ public class AboutActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.tv_about_update:
                 BmobUpdateAgent.forceUpdate(this);
-                BmobUpdateAgent.setUpdateListener(new BmobUpdateListener() {
-
-                    @Override
-                    public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
-                        if (updateStatus == UpdateStatus.Yes) {//版本有更新
-                            toast("检测到新版本");
-                        } else if (updateStatus == UpdateStatus.No) {
-                            toast("当前已经是最新版本");
-                        } else if (updateStatus == UpdateStatus.TimeOut) {
-                            toast("暂时没有网络或者网路堵塞！");
-                        }
+                BmobUpdateAgent.setUpdateListener((updateStatus, updateInfo) -> {
+                    if (updateStatus == UpdateStatus.Yes) {//版本有更新
+                        toast("检测到新版本");
+                    } else if (updateStatus == UpdateStatus.No) {
+                        toast("当前已经是最新版本");
+                    } else if (updateStatus == UpdateStatus.TimeOut) {
+                        toast("暂时没有网络或者网路堵塞！");
                     }
                 });
                 break;

@@ -2,19 +2,18 @@ package com.shenhua.nandagy.presenter;
 
 import com.shenhua.commonlibs.callback.HttpCallback;
 import com.shenhua.commonlibs.mvp.BasePresenter;
+import com.shenhua.nandagy.bean.XueGongData;
 import com.shenhua.nandagy.model.XueGongModel;
 import com.shenhua.nandagy.model.XueGongModelImpl;
 import com.shenhua.nandagy.view.XueGongView;
-
-import java.util.ArrayList;
 
 /**
  * 学工数据代理
  * Created by shenhua on 8/31/2016.
  */
-public class XueGongPresenter extends BasePresenter<XueGongView> implements HttpCallback<ArrayList[]> {
+public class XueGongPresenter extends BasePresenter<XueGongView> implements HttpCallback<XueGongData> {
 
-    private XueGongModel<ArrayList[]> model;
+    private XueGongModel<XueGongData> model;
     private String url;
 
     /**
@@ -39,7 +38,7 @@ public class XueGongPresenter extends BasePresenter<XueGongView> implements Http
     }
 
     @Override
-    public void onSuccess(ArrayList[] data) {
+    public void onSuccess(XueGongData data) {
         mvpView.updateList(data);
     }
 

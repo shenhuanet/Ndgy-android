@@ -17,7 +17,7 @@ import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.ui.fragment.home.HomeFragment;
 import com.shenhua.nandagy.ui.fragment.jiaowu.JiaoWuFragment;
 import com.shenhua.nandagy.ui.fragment.more.MoreFragment;
-import com.shenhua.nandagy.ui.fragment.more.UserFragment;
+import com.shenhua.nandagy.ui.fragment.me.UserFragment;
 import com.shenhua.nandagy.ui.fragment.xuegong.XueGongFragment;
 import com.squareup.otto.Subscribe;
 
