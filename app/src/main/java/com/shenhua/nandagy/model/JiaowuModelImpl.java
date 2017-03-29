@@ -3,6 +3,8 @@ package com.shenhua.nandagy.model;
 import android.os.Handler;
 
 import com.shenhua.commonlibs.callback.HttpCallback;
+import com.shenhua.commonlibs.handler.BaseThreadHandler;
+import com.shenhua.commonlibs.handler.CommonRunnable;
 import com.shenhua.commonlibs.mvp.ApiCallback;
 import com.shenhua.commonlibs.mvp.BasePresenter;
 import com.shenhua.commonlibs.mvp.HttpManager;
@@ -38,6 +40,18 @@ public class JiaowuModelImpl implements JiaowuModel<JiaowuData> {
 
             @Override
             public void onSuccess(String model) {
+                BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<String>("") {
+                    @Override
+                    public void doChildThread() {
+                        JiaowuData data = parseHtml(model);
+                    }
+
+                    @Override
+                    public void doUiThread() {
+
+                    }
+                });
+
                 new Thread(() -> {
                     JiaowuData data = parseHtml(model);
                     handler.post(() -> {

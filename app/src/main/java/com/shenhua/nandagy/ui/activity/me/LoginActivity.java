@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
+import com.shenhua.commonlibs.handler.BaseThreadHandler;
+import com.shenhua.commonlibs.handler.CommonUiRunnable;
 import com.shenhua.commonlibs.widget.ClearEditText;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
@@ -304,9 +306,9 @@ public class LoginActivity extends BaseActivity {
                 int ret = jo.getInt("ret");
                 if (ret == 100030) {
                     // 权限不够，需要增量授权
-                    LoginActivity.this.runOnUiThread(new Runnable() {
+                    BaseThreadHandler.getInstance().sendRunnable(new CommonUiRunnable<String>("all") {
                         @Override
-                        public void run() {
+                        public void doUIThread() {
                             mTencent.reAuth(LoginActivity.this, "all", new IUiListener() {
 
                                 @Override
@@ -337,8 +339,6 @@ public class LoginActivity extends BaseActivity {
                         e1.printStackTrace();
                     }
                     doSignup(openID, "123456", qqPhoimgUrl, nickName);
-
-
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -352,8 +352,7 @@ public class LoginActivity extends BaseActivity {
 
     };
 
-    private void doSignup(final String username, final String password,
-                          final String imgUrl, final String nick) {
+    private void doSignup(final String username, final String password, final String imgUrl, final String nick) {
         LoadingAlertDialog.showLoadDialog(LoginActivity.this, "授权验证中...", false);
         new Handler().postDelayed(() -> {
             MyUser user = new MyUser();
@@ -372,7 +371,6 @@ public class LoginActivity extends BaseActivity {
                     } else {
                         LoadingAlertDialog.dissmissLoadDialog();
                         if (e.getErrorCode() == 202) {
-                            System.out.println("shenhua sout:" + username);
                             doSignin(username, password);
                         }
                     }

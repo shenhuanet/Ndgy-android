@@ -33,7 +33,6 @@ public class ScorePresenter implements HttpCallback<ScoreData> {
 
     @Override
     public void onSuccess(ScoreData data) {
-        scoreQueryView.hideProgress();
         scoreQueryView.onGetQueryResult(data);
     }
 
