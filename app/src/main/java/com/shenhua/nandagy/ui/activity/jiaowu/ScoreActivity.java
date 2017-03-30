@@ -37,7 +37,7 @@ public class ScoreActivity extends BaseActivity {
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
-//        Bmob.initialize(this, BombService.APP_KEY);
+//        Bmob.initialize(this, BmobService.APP_KEY);
 
         num = getIntent().getStringExtra("name_num");
         id = getIntent().getStringExtra("name_id");

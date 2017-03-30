@@ -87,7 +87,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         mTencent = Tencent.createInstance(ShareUtils.QQ_APPID, this);
-//        Bmob.initialize(this, BombService.APP_KEY);
+//        Bmob.initialize(this, BmobService.APP_KEY);
 
         ButterKnife.bind(this);
         mSexRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {

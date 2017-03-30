@@ -3,7 +3,7 @@ package com.shenhua.nandagy;
 import android.app.Application;
 import android.content.Context;
 
-import com.shenhua.nandagy.service.BombService;
+import com.shenhua.nandagy.service.BmobService;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -22,7 +22,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Bmob.initialize(this, BombService.APP_KEY);
+        Bmob.initialize(this, BmobService.APP_KEY);
         mApplicationContext = this;
         if (DEBUG_MODE) {
             LeakCanary.install(this);

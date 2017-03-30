@@ -1,7 +1,5 @@
 package com.shenhua.nandagy.bean.bmobbean;
 
-import com.shenhua.nandagy.service.BmobService;
-
 import java.io.Serializable;
 
 import cn.bmob.v3.BmobUser;

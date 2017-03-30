@@ -26,7 +26,6 @@ import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
 import com.shenhua.nandagy.callback.NewMessageEventBus;
-import com.shenhua.nandagy.service.BombService;
 import com.shenhua.nandagy.service.Constants;
 import com.shenhua.nandagy.service.ExceptionMessage;
 import com.shenhua.nandagy.ui.activity.me.AboutActivity;
@@ -46,7 +45,6 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -91,7 +89,7 @@ public class UserFragment extends BaseFragment {
 
     @Override
     public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
-        Bmob.initialize(getContext(), BombService.APP_KEY);
+//        Bmob.initialize(getContext(), BmobService.APP_KEY);
         ButterKnife.bind(this, rootView);
         // 红点提示
         mMessageTag.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.dot_new_red, 0);
