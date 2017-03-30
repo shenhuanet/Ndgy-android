@@ -30,6 +30,7 @@ import com.shenhua.nandagy.bean.XueGongData;
 import com.shenhua.nandagy.presenter.XueGongPresenter;
 import com.shenhua.nandagy.service.Constants;
 import com.shenhua.nandagy.service.ContentDetailType;
+import com.shenhua.nandagy.service.HttpService;
 import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
 import com.shenhua.nandagy.ui.activity.WebActivity;
 import com.shenhua.nandagy.ui.activity.xuegong.EduAdminActivity;
@@ -72,7 +73,7 @@ public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongVi
     private void showDefaultBanner() {
         BannerData bannerData = new BannerData();
         bannerData.setaTitle(new String[]{""});
-        bannerData.setaImage(new String[]{"http://klxh.oschina.io/shenhuandgy-web/imgs/img_default.png"});
+        bannerData.setaImage(new String[]{HttpService.DEFAULT_IMAGE});
         bannerView.setBannerDataA(bannerData);
     }
 

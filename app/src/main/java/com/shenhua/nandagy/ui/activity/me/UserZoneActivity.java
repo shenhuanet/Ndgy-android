@@ -90,13 +90,13 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
     private boolean accessFromMe;
     private String userObjectId;
     private String finalPhotoPath;
-    // TODO: 3/17/2017 cacheDir
-    private String cacheDir = "Ndgy/temp";
+    private String cacheDir;
     private String cacheHou = ".nui";
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
+        cacheDir = getCacheDir().getPath();
         accessFromMe = getIntent().getBooleanExtra("isMySelf", false);
         if (accessFromMe) {
             setPhotoView(getIntent().getStringExtra("photo"), getIntent().getBooleanExtra("sex", false));
@@ -109,12 +109,9 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
         mBpv.setInterpolator(new BounceInterpolator());
         View content = mBpv.getContentView();
         TextView take = (TextView) content.findViewById(R.id.tv_take_photo);
-        take.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBpv.hide();
-                finalPhotoPath = Crop.takePhoto(UserZoneActivity.this, cacheDir, userObjectId + cacheHou);
-            }
+        take.setOnClickListener(v -> {
+            mBpv.hide();
+            finalPhotoPath = Crop.takePhoto(UserZoneActivity.this, cacheDir, userObjectId + cacheHou);
         });
         TextView pick = (TextView) content.findViewById(R.id.tv_pick_photo);
         pick.setOnClickListener(v -> {
@@ -122,12 +119,7 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
             Crop.pickImage(UserZoneActivity.this);
         });
         TextView cancel = (TextView) content.findViewById(R.id.tv_cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBpv.hide();
-            }
-        });
+        cancel.setOnClickListener(v -> mBpv.hide());
     }
 
     @OnClick(R.id.iv_zone_photo)
@@ -135,7 +127,7 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
         if (accessFromMe && !mBpv.getIsShowing()) {
             mBpv.show();
         } else {
-//            showPhotoDetail();
+            // TODO: 3/30/2017  showPhotoDetail();
         }
     }
 
@@ -155,9 +147,9 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
                 if (e == null) {
                     userZoneBean = userZone;
                     if (!accessFromMe) setPhotoView(userZone.getPhotoUrl(), userZone.getSex());
-                    mZoneIdTv.setText("ID:" + userZone.getObjectId());
-                    mZoneExperTv.setText("经验值:" + userZone.getExper());
-                    mZoneMiTv.setText("米粒数:" + userZone.getMi());
+                    mZoneIdTv.setText(String.format(getString(R.string.user_zone_text_id), userZone.getObjectId()));
+                    mZoneExperTv.setText(String.format(getString(R.string.user_zone_text_exper), userZone.getExper()));
+                    mZoneMiTv.setText(String.format(getString(R.string.user_zone_text_mi), userZone.getMi()));
                     resetText(mDynamicStrTv, userZone.getDynamicStr());
                     resetText(mNameTv, userZone.getName());
                     resetText(mSignTv, userZone.getSign());
@@ -248,7 +240,7 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
                         .into(mZonePhotoIv);
             }
             if (requestCode == Crop.RESULT_ERROR) {
-                toast("裁剪照片发生错误！" + Crop.getError(data).getMessage());
+                toast("裁剪照片发生错误");
             }
         }
     }
@@ -256,7 +248,7 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
     /**
      * 上传头像
      *
-     * @param filePath
+     * @param filePath filePath
      */
     private void upLoadPhoto(String filePath) {
         LoadingAlertDialog.showLoadDialog(this, "头像更新中...", true);

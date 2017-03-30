@@ -26,13 +26,15 @@ import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.JiaowuDataAdapter;
 import com.shenhua.nandagy.bean.ContentPassesData;
 import com.shenhua.nandagy.bean.JiaowuData;
+import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.presenter.JiaowuPresenter;
 import com.shenhua.nandagy.service.Constants;
 import com.shenhua.nandagy.service.ContentDetailType;
 import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
-import com.shenhua.nandagy.ui.activity.WebActivity;
-import com.shenhua.nandagy.ui.activity.xuegong.EduAdminActivity;
-import com.shenhua.nandagy.ui.activity.xuegong.FinanceActivity;
+import com.shenhua.nandagy.ui.activity.jiaowu.BindingActivity;
+import com.shenhua.nandagy.ui.activity.jiaowu.ScoreActivity;
+import com.shenhua.nandagy.ui.activity.me.LoginActivity;
+import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 import com.shenhua.nandagy.view.JiaowuView;
 
 import java.util.ArrayList;
@@ -72,7 +74,7 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (!isInit) {
-            presenter.execute();
+//            presenter.execute();
             setupToolView(mInnerGridView, R.array.jiaowu_tabs_titles, R.array.jiaowu_tabs_images);
             isInit = true;
         }
@@ -149,7 +151,6 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
             items.add(item);
         }
         ar.recycle();
-        Class[] classes = {WebActivity.class, EduAdminActivity.class, FinanceActivity.class};
         BaseListAdapter adapter = new BaseListAdapter<BaseImageTextItem>(getActivity(), items) {
 
             @Override
@@ -157,7 +158,17 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
                 baseViewHolder.setImageResource(R.id.iv_img, item.getDrawable());
                 baseViewHolder.setText(R.id.tv_title, item.getTitle());
                 baseViewHolder.setOnListItemClickListener((view -> {
-                    toast("" + position);
+                    if (position == 0) {
+                        if (UserUtils.getInstance().isLogin(getContext())) {
+                            doIsBinding(true);
+                        } else {
+                            toast("请先登录后再使用本功能");
+                            Intent intent = new Intent(getContext(), LoginActivity.class);
+                            startActivityForResult(intent, Constants.Code.REQUEST_CODE_NAV_TO_LOGIN);
+                        }
+                    }
+                    if (position == 1) toast("现在不是选课时间");
+                    if (position == 2) toast("现在不是报名时间");
                 }));
             }
 
@@ -169,4 +180,36 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
         abs.setAdapter(adapter);
     }
 
+    private void doIsBinding(boolean showMsg) {
+        if (UserUtils.getInstance().isBinding(getContext())) {
+            MyUser user = UserUtils.getInstance().getUser(getContext());
+            Intent intent = new Intent(getContext(), ScoreActivity.class);
+            intent.putExtra("name_num", user.getName_num());
+            intent.putExtra("name_id", user.getName_id());
+            startActivity(intent);
+        } else {
+            if (showMsg) {
+                toast("请先登录教务系统");
+            }
+            Intent intent = new Intent(getContext(), BindingActivity.class);
+            startActivityForResult(intent, Constants.Code.REQUEST_CODE_NAV_TO_BINDING);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.Code.REQUEST_CODE_NAV_TO_LOGIN) {
+            if (resultCode == Constants.Code.RECULT_CODE_LOGIN_SUCCESS) {
+                doIsBinding(false);
+            } else {
+                toast("登录取消");
+            }
+        }
+        if (requestCode == Constants.Code.REQUEST_CODE_NAV_TO_BINDING) {
+            if (resultCode != Constants.Code.RECULT_CODE_BINDING_SUCCESS) {
+                toast("取消操作");
+            }
+        }
+    }
 }

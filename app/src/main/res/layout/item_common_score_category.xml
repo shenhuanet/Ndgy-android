@@ -11,7 +11,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginTop="12dp"
-        android:contentDescription="@string/imgdec" />
+        android:contentDescription="@string/common_imgdec" />
 
     <TextView
         android:id="@+id/common_txt_name"

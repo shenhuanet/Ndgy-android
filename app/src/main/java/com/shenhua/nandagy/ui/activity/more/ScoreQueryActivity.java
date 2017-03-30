@@ -12,7 +12,7 @@ import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.base.BaseImageTextItem;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.ScoreQueryCategoryAdapter;
-import com.shenhua.nandagy.bean.bmobbean.BombUtil;
+import com.shenhua.nandagy.service.BombService;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreBecFragment;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreCAPFragment;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreCetFragment;
@@ -50,7 +50,7 @@ public class ScoreQueryActivity extends BaseActivity {
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
-        Bmob.initialize(this, BombUtil.APP_KEY);
+        Bmob.initialize(this, BombService.APP_KEY);
         ButterKnife.bind(this);
         makeCategoryView(R.array.category_score_item, R.array.category_score_images);
     }

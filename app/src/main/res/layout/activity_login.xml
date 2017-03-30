@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        android:contentDescription="@string/imgdec"
+        android:contentDescription="@string/common_imgdec"
         android:scaleType="centerCrop"
         android:src="@drawable/img_sign_bg2" />
 

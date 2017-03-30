@@ -10,7 +10,7 @@ public class Constants {
     public static final String HOME_URL_GZDT = "http://www.ndgy.cn";
     public static final String HOME_URL_GGGS = HOME_URL_GZDT + "/Item/list.asp?id=1268";
     public static final String XUEGONG_URL = "http://xgc.ndgy.cn";
-	public static final String JIAOWU_URL = "http://www.ncupyh.cn";
+    public static final String JIAOWU_URL = "http://www.ncupyh.cn";
 
     public static class HtmlString {
         public static final String HTML_HEAD = "<html>\n" +
@@ -29,4 +29,19 @@ public class Constants {
             return html.replace("<img", "</br><img").replace("<p><img", "</br><img");
         }
     }
+
+    public static class Code {
+        public static final int REQUEST_CODE_NAV_TO_USER_ZONE = 1;
+        public static final int REQUEST_CODE_NAV_TO_USER_ACCOUNT = 2;
+        public static final int REQUEST_CODE_NAV_TO_LOGIN = 3;
+        public static final int REQUEST_CODE_NAV_TO_PUBLISH_DYNAMIC = 4;
+        public static final int REQUEST_CODE_NAV_TO_MESSAGE = 5;
+        public static final int REQUEST_CODE_NAV_TO_SETTING = 6;
+        public static final int REQUEST_CODE_NAV_TO_ABOUT = 7;
+        public static final int REQUEST_CODE_NAV_TO_BINDING = 8;
+
+        public static final int RECULT_CODE_LOGIN_SUCCESS = 100;
+        public static final int RECULT_CODE_BINDING_SUCCESS = 101;
+    }
+
 }

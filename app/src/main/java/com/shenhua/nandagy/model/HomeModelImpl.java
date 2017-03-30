@@ -1,8 +1,8 @@
 package com.shenhua.nandagy.model;
 
-import android.os.Handler;
-
 import com.shenhua.commonlibs.callback.HttpCallback;
+import com.shenhua.commonlibs.handler.BaseThreadHandler;
+import com.shenhua.commonlibs.handler.CommonRunnable;
 import com.shenhua.commonlibs.mvp.ApiCallback;
 import com.shenhua.commonlibs.mvp.BasePresenter;
 import com.shenhua.commonlibs.mvp.HttpManager;
@@ -27,9 +27,7 @@ import java.util.regex.Pattern;
  */
 public class HomeModelImpl implements HomeModel<List<HomeData>> {
 
-    private static final String TAG = "HomeModelImpl";
     private HttpManager httpManager = HttpManager.getInstance();
-    private Handler handler = new Handler();
 
     @Override
     public void toGetHomeData(BasePresenter basePresenter, final String url, final HttpCallback<List<HomeData>> callback, final int type) {
@@ -41,15 +39,7 @@ public class HomeModelImpl implements HomeModel<List<HomeData>> {
 
             @Override
             public void onSuccess(String html) {
-                new Thread(() -> {
-                    List<HomeData> datas = parseData(html, type);
-                    handler.post(() -> {
-                        if (datas == null) {
-                            callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
-                        } else
-                            callback.onSuccess(datas);
-                    });
-                }).start();
+                getData(html, type, callback);
             }
 
             @Override
@@ -61,17 +51,7 @@ public class HomeModelImpl implements HomeModel<List<HomeData>> {
                             callback.onError(ExceptionMessage.MSG_DATA_NULL);
                             return;
                         }
-                        new Thread(() -> {
-                            List<HomeData> datas = parseData(html, type);
-                            handler.post(() -> {
-                                if (datas == null) {
-                                    callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
-                                } else {
-                                    callback.onSuccess(datas);
-                                }
-                            });
-
-                        }).start();
+                        getData(html, type, callback);
                     } catch (Exception e) {
                         e.printStackTrace();
                         callback.onError(ExceptionMessage.MSG_DATA_NULL);
@@ -84,6 +64,24 @@ public class HomeModelImpl implements HomeModel<List<HomeData>> {
             @Override
             public void onFinish() {
                 callback.onPostRequest();
+            }
+        });
+    }
+
+    private void getData(final String html, final int type, final HttpCallback<List<HomeData>> callback) {
+        BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<List<HomeData>>() {
+            @Override
+            public List<HomeData> doChildThread() {
+                return parseData(html, type);
+            }
+
+            @Override
+            public void doUiThread(List<HomeData> homeDatas) {
+                if (homeDatas == null) {
+                    callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
+                } else {
+                    callback.onSuccess(homeDatas);
+                }
             }
         });
     }

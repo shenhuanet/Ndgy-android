@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
-            android:contentDescription="@string/imgdec"
+            android:contentDescription="@string/common_imgdec"
             android:scaleType="centerCrop"
             android:src="@drawable/about_logo_pic" />
 

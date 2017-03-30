@@ -91,7 +91,7 @@
 
         <ImageView
             style="@style/VerifyCodeStyle"
-            android:contentDescription="@string/imgdec" />
+            android:contentDescription="@string/common_imgdec" />
 
     </LinearLayout>
 

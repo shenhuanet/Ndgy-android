@@ -22,7 +22,8 @@ public class Crop {
     public static final int REQUEST_TAKE = 9163;
     public static final int RESULT_ERROR = 404;
     private Intent cropIntent;
-    private File mTempDir;
+    //    private File mTempDir;
+    private String mCacheDir;
 
     public interface Extra {
         String ASPECT_X = "aspect_x";
@@ -39,13 +40,12 @@ public class Crop {
     }
 
     public Crop fileOutDir(String dir) {
-        mTempDir = new File(Environment.getExternalStorageDirectory(), dir);
-        if (!mTempDir.exists()) mTempDir.mkdirs();
+        this.mCacheDir = dir;
         return this;
     }
 
     public Crop fileOutName(String fileName) {
-        File cropFile = new File(mTempDir, fileName);
+        File cropFile = new File(mCacheDir, fileName);
         Uri output = Uri.fromFile(cropFile);
         cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, output);
         return this;

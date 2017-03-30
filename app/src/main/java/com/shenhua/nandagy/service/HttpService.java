@@ -50,4 +50,6 @@ public class HttpService {
     public static final String STUDY_JIANZHU = "/xuexi/jianzhu/";
     public static final String STUDY_CAIKUAI = "/xuexi/caikuai/";
 
+    public static final String DEFAULT_IMAGE = "http://klxh.oschina.io/shenhuandgy-web/imgs/img_default.png";
+
 }

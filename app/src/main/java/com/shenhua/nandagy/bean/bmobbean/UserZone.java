@@ -30,8 +30,7 @@ public class UserZone extends BmobObject implements Serializable {
     public UserZone() {
     }
 
-    public UserZone(String objeceId, Integer level, Integer dynamic, Integer mi, Integer exper) {
-//        this.objeceId = objeceId;
+    public UserZone(Integer level, Integer dynamic, Integer mi, Integer exper) {
         this.dynamic = dynamic;
         this.exper = exper;
         this.level = level;

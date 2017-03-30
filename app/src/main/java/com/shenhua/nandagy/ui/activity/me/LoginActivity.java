@@ -1,7 +1,6 @@
 package com.shenhua.nandagy.ui.activity.me;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -14,10 +13,12 @@ import android.widget.RelativeLayout;
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.handler.BaseThreadHandler;
+import com.shenhua.commonlibs.handler.CommonRunnable;
 import com.shenhua.commonlibs.handler.CommonUiRunnable;
 import com.shenhua.commonlibs.widget.ClearEditText;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
+import com.shenhua.nandagy.service.Constants;
 import com.shenhua.nandagy.utils.Rotate3dAnimation;
 import com.shenhua.nandagy.utils.ShareUtils;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
@@ -30,6 +31,8 @@ import com.tencent.tauth.UiError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +54,6 @@ import cn.bmob.v3.listener.SaveListener;
 )
 public class LoginActivity extends BaseActivity {
 
-    public static final int LOGIN_SUCCESS = 100;
     @BindView(R.id.layout_sign_content)
     RelativeLayout mSignContent;
     @BindView(R.id.view_signin)
@@ -72,7 +74,7 @@ public class LoginActivity extends BaseActivity {
     ClearEditText mPasswordEt;
     @BindView(R.id.radiogroup)
     RadioGroup mSexRadioGroup;
-    private boolean gender = false;//默认性别 男
+    private boolean gender = false;// 默认性别 男
 
     @BindView(R.id.signin_et_username)
     ClearEditText mUsernameSigninEt;
@@ -85,6 +87,8 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         mTencent = Tencent.createInstance(ShareUtils.QQ_APPID, this);
+//        Bmob.initialize(this, BombService.APP_KEY);
+
         ButterKnife.bind(this);
         mSexRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonId = group.getCheckedRadioButtonId();
@@ -144,13 +148,13 @@ public class LoginActivity extends BaseActivity {
 
     private boolean isReady(String username, String password) {
         if (TextUtils.isEmpty(username)) {
-            toast("请填写注册账号");
+            toast(R.string.login_info_input_username);
             mUsernameEt.requestFocus();
             mUsernameEt.setAnimation(ClearEditText.shakeAnimation(5));
             return false;
         }
         if (TextUtils.isEmpty(password) || password.length() != 6) {
-            toast("密码为6位数字");
+            toast(R.string.login_info_password);
             mPasswordEt.requestFocus();
             mPasswordEt.setAnimation(ClearEditText.shakeAnimation(5));
             return false;
@@ -158,63 +162,90 @@ public class LoginActivity extends BaseActivity {
         return true;
     }
 
+    /**
+     * 用户注册(普通注册)
+     *
+     * @param username 用户名
+     * @param password 密码
+     */
     private void doSignup(final String username, final String password) {
-        LoadingAlertDialog.showLoadDialog(LoginActivity.this, "注册中，请稍后", false);
-        new Handler().postDelayed(new Runnable() {
+        LoadingAlertDialog.showLoadDialog(LoginActivity.this, getString(R.string.login_info_singuping), false);
+        BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<MyUser>() {
             @Override
-            public void run() {
+            public MyUser doChildThread() {
                 MyUser user = new MyUser();
                 user.setUsername(username);
                 user.setPassword(password);
                 user.setSex(gender);
                 user.signUp(new SaveListener<MyUser>() {
                     @Override
-                    // s.toString() (一个实体)          com.shenhua.nandagy.bean.bmobbean.MyUser@ae27bd1
-                    // e.toString()  (BmobException)   errorCode:202,errorMsg:username 'sendi' already taken.
-                    public void done(MyUser s, BmobException e) {
+                    public void done(MyUser user, BmobException e) {
                         if (e == null) {
-                            LoadingAlertDialog.dissmissLoadDialog();
-                            toast("注册成功！");
-                            doSignin(username, password);
+                            doUiThread(user);
                         } else {
                             LoadingAlertDialog.dissmissLoadDialog();
-                            if (e.getErrorCode() == 202)
+                            if (e.getErrorCode() == 202) {
                                 toast("注册失败，\"" + username + "\"已被注册！");
-                            else toast("注册失败，错误码：" + e.getErrorCode());
+                            } else {
+                                toast("注册失败，错误码：" + e.getErrorCode());
+                            }
+                        }
+                    }
+                });
+                return null;
+            }
+
+            @Override
+            public void doUiThread(MyUser user) {
+                LoadingAlertDialog.dissmissLoadDialog();
+                toast("注册成功！");
+                doSignin(username, password);
+            }
+        }, 2000, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * 用户登录
+     *
+     * @param username 用户名
+     * @param password 密码
+     */
+    private void doSignin(final String username, final String password) {
+        LoadingAlertDialog.showLoadDialog(LoginActivity.this, getString(R.string.login_info_singining), true);
+        BaseThreadHandler.getInstance().sendRunnable(new CommonUiRunnable<Object>("") {
+
+            @Override
+            public void doUIThread() {
+                MyUser user = new MyUser();
+                user.setUsername(username);
+                user.setPassword(password);
+                user.login(new SaveListener<MyUser>() {
+
+                    @Override
+                    public void done(MyUser bmobUser, BmobException e) {
+                        if (e == null) {
+                            LoadingAlertDialog.dissmissLoadDialog();
+                            toast(R.string.login_info_singin_success);
+                            onLoginSuccess();
+                            // 通过BmobUser user = BmobUser.getCurrentUser()获取登录成功后的本地用户信息
+                            // 如果是自定义用户对象MyUser，可通过MyUser user = BmobUser.getCurrentUser(MyUser.class)获取自定义用户信息
+                        } else {
+                            LoadingAlertDialog.dissmissLoadDialog();
+                            if (e.getErrorCode() == 101) {
+                                toast(R.string.login_info_singin_failed);
+                            } else {
+                                toast(String.format(getString(R.string.login_info_singin_failed_with_code), e.getErrorCode()));
+                            }
                         }
                     }
                 });
             }
-        }, 2000);
+        }, 2000, TimeUnit.MILLISECONDS);
     }
 
-    private void doSignin(final String username, final String password) {
-        LoadingAlertDialog.showLoadDialog(LoginActivity.this, "登录中，请稍后", false);
-        new Handler().postDelayed(() -> {
-            MyUser user = new MyUser();
-            user.setUsername(username);
-            user.setPassword(password);
-            user.login(new SaveListener<MyUser>() {
-
-                @Override
-                public void done(MyUser bmobUser, BmobException e) {
-                    if (e == null) {
-                        LoadingAlertDialog.dissmissLoadDialog();
-                        toast("登录成功！");
-                        onLoginSuccess();
-                        //通过BmobUser user = BmobUser.getCurrentUser()获取登录成功后的本地用户信息
-                        //如果是自定义用户对象MyUser，可通过MyUser user = BmobUser.getCurrentUser(MyUser.class)获取自定义用户信息
-                    } else {
-                        LoadingAlertDialog.dissmissLoadDialog();
-                        if (e.getErrorCode() == 101)
-                            toast("登录失败，用户名或密码错误");
-                        else toast("登录失败，错误代码" + e.getErrorCode());
-                    }
-                }
-            });
-        }, 2000);
-    }
-
+    /**
+     * 登录成功时回调
+     */
     private void onLoginSuccess() {
         MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
         MyUser user = new MyUser();
@@ -234,10 +265,13 @@ public class LoginActivity extends BaseActivity {
         if (!TextUtils.isEmpty(myUser.getUserZoneObjID())) {
             UserZoneUtils.getInstance().updateZoneStatis(myUser.getUserZoneObjID(), "exper", 2);
         }
-        setResult(LOGIN_SUCCESS);
+        setResult(Constants.Code.RECULT_CODE_LOGIN_SUCCESS);
         this.finish();
     }
 
+    /**
+     * 切换注册、登录的view
+     */
     public void onSwitchView() {
         centerX = mSignContent.getWidth() / 2;
         centerY = mSignContent.getHeight() / 2;
@@ -352,31 +386,42 @@ public class LoginActivity extends BaseActivity {
 
     };
 
+    /**
+     * 用户注册(QQ)
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @param imgUrl   头像
+     * @param nick     昵称
+     */
     private void doSignup(final String username, final String password, final String imgUrl, final String nick) {
-        LoadingAlertDialog.showLoadDialog(LoginActivity.this, "授权验证中...", false);
-        new Handler().postDelayed(() -> {
-            MyUser user = new MyUser();
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setSex(gender);
-            user.setUrl_photo(imgUrl);
-            user.setNick(nick);
-            user.signUp(new SaveListener<MyUser>() {
-                @Override
-                public void done(MyUser s, BmobException e) {
-                    if (e == null) {
-                        LoadingAlertDialog.dissmissLoadDialog();
-                        toast("授权成功！");
-                        doSignin(username, password);
-                    } else {
-                        LoadingAlertDialog.dissmissLoadDialog();
-                        if (e.getErrorCode() == 202) {
+        LoadingAlertDialog.showLoadDialog(LoginActivity.this, getString(R.string.login_info_verfiy), false);
+        BaseThreadHandler.getInstance().sendRunnable(new CommonUiRunnable<String>("") {
+            @Override
+            public void doUIThread() {
+                MyUser user = new MyUser();
+                user.setUsername(username);
+                user.setPassword(password);
+                user.setSex(gender);
+                user.setUrl_photo(imgUrl);
+                user.setNick(nick);
+                user.signUp(new SaveListener<MyUser>() {
+                    @Override
+                    public void done(MyUser s, BmobException e) {
+                        if (e == null) {
+                            LoadingAlertDialog.dissmissLoadDialog();
+                            toast(R.string.login_info_verfiy_success);
                             doSignin(username, password);
+                        } else {
+                            LoadingAlertDialog.dissmissLoadDialog();
+                            if (e.getErrorCode() == 202) {
+                                doSignin(username, password);
+                            }
                         }
                     }
-                }
-            });
-        }, 2000);
+                });
+            }
+        }, 2000, TimeUnit.MILLISECONDS);
     }
 
     private void initOpenAnim() {

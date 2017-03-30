@@ -27,7 +27,7 @@ public class HomeGzFragment extends HomeContentBaseFragment {
     @Override
     public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
         ButterKnife.bind(this, rootView);
-        presenter.execute(0);
+//        presenter.execute(0);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.shenhua.nandagy.model;
 
-import android.os.Handler;
-
 import com.shenhua.commonlibs.callback.HttpCallback;
 import com.shenhua.commonlibs.handler.BaseThreadHandler;
 import com.shenhua.commonlibs.handler.CommonRunnable;
@@ -28,7 +26,6 @@ import java.util.List;
 public class JiaowuModelImpl implements JiaowuModel<JiaowuData> {
 
     private HttpManager httpManager = HttpManager.getInstance();
-    private Handler handler = new Handler();
 
     @Override
     public void getJiaowuDatas(BasePresenter basePresenter, String url, HttpCallback<JiaowuData> callback) {
@@ -39,29 +36,8 @@ public class JiaowuModelImpl implements JiaowuModel<JiaowuData> {
             }
 
             @Override
-            public void onSuccess(String model) {
-                BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<String>("") {
-                    @Override
-                    public void doChildThread() {
-                        JiaowuData data = parseHtml(model);
-                    }
-
-                    @Override
-                    public void doUiThread() {
-
-                    }
-                });
-
-                new Thread(() -> {
-                    JiaowuData data = parseHtml(model);
-                    handler.post(() -> {
-                        if (data == null) {
-                            callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
-                        } else {
-                            callback.onSuccess(data);
-                        }
-                    });
-                }).start();
+            public void onSuccess(String html) {
+                getData(html, callback);
             }
 
             @Override
@@ -73,17 +49,7 @@ public class JiaowuModelImpl implements JiaowuModel<JiaowuData> {
                             callback.onError(ExceptionMessage.MSG_DATA_NULL);
                             return;
                         }
-                        new Thread(() -> {
-                            JiaowuData data = parseHtml(html);
-                            handler.post(() -> {
-                                if (data == null) {
-                                    callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
-                                } else {
-                                    callback.onSuccess(data);
-                                }
-                            });
-
-                        }).start();
+                        getData(html, callback);
                     } catch (Exception e) {
                         e.printStackTrace();
                         callback.onError(ExceptionMessage.MSG_DATA_NULL);
@@ -96,6 +62,24 @@ public class JiaowuModelImpl implements JiaowuModel<JiaowuData> {
             @Override
             public void onFinish() {
                 callback.onPostRequest();
+            }
+        });
+    }
+
+    private void getData(final String html, final HttpCallback<JiaowuData> callback) {
+        BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<JiaowuData>() {
+            @Override
+            public JiaowuData doChildThread() {
+                return parseHtml(html);
+            }
+
+            @Override
+            public void doUiThread(JiaowuData jiaowuData) {
+                if (jiaowuData == null) {
+                    callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
+                } else {
+                    callback.onSuccess(jiaowuData);
+                }
             }
         });
     }

@@ -1,8 +1,8 @@
 package com.shenhua.nandagy.model;
 
-import android.os.Handler;
-
 import com.shenhua.commonlibs.callback.HttpCallback;
+import com.shenhua.commonlibs.handler.BaseThreadHandler;
+import com.shenhua.commonlibs.handler.CommonRunnable;
 import com.shenhua.commonlibs.mvp.ApiCallback;
 import com.shenhua.commonlibs.mvp.BasePresenter;
 import com.shenhua.commonlibs.mvp.HttpManager;
@@ -30,7 +30,6 @@ import java.util.regex.Pattern;
 public class XueGongModelImpl implements XueGongModel<XueGongData> {
 
     private HttpManager httpManager = HttpManager.getInstance();
-    private Handler handler = new Handler();
 
     @Override
     public void toGetXueGongData(BasePresenter basePresenter, String url, final HttpCallback<XueGongData> callback) {
@@ -41,17 +40,8 @@ public class XueGongModelImpl implements XueGongModel<XueGongData> {
             }
 
             @Override
-            public void onSuccess(String model) {
-                new Thread(() -> {
-                    XueGongData datas = parseHtml(model);
-                    handler.post(() -> {
-                        if (datas == null) {
-                            callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
-                        } else {
-                            callback.onSuccess(datas);
-                        }
-                    });
-                }).start();
+            public void onSuccess(String html) {
+                getData(html, callback);
             }
 
             @Override
@@ -63,17 +53,7 @@ public class XueGongModelImpl implements XueGongModel<XueGongData> {
                             callback.onError(ExceptionMessage.MSG_DATA_NULL);
                             return;
                         }
-                        new Thread(() -> {
-                            XueGongData datas = parseHtml(html);
-                            handler.post(() -> {
-                                if (datas == null) {
-                                    callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
-                                } else {
-                                    callback.onSuccess(datas);
-                                }
-                            });
-
-                        }).start();
+                        getData(html, callback);
                     } catch (Exception e) {
                         e.printStackTrace();
                         callback.onError(ExceptionMessage.MSG_DATA_NULL);
@@ -86,6 +66,25 @@ public class XueGongModelImpl implements XueGongModel<XueGongData> {
             @Override
             public void onFinish() {
                 callback.onPostRequest();
+            }
+        });
+    }
+
+    private void getData(final String html, final HttpCallback<XueGongData> callback) {
+        BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<XueGongData>() {
+
+            @Override
+            public XueGongData doChildThread() {
+                return parseHtml(html);
+            }
+
+            @Override
+            public void doUiThread(XueGongData xueGongData) {
+                if (xueGongData == null) {
+                    callback.onError(ExceptionMessage.MSG_DATA_PARSE_ERROR);
+                } else {
+                    callback.onSuccess(xueGongData);
+                }
             }
         });
     }

@@ -95,7 +95,7 @@
             android:layout_gravity="end"
             android:layout_margin="8dp"
             android:visibility="gone"
-            android:contentDescription="@string/imgdec"
+            android:contentDescription="@string/common_imgdec"
             android:src="@drawable/ic_exam_nopass" />
 
     </FrameLayout>
