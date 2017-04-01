@@ -67,8 +67,7 @@ public class UserAccountActivity extends BaseActivity {
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        final MyUser user = UserUtils.getInstance().getUserInfo(this);
-//        final MyUser user = BmobUser.getCurrentUser(MyUser.class);
+        MyUser user = UserUtils.getInstance().getUserInfo(this);
         mIdTv.setText(user.getUserName());
         mNickTv.setText(user.getNick());
         if (user.getSex()) mGenderWoman.setChecked(true);

@@ -9,6 +9,7 @@ import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
+import com.shenhua.nandagy.widget.LoadingAlertDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +30,7 @@ import cn.bmob.v3.listener.UpdateListener;
 )
 public class ScoreActivity extends BaseActivity {
 
+    private static final String TAG = "ScoreActivity";
     @BindView(R.id.toolbar_pro)
     ProgressBar mProgressBar;
     private String num;
@@ -37,21 +39,28 @@ public class ScoreActivity extends BaseActivity {
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
-//        Bmob.initialize(this, BmobService.APP_KEY);
 
         num = getIntent().getStringExtra("name_num");
         id = getIntent().getStringExtra("name_id");
 
-        mProgressBar.setVisibility(View.VISIBLE);
+        doLoginJiaowu();
 
-        onLoginSuccess();
+    }
+
+    private void doLoginJiaowu() {
+        mProgressBar.setVisibility(View.VISIBLE);
+        LoadingAlertDialog.showLoadDialog(this, "正在登录教务系统", true);
+
+
+
+
     }
 
     private void onLoginSuccess() {
-        MyUser user = new MyUser();
-        String objectId = user.getObjectId();
-        user.setValue("name_num", num);
-        user.setValue("name_id", id);
+        MyUser user = UserUtils.getInstance().getUser(this);
+        String objectId = user.getUserId();
+        user.setName_num(num);
+        user.setName_id(id);
         user.setInfo("update");
         user.update(objectId, new UpdateListener() {
             @Override
@@ -61,7 +70,6 @@ public class ScoreActivity extends BaseActivity {
                     UserUtils.getInstance().updateUserInfo(ScoreActivity.this, "name_id", id);
                 } else {
                     e.printStackTrace();
-                    toast("保存失败" + e.getMessage());
                 }
             }
         });

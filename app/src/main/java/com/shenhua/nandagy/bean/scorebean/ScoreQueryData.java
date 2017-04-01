@@ -4,12 +4,10 @@ package com.shenhua.nandagy.bean.scorebean;
  * 第三方成绩查询实体
  * Created by shenhua on 9/8/2016.
  */
-public class ScoreData {
+public class ScoreQueryData {
 
     private String title;
     private String time;
-//    private
-
 
     public String getTitle() {
         return title;

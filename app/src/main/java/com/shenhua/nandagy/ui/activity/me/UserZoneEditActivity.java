@@ -13,6 +13,7 @@ import com.shenhua.commonlibs.utils.ConvertUtils;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -119,61 +120,39 @@ public class UserZoneEditActivity extends BaseActivity {
 
     private void selectBirth() {
         DatePicker picker = new DatePicker(this, DatePicker.YEAR_MONTH_DAY);
-        picker.setRangeStart(1980, 1, 1);//开始范围
-        picker.setRangeEnd(2020, 1, 1);//结束范围
-        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-            @Override
-            public void onDatePicked(String year, String month, String day) {
-                mBrithTv.setText(year + "-" + month + "-" + day);
-            }
-        });
+        picker.setRangeStart(1980, 1, 1);
+        picker.setRangeEnd(2020, 1, 1);
+        picker.setOnDatePickListener((DatePicker.OnYearMonthDayPickListener) (year, month, day) ->
+                mBrithTv.setText(year + "-" + month + "-" + day));
         picker.show();
     }
 
     private void selectLocate() {
-        ArrayList<AddressPicker.Province> data;
         String json = null;
         try {
             json = ConvertUtils.toString(getAssets().open("city.json"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (json == null) {
+            CrashReport.postCatchedException(new Throwable("com.shenhua.nandagy.ui.activity.me.UserZoneEditActivity city.json is null."));
+            return;
+        }
+
         Gson gson = new Gson();
-        data = gson.fromJson(json, new TypeToken<List<AddressPicker.Province>>() {
+        ArrayList<AddressPicker.Province> data = gson.fromJson(json, new TypeToken<List<AddressPicker.Province>>() {
         }.getType());
-        data.addAll(data);
         AddressPicker picker = new AddressPicker(this, data);
-//        picker.setHideProvince(true);//加上此句将只显示地级及县级
-        picker.setHideCounty(true);//加上此句将只显示省级及地级
+        picker.setHideCounty(true);
         picker.setSelectedItem("江西省", "九江市", "");
-        picker.setOnAddressPickListener(new AddressPicker.OnAddressPickListener() {
-            @Override
-            public void onAddressPicked(AddressPicker.Province province, AddressPicker.City city, AddressPicker.County county) {
-                mLocateTv.setText(province.getAreaName() + "-" + city.getAreaName());
-            }
-        });
+        picker.setOnAddressPickListener((province, city, county) ->
+                mLocateTv.setText(province.getAreaName() + "-" + city.getAreaName()));
         picker.show();
     }
 
     private void showSelectStateDialog(final String[] items, final TextView targetTv) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("请选择状态");
-//        builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                targetTv.setText(items[which]);
-//                dialog.dismiss();
-//            }
-//        });
-//        builder.setNegativeButton("取消", null);
-//        builder.show();
         OptionPicker picker = new OptionPicker(this, items);
-        picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
-            @Override
-            public void onOptionPicked(int position, String option) {
-                targetTv.setText(option);
-            }
-        });
+        picker.setOnOptionPickListener((position, option) -> targetTv.setText(option));
         picker.show();
     }
 

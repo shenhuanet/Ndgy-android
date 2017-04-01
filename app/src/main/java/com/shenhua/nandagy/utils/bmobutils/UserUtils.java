@@ -2,6 +2,7 @@ package com.shenhua.nandagy.utils.bmobutils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 
@@ -12,10 +13,15 @@ import com.shenhua.nandagy.bean.bmobbean.MyUser;
 public class UserUtils {
 
     private static final String PREF_USER = "pref_user";
-    private static UserUtils userUtils = new UserUtils();
+    private static UserUtils sInstance = null;
 
     public static UserUtils getInstance() {
-        return userUtils;
+        synchronized (UserUtils.class) {
+            if (sInstance == null) {
+                sInstance = new UserUtils();
+            }
+            return sInstance;
+        }
     }
 
     public MyUser getUser(Context context) {
@@ -33,10 +39,10 @@ public class UserUtils {
         String nameNum = pref.getString("name_num", null);
         String name = pref.getString("name", null);
         String nameId = pref.getString("name_id", null);
-        if (nameNum != null && nameId != null) {
-            return new MyUser(nameNum, nameId, name);
+        if (TextUtils.isEmpty(nameNum) && TextUtils.isEmpty(nameId)) {
+            return null;
         }
-        return null;
+        return new MyUser(nameNum, nameId, name);
     }
 
     public synchronized void setUser(Context context, MyUser user) {
@@ -92,7 +98,7 @@ public class UserUtils {
     }
 
     /**
-     * 用户是否记忆到教务
+     * 用户是否保存了教务登录信息
      *
      * @param context 上下文
      * @return true 已记忆，flase 未记忆

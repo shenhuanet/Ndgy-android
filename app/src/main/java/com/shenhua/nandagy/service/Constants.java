@@ -44,4 +44,28 @@ public class Constants {
         public static final int RECULT_CODE_BINDING_SUCCESS = 101;
     }
 
+    public static class JiaoWuScore {
+
+        public static final String HOST = "http://www.ncupyh.cn/zfjwgl/";
+        public static final String URL_LOGIN = "/default2.aspx";
+        public static final String URL_MAIN = "/xs_main.aspx";
+
+        public static final String URL_REGISTER_ONLINE = "/bmxmb.aspx";// 网上报名
+        public static final String URL_PESON_INFO = "/xsgrxx.aspx";// 个人信息
+        public static final String URL_PASSWORD = "/mmxg.aspx";// 密码修改
+        public static final String URL_SCHEDULE = "/xskbcx.aspx";// 个人课表
+        public static final String URL_VIEW_EXAM = "/xskscx.aspx";// 考试查询
+        public static final String URL_EXAM = "/xscj_gc.aspx";// 成绩查询
+        public static final String URL_GRADE = "/xsdjkscx.aspx";// 等级成绩查询
+
+        public static final String CODE_REGISTER_ONLINE = "N121303";
+        public static final String CODE_PESON_INFO = "N121501";
+        public static final String CODE_PASSWORD = "N121502";
+        public static final String CODE_SCHEDULE = "N121603";
+        public static final String CODE_VIEW_EXAM = "N121604";
+        public static final String CODE_URL_EXAM = "N121605";
+        public static final String CODE_GRADE = "N121606";
+
+    }
+
 }

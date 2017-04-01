@@ -46,7 +46,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -89,7 +88,6 @@ public class UserFragment extends BaseFragment {
 
     @Override
     public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
-//        Bmob.initialize(getContext(), BmobService.APP_KEY);
         ButterKnife.bind(this, rootView);
         // 红点提示
         mMessageTag.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.dot_new_red, 0);
@@ -234,6 +232,7 @@ public class UserFragment extends BaseFragment {
                 userZone.save(new SaveListener<String>() {
                     @Override
                     public void done(String objectId, BmobException e) {
+                        LoadingAlertDialog.dissmissLoadDialog();
                         if (e == null) {
                             doUiThread(objectId);
                         } else {
@@ -247,7 +246,6 @@ public class UserFragment extends BaseFragment {
             @Override
             public void doUiThread(String objectId) {
                 if (objectId.equals(ExceptionMessage.MSG_ERROR)) {
-                    LoadingAlertDialog.dissmissLoadDialog();
                     toast("用户空间创建失败，请重试");
                 } else {
                     MyUser user = new MyUser();
@@ -259,7 +257,6 @@ public class UserFragment extends BaseFragment {
                         }
                     });
                     UserUtils.getInstance().updateUserInfo(getContext(), "userzoneobjid", objectId);
-                    LoadingAlertDialog.dissmissLoadDialog();
                     toast("用户空间创建成功");
                     Intent intent = new Intent(getContext(), UserZoneActivity.class);
                     intent.putExtra("isMySelf", true);
@@ -283,26 +280,26 @@ public class UserFragment extends BaseFragment {
         // 用户登录成功
         if (requestCode == Constants.Code.REQUEST_CODE_NAV_TO_LOGIN && resultCode == Constants.Code.RECULT_CODE_LOGIN_SUCCESS) {
             updateUserView();
-            MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
-            if (!TextUtils.isEmpty(myUser.getUserZoneObjID())) {
+            MyUser myUser = UserUtils.getInstance().getUser(getContext());
+            if (!TextUtils.isEmpty(myUser.getUserZoneObjID())) { // 用户有空间
                 UserZoneUtils.getInstance().updateZoneStatis(myUser.getUserZoneObjID(), "exper", 2);
+                BaseThreadHandler.getInstance().sendRunnable(new CommonUiRunnable<String>("个人经验+2") {
+                    @Override
+                    public void doUIThread() {
+                        FloatingText floatingText = new FloatingText.FloatingTextBuilder(getActivity())
+                                .textColor(Color.parseColor("#1DBFD8"))
+                                .textSize(30)
+                                .textContent(getT())
+                                .offsetX(0)
+                                .offsetY(0)
+                                .floatingAnimatorEffect(new TranslateFloatingAnimator())
+                                .build();
+                        floatingText.attach2Window();
+                        floatingText.startFloating(mExperTv);
+                    }
+                }, 2000, TimeUnit.MILLISECONDS);
             }
 
-            BaseThreadHandler.getInstance().sendRunnable(new CommonUiRunnable<String>("个人经验+2") {
-                @Override
-                public void doUIThread() {
-                    FloatingText floatingText = new FloatingText.FloatingTextBuilder(getActivity())
-                            .textColor(Color.parseColor("#1DBFD8"))
-                            .textSize(30)
-                            .textContent(getT())
-                            .offsetX(0)
-                            .offsetY(0)
-                            .floatingAnimatorEffect(new TranslateFloatingAnimator())
-                            .build();
-                    floatingText.attach2Window();
-                    floatingText.startFloating(mExperTv);
-                }
-            }, 2000, TimeUnit.MILLISECONDS);
         }
     }
 

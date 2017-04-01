@@ -52,4 +52,6 @@ public class HttpService {
 
     public static final String DEFAULT_IMAGE = "http://klxh.oschina.io/shenhuandgy-web/imgs/img_default.png";
 
+
+
 }

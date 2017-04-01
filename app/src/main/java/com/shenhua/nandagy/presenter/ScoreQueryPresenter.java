@@ -1,7 +1,7 @@
 package com.shenhua.nandagy.presenter;
 
 import com.shenhua.commonlibs.callback.HttpCallback;
-import com.shenhua.nandagy.bean.scorebean.ScoreData;
+import com.shenhua.nandagy.bean.scorebean.ScoreQueryData;
 import com.shenhua.nandagy.model.ScoreQueryModel;
 import com.shenhua.nandagy.model.ScoreQueryModelImpl;
 import com.shenhua.nandagy.view.ScoreQueryView;
@@ -10,13 +10,13 @@ import com.shenhua.nandagy.view.ScoreQueryView;
  * 成绩查询代理
  * Created by shenhua on 9/8/2016.
  */
-public class ScorePresenter implements HttpCallback<ScoreData> {
+public class ScoreQueryPresenter implements HttpCallback<ScoreQueryData> {
 
-    private ScoreQueryModel<ScoreData> scoreQueryModel;
+    private ScoreQueryModel<ScoreQueryData> scoreQueryModel;
     private ScoreQueryView scoreQueryView;
     private String url;
 
-    public ScorePresenter(ScoreQueryView scoreQueryView, String url) {
+    public ScoreQueryPresenter(ScoreQueryView scoreQueryView, String url) {
         this.scoreQueryView = scoreQueryView;
         this.url = url;
         scoreQueryModel = new ScoreQueryModelImpl();
@@ -32,7 +32,7 @@ public class ScorePresenter implements HttpCallback<ScoreData> {
     }
 
     @Override
-    public void onSuccess(ScoreData data) {
+    public void onSuccess(ScoreQueryData data) {
         scoreQueryView.onGetQueryResult(data);
     }
 

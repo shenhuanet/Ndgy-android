@@ -1,7 +1,7 @@
 package com.shenhua.nandagy.view;
 
 import com.shenhua.commonlibs.mvp.BaseView;
-import com.shenhua.nandagy.bean.scorebean.ScoreData;
+import com.shenhua.nandagy.bean.scorebean.ScoreQueryData;
 
 /**
  * 查询成绩视图
@@ -9,6 +9,6 @@ import com.shenhua.nandagy.bean.scorebean.ScoreData;
  */
 public interface ScoreQueryView extends BaseView {
 
-    void onGetQueryResult(ScoreData data);
+    void onGetQueryResult(ScoreQueryData data);
 
 }

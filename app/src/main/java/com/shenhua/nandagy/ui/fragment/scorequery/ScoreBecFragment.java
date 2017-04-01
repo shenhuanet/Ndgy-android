@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseScoreQueryVerfyFragment;
-import com.shenhua.nandagy.bean.scorebean.ScoreData;
+import com.shenhua.nandagy.bean.scorebean.ScoreQueryData;
 import com.shenhua.nandagy.service.HttpService;
 import com.shenhua.nandagy.view.ScoreQueryView;
 
@@ -42,7 +42,7 @@ public class ScoreBecFragment extends BaseScoreQueryVerfyFragment implements Sco
     }
 
     @Override
-    public void onGetQueryResult(ScoreData data) {
+    public void onGetQueryResult(ScoreQueryData data) {
 
     }
 

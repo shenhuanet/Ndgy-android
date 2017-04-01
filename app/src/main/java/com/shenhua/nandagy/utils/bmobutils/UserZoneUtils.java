@@ -21,7 +21,6 @@ public class UserZoneUtils {
         zone.update(objid, new UpdateListener() {
             @Override
             public void done(BmobException e) {
-                if (e != null) System.out.println("shenhua sout:" + "经验+" + increment);
             }
         });
     }

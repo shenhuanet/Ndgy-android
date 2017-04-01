@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -88,7 +89,7 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
     private static final String TAG = "UserZoneActivity";
     private UserZone userZoneBean;
     private boolean accessFromMe;
-    private String userObjectId;
+    private String zoneObjectId;
     private String finalPhotoPath;
     private String cacheDir;
     private String cacheHou = ".nui";
@@ -96,22 +97,27 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        cacheDir = getCacheDir().getPath();
         accessFromMe = getIntent().getBooleanExtra("isMySelf", false);
+        // 通过自己访问
         if (accessFromMe) {
             setPhotoView(getIntent().getStringExtra("photo"), getIntent().getBooleanExtra("sex", false));
+            initSelectPhotoView();
+            cacheDir = getCacheDir().getPath();
         }
-        initSelectPhotoView();
+
         mAppBarLayout.addOnOffsetChangedListener(this);
     }
 
+    /**
+     * 初始化头像点击事件
+     */
     private void initSelectPhotoView() {
         mBpv.setInterpolator(new BounceInterpolator());
         View content = mBpv.getContentView();
         TextView take = (TextView) content.findViewById(R.id.tv_take_photo);
         take.setOnClickListener(v -> {
             mBpv.hide();
-            finalPhotoPath = Crop.takePhoto(UserZoneActivity.this, cacheDir, userObjectId + cacheHou);
+            finalPhotoPath = Crop.takePhoto(UserZoneActivity.this, cacheDir, zoneObjectId + cacheHou);
         });
         TextView pick = (TextView) content.findViewById(R.id.tv_pick_photo);
         pick.setOnClickListener(v -> {
@@ -137,16 +143,27 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
         setUpTopView();
     }
 
+    /**
+     * 顶部视图的更新
+     */
     private void setUpTopView() {
-        userObjectId = getIntent().getStringExtra("userObjectId");
-        String zoneObjectId = getIntent().getStringExtra("zoneObjectId");
+        zoneObjectId = getIntent().getStringExtra("zoneObjectId");
+
+        if (zoneObjectId == null) {
+            Log.d(TAG, "setUpTopView: 顶部视图的更新失败：zoneObjectId 为空");
+        }
+
         BmobQuery<UserZone> bmobQuery = new BmobQuery<>();
         bmobQuery.getObject(zoneObjectId, new QueryListener<UserZone>() {
             @Override
             public void done(UserZone userZone, BmobException e) {
                 if (e == null) {
                     userZoneBean = userZone;
-                    if (!accessFromMe) setPhotoView(userZone.getPhotoUrl(), userZone.getSex());
+
+                    if (!accessFromMe) {
+                        setPhotoView(userZone.getPhotoUrl(), userZone.getSex());
+                    }
+
                     mZoneIdTv.setText(String.format(getString(R.string.user_zone_text_id), userZone.getObjectId()));
                     mZoneExperTv.setText(String.format(getString(R.string.user_zone_text_exper), userZone.getExper()));
                     mZoneMiTv.setText(String.format(getString(R.string.user_zone_text_mi), userZone.getMi()));
@@ -170,6 +187,12 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
         if (!TextUtils.isEmpty(str)) textView.setText(str);
     }
 
+    /**
+     * 设置头像和性别标识
+     *
+     * @param imgUrl imgUrl
+     * @param sex    sex
+     */
     private void setPhotoView(String imgUrl, boolean sex) {
         if (TextUtils.isEmpty(imgUrl)) {
             if (sex) {
@@ -224,12 +247,12 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == Crop.REQUEST_PICK) {
-                new Crop(data.getData()).fileOutDir(cacheDir).fileOutName(userObjectId + cacheHou)
+                new Crop(data.getData()).fileOutDir(cacheDir).fileOutName(zoneObjectId + cacheHou)
                         .setCropType(true).start(this);
             }
             if (requestCode == Crop.REQUEST_TAKE) {
                 new Crop(Uri.fromFile(new File(finalPhotoPath)))
-                        .fileOutDir(cacheDir).fileOutName(userObjectId + cacheHou)
+                        .fileOutDir(cacheDir).fileOutName(zoneObjectId + cacheHou)
                         .setCropType(true).start(this);
             }
             if (requestCode == Crop.REQUEST_CROP) {
@@ -257,6 +280,7 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
 
             @Override
             public void done(BmobException e) {
+                LoadingAlertDialog.dissmissLoadDialog();
                 if (e == null) {
                     final String result = bmobFile.getFileUrl();
                     MyUser user = UserUtils.getInstance().getUserInfo(UserZoneActivity.this);
@@ -265,17 +289,14 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
                         @Override
                         public void done(BmobException e) {
                             if (e != null) {
-                                LoadingAlertDialog.dissmissLoadDialog();
                                 toast("头像更新失败：" + e.getMessage());
                             } else {
                                 UserUtils.getInstance().updateUserInfo(UserZoneActivity.this, "url_photo", result);
-                                LoadingAlertDialog.dissmissLoadDialog();
                                 toast("头像更新成功！");
                             }
                         }
                     });
                 } else {
-                    LoadingAlertDialog.dissmissLoadDialog();
                     toast("头像更新失败：" + e.getMessage());
                 }
             }

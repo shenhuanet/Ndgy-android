@@ -22,7 +22,6 @@ import com.shenhua.nandagy.service.Constants;
 import com.shenhua.nandagy.utils.Rotate3dAnimation;
 import com.shenhua.nandagy.utils.ShareUtils;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
-import com.shenhua.nandagy.utils.bmobutils.UserZoneUtils;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
 import com.tencent.connect.UserInfo;
 import com.tencent.tauth.IUiListener;
@@ -88,7 +87,6 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         mTencent = Tencent.createInstance(ShareUtils.QQ_APPID, this);
 //        Bmob.initialize(this, BmobService.APP_KEY);
-
         ButterKnife.bind(this);
         mSexRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonId = group.getCheckedRadioButtonId();
@@ -180,14 +178,14 @@ public class LoginActivity extends BaseActivity {
                 user.signUp(new SaveListener<MyUser>() {
                     @Override
                     public void done(MyUser user, BmobException e) {
+                        LoadingAlertDialog.dissmissLoadDialog();
                         if (e == null) {
                             doUiThread(user);
                         } else {
-                            LoadingAlertDialog.dissmissLoadDialog();
                             if (e.getErrorCode() == 202) {
-                                toast("注册失败，\"" + username + "\"已被注册！");
+                                toast(String.format(getString(R.string.login_info_singup_failed_exists), username));
                             } else {
-                                toast("注册失败，错误码：" + e.getErrorCode());
+                                toast(String.format(getString(R.string.login_info_singup_failed_with_code), e.getErrorCode()));
                             }
                         }
                     }
@@ -197,8 +195,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void doUiThread(MyUser user) {
-                LoadingAlertDialog.dissmissLoadDialog();
-                toast("注册成功！");
+                toast(R.string.login_info_singup_success);
                 doSignin(username, password);
             }
         }, 2000, TimeUnit.MILLISECONDS);
@@ -223,14 +220,13 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void done(MyUser bmobUser, BmobException e) {
+                        LoadingAlertDialog.dissmissLoadDialog();
                         if (e == null) {
-                            LoadingAlertDialog.dissmissLoadDialog();
                             toast(R.string.login_info_singin_success);
                             onLoginSuccess();
                             // 通过BmobUser user = BmobUser.getCurrentUser()获取登录成功后的本地用户信息
                             // 如果是自定义用户对象MyUser，可通过MyUser user = BmobUser.getCurrentUser(MyUser.class)获取自定义用户信息
                         } else {
-                            LoadingAlertDialog.dissmissLoadDialog();
                             if (e.getErrorCode() == 101) {
                                 toast(R.string.login_info_singin_failed);
                             } else {
@@ -249,7 +245,7 @@ public class LoginActivity extends BaseActivity {
     private void onLoginSuccess() {
         MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
         MyUser user = new MyUser();
-        user.setUserId(myUser.getObjectId());
+        user.setUserId(myUser.getObjectId());// set current ObjectId to userId
         user.setUserName(myUser.getUsername());
         user.setPhone(myUser.getMobilePhoneNumber());
         user.seteMail(myUser.getEmail());
@@ -262,9 +258,6 @@ public class LoginActivity extends BaseActivity {
         user.setSex(myUser.getSex());
         user.setUserZoneObjID(myUser.getUserZoneObjID());
         UserUtils.getInstance().setUser(this, user);
-        if (!TextUtils.isEmpty(myUser.getUserZoneObjID())) {
-            UserZoneUtils.getInstance().updateZoneStatis(myUser.getUserZoneObjID(), "exper", 2);
-        }
         setResult(Constants.Code.RECULT_CODE_LOGIN_SUCCESS);
         this.finish();
     }
@@ -408,12 +401,11 @@ public class LoginActivity extends BaseActivity {
                 user.signUp(new SaveListener<MyUser>() {
                     @Override
                     public void done(MyUser s, BmobException e) {
+                        LoadingAlertDialog.dissmissLoadDialog();
                         if (e == null) {
-                            LoadingAlertDialog.dissmissLoadDialog();
                             toast(R.string.login_info_verfiy_success);
                             doSignin(username, password);
                         } else {
-                            LoadingAlertDialog.dissmissLoadDialog();
                             if (e.getErrorCode() == 202) {
                                 doSignin(username, password);
                             }

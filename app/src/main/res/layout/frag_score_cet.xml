@@ -12,7 +12,6 @@
         <android.support.design.widget.TextInputEditText
             style="@style/ScoreTextInputEditTextStyle.ZhunKaoZheng"
             android:hint="请输入15位准考证号"
-            android:text="360013161200621"
             android:maxLength="15" />
 
     </android.support.design.widget.TextInputLayout>
@@ -25,7 +24,6 @@
 
         <android.support.design.widget.TextInputEditText
             style="@style/ScoreEditTextStyle.XingMing"
-            android:text="林慧"
             android:hint="请输入姓名,姓名超过3个字,可只输入前3个" />
 
     </android.support.design.widget.TextInputLayout>
