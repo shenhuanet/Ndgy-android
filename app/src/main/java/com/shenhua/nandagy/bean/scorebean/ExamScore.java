@@ -14,6 +14,9 @@ public class ExamScore implements Serializable {
     private Overview overview;
     private List<ExamScoreList> examScoreLists;
 
+    public ExamScore() {
+    }
+
     public ExamScore(Overview overview, List<ExamScoreList> examScoreLists) {
         this.overview = overview;
         this.examScoreLists = examScoreLists;
@@ -46,6 +49,9 @@ public class ExamScore implements Serializable {
         private String totalPeople;// 总人数
         private String averageCredit;// 平均学分
         private String averagePoint;// 平均绩点
+
+        public Overview() {
+        }
 
         public Overview(String requestCredit, String gainCredit, String noPassCredit, String needCredit,
                         String totalPeople, String averageCredit, String averagePoint) {
@@ -140,6 +146,9 @@ public class ExamScore implements Serializable {
         private String minor;// 辅修标记
         private String rebuild;// 重修标记
         private String remark;// 备注
+
+        public ExamScoreList() {
+        }
 
         public ExamScoreList(String year, String term, String code, String name, String credit,
                              String point, String usualGrade, String midGrade, String finalGrade,

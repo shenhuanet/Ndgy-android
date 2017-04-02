@@ -17,6 +17,9 @@ public class GradeScore implements Serializable {
     private String num;
     private String date;
 
+    public GradeScore() {
+    }
+
     public GradeScore(String name, String year, String term, String grade, String num, String date) {
         this.name = name;
         this.year = year;

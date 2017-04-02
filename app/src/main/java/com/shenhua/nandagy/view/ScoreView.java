@@ -12,8 +12,18 @@ import java.util.List;
  */
 public interface ScoreView extends BaseView {
 
+    void reBinding(String error);
+
+    void exit();
+
+    void getScoreFailed(String msg);
+
+    void onLoginSuccess(String[] numName);
+
     void showExamScore(ExamScore examScore);
 
     void showGradeScore(List<GradeScore> gradeScores);
+
+    void showProgress(String msg);
 
 }

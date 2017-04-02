@@ -19,7 +19,7 @@ import com.shenhua.nandagy.bean.bmobbean.ScoreQuery;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETBean;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETParams;
 import com.shenhua.nandagy.callback.OnScoreQueryListener;
-import com.shenhua.nandagy.presenter.QueryTask;
+import com.shenhua.nandagy.presenter.ScoreQueryTask;
 import com.shenhua.nandagy.ui.activity.more.ScoreQueryResultActivity;
 
 import java.io.Serializable;
@@ -80,7 +80,7 @@ public class ScoreCetFragment extends BaseScoreQueryFragment {
         query.setName(name);
         sendToDatabase(query);
         ScoreCETParams data = new ScoreCETParams(name, zkzh);
-        new QueryTask<>(getActivity(), data, new OnScoreQueryListener() {
+        new ScoreQueryTask<>(getActivity(), data, new OnScoreQueryListener() {
             @Override
             public void onQuerySuccess(Object result) {
                 System.out.println("shenhua sout:回调结果--->" + ((ScoreCETBean) result).getName());

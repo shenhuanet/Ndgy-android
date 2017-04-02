@@ -74,7 +74,7 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (!isInit) {
-//            presenter.execute();
+            presenter.execute();
             setupToolView(mInnerGridView, R.array.jiaowu_tabs_titles, R.array.jiaowu_tabs_images);
             isInit = true;
         }

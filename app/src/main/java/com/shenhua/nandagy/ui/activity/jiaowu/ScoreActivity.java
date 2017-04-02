@@ -7,14 +7,17 @@ import android.widget.ProgressBar;
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.bean.bmobbean.MyUser;
-import com.shenhua.nandagy.utils.bmobutils.UserUtils;
+import com.shenhua.nandagy.bean.scorebean.ExamScore;
+import com.shenhua.nandagy.bean.scorebean.GradeScore;
+import com.shenhua.nandagy.presenter.ScorePresenter;
+import com.shenhua.nandagy.service.Constants;
+import com.shenhua.nandagy.view.ScoreView;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * 教务成绩查询界面
@@ -28,13 +31,14 @@ import cn.bmob.v3.listener.UpdateListener;
         toolbarTitle = R.string.toolbar_title_score,
         toolbarTitleId = R.id.toolbar_title
 )
-public class ScoreActivity extends BaseActivity {
+public class ScoreActivity extends BaseActivity implements ScoreView {
 
     private static final String TAG = "ScoreActivity";
     @BindView(R.id.toolbar_pro)
     ProgressBar mProgressBar;
     private String num;
     private String id;
+    private ScorePresenter presenter;
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
@@ -43,35 +47,60 @@ public class ScoreActivity extends BaseActivity {
         num = getIntent().getStringExtra("name_num");
         id = getIntent().getStringExtra("name_id");
 
-        doLoginJiaowu();
+        presenter = new ScorePresenter(this);
+        presenter.login(this, Constants.JiaoWuScore.HOST + Constants.JiaoWuScore.URL_LOGIN);
 
     }
 
-    private void doLoginJiaowu() {
+    @Override
+    public void reBinding(String error) {
+
+    }
+
+    @Override
+    public void getScoreFailed(String msg) {
+        // 成绩获取失败
+    }
+
+    @Override
+    public void onLoginSuccess(String[] numName) {
+        // 显示学号 姓名
+    }
+
+    @Override
+    public void showExamScore(ExamScore examScore) {
+
+    }
+
+    @Override
+    public void showGradeScore(List<GradeScore> gradeScores) {
+
+    }
+
+    @Override
+    public void showProgress() {
+        // do nothing
+    }
+
+    @Override
+    public void showProgress(String msg) {
         mProgressBar.setVisibility(View.VISIBLE);
-        LoadingAlertDialog.showLoadDialog(this, "正在登录教务系统", true);
-
-
-
-
+        LoadingAlertDialog.showLoadDialog(this, msg, true);
     }
 
-    private void onLoginSuccess() {
-        MyUser user = UserUtils.getInstance().getUser(this);
-        String objectId = user.getUserId();
-        user.setName_num(num);
-        user.setName_id(id);
-        user.setInfo("update");
-        user.update(objectId, new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                if (e == null) {
-                    UserUtils.getInstance().updateUserInfo(ScoreActivity.this, "name_num", num);
-                    UserUtils.getInstance().updateUserInfo(ScoreActivity.this, "name_id", id);
-                } else {
-                    e.printStackTrace();
-                }
-            }
-        });
+    @Override
+    public void hideProgress() {
+        mProgressBar.setVisibility(View.GONE);
+        LoadingAlertDialog.dissmissLoadDialog();
+    }
+
+    @Override
+    public void showToast(String msg) {
+        toast(msg);
+    }
+
+    @Override
+    public void exit() {
+        this.finish();
     }
 }

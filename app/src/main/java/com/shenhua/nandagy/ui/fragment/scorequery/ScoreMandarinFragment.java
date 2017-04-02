@@ -17,7 +17,7 @@ import com.shenhua.nandagy.base.BaseScoreQueryFragment;
 import com.shenhua.nandagy.bean.bmobbean.ScoreQuery;
 import com.shenhua.nandagy.bean.scorebean.ScoreMandarinParams;
 import com.shenhua.nandagy.callback.OnScoreQueryListener;
-import com.shenhua.nandagy.presenter.QueryTask;
+import com.shenhua.nandagy.presenter.ScoreQueryTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,7 +76,7 @@ public class ScoreMandarinFragment extends BaseScoreQueryFragment {
                 query.setSfzh(DESUtils.getInstance().encrypt("证件编号:" + zjh));
                 sendToDatabase(query);
                 ScoreMandarinParams data = new ScoreMandarinParams(zkzh, name, zjh);
-                new QueryTask<>(getActivity(), data, new OnScoreQueryListener() {
+                new ScoreQueryTask<>(getActivity(), data, new OnScoreQueryListener() {
                     @Override
                     public void onQuerySuccess(Object result) {
 //                System.out.println("shenhua sout:回调结果--->" + ((ScoreMandarinBean) result).getName());
