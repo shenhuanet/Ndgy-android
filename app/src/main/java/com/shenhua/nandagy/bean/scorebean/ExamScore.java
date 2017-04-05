@@ -65,7 +65,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getRequestCredit() {
-            return requestCredit;
+            return requestCredit == null ? "" : requestCredit;
         }
 
         public void setRequestCredit(String requestCredit) {
@@ -73,7 +73,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getGainCredit() {
-            return gainCredit;
+            return gainCredit == null ? "" : gainCredit;
         }
 
         public void setGainCredit(String gainCredit) {
@@ -81,7 +81,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getNoPassCredit() {
-            return noPassCredit;
+            return noPassCredit == null ? "" : noPassCredit;
         }
 
         public void setNoPassCredit(String noPassCredit) {
@@ -89,7 +89,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getNeedCredit() {
-            return needCredit;
+            return needCredit == null ? "" : needCredit;
         }
 
         public void setNeedCredit(String needCredit) {
@@ -97,7 +97,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getTotalPeople() {
-            return totalPeople;
+            return totalPeople == null ? "" : totalPeople;
         }
 
         public void setTotalPeople(String totalPeople) {
@@ -105,7 +105,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getAverageCredit() {
-            return averageCredit;
+            return averageCredit == null ? "" : averageCredit;
         }
 
         public void setAverageCredit(String averageCredit) {
@@ -113,7 +113,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getAveragePoint() {
-            return averagePoint;
+            return averagePoint == null ? "" : averagePoint;
         }
 
         public void setAveragePoint(String averagePoint) {
@@ -171,7 +171,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getYear() {
-            return year;
+            return year == null ? "" : year;
         }
 
         public void setYear(String year) {
@@ -179,7 +179,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getTerm() {
-            return term;
+            return term == null ? " " : term;
         }
 
         public void setTerm(String term) {
@@ -187,7 +187,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getCode() {
-            return code;
+            return code == null ? "" : code;
         }
 
         public void setCode(String code) {
@@ -195,7 +195,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getName() {
-            return name;
+            return name == null ? "" : name;
         }
 
         public void setName(String name) {
@@ -203,7 +203,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getCredit() {
-            return credit;
+            return credit == null ? "" : credit;
         }
 
         public void setCredit(String credit) {
@@ -211,7 +211,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getPoint() {
-            return point;
+            return point == null ? "" : point;
         }
 
         public void setPoint(String point) {
@@ -219,7 +219,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getUsualGrade() {
-            return usualGrade;
+            return usualGrade == null ? "" : usualGrade;
         }
 
         public void setUsualGrade(String usualGrade) {
@@ -227,7 +227,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getMidGrade() {
-            return midGrade;
+            return midGrade == null ? "" : midGrade;
         }
 
         public void setMidGrade(String midGrade) {
@@ -235,7 +235,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getFinalGrade() {
-            return finalGrade;
+            return finalGrade == null ? "" : finalGrade;
         }
 
         public void setFinalGrade(String finalGrade) {
@@ -243,7 +243,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getTestGrade() {
-            return testGrade;
+            return testGrade == null ? "" : testGrade;
         }
 
         public void setTestGrade(String testGrade) {
@@ -251,7 +251,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getMakeGrade() {
-            return makeGrade;
+            return makeGrade == null ? "" : makeGrade;
         }
 
         public void setMakeGrade(String makeGrade) {
@@ -259,7 +259,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getRebuildGrade() {
-            return rebuildGrade;
+            return rebuildGrade == null ? "" : rebuildGrade;
         }
 
         public void setRebuildGrade(String rebuildGrade) {
@@ -267,7 +267,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getAllGrade() {
-            return allGrade;
+            return allGrade == null ? "" : allGrade;
         }
 
         public void setAllGrade(String allGrade) {
@@ -275,7 +275,7 @@ public class ExamScore implements Serializable {
         }
 
         public String getSchool() {
-            return school;
+            return school == null ? "" : school;
         }
 
         public void setSchool(String school) {

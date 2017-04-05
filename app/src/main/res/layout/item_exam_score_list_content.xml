@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="examScore"
+            type="com.shenhua.nandagy.bean.scorebean.ExamScore.ExamScoreList" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:background="#60FFFFFF"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@{String.format(@string/exam_score_content_year,examScore.year)}"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@{String.format(@string/exam_score_content_term,examScore.term)}"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:padding="5dp"
+                android:text="@{String.format(@string/exam_score_content_code,examScore.code)}" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:padding="5dp"
+            android:text="@{String.format(@string/exam_score_content_name,examScore.name)}" />
+
+        <include layout="@layout/view_divider_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_content_credit,examScore.credit)}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_content_point,examScore.point)}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_content_usual_grade,examScore.usualGrade)}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_content_mid_grade,examScore.midGrade)}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_content_final_grade,examScore.finalGrade)}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_content_test_grade,examScore.testGrade)}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_content_make_grade,examScore.makeGrade)}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_content_rebuild_grade,examScore.rebuildGrade)}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle.Theme"
+                android:text="@{String.format(@string/exam_score_content_all_grade,examScore.allGrade)}" />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_divider_horizontal" />
+
+        <TextView
+            style="@style/ItemExamScoreStyle"
+            android:layout_margin="5dp"
+            android:text="@{String.format(@string/exam_score_content_school,examScore.school)}" />
+
+    </LinearLayout>
+</layout>

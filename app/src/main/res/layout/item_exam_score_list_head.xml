@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="overView"
+            type="com.shenhua.nandagy.bean.scorebean.ExamScore.Overview" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/exam_score_head_title"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_head_request_credit,overView.requestCredit)}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_head_gain_credit,overView.gainCredit)}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_head_nopass_credit,overView.noPassCredit)}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_head_need_credit,overView.needCredit)}" />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_divider_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_head_total_people,overView.totalPeople)}" />
+
+            <include layout="@layout/view_divider_vertical" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_head_average_credit,overView.averageCredit)}" />
+
+            <include layout="@layout/view_divider_vertical" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle.Theme"
+                android:text="@{String.format(@string/exam_score_head_average_point,overView.averagePoint)}" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

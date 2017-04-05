@@ -72,7 +72,6 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
-
     // BMob
     // compile 'cn.bmob.android:bmob-sdk:3.5.3'
     //    compile files('libs/umeng-analytics-v5.6.4.jar')

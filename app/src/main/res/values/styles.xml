@@ -216,4 +216,20 @@
         <item name="android:paddingRight">5dp</item>
     </style>
 
+    <style name="ItemExamScoreStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="ItemExamScoreStyle.Small">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="ItemExamScoreStyle.Theme">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
 </resources>

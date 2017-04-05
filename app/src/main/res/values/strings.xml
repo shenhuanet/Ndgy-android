@@ -1,25 +1,14 @@
 <resources>
     <string name="app_name">ndgy</string>
     <string name="action_settings">Settings</string>
-    <string name="common_imgdec">imgdec</string>
 
+    <!--common-->
+    <string name="common_imgdec">imgdec</string>
     <string name="common_text_man">男</string>
     <string name="common_text_woman">女</string>
+    <string name="common_single_num_format">%d</string>
 
-    <string name="xcj_string_xn">%s学年</string>
-    <string name="xcj_string_xq">第%s学期</string>
-    <string name="xcj_string_kcm">课程名：%s</string>
-    <string name="xcj_string_xf">学分\n%s</string>
-    <string name="xcj_string_jd">绩点\n%s</string>
-    <string name="xcj_string_ps">平时\n%s</string>
-    <string name="xcj_string_qz">期中\n%s</string>
-    <string name="xcj_string_qm">期末\n%s</string>
-    <string name="xcj_string_sy">实验\n%s</string>
-    <string name="xcj_string_bk">补考\n%s</string>
-    <string name="xcj_string_zf">总分\n%s</string>
-    <string name="xcjdj_string_zkzh">准考证号：%s</string>
-    <string name="xcjdj_string_ksrq">考试日期：%s</string>
-
+    <!--CET-->
     <string name="cet_string_sum">总分： %s</string>
     <string name="cet_string_listen">听力： %s</string>
     <string name="cet_string_reading">阅读： %s</string>
@@ -30,12 +19,15 @@
     <string name="cet_string_exam_num">准考证号： %s</string>
     <string name="cet_string_exam_time">考试时间： %s</string>
 
+    <!--image-->
     <string name="img_photo">头像</string>
     <string name="img_background">背景</string>
     <string name="img_arrow">img_arrow</string>
 
+    <!--menu-->
     <string name="action_edit">编辑</string>
 
+    <!--signin signup-->
     <string name="txt_gender">性别</string>
     <string name="txt_gender_man">男</string>
     <string name="txt_gender_woman">女</string>
@@ -46,8 +38,23 @@
     <string name="txt_hint_username">邮箱/用户名/手机号</string>
     <string name="txt_hint_password">6位数字密码</string>
     <string name="txt_forget_password">忘记密码？</string>
+    <string name="login_info_singuping">注册中，请稍后</string>
+    <string name="login_info_singining">登录中，请稍后</string>
+    <string name="login_info_input_username">请填写注册账号</string>
+    <string name="login_info_password">密码为6位数字</string>
+    <string name="login_info_singin_success">登录成功</string>
+    <string name="login_info_singup_success">注册成功</string>
+    <string name="login_info_singin_failed">登录失败，用户名或密码错误</string>
+    <string name="login_info_singup_failed_exists">注册失败 %s 已被注册</string>
+    <string name="login_info_singin_failed_with_code">登录失败，错误代码:%d</string>
+    <string name="login_info_singup_failed_with_code">注册失败，错误代码:%d</string>
+    <string name="login_info_verfiy">授权验证中</string>
+    <string name="login_info_verfiy_success">授权成功</string>
 
+    <!--page-->
     <string name="home">首页</string>
+
+    <!--toolbar-->
     <string name="toolbar_title_score_query">成绩查询</string>
     <string name="toolbar_title_content_detail">正文详情</string>
     <string name="toolbar_title_about">关于本软件</string>
@@ -69,23 +76,35 @@
     <string name="toolbar_title_binding">登录教务系统</string>
     <string name="toolbar_title_score">我的成绩</string>
 
-    <string name="single_num_format">%d</string>
-
+    <!--user-->
     <string name="user_zone_text_id">ID:%s</string>
     <string name="user_zone_text_exper">经验值:%d</string>
     <string name="user_zone_text_mi">米粒数:%d</string>
 
-    <string name="login_info_singuping">注册中，请稍后</string>
-    <string name="login_info_singining">登录中，请稍后</string>
-    <string name="login_info_input_username">请填写注册账号</string>
-    <string name="login_info_password">密码为6位数字</string>
-    <string name="login_info_singin_success">登录成功</string>
-    <string name="login_info_singup_success">注册成功</string>
-    <string name="login_info_singin_failed">登录失败，用户名或密码错误</string>
-    <string name="login_info_singup_failed_exists">注册失败 %s 已被注册</string>
-    <string name="login_info_singin_failed_with_code">登录失败，错误代码:%d</string>
-    <string name="login_info_singup_failed_with_code">注册失败，错误代码:%d</string>
-    <string name="login_info_verfiy">授权验证中</string>
-    <string name="login_info_verfiy_success">授权成功</string>
+    <!--examScore-->
+    <string name="exam_score_head_title">总体成绩分析</string>
+    <string name="exam_score_head_request_credit">要求学分\n%s</string>
+    <string name="exam_score_head_gain_credit">获得学分\n%s</string>
+    <string name="exam_score_head_nopass_credit">未通过学分\n%s</string>
+    <string name="exam_score_head_need_credit">还需学分\n%s</string>
+    <string name="exam_score_head_total_people">本专业总人数\n%s</string>
+    <string name="exam_score_head_average_credit">平均学分绩点\n%s</string>
+    <string name="exam_score_head_average_point">学分绩点总和\n%s</string>
+    <string name="exam_score_content_year">%s学年</string>
+    <string name="exam_score_content_term">第%s学期</string>
+    <string name="exam_score_content_code">课程代码:%s</string>
+    <string name="exam_score_content_name">课程名:%s</string>
+    <string name="exam_score_content_credit">学分\n%s</string>
+    <string name="exam_score_content_point">绩点\n%s</string>
+    <string name="exam_score_content_usual_grade">平时\n%s</string>
+    <string name="exam_score_content_mid_grade">期中\n%s</string>
+    <string name="exam_score_content_final_grade">期末\n%s</string>
+    <string name="exam_score_content_test_grade">实验\n%s</string>
+    <string name="exam_score_content_make_grade">补考\n%s</string>
+    <string name="exam_score_content_rebuild_grade">重修\n%s</string>
+    <string name="exam_score_content_all_grade">总分\n%s</string>
+    <string name="exam_score_content_school">学院:%s</string>
+    <string name="grade_score_content_num">准考证号:%s</string>
+    <string name="grade_score_content_date">考试日期:%s</string>
 
 </resources>

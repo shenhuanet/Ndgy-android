@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="gradeScore"
+            type="com.shenhua.nandagy.bean.scorebean.GradeScore" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@{gradeScore.name}"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_content_year,gradeScore.year)}" />
+
+            <include layout="@layout/view_divider_vertical" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/exam_score_content_term,gradeScore.term)}" />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_divider_horizontal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@{gradeScore.grade}"
+            android:textColor="@color/themecolor"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/grade_score_content_num,gradeScore.num)}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/grade_score_content_date,gradeScore.date)}" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

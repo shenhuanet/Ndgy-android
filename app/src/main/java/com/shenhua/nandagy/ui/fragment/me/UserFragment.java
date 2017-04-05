@@ -119,10 +119,10 @@ public class UserFragment extends BaseFragment {
                 @Override
                 public void done(UserZone zone, BmobException e) {
                     if (e == null) {
-                        mLevelTv.setText(String.format(getString(R.string.single_num_format), zone.getLevel()));
-                        mDynamicTv.setText(String.format(getString(R.string.single_num_format), zone.getDynamic()));
-                        mMiTv.setText(String.format(getString(R.string.single_num_format), zone.getMi()));
-                        mExperTv.setText(String.format(getString(R.string.single_num_format), zone.getExper()));
+                        mLevelTv.setText(String.format(getString(R.string.common_single_num_format), zone.getLevel()));
+                        mDynamicTv.setText(String.format(getString(R.string.common_single_num_format), zone.getDynamic()));
+                        mMiTv.setText(String.format(getString(R.string.common_single_num_format), zone.getMi()));
+                        mExperTv.setText(String.format(getString(R.string.common_single_num_format), zone.getExper()));
                     } else {
                         toast("个人主页信息获取失败：" + e.getMessage());
                         mLevelTv.setText("0");

@@ -30,7 +30,7 @@ public class GradeScore implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -38,7 +38,7 @@ public class GradeScore implements Serializable {
     }
 
     public String getYear() {
-        return year;
+        return year == null ? "" : year;
     }
 
     public void setYear(String year) {
@@ -46,7 +46,7 @@ public class GradeScore implements Serializable {
     }
 
     public String getTerm() {
-        return term;
+        return term == null ? "" : term;
     }
 
     public void setTerm(String term) {
@@ -54,7 +54,7 @@ public class GradeScore implements Serializable {
     }
 
     public String getGrade() {
-        return grade;
+        return grade == null ? " " : grade;
     }
 
     public void setGrade(String grade) {
@@ -62,7 +62,7 @@ public class GradeScore implements Serializable {
     }
 
     public String getNum() {
-        return num;
+        return num == null ? "" : num;
     }
 
     public void setNum(String num) {
@@ -70,7 +70,7 @@ public class GradeScore implements Serializable {
     }
 
     public String getDate() {
-        return date;
+        return date == null ? "" : date;
     }
 
     public void setDate(String date) {
