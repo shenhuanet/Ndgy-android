@@ -1,10 +1,12 @@
 package com.shenhua.nandagy.base;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +35,7 @@ public abstract class BaseRecyclerBindingAdapter<T> extends RecyclerView.Adapter
     private OnItemLongClickListener onItemLongClickListener;
     private OnHeaderClickListener headerClickListener;
     private OnFooterClickListener footerClickListener;
-    public ViewDataBinding binding;
+    public Context context;
 
     public BaseRecyclerBindingAdapter(List<T> mData) {
         this.mData = (mData != null) ? mData : new ArrayList<T>();
@@ -49,14 +51,16 @@ public abstract class BaseRecyclerBindingAdapter<T> extends RecyclerView.Adapter
 
     @Override
     public BaseRecyclerBindingAdapter.RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        this.context = parent.getContext();
+        ViewDataBinding binding;
         if (null != headViews && viewType == VIEW_HEADER && getHeaderVisible()) {
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), getHeaderId(headerCount), parent, false);
+            binding = DataBindingUtil.inflate(LayoutInflater.from(context), getHeaderId(headerCount), parent, false);
             headerCount++;
         } else if (null != footViews && viewType == VIEW_FOOTER && getFooterVisible()) {
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), getFooterId(footerCount), parent, false);
+            binding = DataBindingUtil.inflate(LayoutInflater.from(context), getFooterId(footerCount), parent, false);
             footerCount++;
         } else {
-            binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), getItemLayoutId(viewType), parent, false);
+            binding = DataBindingUtil.inflate(LayoutInflater.from(context), getItemLayoutId(viewType), parent, false);
         }
         BaseRecyclerBindingAdapter.RecyclerViewHolder holder = new BaseRecyclerBindingAdapter.RecyclerViewHolder(binding.getRoot());
         holder.setBinding(binding);
@@ -67,11 +71,11 @@ public abstract class BaseRecyclerBindingAdapter<T> extends RecyclerView.Adapter
     public void onBindViewHolder(BaseRecyclerBindingAdapter.RecyclerViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case VIEW_HEADER:
-                bindData(holder, headViews.get(position).getVariableId(), headViews.get(position).getData());
+                bindData(holder, headViews.get(position).getVariableId(), headViews.get(position).getData(),position);
                 holder.itemView.setOnClickListener(getHeaderClickListener(holder.itemView, position));
                 break;
             case VIEW_FOOTER:
-                bindData(holder, footViews.get(getFooterPosition(holder)).getVariableId(), footViews.get(getFooterPosition(holder)).getData());
+                bindData(holder, footViews.get(getFooterPosition(holder)).getVariableId(), footViews.get(getFooterPosition(holder)).getData(),position);
                 holder.itemView.setOnClickListener(getFooterClickListener(holder.itemView, getFooterPosition(holder)));
                 break;
             default:
@@ -79,11 +83,11 @@ public abstract class BaseRecyclerBindingAdapter<T> extends RecyclerView.Adapter
                 holder.itemView.setOnLongClickListener(getLongClickListener(holder.itemView, getRealPosition(holder)));
                 switch (mMode) {
                     case TYPE_NORMAL:
-                        bindData(holder, getVariableId(getItemViewType(position)), mData.get(getRealPosition(holder)));
+                        bindData(holder, getVariableId(getItemViewType(position)), mData.get(getRealPosition(holder)),position);
                         break;
                     case TYPE_CUSTOM:
-                        bindData(holder, getVariableId(getItemViewType(position)), mData.get(getRealPosition(holder)));
-                        bindCustomData(holder, position, mData.get(getRealPosition(holder)));
+                        bindData(holder, getVariableId(getItemViewType(position)), mData.get(getRealPosition(holder)),position);
+                        // bindCustomData(holder, position, mData.get(getRealPosition(holder)));
                         break;
                 }
                 break;
@@ -143,7 +147,7 @@ public abstract class BaseRecyclerBindingAdapter<T> extends RecyclerView.Adapter
         }
     }
 
-    private void bindData(BaseRecyclerBindingAdapter.RecyclerViewHolder holder, int variableId, T item) {
+    private void bindData(BaseRecyclerBindingAdapter.RecyclerViewHolder holder, int variableId, T item,int position) {
         holder.getBinding().setVariable(variableId, item);
         holder.getBinding().executePendingBindings();
     }
@@ -396,12 +400,8 @@ public abstract class BaseRecyclerBindingAdapter<T> extends RecyclerView.Adapter
 
     /**
      * custom
-     *
-     * @param holder   viewholder
-     * @param position position
-     * @param item     item
      */
-    public abstract void bindCustomData(BaseRecyclerBindingAdapter.RecyclerViewHolder holder, int position, T item);
+    // public abstract void bindCustomData(BaseRecyclerBindingAdapter.RecyclerViewHolder holder, int position, T item);
 
     public interface OnHeaderClickListener {
         void headerClick(View view, int position);
@@ -428,9 +428,12 @@ public abstract class BaseRecyclerBindingAdapter<T> extends RecyclerView.Adapter
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
         private ViewDataBinding binding;
+        // 集合类，layout里包含的View,以view的id作为key，value是view对象
+        private SparseArray<View> mViews;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
+            mViews = new SparseArray<>();
         }
 
         public ViewDataBinding getBinding() {
@@ -439,6 +442,19 @@ public abstract class BaseRecyclerBindingAdapter<T> extends RecyclerView.Adapter
 
         public void setBinding(ViewDataBinding binding) {
             this.binding = binding;
+        }
+
+        private <T extends View> T findViewById(int viewId) {
+            View view = mViews.get(viewId);
+            if (view == null) {
+                view = itemView.findViewById(viewId);
+                mViews.put(viewId, view);
+            }
+            return (T) view;
+        }
+
+        public View getView(int viewId) {
+            return findViewById(viewId);
         }
 
     }

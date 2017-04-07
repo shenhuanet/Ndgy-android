@@ -1,12 +1,15 @@
 package com.shenhua.nandagy.ui.activity.more;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
+import com.shenhua.commonlibs.utils.ImageUtils;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETBean;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreBecFragment;
@@ -20,6 +23,7 @@ import com.shenhua.nandagy.ui.fragment.scorequery.ScoreMandarinFragment;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreNTCEFragment;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScorePETSFragment;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -35,6 +39,9 @@ import butterknife.OnClick;
         toolbarTitleId = R.id.toolbar_title
 )
 public class ScoreQueryResultActivity extends BaseActivity {
+
+    @BindView(R.id.fragment_score_result)
+    FrameLayout frameLayout;
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
@@ -90,12 +97,29 @@ public class ScoreQueryResultActivity extends BaseActivity {
     void clicks(View v) {
         switch (v.getId()) {
             case R.id.btn_save_score:
-
+                Bitmap bitmap = viewShot(frameLayout);
+                try {
+                    // TODO: 4/7/2017 权限请求
+                    ImageUtils.saveBitmapToSDCard(this, bitmap, String.valueOf(System.currentTimeMillis()), "ndgy", true);
+                    showSnackBar("图片保存成功");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showSnackBar("图片保存失败");
+                }
                 break;
             case R.id.btn_share_score:
-
+                // TODO: 4/7/2017 分享
                 break;
         }
+    }
+
+    public Bitmap viewShot(View view) {
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+        view.setDrawingCacheEnabled(false);
+        view.destroyDrawingCache();
+        return bitmap;
     }
 
 }

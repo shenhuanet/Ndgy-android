@@ -9,8 +9,12 @@ import android.text.TextUtils;
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.callback.TextEnableInputWatcher;
+import com.shenhua.commonlibs.handler.BaseThreadHandler;
+import com.shenhua.commonlibs.handler.CommonRunnable;
+import com.shenhua.commonlibs.utils.DESUtils;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.service.Constants;
+import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,30 +46,40 @@ public class BindingActivity extends BaseActivity {
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
-
         mNumEt.addTextChangedListener(new TextEnableInputWatcher(mNumLayout));
         mIdEt.addTextChangedListener(new TextEnableInputWatcher(mIdLayout));
+        mNumEt.setText(DESUtils.getInstance().decrypt(UserUtils.getInstance().getUserInfo(this).getName_num()));
     }
 
     @OnClick(R.id.btn_query)
     void onClick() {
         String num = mNumEt.getText().toString();
         String id = mIdEt.getText().toString();
-
         if (TextUtils.isEmpty(num) || num.length() != 10) {
             mNumEt.setError("学号填写不正确");
         } else if (TextUtils.isEmpty(id)) {
             mIdEt.setError("密码填写不正确");
         } else {
             hideKeyboard();
+            BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<Void>() {
+                @Override
+                public Void doChildThread() {
+                    String numEncrypt = DESUtils.getInstance().encrypt(num);
+                    String idEncrypt = DESUtils.getInstance().encrypt(id);
+                    UserUtils.getInstance().setBinding(BindingActivity.this, new String[]{numEncrypt, idEncrypt});
+                    return null;
+                }
 
-            Intent intent = new Intent(this, ScoreActivity.class);
-            intent.putExtra("name_num", num);
-            intent.putExtra("name_id", id);
-            startActivity(intent);
-
-            this.setResult(Constants.Code.RECULT_CODE_BINDING_SUCCESS);
-            this.finish();
+                @Override
+                public void doUiThread(Void aVoid) {
+                    Intent intent = new Intent(BindingActivity.this, ScoreActivity.class);
+                    intent.putExtra("name_num", num);
+                    intent.putExtra("name_id", id);
+                    startActivity(intent);
+                    BindingActivity.this.setResult(Constants.Code.RECULT_CODE_BINDING_SUCCESS);
+                    BindingActivity.this.finish();
+                }
+            });
         }
     }
 

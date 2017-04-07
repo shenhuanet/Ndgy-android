@@ -47,7 +47,7 @@ public class Constants {
     public static class JiaoWuScore {
 
         public static final String HOST = "http://www.ncupyh.cn/zfjwgl/";
-        public static final String URL_LOGIN = "/default2.aspx";
+        public static final String URL_LOGIN = "default2.aspx";
         public static final String URL_MAIN = "/xs_main.aspx";
 
         public static final String URL_REGISTER_ONLINE = "/bmxmb.aspx";// 网上报名

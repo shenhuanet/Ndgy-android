@@ -13,10 +13,10 @@ import android.widget.EditText;
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.callback.TextEnableInputWatcher;
 import com.shenhua.commonlibs.utils.DESUtils;
+import com.shenhua.nandagy.App;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseScoreQueryFragment;
 import com.shenhua.nandagy.bean.bmobbean.ScoreQuery;
-import com.shenhua.nandagy.bean.scorebean.ScoreCETBean;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETParams;
 import com.shenhua.nandagy.callback.OnScoreQueryListener;
 import com.shenhua.nandagy.presenter.ScoreQueryTask;
@@ -51,8 +51,10 @@ public class ScoreCetFragment extends BaseScoreQueryFragment {
     public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
         ButterKnife.bind(this, rootView);
 
-        mZkzhEt.setText("");
-        mNameEt.setText("");
+        if (App.DEBUG_MODE) {
+            mZkzhEt.setText("360013162101403");
+            mNameEt.setText("余青青");
+        }
     }
 
     @Override
@@ -80,11 +82,10 @@ public class ScoreCetFragment extends BaseScoreQueryFragment {
         query.setName(name);
         sendToDatabase(query);
         ScoreCETParams data = new ScoreCETParams(name, zkzh);
-        new ScoreQueryTask<>(getActivity(), data, new OnScoreQueryListener() {
+        new ScoreQueryTask<>(getContext(), data, new OnScoreQueryListener() {
             @Override
             public void onQuerySuccess(Object result) {
-                System.out.println("shenhua sout:回调结果--->" + ((ScoreCETBean) result).getName());
-                Intent intent = new Intent(getActivity(), ScoreQueryResultActivity.class);
+                Intent intent = new Intent(getContext(), ScoreQueryResultActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("result", (Serializable) result);
                 intent.putExtras(bundle);

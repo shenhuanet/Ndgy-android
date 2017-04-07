@@ -3,6 +3,10 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
         <variable
             name="gradeScore"
             type="com.shenhua.nandagy.bean.scorebean.GradeScore" />
@@ -51,17 +55,34 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="@{gradeScore.grade}"
-            android:textColor="@color/themecolor"
+            android:textColor="@color/colorPrimary"
             android:textSize="20sp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="vertical">
 
             <TextView
                 style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/grade_score_content_listen,gradeScore.listen)}"
+                android:visibility="@{TextUtils.isEmpty(gradeScore.listen) ? View.GONE : View.VISIBLE}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/grade_score_content_read,gradeScore.read)}"
+                android:visibility="@{TextUtils.isEmpty(gradeScore.read) ? View.GONE : View.VISIBLE}" />
+
+            <TextView
+                style="@style/ItemExamScoreStyle"
+                android:text="@{String.format(@string/grade_score_content_text,gradeScore.text)}"
+                android:visibility="@{TextUtils.isEmpty(gradeScore.text) ? View.GONE : View.VISIBLE}" />
+
+            <TextView
+                android:id="@+id/tv_grade_num"
+                style="@style/ItemExamScoreStyle"
+                android:layout_marginTop="10dp"
                 android:text="@{String.format(@string/grade_score_content_num,gradeScore.num)}" />
 
             <TextView

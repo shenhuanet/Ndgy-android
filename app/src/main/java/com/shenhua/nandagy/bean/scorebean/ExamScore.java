@@ -125,20 +125,20 @@ public class ExamScore implements Serializable {
      * 成绩详情
      */
     public class ExamScoreList {
-        private String year;// 学年
-        private String term;// 学期
-        private String code;// 课程代码
-        private String name;// 课程名称
-        private String credit;// 学分
-        private String point;// 绩点
-        private String usualGrade;// 平时成绩
-        private String midGrade;// 期中成绩
-        private String finalGrade;// 期末成绩
-        private String testGrade;// 实验成绩
-        private String makeGrade;// 补考成绩
-        private String rebuildGrade;// 重修成绩
-        private String allGrade;// 总成绩
-        private String school;// 学院
+        private String year;// 学年0
+        private String term;// 学期1
+        private String code;// 课程代码2
+        private String name;// 课程名称3
+        private String credit;// 学分6
+        private String point;// 绩点7
+        private String usualGrade;// 平时成绩8
+        private String midGrade;// 期中成绩9
+        private String finalGrade;// 期末成绩10
+        private String testGrade;// 实验成绩11
+        private String makeGrade;// 补考成绩14
+        private String rebuildGrade;// 重修成绩15
+        private String allGrade;// 总成绩12
+        private String school;// 学院16
 
         // 暂未使用
         private String nature;// 课程性质

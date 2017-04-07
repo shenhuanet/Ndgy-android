@@ -21,6 +21,7 @@ import com.shenhua.commonlibs.base.BaseListAdapter;
 import com.shenhua.commonlibs.mvp.BaseMvpFragment;
 import com.shenhua.commonlibs.utils.BusBooleanEvent;
 import com.shenhua.commonlibs.utils.BusProvider;
+import com.shenhua.commonlibs.utils.DESUtils;
 import com.shenhua.commonlibs.widget.InnerGridView;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.JiaowuDataAdapter;
@@ -181,11 +182,11 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
     }
 
     private void doIsBinding(boolean showMsg) {
-        if (UserUtils.getInstance().isBinding(getContext())) {
-            MyUser user = UserUtils.getInstance().getUser(getContext());
+        MyUser user = UserUtils.getInstance().getBinding(getContext());
+        if (user != null) {
             Intent intent = new Intent(getContext(), ScoreActivity.class);
-            intent.putExtra("name_num", user.getName_num());
-            intent.putExtra("name_id", user.getName_id());
+            intent.putExtra("name_num", DESUtils.getInstance().decrypt(user.getName_num()));
+            intent.putExtra("name_id", DESUtils.getInstance().decrypt(user.getName_id()));
             startActivity(intent);
         } else {
             if (showMsg) {

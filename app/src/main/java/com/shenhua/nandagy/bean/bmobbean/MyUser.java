@@ -11,13 +11,13 @@ public class MyUser extends BmobUser implements Serializable {
     private String userName;
     private String phone;
     private String eMail;
-    private String nick;//昵称
-    private String name_num;//学号
-    private String name;//姓名
-    private String name_id;//sfz
+    private String nick;
+    private String name_num;
+    private String name;
+    private String name_id;
     private String info;
-    private String url_photo;//头像
-    private Boolean sex;//性别  true女，false男
+    private String url_photo;
+    private Boolean sex;
     private String userZoneObjID;
 
     public MyUser() {
@@ -28,7 +28,8 @@ public class MyUser extends BmobUser implements Serializable {
         this.userName = userName;
     }
 
-    public MyUser(String nameNum, String nameId, String name) {
+    public MyUser(String userId, String nameNum, String nameId, String name) {
+        this.userId = userId;
         this.name_num = nameNum;
         this.name_id = nameId;
         this.name = name;

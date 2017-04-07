@@ -2,7 +2,6 @@ package com.shenhua.nandagy.presenter;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 
 import com.shenhua.commonlibs.mvp.HttpManager;
 import com.shenhua.commonlibs.utils.CheckUtils;
@@ -21,8 +20,6 @@ import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 成绩查询的异步线程
@@ -33,6 +30,7 @@ import java.util.regex.Pattern;
  */
 public class ScoreQueryTask<T> extends AsyncTask<Integer, Integer, ScoreQueryResult> {
 
+    private static final String TAG = "ScoreQueryTask";
     private T data;
     private Context mContext;
     private OnScoreQueryListener onScoreQueryListener;
@@ -119,7 +117,6 @@ public class ScoreQueryTask<T> extends AsyncTask<Integer, Integer, ScoreQueryRes
         }
     }
 
-    @NonNull
     private ScoreQueryResult doQueryCet4() {
         ScoreQueryResult resultBean = new ScoreQueryResult();
         Document doc;
@@ -132,47 +129,40 @@ public class ScoreQueryTask<T> extends AsyncTask<Integer, Integer, ScoreQueryRes
                     .timeout(5000)
                     .header("Referer", "http://www.chsi.com.cn/cet/")
                     .post();
-        } catch (IOException e) {
+        } catch (Exception e) {
             resultBean.setCode(0);
             resultBean.setErrInfo("连接到服务器异常");
             return resultBean;
         }
         Element divElement;
         try {
-            divElement = doc.getElementsByClass("m_cnt_m").get(0).select("table").get(0).select("tbody").get(0);
+            divElement = doc.getElementsByClass("cetTable").get(0);
         } catch (Exception e) {
             resultBean.setCode(0);
-            resultBean.setErrInfo("准考证号及姓名输入有误");
+            resultBean.setErrInfo("准考证号或姓名输入有误");
             return resultBean;
         }
         ScoreCETBean cetBean = new ScoreCETBean();
         try {
-            cetBean.setName(divElement.select("td").get(0).text());// name
-            cetBean.setSchool(divElement.select("td").get(1).text());// school
-            cetBean.setExamType(divElement.select("td").get(2).text());// type
-            cetBean.setExamNum(divElement.select("td").get(3).text());// num
-            cetBean.setExamTime(divElement.select("td").get(4).text());// time
-            String content = divElement.select("td").get(5).text();// content
-            String[] score = content.split("：");
-            for (int i = 0; i < score.length; i++) {
-                String regEx = "[^0-9]";
-                Pattern p = Pattern.compile(regEx);
-                Matcher m = p.matcher(score[i]);
-                score[i] = m.replaceAll("").trim();
-            }
-            cetBean.setSum(score[0]);
-            cetBean.setListen(score[1]);
-            cetBean.setReading(score[2]);
-            cetBean.setCompos(score[3]);
+            cetBean.setName(divElement.getElementsByAttributeValue("colspan", "2").get(0).text());// name
+            cetBean.setSchool(divElement.getElementsByAttributeValue("colspan", "2").get(1).text());// school
+            cetBean.setExamType(divElement.getElementsByAttributeValue("colspan", "2").get(2).text());// type
+            cetBean.setExamNum(divElement.getElementsByAttributeValue("colspan", "2").get(3).text());// num
+            cetBean.setSum(divElement.getElementsByAttributeValue("colspan", "2").get(4).text());// sum
+
+            cetBean.setExamTime(divElement.getElementsByAttributeValue("colspan", "2").get(5).text());// time
+            cetBean.setListen(divElement.getElementsByTag("td").get(6).text());
+            cetBean.setReading(divElement.getElementsByTag("td").get(8).text());
+            cetBean.setCompos(divElement.getElementsByTag("td").get(10).text());
+
+            resultBean.setCode(1);
+            resultBean.setData(cetBean);
+            return resultBean;
         } catch (Exception e) {
             resultBean.setCode(-1);
             resultBean.setErrInfo("数据解析失败");
             return resultBean;
         }
-        resultBean.setCode(1);
-        resultBean.setData(cetBean);
-        return resultBean;
     }
-
 
 }

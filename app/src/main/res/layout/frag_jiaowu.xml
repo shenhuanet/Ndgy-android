@@ -16,7 +16,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/layout_xl_border"
+            android:background="@drawable/shape_school_week_bg"
             android:orientation="vertical"
             android:padding="12dp">
 
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="0"
-                android:textColor="@color/themecolor"
+                android:textColor="@color/colorPrimary"
                 android:textSize="30sp" />
 
         </LinearLayout>

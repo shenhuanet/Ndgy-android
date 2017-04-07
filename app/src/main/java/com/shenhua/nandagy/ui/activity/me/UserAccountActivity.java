@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.utils.CheckUtils;
+import com.shenhua.commonlibs.utils.DESUtils;
 import com.shenhua.commonlibs.widget.ClearEditText;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
@@ -75,7 +76,7 @@ public class UserAccountActivity extends BaseActivity {
         mPhoneTv.setText(user.getPhone());
         mMailTv.setText(user.geteMail());
         mNameTv.setText(user.getName());
-        mNumTv.setText(user.getName_num());
+        mNumTv.setText(DESUtils.getInstance().decrypt(user.getName_num()));
         updateSex(user);
     }
 

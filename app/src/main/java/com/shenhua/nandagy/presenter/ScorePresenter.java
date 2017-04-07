@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.shenhua.commonlibs.handler.BaseThreadHandler;
 import com.shenhua.commonlibs.handler.CommonRunnable;
+import com.shenhua.commonlibs.utils.DESUtils;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.bean.scorebean.ExamScore;
 import com.shenhua.nandagy.bean.scorebean.GradeScore;
@@ -30,12 +31,12 @@ public class ScorePresenter {
         scoreModel = new ScoreModelImpl();
     }
 
-    public void login(final Context context, String url) {
+    public void login(Context context, String url, String num, String pwd) {
         scoreView.showProgress("正在登录教务系统");
         BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<Integer>() {
             @Override
             public Integer doChildThread() {
-                return scoreModel.login(url);
+                return scoreModel.login(context, url, num, pwd);
             }
 
             @Override
@@ -49,48 +50,54 @@ public class ScorePresenter {
                         scoreView.reBinding("密码错误");
                         break;
                     case ScoreModelImpl.LOGIN_REDIRCT_HOME:
-                        scoreView.showToast("好像跳转到了首页");
+                        scoreView.showToast("服务器未响应");
                         scoreView.exit();
                         break;
                     case ScoreModelImpl.LOGIN_ERROR:
                         scoreView.showToast("服务器正在维护当中");
                         scoreView.exit();
                         break;
+                    case ScoreModelImpl.LOGIN_CATCH:
+                        // TODO: 4/6/2017 从缓存中拿数据
+                        scoreView.showToast("登录失败");
+                        scoreView.exit();
+                        break;
+                    case ScoreModelImpl.NETWORK_ABNORMAL:
+                        scoreView.showToast("网络异常");
+                        scoreView.exit();
+                        break;
+                    case ScoreModelImpl.NETWORK_TIMEOUT:
+                        scoreView.showToast("连接超时");
+                        scoreView.exit();
+                        break;
                     case ScoreModelImpl.LOGIN_SUCCESS:
                         String[] numName = scoreModel.getmNumName();
                         scoreView.onLoginSuccess(numName);
-                        MyUser user = UserUtils.getInstance().getUser(context);
+                        MyUser user = UserUtils.getInstance().getBinding(context);
+                        UserUtils.getInstance().updateUserInfo(context, "name", numName[1]);
                         String objectId = user.getUserId();
-                        user.setName_num("");
-                        user.setName_id("");
+                        user.setName_num(DESUtils.getInstance().encrypt(numName[0]));
+                        user.setName(DESUtils.getInstance().encrypt(numName[1]));
+                        user.setName_id(user.getName_id());
                         user.setInfo("update");
                         user.update(objectId, new UpdateListener() {
                             @Override
                             public void done(BmobException e) {
-                                if (e == null) {
-//                                    UserUtils.getInstance().updateUserInfo(ScoreActivity.this, "name_num", num);
-//                                    UserUtils.getInstance().updateUserInfo(ScoreActivity.this, "name_id", id);
-                                } else {
-                                    e.printStackTrace();
-                                }
+
                             }
                         });
-
-                        break;
-                    default:
-
                         break;
                 }
             }
         });
     }
 
-    public void getExamScore(String url) {
+    public void getExamScore(Context context) {
         scoreView.showProgress("正在查询考试成绩");
         BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<ExamScore>() {
             @Override
             public ExamScore doChildThread() {
-                return scoreModel.getExamScore(url);
+                return scoreModel.getExamScore(context);
             }
 
             @Override
@@ -105,12 +112,12 @@ public class ScorePresenter {
         });
     }
 
-    public void getGradeScore(String url) {
+    public void getGradeScore(Context context) {
         scoreView.showProgress("正在查询等级考试成绩");
         BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<List<GradeScore>>() {
             @Override
             public List<GradeScore> doChildThread() {
-                return scoreModel.getGradeScore(url);
+                return scoreModel.getGradeScore(context);
             }
 
             @Override
@@ -118,7 +125,7 @@ public class ScorePresenter {
                 scoreView.hideProgress();
                 if (gradeScores != null) {
                     if (gradeScores.size() == 0) {
-                        // 没有参加考试
+                        scoreView.getScoreFailed("你没有参加过考试");
                     } else {
                         scoreView.showGradeScore(gradeScores);
                     }

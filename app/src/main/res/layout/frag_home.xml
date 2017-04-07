@@ -42,7 +42,7 @@
                 app:tabIndicatorHeight="2dp"
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/colorPrimary"
-                app:tabTextColor="@color/textColor_unselected" />
+                app:tabTextColor="@color/colorText" />
 
         </LinearLayout>
 

@@ -1,5 +1,7 @@
 package com.shenhua.nandagy.model;
 
+import android.content.Context;
+
 import com.shenhua.nandagy.bean.scorebean.ExamScore;
 import com.shenhua.nandagy.bean.scorebean.GradeScore;
 
@@ -14,22 +16,27 @@ public interface ScoreModel {
     /**
      * 登录教务系统
      *
-     * @param url url
+     * @param context context
+     * @param url     url
+     * @param num     num
+     * @param pwd     pwd
      * @return 登录结果
      */
-    int login(String url);
+    int login(Context context, String url, String num, String pwd);
 
     /**
      * 获取考试成绩
      *
-     * @param url url
+     * @param context context
+     * @return 结果
      */
-    ExamScore getExamScore(String url);
+    ExamScore getExamScore(Context context);
 
     /**
      * 获取等级考试成绩
      *
-     * @param url url
+     * @param context context
+     * @return 结果
      */
-    List<GradeScore> getGradeScore(String url);
+    List<GradeScore> getGradeScore(Context context);
 }

@@ -82,6 +82,8 @@
     <string name="user_zone_text_mi">米粒数:%d</string>
 
     <!--examScore-->
+    <string name="score_toolbar_title">我的成绩(%1$s %2$s)</string>
+    <string name="score_toast_welcome">欢迎 %s 同学</string>
     <string name="exam_score_head_title">总体成绩分析</string>
     <string name="exam_score_head_request_credit">要求学分\n%s</string>
     <string name="exam_score_head_gain_credit">获得学分\n%s</string>
@@ -104,7 +106,10 @@
     <string name="exam_score_content_rebuild_grade">重修\n%s</string>
     <string name="exam_score_content_all_grade">总分\n%s</string>
     <string name="exam_score_content_school">学院:%s</string>
-    <string name="grade_score_content_num">准考证号:%s</string>
+    <string name="grade_score_content_num">准考证号:%s (长按可复制)</string>
     <string name="grade_score_content_date">考试日期:%s</string>
+    <string name="grade_score_content_listen">听力:%s</string>
+    <string name="grade_score_content_read">阅读:%s</string>
+    <string name="grade_score_content_text">写作:%s</string>
 
 </resources>

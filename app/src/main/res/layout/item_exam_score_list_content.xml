@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        android:background="#60FFFFFF"
+        android:background="#AAFFFFFF"
         android:orientation="vertical">
 
         <LinearLayout
@@ -25,21 +25,22 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="@{String.format(@string/exam_score_content_year,examScore.year)}"
-                android:textColor="@color/white" />
+                android:textColor="@color/colorGreen1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="@{String.format(@string/exam_score_content_term,examScore.term)}"
-                android:textColor="@color/white" />
+                android:textColor="@color/colorGreen1" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:padding="5dp"
-                android:text="@{String.format(@string/exam_score_content_code,examScore.code)}" />
+                android:text="@{String.format(@string/exam_score_content_code,examScore.code)}"
+                android:textColor="@color/colorPurple1" />
 
         </LinearLayout>
 

@@ -34,15 +34,29 @@ public class UserUtils {
         return null;
     }
 
-    private MyUser getBanding(Context context) {
+    public MyUser getBinding(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_USER, Context.MODE_PRIVATE);
+        String userId = pref.getString("userid", null);
         String nameNum = pref.getString("name_num", null);
         String name = pref.getString("name", null);
         String nameId = pref.getString("name_id", null);
         if (TextUtils.isEmpty(nameNum) && TextUtils.isEmpty(nameId)) {
             return null;
         }
-        return new MyUser(nameNum, nameId, name);
+        return new MyUser(userId, nameNum, nameId, name);
+    }
+
+    public MyUser getUserInfo(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_USER, Context.MODE_PRIVATE);
+        return new MyUser(pref.getString("email", ""), pref.getString("info", ""), pref.getString("name", ""),
+                pref.getString("name_id", ""), pref.getString("name_num", ""), pref.getString("nick", ""),
+                pref.getString("phone", ""), pref.getBoolean("gender", false), pref.getString("url_photo", ""),
+                pref.getString("userid", ""), pref.getString("username", ""), pref.getString("userzoneobjid", ""));
+    }
+
+    public void setBinding(Context context, String[] numId) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_USER, Context.MODE_PRIVATE);
+        pref.edit().putString("name_num", numId[0]).putString("name_id", numId[1]).apply();
     }
 
     public synchronized void setUser(Context context, MyUser user) {
@@ -61,14 +75,6 @@ public class UserUtils {
                 .putBoolean("gender", user.getSex())
                 .putString("userzoneobjid", user.getUserZoneObjID())
                 .apply();
-    }
-
-    public MyUser getUserInfo(Context context) {
-        SharedPreferences pref = context.getSharedPreferences(PREF_USER, Context.MODE_PRIVATE);
-        return new MyUser(pref.getString("email", ""), pref.getString("info", ""), pref.getString("name", ""),
-                pref.getString("name_id", ""), pref.getString("name_num", ""), pref.getString("nick", ""),
-                pref.getString("phone", ""), pref.getBoolean("gender", false), pref.getString("url_photo", ""),
-                pref.getString("userid", ""), pref.getString("username", ""), pref.getString("userzoneobjid", ""));
     }
 
     public synchronized void updateUserInfo(Context context, String key, String value) {
@@ -95,16 +101,6 @@ public class UserUtils {
      */
     public boolean isLogin(Context context) {
         return getUser(context) != null;
-    }
-
-    /**
-     * 用户是否保存了教务登录信息
-     *
-     * @param context 上下文
-     * @return true 已记忆，flase 未记忆
-     */
-    public boolean isBinding(Context context) {
-        return getBanding(context) != null;
     }
 
 }

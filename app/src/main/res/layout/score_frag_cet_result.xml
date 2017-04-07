@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentTop="true"
-    android:layout_margin="16dp"
     android:background="@drawable/bg_score_board"
     android:orientation="vertical">
 
@@ -14,7 +13,7 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="成绩单"
-        android:textColor="@color/white"
+        android:textColor="@android:color/white"
         android:textSize="18sp" />
 
     <FrameLayout
@@ -94,10 +93,18 @@
             android:layout_height="80dp"
             android:layout_gravity="end"
             android:layout_margin="8dp"
-            android:visibility="gone"
             android:contentDescription="@string/common_imgdec"
-            android:src="@drawable/ic_exam_nopass" />
+            android:src="@drawable/ic_exam_nopass"
+            android:visibility="gone" />
 
     </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:text="最终结果请以《成绩报告单》为准\n本次查询结果由南大共院app提供"
+        android:textColor="@color/colorGreen2" />
 
 </LinearLayout>

@@ -9,15 +9,9 @@
     <FrameLayout
         android:id="@+id/fragment_score_result"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:text="本次查询结果由南大共院app提供"
-        android:textColor="@color/colorPrimary" />
+        android:background="@android:color/white"
+        android:padding="16dp" />
 
     <LinearLayout
         android:layout_width="match_parent"

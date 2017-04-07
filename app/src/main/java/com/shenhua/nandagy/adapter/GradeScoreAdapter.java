@@ -3,17 +3,17 @@ package com.shenhua.nandagy.adapter;
 import com.shenhua.nandagy.BR;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.base.BaseRecyclerBindingAdapter;
-import com.shenhua.nandagy.bean.scorebean.ExamScore;
+import com.shenhua.nandagy.bean.scorebean.GradeScore;
 
 import java.util.List;
 
 /**
- * Created by shenhua on 4/6/2017.
+ * Created by shenhua on 4/5/2017.
  * Email shenhuanet@126.com
  */
-public class ExamScoreAdapter extends BaseRecyclerBindingAdapter<ExamScore.ExamScoreList> {
+public class GradeScoreAdapter extends BaseRecyclerBindingAdapter<GradeScore> {
 
-    public ExamScoreAdapter(List<ExamScore.ExamScoreList> mData) {
+    public GradeScoreAdapter(List<GradeScore> mData) {
         super(mData);
     }
 
@@ -24,12 +24,12 @@ public class ExamScoreAdapter extends BaseRecyclerBindingAdapter<ExamScore.ExamS
 
     @Override
     public int getItemLayoutId(int viewType) {
-        return  R.layout.item_exam_score_list_content;
+        return R.layout.item_grade_score_list_content;
     }
 
     @Override
     public int getVariableId(int viewType) {
-        return BR.examScore;
+        return BR.gradeScore;
     }
 
     @Override

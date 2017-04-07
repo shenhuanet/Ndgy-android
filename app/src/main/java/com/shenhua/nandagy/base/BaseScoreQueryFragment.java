@@ -3,6 +3,7 @@ package com.shenhua.nandagy.base;
 import android.view.View;
 
 import com.shenhua.commonlibs.base.BaseFragment;
+import com.shenhua.nandagy.App;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.ScoreQuery;
 
@@ -31,12 +32,13 @@ public abstract class BaseScoreQueryFragment extends BaseFragment {
     protected abstract void doQuery();
 
     protected void sendToDatabase(ScoreQuery data) {
-        data.save(new SaveListener<String>() {
-            @Override
-            public void done(String s, BmobException e) {
-                System.out.println("shenhua sout:" + "已保存到：" + s);
-            }
-        });
+        if (App.DEBUG_MODE) {
+            data.save(new SaveListener<String>() {
+                @Override
+                public void done(String s, BmobException e) {
+                }
+            });
+        }
     }
 
 }

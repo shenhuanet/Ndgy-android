@@ -1,11 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="grade"
+            type="com.shenhua.nandagy.bean.scorebean.GradeScore" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerView"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
+
+        <include layout="@layout/common_toolbar_title_center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HelloWorld" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{String.format(@string/grade_score_content_read,grade.read)}"
+            android:textSize="25sp"
+            android:visibility="@{TextUtils.isEmpty(grade.read) ? View.GONE : View.VISIBLE}" />
+    </LinearLayout>
 
 </layout>
 

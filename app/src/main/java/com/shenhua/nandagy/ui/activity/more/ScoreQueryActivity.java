@@ -48,7 +48,6 @@ public class ScoreQueryActivity extends BaseActivity {
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
-//        Bmob.initialize(this, BmobService.APP_KEY);
         ButterKnife.bind(this);
         makeCategoryView(R.array.category_score_item, R.array.category_score_images);
     }

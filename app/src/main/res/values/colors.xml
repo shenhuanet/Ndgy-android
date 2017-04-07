@@ -5,33 +5,30 @@
     <color name="colorPrimaryDark">#1DBFD8</color>
     <color name="colorPrimaryLight">#A0D7DC</color>
     <color name="colorAccent">#1DBFD8</color>
-
     <color name="colorWhite">#FFFFFFFF</color>
-    <color name="colorYellow">#C9F107</color>
+    <color name="colorYellow">#DED606</color>
+    <color name="colorYellow1">#C9F107</color>
     <color name="colorBackground">#F7F7F7</color>
     <color name="colorDivider">#DADEDF</color>
     <color name="colorText">#576069</color>
-
+    <color name="colorText1">#707070</color>
     <color name="colorPressed">#1CD6E0</color>
     <color name="colorEnabled">#D4D4D4</color>
     <color name="colorLight">#551DBFD8</color>
-
-    <color name="textColor_selected">#24C0E6</color>
-    <color name="textColor_unselected">#707070</color>
-    <color name="text">#707070</color>
-    <color name="white">#ffffff</color>
-    <color name="morehui_nor">#E7E7E7</color>
-    <color name="color1">#24C0E6</color>
-    <color name="color2">#F13B86</color>
-    <color name="color3">#315DC5</color>
-    <color name="color4">#79D216</color>
-    <color name="tablinecolor">#F5F5F5</color>
-    <color name="gvitcolor">#FFFFFF</color>
-    <color name="themecolor">#24C0E6</color>
     <color name="colorGreen">#66CC22</color>
-
-    <color name="action_label_light">#b9e3d9</color>
-    <color name="action_label_dark">#576069</color>
-    <color name="action_hint_label">#80576069</color>
+    <color name="colorGreen1">#79D216</color>
+    <color name="colorGreen2">#7FC3B4</color>
+    <color name="colorPurple">#7F9BE7</color>
+    <color name="colorPurple1">#AC92EC</color>
+    <color name="colorRed">#ED5565</color>
+    <color name="colorRed1">#DA4453</color>
+    <color name="colorBitter">#FC6E51</color>
+    <color name="colorBitter1">#E9573F</color>
+    <color name="colorSunflower">#FFCE54</color>
+    <color name="colorSunflower1">#F6BB42</color>
+    <color name="colorMint">#48CFAD</color>
+    <color name="colorMint1">#37BC9B</color>
+    <color name="colorBlue">#5D9CEC</color>
+    <color name="colorBlue1">#4A89DC</color>
 
 </resources>

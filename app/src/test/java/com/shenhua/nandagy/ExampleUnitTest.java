@@ -25,7 +25,11 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
 
-        fe();
+//        String num = "";
+//        String id = "";
+//        String name = "";
+//
+//        System.out.println(DESUtils.getInstance().encrypt(num) + "  " + DESUtils.getInstance().encrypt(id) + "  " + DESUtils.getInstance().encrypt(name));
 
     }
 
