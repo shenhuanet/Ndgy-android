@@ -6,5 +6,7 @@ package com.shenhua.nandagy.service;
  */
 public enum ContentDetailType {
 
-    TYPE_HOME, TYPE_XUEGONG, TYPE_JIAOWU
+    TYPE_HOME, TYPE_XUEGONG, TYPE_JIAOWU // 禁用枚举
+
+    u
 }

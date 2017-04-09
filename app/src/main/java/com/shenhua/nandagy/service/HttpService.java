@@ -52,6 +52,6 @@ public class HttpService {
 
     public static final String DEFAULT_IMAGE = "http://klxh.oschina.io/shenhuandgy-web/imgs/img_default.png";
 
-
+    public static final String URL_GONGQING = "http://wap.gongqing.gov.cn";
 
 }

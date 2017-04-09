@@ -13,9 +13,7 @@ import butterknife.ButterKnife;
  * Created by Shenhua on 10/6/2016.
  * e-mail shenhuanet@126.com
  */
-@ActivityFragmentInject(
-        contentViewId = R.layout.activity_party
-)
+@ActivityFragmentInject(contentViewId = R.layout.activity_party)
 public class PartyActivity extends BaseActivity {
 
     @Override

@@ -8,6 +8,7 @@ import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
 
 /**
  * Application
@@ -17,12 +18,13 @@ public class App extends Application {
 
     private static Context mApplicationContext;
 
-    public static final boolean DEBUG_MODE = true;
+    public static final boolean DEBUG_MODE = true;// 发布时更改版本号
 
     @Override
     public void onCreate() {
         super.onCreate();
         Bmob.initialize(this, BmobService.APP_KEY);
+        BmobInstallation.getCurrentInstallation().save();
         mApplicationContext = this;
         if (DEBUG_MODE) {
             LeakCanary.install(this);

@@ -4,7 +4,7 @@ apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion '25.0.2'
     useLibrary 'org.apache.http.legacy'
 
     dataBinding {
@@ -15,8 +15,9 @@ android {
         applicationId "com.shenhua.nandagy"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 4
-        versionName "2.4.8"
+        versionCode 3
+        versionName "3.0.0-test"
+
     }
     buildTypes {
         release {
