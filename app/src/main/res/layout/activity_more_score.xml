@@ -15,7 +15,6 @@
         <ListView
             android:id="@+id/list_scroe_category"
             android:layout_width="72dp"
-            android:transitionName="list"
             android:layout_height="match_parent"
             android:scrollbars="none" />
 

@@ -49,7 +49,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
 //        BmobUpdateAgent.update(this);
 //        BmobUpdateAgent.setUpdateOnlyWifi(false);
-
         BmobPush.startWork(this);
 
         ButterKnife.bind(this);

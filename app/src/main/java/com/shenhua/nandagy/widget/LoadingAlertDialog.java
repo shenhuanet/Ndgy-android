@@ -13,20 +13,38 @@ import com.shenhua.nandagy.R;
  */
 public class LoadingAlertDialog {
 
-    private static AlertDialog alertDialog;
+    private static LoadingAlertDialog sInatance = null;
+    private AlertDialog alertDialog;
 
-    public static void showLoadDialog(Context context, String text, boolean cancelable) {
+    public static LoadingAlertDialog getInstance(Context context) {
+        if (sInatance == null) {
+            synchronized (LoadingAlertDialog.class) {
+                if (sInatance == null) {
+                    sInatance = new LoadingAlertDialog(context);
+                }
+            }
+        }
+        return sInatance;
+    }
+
+    private LoadingAlertDialog(Context context) {
         alertDialog = new AlertDialog.Builder(context).create();
+    }
+
+    public void showLoadDialog(String text, boolean cancelable) {
         alertDialog.setCancelable(cancelable);
         alertDialog.show();
         Window window = alertDialog.getWindow();
-        window.setContentView(R.layout.dialog_loading);
-        TextView tv = (TextView) window.findViewById(R.id.txt_dialog_message);
-        tv.setText(text);
+        if (window != null) {
+            window.setContentView(R.layout.dialog_loading);
+            TextView tv = (TextView) window.findViewById(R.id.txt_dialog_message);
+            tv.setText(text);
+        }
     }
 
-    public static void dissmissLoadDialog() {
-        if (alertDialog != null && alertDialog.isShowing())
+    public void dissmissLoadDialog() {
+        if (alertDialog != null && alertDialog.isShowing()) {
             alertDialog.dismiss();
+        }
     }
 }

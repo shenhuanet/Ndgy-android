@@ -167,7 +167,7 @@ public class LoginActivity extends BaseActivity {
      * @param password 密码
      */
     private void doSignup(final String username, final String password) {
-        LoadingAlertDialog.showLoadDialog(LoginActivity.this, getString(R.string.login_info_singuping), false);
+        LoadingAlertDialog.getInstance(LoginActivity.this).showLoadDialog(getString(R.string.login_info_singuping), false);
         BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<MyUser>() {
             @Override
             public MyUser doChildThread() {
@@ -178,7 +178,7 @@ public class LoginActivity extends BaseActivity {
                 user.signUp(new SaveListener<MyUser>() {
                     @Override
                     public void done(MyUser user, BmobException e) {
-                        LoadingAlertDialog.dissmissLoadDialog();
+                        LoadingAlertDialog.getInstance(LoginActivity.this).dissmissLoadDialog();
                         if (e == null) {
                             doUiThread(user);
                         } else {
@@ -208,7 +208,7 @@ public class LoginActivity extends BaseActivity {
      * @param password 密码
      */
     private void doSignin(final String username, final String password) {
-        LoadingAlertDialog.showLoadDialog(LoginActivity.this, getString(R.string.login_info_singining), true);
+        LoadingAlertDialog.getInstance(LoginActivity.this).showLoadDialog(getString(R.string.login_info_singining), true);
         BaseThreadHandler.getInstance().sendRunnable(new CommonUiRunnable<Object>("") {
 
             @Override
@@ -220,7 +220,7 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void done(MyUser bmobUser, BmobException e) {
-                        LoadingAlertDialog.dissmissLoadDialog();
+                        LoadingAlertDialog.getInstance(LoginActivity.this).dissmissLoadDialog();
                         if (e == null) {
                             toast(R.string.login_info_singin_success);
                             onLoginSuccess();
@@ -388,7 +388,7 @@ public class LoginActivity extends BaseActivity {
      * @param nick     昵称
      */
     private void doSignup(final String username, final String password, final String imgUrl, final String nick) {
-        LoadingAlertDialog.showLoadDialog(LoginActivity.this, getString(R.string.login_info_verfiy), false);
+        LoadingAlertDialog.getInstance(this).showLoadDialog(getString(R.string.login_info_verfiy), false);
         BaseThreadHandler.getInstance().sendRunnable(new CommonUiRunnable<String>("") {
             @Override
             public void doUIThread() {
@@ -401,7 +401,7 @@ public class LoginActivity extends BaseActivity {
                 user.signUp(new SaveListener<MyUser>() {
                     @Override
                     public void done(MyUser s, BmobException e) {
-                        LoadingAlertDialog.dissmissLoadDialog();
+                        LoadingAlertDialog.getInstance(LoginActivity.this).dissmissLoadDialog();
                         if (e == null) {
                             toast(R.string.login_info_verfiy_success);
                             doSignin(username, password);

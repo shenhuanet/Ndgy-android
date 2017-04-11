@@ -48,7 +48,7 @@ public class FeedbackActivity extends BaseActivity {
             toast("请先写点东西呗...");
             return;
         }
-        LoadingAlertDialog.showLoadDialog(this, "意见提交中...", true);
+        LoadingAlertDialog.getInstance(this).showLoadDialog("意见提交中...", true);
         mContentEditTv.postDelayed(() -> {
             FeedBack feedBack = new FeedBack();
             feedBack.setOption(1);
@@ -56,7 +56,7 @@ public class FeedbackActivity extends BaseActivity {
             feedBack.save(new SaveListener<String>() {
                 @Override
                 public void done(String s, BmobException e) {
-                    LoadingAlertDialog.dissmissLoadDialog();
+                    LoadingAlertDialog.getInstance(FeedbackActivity.this).dissmissLoadDialog();
                     if (e == null) toast("操作成功，感谢你的反馈，我们以后会做得更好！");
                     else toast("操作失败：" + e.getMessage());
                 }

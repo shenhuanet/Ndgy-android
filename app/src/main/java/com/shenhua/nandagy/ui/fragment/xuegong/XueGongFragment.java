@@ -29,7 +29,6 @@ import com.shenhua.nandagy.bean.ContentPassesData;
 import com.shenhua.nandagy.bean.XueGongData;
 import com.shenhua.nandagy.presenter.XueGongPresenter;
 import com.shenhua.nandagy.service.Constants;
-import com.shenhua.nandagy.service.ContentDetailType;
 import com.shenhua.nandagy.service.HttpService;
 import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
 import com.shenhua.nandagy.ui.activity.WebActivity;
@@ -130,7 +129,7 @@ public class XueGongFragment extends BaseMvpFragment<XueGongPresenter, XueGongVi
     private void navToDetail(View view, XueGongData.XuegongListData data) {
         Intent intent = new Intent(getActivity(), ContentDetailActivity.class);
         ContentPassesData contentPassesData = new ContentPassesData(
-                ContentDetailType.TYPE_XUEGONG,
+                Constants.Code.URL_REQUEST_TYPE_XUEGONG,
                 data.getTitle(),
                 data.getNewsType(),
                 data.getTime(),

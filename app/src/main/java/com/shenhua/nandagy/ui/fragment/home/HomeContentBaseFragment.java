@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.shenhua.commonlibs.mvp.BaseMvpFragment;
 import com.shenhua.commonlibs.utils.BusBooleanEvent;
@@ -17,7 +16,7 @@ import com.shenhua.nandagy.adapter.HomeDataAdapter;
 import com.shenhua.nandagy.bean.ContentPassesData;
 import com.shenhua.nandagy.bean.HomeData;
 import com.shenhua.nandagy.presenter.HomePresenter;
-import com.shenhua.nandagy.service.ContentDetailType;
+import com.shenhua.nandagy.service.Constants;
 import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
 import com.shenhua.nandagy.view.HomeView;
 
@@ -52,7 +51,7 @@ public abstract class HomeContentBaseFragment extends BaseMvpFragment<HomePresen
             adapter.setOnItemClickListener((view1, position, data) -> {
                 Intent intent = new Intent(getContext(), ContentDetailActivity.class);
                 ContentPassesData contentPassesData = new ContentPassesData(
-                        ContentDetailType.TYPE_HOME,
+                        Constants.Code.URL_REQUEST_TYPE_HOME,
                         data.getTitle(),
                         data.getImgUrl(),
                         data.getTime(),

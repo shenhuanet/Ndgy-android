@@ -179,13 +179,13 @@ public class ScoreActivity extends BaseActivity implements ScoreView {
     @Override
     public void showProgress(String msg) {
         mProgressBar.setVisibility(View.VISIBLE);
-        LoadingAlertDialog.showLoadDialog(this, msg, true);
+        LoadingAlertDialog.getInstance(this).showLoadDialog(msg, true);
     }
 
     @Override
     public void hideProgress() {
         mProgressBar.setVisibility(View.GONE);
-        LoadingAlertDialog.dissmissLoadDialog();
+        LoadingAlertDialog.getInstance(this).dissmissLoadDialog();
     }
 
     @Override

@@ -83,18 +83,14 @@ public class MoreFragment extends BaseFragment {
         mNineGridView.setupNineGridView(images, titiels);
         mNineGridView.setOnItemClickListener((view, position) -> {
             Intent intent = new Intent(getContext(), aClass[position]);
-            if (position == 0) {
-                sceneTransitionTo(intent, 0, view, R.id.imageView, "list");
-            } else {
-                if (position == 2) {
-                    intent.putExtra("title", titiels[2]);
-                    intent.putExtra("url", "school-employment.html");
-                } else if (position == 7) {
-                    intent.putExtra("title", titiels[7]);
-                    intent.putExtra("url", "school-poyang.html");
-                }
-                sceneTransitionTo(intent, 0, view, R.id.textView, "title");
+            if (position == 2) {
+                intent.putExtra("title", titiels[2]);
+                intent.putExtra("url", "school-employment.html");
+            } else if (position == 7) {
+                intent.putExtra("title", titiels[7]);
+                intent.putExtra("url", "school-poyang.html");
             }
+            sceneTransitionTo(intent, 0, view, R.id.textView, "title");
         });
     }
 }

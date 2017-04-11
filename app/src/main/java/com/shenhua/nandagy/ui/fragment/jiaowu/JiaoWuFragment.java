@@ -30,7 +30,6 @@ import com.shenhua.nandagy.bean.JiaowuData;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.presenter.JiaowuPresenter;
 import com.shenhua.nandagy.service.Constants;
-import com.shenhua.nandagy.service.ContentDetailType;
 import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
 import com.shenhua.nandagy.ui.activity.jiaowu.BindingActivity;
 import com.shenhua.nandagy.ui.activity.jiaowu.ScoreActivity;
@@ -106,7 +105,7 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
     private void navToDetail(View view, JiaowuData.JiaowuList data) {
         Intent intent = new Intent(getActivity(), ContentDetailActivity.class);
         ContentPassesData contentPassesData = new ContentPassesData(
-                ContentDetailType.TYPE_JIAOWU,
+                Constants.Code.URL_REQUEST_TYPE_JIAOWU,
                 data.getTitle(),
                 data.getDrawable(),
                 data.getTime(),

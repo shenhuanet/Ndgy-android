@@ -30,7 +30,6 @@ import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.ContentDetailData;
 import com.shenhua.nandagy.bean.ContentPassesData;
 import com.shenhua.nandagy.presenter.ContentDetailPresenter;
-import com.shenhua.nandagy.service.ContentDetailType;
 import com.shenhua.nandagy.view.ContentDetailView;
 
 import org.jsoup.Jsoup;
@@ -69,7 +68,7 @@ public class ContentDetailActivity extends BaseMvpActivity<ContentDetailPresente
     WebView mWebView;
     protected ContentDetailPresenter mContentDetailPresenter;
     private String detail;
-    private ContentDetailType type;
+    private int type;
     private String mUrl;
 
     @Override

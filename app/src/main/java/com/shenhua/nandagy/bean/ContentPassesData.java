@@ -1,7 +1,5 @@
 package com.shenhua.nandagy.bean;
 
-import com.shenhua.nandagy.service.ContentDetailType;
-
 import java.io.Serializable;
 
 /**
@@ -11,13 +9,13 @@ import java.io.Serializable;
 public class ContentPassesData implements Serializable {
 
     private static final long serialVersionUID = 1973445603082576916L;
-    private ContentDetailType type;
+    private int type;
     private Object image;
     private String title;
     private String time;
     private String url;
 
-    public ContentPassesData(ContentDetailType type, String title, Object image, String time, String url) {
+    public ContentPassesData(int type, String title, Object image, String time, String url) {
         this.type = type;
         this.title = title;
         this.image = image;
@@ -53,11 +51,11 @@ public class ContentPassesData implements Serializable {
         this.title = title;
     }
 
-    public ContentDetailType getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(ContentDetailType type) {
+    public void setType(int type) {
         this.type = type;
     }
 

@@ -5,7 +5,7 @@ import com.shenhua.commonlibs.mvp.BasePresenter;
 import com.shenhua.nandagy.bean.ContentDetailData;
 import com.shenhua.nandagy.model.ContentDetailModel;
 import com.shenhua.nandagy.model.ContentDetailModelImpl;
-import com.shenhua.nandagy.service.ContentDetailType;
+import com.shenhua.nandagy.service.Constants;
 import com.shenhua.nandagy.view.ContentDetailView;
 
 /**
@@ -15,10 +15,10 @@ import com.shenhua.nandagy.view.ContentDetailView;
 public class ContentDetailPresenter extends BasePresenter<ContentDetailView> implements HttpCallback<ContentDetailData> {
 
     private ContentDetailModel<ContentDetailData> model;
-    private ContentDetailType type;
+    private int type;
     private String url;
 
-    public ContentDetailPresenter(ContentDetailView view, ContentDetailType type, String url) {
+    public ContentDetailPresenter(ContentDetailView view, int type, String url) {
         attachView(view);
         this.type = type;
         this.url = url;
@@ -30,11 +30,11 @@ public class ContentDetailPresenter extends BasePresenter<ContentDetailView> imp
     }
 
     public void execute() {
-        if (type == ContentDetailType.TYPE_HOME) {
+        if (type == Constants.Code.URL_REQUEST_TYPE_HOME) {
             model.getHomeDetail(this, url, this);
-        } else if (type == ContentDetailType.TYPE_XUEGONG) {
+        } else if (type==Constants.Code.URL_REQUEST_TYPE_XUEGONG) {
             model.getXuegongDetail(this, url, this);
-        } else if (type == ContentDetailType.TYPE_JIAOWU) {
+        } else if (type == Constants.Code.URL_REQUEST_TYPE_JIAOWU) {
             model.getJiaowuDetail(this, url, this);
         }
     }

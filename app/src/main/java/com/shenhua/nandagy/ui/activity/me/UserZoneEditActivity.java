@@ -157,7 +157,7 @@ public class UserZoneEditActivity extends BaseActivity {
     }
 
     private void doUpdateInfo() {
-        LoadingAlertDialog.showLoadDialog(this, "资料更新中，请稍后...", true);
+        LoadingAlertDialog.getInstance(this).showLoadDialog("资料更新中，请稍后...", true);
         userZone.setName(mNameEt.getText().toString());
         userZone.setSign(mSignEt.getText().toString());
         userZone.setBirth(mBrithTv.getText().toString());
@@ -169,7 +169,7 @@ public class UserZoneEditActivity extends BaseActivity {
         userZone.update(userZone.getObjectId(), new UpdateListener() {
             @Override
             public void done(BmobException e) {
-                LoadingAlertDialog.dissmissLoadDialog();
+                LoadingAlertDialog.getInstance(UserZoneEditActivity.this).dissmissLoadDialog();
                 if (e != null) {
                     toast("数据更新成功！");
                 } else {

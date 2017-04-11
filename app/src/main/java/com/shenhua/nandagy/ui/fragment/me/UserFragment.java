@@ -217,7 +217,7 @@ public class UserFragment extends BaseFragment {
      * 创建用户主页
      */
     private void crateUserZone() {
-        LoadingAlertDialog.showLoadDialog(getContext(), "正在创建用户主页", true);
+        LoadingAlertDialog.getInstance(getContext()).showLoadDialog("正在创建用户主页", true);
         BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<String>() {
             @Override
             public String doChildThread() {
@@ -232,7 +232,7 @@ public class UserFragment extends BaseFragment {
                 userZone.save(new SaveListener<String>() {
                     @Override
                     public void done(String objectId, BmobException e) {
-                        LoadingAlertDialog.dissmissLoadDialog();
+                        LoadingAlertDialog.getInstance(getContext()).dissmissLoadDialog();
                         if (e == null) {
                             doUiThread(objectId);
                         } else {

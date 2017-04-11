@@ -274,13 +274,13 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
      * @param filePath filePath
      */
     private void upLoadPhoto(String filePath) {
-        LoadingAlertDialog.showLoadDialog(this, "头像更新中...", true);
+        LoadingAlertDialog.getInstance(this).showLoadDialog("头像更新中...", true);
         final BmobFile bmobFile = new BmobFile(new File(filePath));
         bmobFile.uploadblock(new UploadFileListener() {
 
             @Override
             public void done(BmobException e) {
-                LoadingAlertDialog.dissmissLoadDialog();
+                LoadingAlertDialog.getInstance(UserZoneActivity.this).dissmissLoadDialog();
                 if (e == null) {
                     final String result = bmobFile.getFileUrl();
                     MyUser user = UserUtils.getInstance().getUserInfo(UserZoneActivity.this);

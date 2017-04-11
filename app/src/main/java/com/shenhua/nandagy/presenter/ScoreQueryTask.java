@@ -44,7 +44,7 @@ public class ScoreQueryTask<T> extends AsyncTask<Integer, Integer, ScoreQueryRes
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        LoadingAlertDialog.showLoadDialog(mContext, "查询中，请稍后...", true);
+        LoadingAlertDialog.getInstance(mContext).showLoadDialog("查询中，请稍后...", true);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ScoreQueryTask<T> extends AsyncTask<Integer, Integer, ScoreQueryRes
     @Override
     protected void onPostExecute(ScoreQueryResult result) {
         super.onPostExecute(result);
-        LoadingAlertDialog.dissmissLoadDialog();
+        LoadingAlertDialog.getInstance(mContext).dissmissLoadDialog();
         if (result != null) {
             if (result.getCode() > 0)
                 onScoreQueryListener.onQuerySuccess(result.getData());

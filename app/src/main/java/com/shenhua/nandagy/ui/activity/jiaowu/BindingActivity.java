@@ -26,7 +26,7 @@ import butterknife.OnClick;
  * Email shenhuanet@126.com
  */
 @ActivityFragmentInject(
-        contentViewId = R.layout.activity_banding,
+        contentViewId = R.layout.activity_binding,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
         toolbarTitle = R.string.toolbar_title_binding,

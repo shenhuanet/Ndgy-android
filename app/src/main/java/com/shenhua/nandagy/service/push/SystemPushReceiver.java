@@ -21,15 +21,5 @@ public class SystemPushReceiver extends BroadcastReceiver {
         }
     }
 
-    /*
-     * {
-     "aps": {
-     "sound": "cheering.caf",
-     "alert": "这个是通知栏上显示的内容",
-     "badge": 0
-     },
-     "xx" : "json的key-value对，你可以根据情况添加更多的，客户端进行解析获取",
-     }
-     */
-
+    // {"_id":"0001","_result":"OK","_title":"\u6807\u9898","_content":"hello world","_date":"2017-04-10"}
 }

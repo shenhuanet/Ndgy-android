@@ -75,7 +75,7 @@ public class UserAccountActivity extends BaseActivity {
         else mGenderMan.setChecked(true);
         mPhoneTv.setText(user.getPhone());
         mMailTv.setText(user.geteMail());
-        mNameTv.setText(user.getName());
+        mNameTv.setText(DESUtils.getInstance().decrypt(user.getName()));
         mNumTv.setText(DESUtils.getInstance().decrypt(user.getName_num()));
         updateSex(user);
     }

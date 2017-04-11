@@ -42,6 +42,10 @@ public class Constants {
 
         public static final int RECULT_CODE_LOGIN_SUCCESS = 100;
         public static final int RECULT_CODE_BINDING_SUCCESS = 101;
+
+        public static final int URL_REQUEST_TYPE_HOME = 1;
+        public static final int URL_REQUEST_TYPE_XUEGONG = 2;
+        public static final int URL_REQUEST_TYPE_JIAOWU = 3;
     }
 
     public static class JiaoWuScore {
