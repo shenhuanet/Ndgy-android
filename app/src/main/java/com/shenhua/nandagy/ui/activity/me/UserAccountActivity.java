@@ -62,22 +62,23 @@ public class UserAccountActivity extends BaseActivity {
     private static final int TYPE_NICK = 1;
     private static final int TYPE_PHONE = 2;
     private static final int TYPE_EMAIL = 3;
+    private MyUser myUser;
 
     // R.id.account_layout_id,R.id.account_layout_nick,R.id.account_layout_password,R.id.account_layout_phone,R.id.account_layout_mail,R.id.account_layout_name,R.id.account_layout_num
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        MyUser user = UserUtils.getInstance().getUserInfo(this);
-        mIdTv.setText(user.getUserName());
-        mNickTv.setText(user.getNick());
-        if (user.getSex()) mGenderWoman.setChecked(true);
+        myUser = BmobUser.getCurrentUser(MyUser.class);
+        mIdTv.setText(myUser.getUsername());
+        mNickTv.setText(myUser.getNick());
+        if (myUser.getSex()) mGenderWoman.setChecked(true);
         else mGenderMan.setChecked(true);
-        mPhoneTv.setText(user.getPhone());
-        mMailTv.setText(user.geteMail());
-        mNameTv.setText(DESUtils.getInstance().decrypt(user.getName()));
-        mNumTv.setText(DESUtils.getInstance().decrypt(user.getName_num()));
-        updateSex(user);
+        mPhoneTv.setText(myUser.getMobilePhoneNumber());
+        mMailTv.setText(myUser.getEmail());
+        mNameTv.setText(DESUtils.getInstance().decrypt(myUser.getName()));
+        mNumTv.setText(DESUtils.getInstance().decrypt(myUser.getName_num()));
+        updateSex();
     }
 
     @OnClick({R.id.btn_logout, R.id.account_layout_id, R.id.account_layout_nick, R.id.account_layout_password,
@@ -186,17 +187,16 @@ public class UserAccountActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 final String value = conEv.getText().toString();
-                MyUser user = UserUtils.getInstance().getUserInfo(UserAccountActivity.this);
                 if (!value.equals(str)) {
                     switch (type) {
                         case TYPE_NICK:
-                            if (updateNick(value, user)) return;
+                            if (updateNick(value)) return;
                             break;
                         case TYPE_PHONE:
-                            if (updatePhone(value, user)) return;
+                            if (updatePhone(value)) return;
                             break;
                         case TYPE_EMAIL:
-                            if (updateEmail(value, user)) return;
+                            if (updateEmail(value)) return;
                             break;
                     }
 
@@ -206,54 +206,52 @@ public class UserAccountActivity extends BaseActivity {
         });
     }
 
-    private void updateSex(final MyUser user) {
-        mSexRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                boolean gender = false;
-                int radioButtonId = group.getCheckedRadioButtonId();
-                RadioButton rb = (RadioButton) findViewById(radioButtonId);
-                assert rb != null;
-                switch (rb.getText().toString()) {
-                    case "男":
-                        gender = false;
-                        break;
-                    case "女":
-                        gender = true;
-                        break;
+    private void updateSex() {
+        mSexRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            boolean gender = false;
+            int radioButtonId = group.getCheckedRadioButtonId();
+            RadioButton rb = (RadioButton) findViewById(radioButtonId);
+            assert rb != null;
+            switch (rb.getText().toString()) {
+                case "男":
+                    gender = false;
+                    break;
+                case "女":
+                    gender = true;
+                    break;
+            }
+            myUser.setSex(gender);
+            final boolean finalGender = gender;
+            myUser.update(myUser.getObjectId(), new UpdateListener() {
+                @Override
+                public void done(BmobException e) {
+                    if (e != null) toast(e.getMessage());
+                    else {
+                        toast("信息更新成功");
+                        UserUtils.getInstance().updateUserInfo(UserAccountActivity.this, "gender", finalGender);
+                    }
                 }
-                user.setSex(gender);
-                final boolean finalGender = gender;
-                user.update(user.getUserId(), new UpdateListener() {
+            });
+            String zoneObjId = myUser.getUserZone().getObjectId();
+            if (!TextUtils.isEmpty(zoneObjId)) {
+                UserZone p2 = new UserZone();
+//                p2.setSex(gender);
+                p2.update(zoneObjId, new UpdateListener() {
                     @Override
                     public void done(BmobException e) {
-                        if (e != null) toast(e.getMessage());
-                        else {
-                            toast("信息更新成功");
-                            UserUtils.getInstance().updateUserInfo(UserAccountActivity.this, "gender", finalGender);
-                        }
+
                     }
                 });
-                String zoneId = user.getUserZoneObjID();
-                if (!TextUtils.isEmpty(zoneId)) {
-                    UserZone p2 = new UserZone();
-                    p2.setSex(gender);
-                    p2.update(zoneId, new UpdateListener() {
-                        @Override
-                        public void done(BmobException e) {
-
-                        }
-                    });
-                }
             }
         });
     }
 
-    private boolean updateEmail(final String value, MyUser user) {
+    // TODO: 4/11/2017 return type
+    private boolean updateEmail(final String value) {
         if (CheckUtils.isEmail(value)) {
-            user.setEmail(value);
+            myUser.setEmail(value);
             mMailTv.setText(value);
-            user.update(user.getUserId(), new UpdateListener() {
+            myUser.update(myUser.getObjectId(), new UpdateListener() {
                 @Override
                 public void done(BmobException e) {
                     if (e != null) toast(e.getMessage());
@@ -270,11 +268,11 @@ public class UserAccountActivity extends BaseActivity {
         return false;
     }
 
-    private boolean updatePhone(final String value, MyUser user) {
+    private boolean updatePhone(final String value) {
         if (CheckUtils.isPhone(value)) {
-            user.setMobilePhoneNumber(value);
+            myUser.setMobilePhoneNumber(value);
             mPhoneTv.setText(value);
-            user.update(user.getUserId(), new UpdateListener() {
+            myUser.update(myUser.getObjectId(), new UpdateListener() {
                 @Override
                 public void done(BmobException e) {
                     if (e != null) toast(e.getMessage());
@@ -291,11 +289,11 @@ public class UserAccountActivity extends BaseActivity {
         return false;
     }
 
-    private boolean updateNick(final String value, MyUser user) {
+    private boolean updateNick(final String value) {
         if (TextUtils.isEmpty(value)) return true;
-        user.setNick(value);
+        myUser.setNick(value);
         mNickTv.setText(value);
-        user.update(user.getUserId(), new UpdateListener() {
+        myUser.update(myUser.getObjectId(), new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e != null) toast(e.getMessage());

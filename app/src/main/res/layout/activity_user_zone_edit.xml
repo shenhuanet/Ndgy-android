@@ -1,253 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_edit_zone_rootview"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:ignore="TextFields">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="data"
+            type="com.shenhua.nandagy.bean.bmobbean.UserZone" />
+
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/layout_edit_zone_rootview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        android:orientation="vertical">
+        tools:ignore="TextFields">
 
-        <include layout="@layout/common_toolbar_title_left" />
-
-        <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            app:divider="@drawable/bg_divider_gray_vertical"
-            app:showDividers="beginning|middle|end">
-
-            <LinearLayout
-                android:id="@+id/layout_edit_zone_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="真实姓名" />
-
-                <EditText
-                    android:id="@+id/et_edit_zone_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:textColor="@color/colorText"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_edit_zone_sign"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="个性签名" />
-
-                <EditText
-                    android:id="@+id/et_edit_zone_sign"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:textColor="@color/colorText"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_edit_zone_brith"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="生\u3000\u3000日" />
-
-                <TextView
-                    android:id="@+id/tv_edit_zone_brith"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:gravity="center"
-                    android:textColor="@color/colorText"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_edit_zone_locate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="家\u3000\u3000乡" />
-
-                <TextView
-                    android:id="@+id/tv_edit_zone_locate"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:gravity="center"
-                    android:textColor="@color/colorText"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_edit_zone_love"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="恋爱状态" />
-
-                <TextView
-                    android:id="@+id/tv_edit_zone_love"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:gravity="center"
-                    android:text="保密"
-                    android:textColor="@color/colorText"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.LinearLayoutCompat>
-
-        <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            app:divider="@drawable/bg_divider_gray_vertical"
-            app:showDividers="beginning|middle|end">
-
-            <LinearLayout
-                android:id="@+id/layout_edit_zone_depart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="系\u3000\u3000别" />
-
-                <TextView
-                    android:id="@+id/tv_edit_zone_depart"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:gravity="center"
-                    android:textColor="@color/colorText"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_edit_zone_qual"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="学\u3000\u3000历" />
-
-                <TextView
-                    android:id="@+id/tv_edit_zone_qual"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:gravity="center"
-                    android:textColor="@color/colorText"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="毕业中学" />
-
-                <EditText
-                    android:id="@+id/et_edit_zone_school"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:background="@null"
-                    android:gravity="center"
-                    android:textColor="@color/colorText"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.LinearLayoutCompat>
-
-        <Button
-            android:id="@+id/btn_edit_save"
-            style="@style/ButtonStyle.Primary"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="23dp"
-            android:text="保存" />
+            android:clickable="true"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <include layout="@layout/common_toolbar_title_left" />
 
-</android.support.v4.widget.NestedScrollView>
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                app:divider="@drawable/bg_divider_gray_vertical"
+                app:showDividers="beginning|middle|end">
+
+                <LinearLayout
+                    android:id="@+id/layout_edit_zone_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="@string/userzone_edit_string_name" />
+
+                    <EditText
+                        android:id="@+id/et_edit_zone_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="@{data.name}"
+                        android:textColor="@color/colorText"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_edit_zone_sign"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="@string/userzone_edit_string_sign" />
+
+                    <EditText
+                        android:id="@+id/et_edit_zone_sign"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="@{data.sign}"
+                        android:textColor="@color/colorText"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_edit_zone_brith"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="@string/userzone_edit_string_birth" />
+
+                    <TextView
+                        android:id="@+id/tv_edit_zone_brith"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:text="@{data.birth}"
+                        android:textColor="@color/colorText"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_edit_zone_locate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="@string/userzone_edit_string_locate" />
+
+                    <TextView
+                        android:id="@+id/tv_edit_zone_locate"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:text="@{data.locate}"
+                        android:textColor="@color/colorText"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_edit_zone_love"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="@string/userzone_edit_string_love" />
+
+                    <TextView
+                        android:id="@+id/tv_edit_zone_love"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:text="@{data.love}"
+                        android:textColor="@color/colorText"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                app:divider="@drawable/bg_divider_gray_vertical"
+                app:showDividers="beginning|middle|end">
+
+                <LinearLayout
+                    android:id="@+id/layout_edit_zone_depart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="@string/userzone_edit_string_depart" />
+
+                    <TextView
+                        android:id="@+id/tv_edit_zone_depart"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:text="@{data.depart}"
+                        android:textColor="@color/colorText"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_edit_zone_qual"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="@string/userzone_edit_string_qual" />
+
+                    <TextView
+                        android:id="@+id/tv_edit_zone_qual"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:text="@{data.qual}"
+                        android:textColor="@color/colorText"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="@string/userzone_edit_string_school" />
+
+                    <EditText
+                        android:id="@+id/et_edit_zone_school"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="@{data.highSchool}"
+                        android:textColor="@color/colorText"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <Button
+                android:id="@+id/btn_edit_save"
+                style="@style/ButtonStyle.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="23dp"
+                android:text="@string/common_text_action_save" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</layout>
+

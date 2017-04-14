@@ -7,88 +7,22 @@ import cn.bmob.v3.BmobUser;
 public class MyUser extends BmobUser implements Serializable {
 
     private static final long serialVersionUID = 5589615413893455310L;
-    private String userId;
-    private String userName;
-    private String phone;
-    private String eMail;
+    private String url_photo;
     private String nick;
     private String name_num;
-    private String name;
     private String name_id;
-    private String info;
-    private String url_photo;
+    private String name;
+    private String info;// 记录最近一次操作
     private Boolean sex;
-    private String userZoneObjID;
+    private UserZone userZone;
 
     public MyUser() {
     }
 
-    public MyUser(String userId, String userName) {
-        this.userId = userId;
-        this.userName = userName;
-    }
-
-    public MyUser(String userId, String nameNum, String nameId, String name) {
-        this.userId = userId;
+    public MyUser(String nameNum, String nameId, String name) {
         this.name_num = nameNum;
         this.name_id = nameId;
         this.name = name;
-    }
-
-    public MyUser(String eMail, String info, String name, String name_id, String name_num, String nick,
-                  String phone, Boolean sex, String url_photo, String userId, String userName, String userZoneObjID) {
-        this.eMail = eMail;
-        this.info = info;
-        this.name = name;
-        this.name_id = name_id;
-        this.name_num = name_num;
-        this.nick = nick;
-        this.phone = phone;
-        this.sex = sex;
-        this.url_photo = url_photo;
-        this.userId = userId;
-        this.userName = userName;
-        this.userZoneObjID = userZoneObjID;
-    }
-
-    public String getUserZoneObjID() {
-        return userZoneObjID;
-    }
-
-    public void setUserZoneObjID(String userZoneObjID) {
-        this.userZoneObjID = userZoneObjID;
-    }
-
-    public String geteMail() {
-        return eMail;
-    }
-
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getInfo() {
@@ -145,6 +79,14 @@ public class MyUser extends BmobUser implements Serializable {
 
     public void setUrl_photo(String url_photo) {
         this.url_photo = url_photo;
+    }
+
+    public UserZone getUserZone() {
+        return userZone;
+    }
+
+    public void setUserZone(UserZone userZone) {
+        this.userZone = userZone;
     }
 
 }

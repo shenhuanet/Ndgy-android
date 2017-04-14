@@ -48,7 +48,7 @@ public class BindingActivity extends BaseActivity {
         ButterKnife.bind(this);
         mNumEt.addTextChangedListener(new TextEnableInputWatcher(mNumLayout));
         mIdEt.addTextChangedListener(new TextEnableInputWatcher(mIdLayout));
-        mNumEt.setText(DESUtils.getInstance().decrypt(UserUtils.getInstance().getUserInfo(this).getName_num()));
+//        mNumEt.setText(DESUtils.getInstance().decrypt(UserUtils.getInstance().getUserInfo(this).getName_num()));
     }
 
     @OnClick(R.id.btn_query)

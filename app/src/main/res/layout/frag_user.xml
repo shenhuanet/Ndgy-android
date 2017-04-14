@@ -1,323 +1,348 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="java.lang.Integer" />
+
+        <variable
+            name="user"
+            type="com.shenhua.nandagy.bean.bmobbean.MyUser" />
+
+        <variable
+            name="userZone"
+            type="com.shenhua.nandagy.bean.bmobbean.UserZone" />
+
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="23dp"
-        android:paddingTop="23dp">
+        android:background="@color/colorBackground">
 
-        <android.support.v7.widget.LinearLayoutCompat
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            app:divider="@drawable/bg_divider_gray_vertical"
-            app:showDividers="beginning|middle|end">
+            android:paddingBottom="23dp"
+            android:paddingTop="23dp">
 
-            <RelativeLayout
-                android:id="@+id/rl_user_zone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:orientation="horizontal"
-                android:padding="6dp">
-
-                <com.shenhua.commonlibs.widget.CircleImageView
-                    android:id="@+id/iv_user_photo"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="16dp"
-                    android:contentDescription="@string/img_photo" />
-
-                <TextView
-                    android:id="@+id/tv_user_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="16dp"
-                    android:layout_toRightOf="@+id/iv_user_photo"
-                    android:textSize="18sp" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:contentDescription="@string/img_arrow"
-                    android:src="@drawable/ic_arrow_right" />
-
-            </RelativeLayout>
-
-            <LinearLayout
+            <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:layout_margin="16dp">
+                android:orientation="vertical"
+                app:divider="@drawable/bg_divider_gray_vertical"
+                app:showDividers="beginning|middle|end">
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                <RelativeLayout
+                    android:id="@+id/rl_user_zone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
                     android:clickable="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:padding="6dp">
+
+                    <com.shenhua.commonlibs.widget.CircleImageView
+                        android:id="@+id/iv_user_photo"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:contentDescription="@string/img_photo"
+                        app:error="@{user==null? @drawable/img_photo_man : (user.sex ? @drawable/img_photo_woman : @drawable/img_photo_man)}"
+                        app:imageUrl="@{user.url_photo}"
+                        app:placeHolder="@{user==null? @drawable/img_photo_man : (user.sex ? @drawable/img_photo_woman : @drawable/img_photo_man)}" />
 
                     <TextView
+                        android:id="@+id/tv_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我的等级" />
+                        android:layout_centerVertical="true"
+                        android:layout_margin="16dp"
+                        android:layout_toRightOf="@+id/iv_user_photo"
+                        android:text="@{user!=null ? (TextUtils.isEmpty(user.nick) ? @string/user_fragment_nick_noset : user.nick): @string/user_fragment_nick_nologin}"
+                        android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/tv_user_level"
-                        style="@style/UserZoneNumStyle" />
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:contentDescription="@string/img_arrow"
+                        android:src="@drawable/ic_arrow_right" />
 
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="35dp"
-                    android:background="@color/colorPrimary" />
+                </RelativeLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@android:color/white"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="我的动态" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_user_dynamic"
-                        style="@style/UserZoneNumStyle" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="我的等级" />
+
+                        <TextView
+                            style="@style/UserZoneNumStyle"
+                            android:text="@{userZone==null? @string/user_fragment_user_levd:Integer.toString(userZone.level)}" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="35dp"
+                        android:background="@color/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="我的动态" />
+
+                        <TextView
+                            style="@style/UserZoneNumStyle"
+                            android:text="@{userZone==null? @string/user_fragment_user_levd:Integer.toString(userZone.dynamic)}" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="35dp"
+                        android:background="@color/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="我的米粒" />
+
+                        <TextView
+                            style="@style/UserZoneNumStyle"
+                            android:text="@{userZone==null? @string/user_fragment_user_levd:Integer.toString(userZone.mi)}" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="35dp"
+                        android:background="@color/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="我的经验" />
+
+                        <TextView
+                            android:id="@+id/tv_user_exper"
+                            style="@style/UserZoneNumStyle"
+                            android:text="@{userZone==null? @string/user_fragment_user_levd:Integer.toString(userZone.exper)}" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="35dp"
-                    android:background="@color/colorPrimary" />
+            </android.support.v7.widget.LinearLayoutCompat>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                app:divider="@drawable/bg_divider_gray_vertical"
+                app:showDividers="beginning|end">
+
+                <RelativeLayout
+                    android:id="@+id/rl_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:padding="16dp">
 
                     <TextView
+                        android:id="@+id/tag_tv_acconut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我的米粒" />
+                        android:layout_centerVertical="true"
+                        android:text="我的账号"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/img_arrow"
+                        android:src="@drawable/ic_arrow_right" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                app:divider="@drawable/bg_divider_gray_vertical"
+                app:showDividers="beginning|middle|end">
+
+                <RelativeLayout
+                    android:id="@+id/rl_publish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:padding="16dp">
 
                     <TextView
-                        android:id="@+id/tv_user_mi"
-                        style="@style/UserZoneNumStyle" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="35dp"
-                    android:background="@color/colorPrimary" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
+                        android:id="@+id/tag_tv_publish"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我的经验" />
+                        android:layout_centerVertical="true"
+                        android:text="发布动态"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/img_arrow"
+                        android:src="@drawable/ic_arrow_right" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:padding="16dp">
 
                     <TextView
-                        android:id="@+id/tv_user_exper"
-                        style="@style/UserZoneNumStyle" />
+                        android:id="@+id/tag_tv_message"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="5dp"
+                        android:text="消息中心"
+                        android:textSize="16sp" />
 
-                </LinearLayout>
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/img_arrow"
+                        android:src="@drawable/ic_arrow_right" />
 
-            </LinearLayout>
+                </RelativeLayout>
 
-        </android.support.v7.widget.LinearLayoutCompat>
-
-        <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            app:divider="@drawable/bg_divider_gray_vertical"
-            app:showDividers="beginning|end">
-
-            <RelativeLayout
-                android:id="@+id/rl_account"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/tag_tv_acconut"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/rl_setting"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="我的账号"
-                    android:textSize="16sp" />
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:padding="16dp">
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/img_arrow"
-                    android:src="@drawable/ic_arrow_right" />
+                    <TextView
+                        android:id="@+id/tag_tv_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="5dp"
+                        android:text="通用设置"
+                        android:textSize="16sp" />
 
-            </RelativeLayout>
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/img_arrow"
+                        android:src="@drawable/ic_arrow_right" />
 
-        </android.support.v7.widget.LinearLayoutCompat>
+                </RelativeLayout>
 
-        <android.support.v7.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            app:divider="@drawable/bg_divider_gray_vertical"
-            app:showDividers="beginning|middle|end">
-
-            <RelativeLayout
-                android:id="@+id/rl_publish"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/tag_tv_publish"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/rl_about"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="发布动态"
-                    android:textSize="16sp" />
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:padding="16dp">
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/img_arrow"
-                    android:src="@drawable/ic_arrow_right" />
+                    <TextView
+                        android:id="@+id/tag_tv_about"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="5dp"
+                        android:text="关于本软件"
+                        android:textSize="16sp" />
 
-            </RelativeLayout>
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/img_arrow"
+                        android:src="@drawable/ic_arrow_right" />
 
-            <RelativeLayout
-                android:id="@+id/rl_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:padding="16dp">
+                </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tag_tv_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawablePadding="5dp"
-                    android:text="消息中心"
-                    android:textSize="16sp" />
+            </android.support.v7.widget.LinearLayoutCompat>
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/img_arrow"
-                    android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
 
-            </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-            <RelativeLayout
-                android:id="@+id/rl_setting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/tag_tv_setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawablePadding="5dp"
-                    android:text="通用设置"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/img_arrow"
-                    android:src="@drawable/ic_arrow_right" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_about"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/tag_tv_about"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawablePadding="5dp"
-                    android:text="关于本软件"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/img_arrow"
-                    android:src="@drawable/ic_arrow_right" />
-
-            </RelativeLayout>
-
-        </android.support.v7.widget.LinearLayoutCompat>
-
-    </LinearLayout>
-
-</android.support.v4.widget.NestedScrollView>
+</layout>

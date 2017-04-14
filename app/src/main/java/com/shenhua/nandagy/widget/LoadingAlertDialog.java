@@ -17,14 +17,12 @@ public class LoadingAlertDialog {
     private AlertDialog alertDialog;
 
     public static LoadingAlertDialog getInstance(Context context) {
-        if (sInatance == null) {
-            synchronized (LoadingAlertDialog.class) {
-                if (sInatance == null) {
-                    sInatance = new LoadingAlertDialog(context);
-                }
+        synchronized (LoadingAlertDialog.class) {
+            if (sInatance == null) {
+                sInatance = new LoadingAlertDialog(context);
             }
+            return sInatance;
         }
-        return sInatance;
     }
 
     private LoadingAlertDialog(Context context) {
@@ -45,6 +43,7 @@ public class LoadingAlertDialog {
     public void dissmissLoadDialog() {
         if (alertDialog != null && alertDialog.isShowing()) {
             alertDialog.dismiss();
+            sInatance = null;
         }
     }
 }

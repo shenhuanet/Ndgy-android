@@ -1,5 +1,6 @@
 package com.shenhua.nandagy.ui.activity.me;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.utils.ConvertUtils;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
+import com.shenhua.nandagy.databinding.ActivityUserZoneEditBinding;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -33,7 +35,6 @@ import cn.qqtheme.framework.picker.OptionPicker;
  * Created by Shenhua on 9/4/2016.
  */
 @ActivityFragmentInject(
-        contentViewId = R.layout.activity_user_zone_edit,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
         toolbarTitle = R.string.toolbar_title_user_zone_edit,
@@ -57,70 +58,53 @@ public class UserZoneEditActivity extends BaseActivity {
     TextView mQualTv;
     @BindView(R.id.et_edit_zone_school)
     EditText mSchoolEt;
+    public static final int RESULT_EDIT = 100;
     private UserZone userZone;
+    private String zoneObjId;
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
+        ActivityUserZoneEditBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_user_zone_edit);
+        initToolbar();
         ButterKnife.bind(this);
+        zoneObjId = getIntent().getStringExtra("zoneObjId");
         userZone = (UserZone) getIntent().getSerializableExtra("userZoneInfo");
-        mNameEt.setText(userZone.getName());
-        mSignEt.setText(userZone.getSign());
-        mBrithTv.setText(userZone.getBirth());
-        mLocateTv.setText(userZone.getLocate());
-        mLoveTv.setText(userZone.getLove());
-        mDepartTv.setText(userZone.getDepart());
-        mQualTv.setText(userZone.getQual());
-        mSchoolEt.setText(userZone.getHighSchool());
+        binding.setData(userZone);
     }
 
-    @OnClick({R.id.layout_edit_zone_name, R.id.layout_edit_zone_sign, R.id.layout_edit_zone_brith,
-            R.id.layout_edit_zone_locate, R.id.layout_edit_zone_love,
-            R.id.layout_edit_zone_depart, R.id.layout_edit_zone_qual, R.id.btn_edit_save,
-            R.id.layout_edit_zone_rootview})
+    @OnClick({R.id.layout_edit_zone_brith, R.id.layout_edit_zone_locate, R.id.layout_edit_zone_love,
+            R.id.layout_edit_zone_depart, R.id.layout_edit_zone_qual, R.id.btn_edit_save})
     void clicks(View v) {
+        hideKeyboard();
         String[] items;
         switch (v.getId()) {
-            case R.id.layout_edit_zone_name:
-                hideKeyboard();
-                break;
-            case R.id.layout_edit_zone_sign:
-                hideKeyboard();
-                break;
             case R.id.layout_edit_zone_brith:
-                hideKeyboard();
                 selectBirth();
                 break;
             case R.id.layout_edit_zone_locate:
-                hideKeyboard();
                 selectLocate();
                 break;
             case R.id.layout_edit_zone_love:
-                hideKeyboard();
                 items = getResources().getStringArray(R.array.dialog_choice_love_items);
                 showSelectStateDialog(items, mLoveTv);
                 break;
             case R.id.layout_edit_zone_depart:
-                hideKeyboard();
                 items = getResources().getStringArray(R.array.dialog_choice_depart_items);
                 showSelectStateDialog(items, mDepartTv);
                 break;
             case R.id.layout_edit_zone_qual:
-                hideKeyboard();
                 items = getResources().getStringArray(R.array.dialog_choice_qual_items);
                 showSelectStateDialog(items, mQualTv);
                 break;
             case R.id.btn_edit_save:
                 doUpdateInfo();
                 break;
-            case R.id.layout_edit_zone_rootview:
-                hideKeyboard();
-                break;
         }
     }
 
     private void selectBirth() {
         DatePicker picker = new DatePicker(this, DatePicker.YEAR_MONTH_DAY);
-        picker.setRangeStart(1980, 1, 1);
+        picker.setRangeStart(1990, 1, 1);
         picker.setRangeEnd(2020, 1, 1);
         picker.setOnDatePickListener((DatePicker.OnYearMonthDayPickListener) (year, month, day) ->
                 mBrithTv.setText(year + "-" + month + "-" + day));
@@ -166,15 +150,16 @@ public class UserZoneEditActivity extends BaseActivity {
         userZone.setDepart(mDepartTv.getText().toString());
         userZone.setQual(mQualTv.getText().toString());
         userZone.setHighSchool(mSchoolEt.getText().toString());
-        userZone.update(userZone.getObjectId(), new UpdateListener() {
+        userZone.update(zoneObjId, new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 LoadingAlertDialog.getInstance(UserZoneEditActivity.this).dissmissLoadDialog();
-                if (e != null) {
+                if (e == null) {
                     toast("数据更新成功！");
                 } else {
                     toast("数据更新失败：" + e.getMessage());
                 }
+                setResult(RESULT_EDIT);
             }
         });
     }

@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.shenhua.nandagy.App;
 import com.shenhua.nandagy.R;
 
 import butterknife.BindView;
@@ -30,17 +31,19 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
 
-        AsyncCustomEndpoints ace = new AsyncCustomEndpoints();
-        ace.callEndpoint("AD_Control", new CloudCodeListener() {
-            @Override
-            public void done(Object o, BmobException e) {
-                if (e==null){
-                    Log.d(TAG, "done: 云端回调结果："+o.toString());
-                }else {
-                    Log.d(TAG, "done: 云端回调结果：e is null");
+        if (!App.DEBUG_MODE) {
+            AsyncCustomEndpoints ace = new AsyncCustomEndpoints();
+            ace.callEndpoint("AD_Control", new CloudCodeListener() {
+                @Override
+                public void done(Object o, BmobException e) {
+                    if (e == null) {
+                        Log.d(TAG, "done: 云端回调结果：" + o.toString());
+                    } else {
+                        Log.d(TAG, "done: 云端回调结果：e is null");
+                    }
                 }
-            }
-        });
+            });
+        }
 
         mShenhuaLogo.postDelayed(this::navTo, 3000);
     }

@@ -1,8 +1,10 @@
 package com.shenhua.nandagy.ui.activity.me;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.AppBarLayout;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,28 +13,38 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.widget.BaseShareView;
-import com.shenhua.commonlibs.widget.CircleImageView;
+import com.shenhua.lib.boxing.impl.Boxing;
+import com.shenhua.lib.boxing.impl.BoxingCrop;
+import com.shenhua.lib.boxing.impl.BoxingUcrop;
+import com.shenhua.lib.boxing.loader.BoxingGlideLoader;
+import com.shenhua.lib.boxing.loader.BoxingMediaLoader;
+import com.shenhua.lib.boxing.model.config.BoxingConfig;
+import com.shenhua.lib.boxing.model.config.BoxingCropOption;
+import com.shenhua.lib.boxing.model.entity.BaseMedia;
+import com.shenhua.lib.boxing.ui.BoxingActivity;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
+import com.shenhua.nandagy.databinding.ActivityUserZoneBinding;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
+import com.shenhua.nandagy.utils.bmobutils.UserZoneUtils;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
-import com.shenhua.photopicker.Crop;
 
 import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
@@ -44,7 +56,6 @@ import cn.bmob.v3.listener.UploadFileListener;
  * Created by Shenhua on 9/3/2016.
  */
 @ActivityFragmentInject(
-        contentViewId = R.layout.activity_user_zone,
         toolbarId = R.id.common_toolbar,
         toolbarHomeAsUp = true,
         toolbarTitle = R.string.toolbar_title_user_zone,
@@ -56,73 +67,101 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
     AppBarLayout mAppBarLayout;
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
-    @BindView(R.id.iv_zone_photo)
-    CircleImageView mZonePhotoIv;
-    @BindView(R.id.iv_zone_gender)
-    ImageView mZoneGenderIv;
     @BindView(R.id.tv_zone_id)
     TextView mZoneIdTv;
     @BindView(R.id.tv_zone_exper)
     TextView mZoneExperTv;
     @BindView(R.id.tv_zone_mi)
     TextView mZoneMiTv;
-    @BindView(R.id.tv_zone_dynamic_str)
-    TextView mDynamicStrTv;
-    @BindView(R.id.tv_zone_name)
-    TextView mNameTv;
-    @BindView(R.id.tv_zone_sign)
-    TextView mSignTv;
-    @BindView(R.id.tv_zone_birth)
-    TextView mBirthTv;
-    @BindView(R.id.tv_zone_locate)
-    TextView mLoctateTv;
-    @BindView(R.id.tv_zone_love)
-    TextView mLoveTv;
-    @BindView(R.id.tv_zone_depart)
-    TextView mDepartTv;
-    @BindView(R.id.tv_zone_qual)
-    TextView mQuelTv;
-    @BindView(R.id.tv_zone_highSchool)
-    TextView mHighSchoolTv;
     @BindView(R.id.bpv)
     BaseShareView mBpv;
     private static final String TAG = "UserZoneActivity";
-    private UserZone userZoneBean;
+    public static final int REQUEST_EDIT = 1;
+    private static final int REQUEST_TAKE = 12;
+    private static final int REQUEST_SELECT = 13;
     private boolean accessFromMe;
     private String zoneObjectId;
     private String finalPhotoPath;
-    private String cacheDir;
     private String cacheHou = ".nui";
+    private ActivityUserZoneBinding binding;
+    private Serializable userZoneBean;
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_user_zone);
+        initToolbar();
         ButterKnife.bind(this);
-        accessFromMe = getIntent().getBooleanExtra("isMySelf", false);
-        // 通过自己访问
-        if (accessFromMe) {
-            setPhotoView(getIntent().getStringExtra("photo"), getIntent().getBooleanExtra("sex", false));
-            initSelectPhotoView();
-            cacheDir = getCacheDir().getPath();
-        }
-
+        accessFromMe = getIntent().getBooleanExtra("isMyself", false);
+        zoneObjectId = getIntent().getStringExtra("zoneObjectId");
+        mZoneIdTv.setText(String.format(getString(R.string.userzone_text_objid), zoneObjectId));
         mAppBarLayout.addOnOffsetChangedListener(this);
+        updataViews(false);
+        initSelectPhotoView();
+    }
+
+    private void updataViews(boolean upgrade) {
+        if (upgrade) {
+            BmobQuery<UserZone> query = new BmobQuery<>();
+            query.getObject(zoneObjectId, new QueryListener<UserZone>() {
+                @Override
+                public void done(UserZone userZone, BmobException e) {
+                    if (e == null) {
+                        binding.setUserZone(userZone);
+                        if (accessFromMe) {
+                            userZoneBean = userZone;
+                            UserZoneUtils.getInstance().saveUserZone(UserZoneActivity.this, userZone);
+                        }
+                    } else {
+                        toast("用户主页资料获取失败：" + e.getMessage());
+                    }
+                }
+            });
+        } else {// 自己访问，不要从网络请求
+            UserZone uz = (UserZone) getIntent().getExtras().getSerializable("userzone");
+            if (uz == null) return;
+            userZoneBean = uz;
+            binding.setUserZone(uz);
+        }
     }
 
     /**
      * 初始化头像点击事件
      */
     private void initSelectPhotoView() {
+        if (!accessFromMe) return;
+
+        BoxingMediaLoader.getInstance().init(new BoxingGlideLoader());
+        BoxingCrop.getInstance().init(new BoxingUcrop());
+
         mBpv.setInterpolator(new BounceInterpolator());
         View content = mBpv.getContentView();
         TextView take = (TextView) content.findViewById(R.id.tv_take_photo);
+
+
         take.setOnClickListener(v -> {
             mBpv.hide();
-            finalPhotoPath = Crop.takePhoto(UserZoneActivity.this, cacheDir, zoneObjectId + cacheHou);
+            // finalPhotoPath = Crop.takePhoto(UserZoneActivity.this, getCacheDir().getPath(), zoneObjectId + cacheHou);
         });
         TextView pick = (TextView) content.findViewById(R.id.tv_pick_photo);
         pick.setOnClickListener(v -> {
             mBpv.hide();
-            Crop.pickImage(UserZoneActivity.this);
+            String cachePath = Environment.getExternalStorageDirectory() + File.separator + "Pictures";
+            if (TextUtils.isEmpty(cachePath)) {
+                Toast.makeText(getApplicationContext(), "设备存储读取出错或暂不可用，请稍候重试", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Uri destUri = new Uri.Builder()
+                    .scheme("file")
+                    .appendPath(cachePath)
+                    .appendPath("123456.jpg")
+                    .build();
+            BoxingConfig singleCropImgConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG)
+                    .withCropOption(new BoxingCropOption(destUri)
+                            //设置最大尺寸
+                            .withMaxResultSize(400, 400)
+                            //设置比例为1:1
+                            .aspectRatio(1f, 1f));
+            Boxing.of(singleCropImgConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT);
         });
         TextView cancel = (TextView) content.findViewById(R.id.tv_cancel);
         cancel.setOnClickListener(v -> mBpv.hide());
@@ -135,75 +174,6 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
         } else {
             // TODO: 3/30/2017  showPhotoDetail();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUpTopView();
-    }
-
-    /**
-     * 顶部视图的更新
-     */
-    private void setUpTopView() {
-        zoneObjectId = getIntent().getStringExtra("zoneObjectId");
-
-        if (zoneObjectId == null) {
-            Log.d(TAG, "setUpTopView: 顶部视图的更新失败：zoneObjectId 为空");
-        }
-
-        BmobQuery<UserZone> bmobQuery = new BmobQuery<>();
-        bmobQuery.getObject(zoneObjectId, new QueryListener<UserZone>() {
-            @Override
-            public void done(UserZone userZone, BmobException e) {
-                if (e == null) {
-                    userZoneBean = userZone;
-
-                    if (!accessFromMe) {
-                        setPhotoView(userZone.getPhotoUrl(), userZone.getSex());
-                    }
-
-                    mZoneIdTv.setText(String.format(getString(R.string.user_zone_text_id), userZone.getObjectId()));
-                    mZoneExperTv.setText(String.format(getString(R.string.user_zone_text_exper), userZone.getExper()));
-                    mZoneMiTv.setText(String.format(getString(R.string.user_zone_text_mi), userZone.getMi()));
-                    resetText(mDynamicStrTv, userZone.getDynamicStr());
-                    resetText(mNameTv, userZone.getName());
-                    resetText(mSignTv, userZone.getSign());
-                    resetText(mBirthTv, userZone.getBirth());
-                    resetText(mLoctateTv, userZone.getLocate());
-                    resetText(mLoveTv, userZone.getLove());
-                    resetText(mDepartTv, userZone.getDepart());
-                    resetText(mQuelTv, userZone.getQual());
-                    resetText(mHighSchoolTv, userZone.getHighSchool());
-                } else {
-                    toast("用户主页资料获取失败：" + e.getMessage());
-                }
-            }
-        });
-    }
-
-    private void resetText(TextView textView, String str) {
-        if (!TextUtils.isEmpty(str)) textView.setText(str);
-    }
-
-    /**
-     * 设置头像和性别标识
-     *
-     * @param imgUrl imgUrl
-     * @param sex    sex
-     */
-    private void setPhotoView(String imgUrl, boolean sex) {
-        if (TextUtils.isEmpty(imgUrl)) {
-            if (sex) {
-                Glide.with(this).load(R.drawable.img_photo_woman).centerCrop().into(mZonePhotoIv);
-            } else {
-                Glide.with(this).load(R.drawable.img_photo_man).centerCrop().into(mZonePhotoIv);
-            }
-        } else {
-            Glide.with(this).load(imgUrl).centerCrop().into(mZonePhotoIv);
-        }
-        mZoneGenderIv.setImageResource(sex ? R.drawable.ic_user_gender_female : R.drawable.ic_user_gender_male);
     }
 
     @Override
@@ -221,11 +191,16 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_edit) {
+            if (userZoneBean == null) {
+                toast("当前无法编辑个人信息，请稍候重试");
+                return true;
+            }
             Intent intent = new Intent(this, UserZoneEditActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("userZoneInfo", userZoneBean);
+            intent.putExtra("zoneObjId", zoneObjectId);
             intent.putExtras(bundle);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_EDIT);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -245,26 +220,19 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == Crop.REQUEST_PICK) {
-                new Crop(data.getData()).fileOutDir(cacheDir).fileOutName(zoneObjectId + cacheHou)
-                        .setCropType(true).start(this);
+        if (requestCode == REQUEST_EDIT && resultCode == UserZoneEditActivity.RESULT_EDIT) {
+            // 刷新界面
+            Log.d(TAG, "onActivityResult: 编辑了");
+            updataViews(true);
+        }
+        if (requestCode == REQUEST_SELECT && resultCode == RESULT_OK) {
+            ArrayList<BaseMedia> medias = Boxing.getResult(data);
+            if (medias == null) {
+                Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
+                return;
             }
-            if (requestCode == Crop.REQUEST_TAKE) {
-                new Crop(Uri.fromFile(new File(finalPhotoPath)))
-                        .fileOutDir(cacheDir).fileOutName(zoneObjectId + cacheHou)
-                        .setCropType(true).start(this);
-            }
-            if (requestCode == Crop.REQUEST_CROP) {
-                String phopath = Crop.getOutput(data).getPath();
-                upLoadPhoto(phopath);
-                Glide.with(this).load(phopath).centerCrop().skipMemoryCache(true)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .into(mZonePhotoIv);
-            }
-            if (requestCode == Crop.RESULT_ERROR) {
-                toast("裁剪照片发生错误");
-            }
+            Toast.makeText(this, "--" + medias.size(), Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "onActivityResult: " + medias.get(0).getPath());// /data/data/com.shenhua.pictruechoice/cache/boxing/123.jpg
         }
     }
 
@@ -283,9 +251,9 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
                 LoadingAlertDialog.getInstance(UserZoneActivity.this).dissmissLoadDialog();
                 if (e == null) {
                     final String result = bmobFile.getFileUrl();
-                    MyUser user = UserUtils.getInstance().getUserInfo(UserZoneActivity.this);
+                    MyUser user = BmobUser.getCurrentUser(MyUser.class);
                     user.setUrl_photo(result);
-                    user.update(user.getUserId(), new UpdateListener() {
+                    user.update(user.getObjectId(), new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
                             if (e != null) {

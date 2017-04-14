@@ -7,6 +7,7 @@
     <string name="common_text_man">男</string>
     <string name="common_text_woman">女</string>
     <string name="common_single_num_format">%d</string>
+    <string name="common_text_action_save">保存</string>
 
     <!--CET-->
     <string name="cet_string_sum">总分： %s</string>
@@ -111,5 +112,32 @@
     <string name="grade_score_content_listen">听力:%s</string>
     <string name="grade_score_content_read">阅读:%s</string>
     <string name="grade_score_content_text">写作:%s</string>
+
+    <string name="user_fragment_nick_noset">未设置昵称</string>
+    <string name="user_fragment_nick_nologin">未登录</string>
+    <string name="user_fragment_user_levd">-</string>
+    <string name="userzone_text_dynamicStr">（无）</string>
+    <string name="userzone_text_objid">ID:%s</string>
+    <string name="userzone_text_exper">经验值:%d</string>
+    <string name="userzone_text_mi">米粒数:%d</string>
+    <string name="userzone_string_none">未填写</string>
+    <string name="userzone_string_recent">最近一条动态</string>
+    <string name="userzone_string_name">真实姓名</string>
+    <string name="userzone_string_sign">个性签名</string>
+    <string name="userzone_string_birth">生日</string>
+    <string name="userzone_string_locate">家乡</string>
+    <string name="userzone_string_love">恋爱状态</string>
+    <string name="userzone_string_depart">系别</string>
+    <string name="userzone_string_qual">学历</string>
+    <string name="userzone_string_school">毕业中学</string>
+    <string name="userzone_edit_string_name">真实姓名</string>
+    <string name="userzone_edit_string_sign">个性签名</string>
+    <string name="userzone_edit_string_birth">生\u3000\u3000日</string>
+    <string name="userzone_edit_string_locate">家\u3000\u3000乡</string>
+    <string name="userzone_edit_string_love">恋爱状态</string>
+    <string name="userzone_edit_string_depart">系\u3000\u3000别</string>
+    <string name="userzone_edit_string_qual">学\u3000\u3000历</string>
+    <string name="userzone_edit_string_school">毕业中学</string>
+
 
 </resources>

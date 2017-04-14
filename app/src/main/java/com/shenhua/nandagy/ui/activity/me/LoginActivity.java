@@ -38,6 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -86,7 +87,6 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         mTencent = Tencent.createInstance(ShareUtils.QQ_APPID, this);
-//        Bmob.initialize(this, BmobService.APP_KEY);
         ButterKnife.bind(this);
         mSexRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonId = group.getCheckedRadioButtonId();
@@ -213,19 +213,16 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void doUIThread() {
-                MyUser user = new MyUser();
-                user.setUsername(username);
-                user.setPassword(password);
-                user.login(new SaveListener<MyUser>() {
+                BmobUser.loginByAccount(username, password, new LogInListener<MyUser>() {
 
                     @Override
-                    public void done(MyUser bmobUser, BmobException e) {
+                    public void done(MyUser user, BmobException e) {
                         LoadingAlertDialog.getInstance(LoginActivity.this).dissmissLoadDialog();
                         if (e == null) {
                             toast(R.string.login_info_singin_success);
-                            onLoginSuccess();
-                            // 通过BmobUser user = BmobUser.getCurrentUser()获取登录成功后的本地用户信息
-                            // 如果是自定义用户对象MyUser，可通过MyUser user = BmobUser.getCurrentUser(MyUser.class)获取自定义用户信息
+                            UserUtils.getInstance().saveUser(LoginActivity.this, user);
+                            setResult(Constants.Code.RECULT_CODE_LOGIN_SUCCESS);
+                            LoginActivity.this.finish();
                         } else {
                             if (e.getErrorCode() == 101) {
                                 toast(R.string.login_info_singin_failed);
@@ -237,29 +234,6 @@ public class LoginActivity extends BaseActivity {
                 });
             }
         }, 2000, TimeUnit.MILLISECONDS);
-    }
-
-    /**
-     * 登录成功时回调
-     */
-    private void onLoginSuccess() {
-        MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
-        MyUser user = new MyUser();
-        user.setUserId(myUser.getObjectId());// set current ObjectId to userId
-        user.setUserName(myUser.getUsername());
-        user.setPhone(myUser.getMobilePhoneNumber());
-        user.seteMail(myUser.getEmail());
-        user.setNick(myUser.getNick());
-        user.setName_num(myUser.getName_num());
-        user.setName(myUser.getName());
-        user.setName_id(myUser.getName_id());
-        user.setInfo(myUser.getInfo());
-        user.setUrl_photo(myUser.getUrl_photo());
-        user.setSex(myUser.getSex());
-        user.setUserZoneObjID(myUser.getUserZoneObjID());
-        UserUtils.getInstance().setUser(this, user);
-        setResult(Constants.Code.RECULT_CODE_LOGIN_SUCCESS);
-        this.finish();
     }
 
     /**

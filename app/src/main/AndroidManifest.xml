@@ -78,6 +78,9 @@
         <activity
             android:name=".ui.activity.jiaowu.BindingActivity"
             android:launchMode="singleTask" />
+
+        <activity android:name=".ui.activity.ImageViewerActivity" />
+
         <!-- tencent -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -121,7 +124,7 @@
         <!-- 用于进程保活 -->
         <service
             android:name="cn.bmob.push.lib.service.PushNotifyService"
-            android:process=":bmobpush"></service>
+            android:process=":bmobpush" />
 
         <receiver android:name="cn.bmob.push.PushReceiver">
             <intent-filter>
@@ -153,6 +156,33 @@
             </intent-filter>
         </receiver>
 
+        <!--Boxing-->
+        <activity
+            android:name="com.shenhua.lib.boxing.ui.BoxingActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Boxing.AppTheme.NoActionBar" />
+
+        <activity
+            android:name="com.shenhua.lib.boxing.ui.BoxingViewActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Boxing.AppTheme.NoActionBar" />
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Boxing.AppTheme.NoActionBar" />
+        <!--Android N 版本使用相机-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.file.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/boxing_file_provider" />
+
+        </provider>
     </application>
 
 </manifest>

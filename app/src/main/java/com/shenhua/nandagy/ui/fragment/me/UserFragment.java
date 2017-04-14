@@ -1,33 +1,31 @@
 package com.shenhua.nandagy.ui.fragment.me;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
-import com.shenhua.commonlibs.base.BaseFragment;
 import com.shenhua.commonlibs.handler.BaseThreadHandler;
-import com.shenhua.commonlibs.handler.CommonRunnable;
 import com.shenhua.commonlibs.handler.CommonUiRunnable;
-import com.shenhua.commonlibs.utils.BusBooleanEvent;
 import com.shenhua.commonlibs.utils.BusProvider;
+import com.shenhua.commonlibs.utils.NetworkUtils;
+import com.shenhua.commonlibs.widget.CircleImageView;
 import com.shenhua.floatingtextview.Animator.TranslateFloatingAnimator;
 import com.shenhua.floatingtextview.base.FloatingText;
 import com.shenhua.nandagy.R;
+import com.shenhua.nandagy.base.BaseDefaultFragment;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
 import com.shenhua.nandagy.callback.NewMessageEventBus;
+import com.shenhua.nandagy.databinding.FragUserBinding;
 import com.shenhua.nandagy.service.Constants;
-import com.shenhua.nandagy.service.ExceptionMessage;
 import com.shenhua.nandagy.ui.activity.me.AboutActivity;
 import com.shenhua.nandagy.ui.activity.me.LoginActivity;
 import com.shenhua.nandagy.ui.activity.me.MessageActivity;
@@ -39,6 +37,7 @@ import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 import com.shenhua.nandagy.utils.bmobutils.UserZoneUtils;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
 import com.squareup.otto.Subscribe;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.concurrent.TimeUnit;
 
@@ -46,6 +45,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -55,23 +55,14 @@ import cn.bmob.v3.listener.UpdateListener;
  * 用户
  * Created by Shenhua on 8/28/2016.
  */
-@ActivityFragmentInject(
-        contentViewId = R.layout.frag_user,
-        useBusEvent = true
-)
-public class UserFragment extends BaseFragment {
+public class UserFragment extends BaseDefaultFragment {
 
     private static final String TAG = "UserFragment";
+    public static final int EVENT_TYPE_MESSAGE = 1;
+    public static final int EVENT_TYPE_SETTING = 2;
+    public static final int EVENT_TYPE_ABOUT = 3;
     @BindView(R.id.iv_user_photo)
-    ImageView mUserPhotoIv;
-    @BindView(R.id.tv_user_name)
-    TextView mUserNameTv;
-    @BindView(R.id.tv_user_level)
-    TextView mLevelTv;
-    @BindView(R.id.tv_user_dynamic)
-    TextView mDynamicTv;
-    @BindView(R.id.tv_user_mi)
-    TextView mMiTv;
+    CircleImageView mPhotoImageView;
     @BindView(R.id.tv_user_exper)
     TextView mExperTv;
     @BindView(R.id.rl_account)
@@ -82,81 +73,76 @@ public class UserFragment extends BaseFragment {
     TextView mSettingTag;
     @BindView(R.id.tag_tv_about)
     TextView mAboutTag;
-    public static final int EVENT_TYPE_MESSAGE = 1;
-    public static final int EVENT_TYPE_SETTING = 2;
-    public static final int EVENT_TYPE_ABOUT = 3;
+    private View rootView;
+    private FragUserBinding binding;
 
     @Override
-    public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState, View rootView) {
-        ButterKnife.bind(this, rootView);
-        // 红点提示
-        mMessageTag.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.dot_new_red, 0);
-        mAboutTag.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.dot_new_red, 0);
-
-        updateUserView();
+    public void onStart() {
+        super.onStart();
+        BusProvider.getInstance().register(this);
     }
 
-    private void updateUserView() {
-        BusProvider.getInstance().post(new BusBooleanEvent(true));
-        UserUtils instance = UserUtils.getInstance();
-        if (instance.isLogin(getContext())) {// 已登录
-            MyUser user = instance.getUserInfo(getContext());
-            String imgUrl = user.getUrl_photo();
-            boolean sex = user.getSex();
-            setPhotoView(imgUrl, sex);
-            String n = user.getNick();
-            mUserNameTv.setText(TextUtils.isEmpty(n) ? "未设置昵称" : n);
-            BmobQuery<UserZone> zone = new BmobQuery<>();
-            if (TextUtils.isEmpty(user.getUserZoneObjID())) {
-                mLevelTv.setText("-");
-                mDynamicTv.setText("-");
-                mMiTv.setText("-");
-                mExperTv.setText("-");
-                BusProvider.getInstance().post(new BusBooleanEvent(false));
-                return;
-            }
-            zone.getObject(user.getUserZoneObjID(), new QueryListener<UserZone>() {
-                @Override
-                public void done(UserZone zone, BmobException e) {
-                    if (e == null) {
-                        mLevelTv.setText(String.format(getString(R.string.common_single_num_format), zone.getLevel()));
-                        mDynamicTv.setText(String.format(getString(R.string.common_single_num_format), zone.getDynamic()));
-                        mMiTv.setText(String.format(getString(R.string.common_single_num_format), zone.getMi()));
-                        mExperTv.setText(String.format(getString(R.string.common_single_num_format), zone.getExper()));
-                    } else {
-                        toast("个人主页信息获取失败：" + e.getMessage());
-                        mLevelTv.setText("0");
-                        mDynamicTv.setText("0");
-                        mMiTv.setText("0");
-                        mExperTv.setText("0");
-                    }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (rootView == null) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.frag_user, container, false);
+            rootView = binding.getRoot();
+            ButterKnife.bind(this, rootView);
+            updateViews(NetworkUtils.isConnectedNet(getContext()));
+            // 红点提示
+            mMessageTag.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.dot_new_red, 0);
+            mAboutTag.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.dot_new_red, 0);
+        }
+        ViewGroup group = (ViewGroup) rootView.getParent();
+        if (group != null)
+            group.removeView(rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        BusProvider.getInstance().unregister(this);
+    }
+
+    /**
+     * 更新显示信息
+     *
+     * @param upgrade 是否从网络读取数据
+     */
+    public void updateViews(boolean upgrade) {
+        MyUser user = BmobUser.getCurrentUser(MyUser.class);
+        if (user != null) {
+            binding.setUser(user);
+//            Glide.with(getContext()).load(user.getUrl_photo())
+//                    .placeholder(getDefaultPhoto(user.getSex()))
+//                    .error(getDefaultPhoto(user.getSex()))
+//                    .centerCrop()
+//                    .into(mPhotoImageView);
+            if (UserUtils.getInstance().isCreateZone()) {
+                if (upgrade) {
+                    String zoneObjId = UserUtils.getInstance().getUserzoneObjId(getContext());
+                    BmobQuery<UserZone> query = new BmobQuery<>();
+                    query.getObject(zoneObjId, new QueryListener<UserZone>() {
+                        @Override
+                        public void done(UserZone zone, BmobException e) {
+                            binding.setUserZone(zone);
+                            UserZoneUtils.getInstance().saveUserZone(getContext(), zone);
+                        }
+                    });
+                } else {
+                    binding.setUserZone(UserZoneUtils.getInstance().getUserZone(getContext()));
                 }
-            });
-            BusProvider.getInstance().post(new BusBooleanEvent(false));
-        } else {
-            Glide.with(this).load("").centerCrop().placeholder(R.drawable.img_photo_man)
-                    .error(R.drawable.img_photo_man).into(mUserPhotoIv);
-            mUserNameTv.setText("未登录");
-            mLevelTv.setText("-");
-            mDynamicTv.setText("-");
-            mMiTv.setText("-");
-            mExperTv.setText("-");
-            BusProvider.getInstance().post(new BusBooleanEvent(false));
-        }
-    }
-
-    private void setPhotoView(String imgUrl, boolean sex) {
-        if (TextUtils.isEmpty(imgUrl)) {
-            if (sex) {
-                Glide.with(this).load(R.drawable.img_photo_woman).centerCrop().into(mUserPhotoIv);
-            } else {
-                Glide.with(this).load(R.drawable.img_photo_man).centerCrop().into(mUserPhotoIv);
             }
-        } else {
-            Glide.with(this).load(imgUrl).centerCrop().into(mUserPhotoIv);
         }
     }
 
+    /**
+     * 红点提示
+     *
+     * @param event event
+     */
     @Subscribe
     public void onMessageReadChanged(NewMessageEventBus event) {
         switch (event.getType()) {
@@ -180,7 +166,7 @@ public class UserFragment extends BaseFragment {
      */
     private void navToUserAccount() {
         Intent intent;
-        if (UserUtils.getInstance().isLogin(getContext())) {
+        if (UserUtils.getInstance().isLogin()) {
             intent = new Intent(getContext(), UserAccountActivity.class);
             sceneTransitionTo(intent, Constants.Code.REQUEST_CODE_NAV_TO_USER_ACCOUNT, rootView, R.id.tag_tv_acconut, "title");
         } else {
@@ -190,82 +176,97 @@ public class UserFragment extends BaseFragment {
     }
 
     /**
-     * 进入用户主页
+     * 进入用户空间
      */
     private void navToUserZone() {
+        Intent intent = new Intent(getContext(), UserZoneActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("userzone", UserZoneUtils.getInstance().getUserZone(getContext()));
+        intent.putExtra("isMyself", true);
+        intent.putExtra("zoneObjectId", UserUtils.getInstance().getUserzoneObjId(getContext()));
+        intent.putExtras(bundle);
+        sceneTransitionTo(intent, Constants.Code.REQUEST_CODE_NAV_TO_USER_ZONE, rootView, R.id.iv_user_photo, "photos");
+    }
+
+    /**
+     * 进入用户空间之前
+     */
+    private void preNavToUserZone() {
         Intent intent;
-        if (UserUtils.getInstance().isLogin(getContext())) {
-            MyUser user = UserUtils.getInstance().getUserInfo(getContext());
-            if (TextUtils.isEmpty(user.getUserZoneObjID())) {
-                crateUserZone();
-            } else {
-                intent = new Intent(getContext(), UserZoneActivity.class);
-                intent.putExtra("isMySelf", true);
-                intent.putExtra("zoneObjectId", user.getUserZoneObjID());
-                intent.putExtra("userObjectId", user.getUserId());
-                intent.putExtra("photo", user.getUrl_photo());
-                intent.putExtra("sex", user.getSex());
-                sceneTransitionTo(intent, Constants.Code.REQUEST_CODE_NAV_TO_USER_ZONE, rootView, R.id.iv_user_photo, "photos");
-            }
-        } else {
+        if (!UserUtils.getInstance().isLogin()) {
             intent = new Intent(getContext(), LoginActivity.class);
             sceneTransitionTo(intent, Constants.Code.REQUEST_CODE_NAV_TO_LOGIN, rootView, R.id.tag_tv_acconut, "content");
+            return;
         }
+        if (!UserUtils.getInstance().isCreateZone()) {// 用户没有空间
+            crateUserZone();
+            return;
+        }
+        navToUserZone();
     }
 
     /**
      * 创建用户主页
      */
     private void crateUserZone() {
+        // Unable to add window -- token android.os.BinderProxy@3ce320e7 is not valid; is your activity running?
         LoadingAlertDialog.getInstance(getContext()).showLoadDialog("正在创建用户主页", true);
-        BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<String>() {
+        MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+        UserZone userZone = new UserZone();
+        userZone.setUser(myUser);
+        userZone.setLevel(0);
+        userZone.setDynamic(0);
+        userZone.setMi(0);
+        userZone.setExper(0);
+        userZone.save(new SaveListener<String>() {
             @Override
-            public String doChildThread() {
-                UserZone userZone = new UserZone();
-                final MyUser user = UserUtils.getInstance().getUserInfo(getContext());
-                userZone.setLevel(0);
-                userZone.setDynamic(0);
-                userZone.setMi(0);
-                userZone.setExper(0);
-                userZone.setPhotoUrl(user.getUrl_photo());
-                userZone.setSex(user.getSex());
-                userZone.save(new SaveListener<String>() {
+            public void done(String objectId, BmobException e) {
+                LoadingAlertDialog.getInstance(getContext()).dissmissLoadDialog();
+                if (e == null) {
+                    // 创建一条空间数据后，查询该数据
+                    Log.d(TAG, "空间创建完毕: " + objectId);
+                    BmobQuery<UserZone> query = new BmobQuery<>();
+                    query.getObject(objectId, new QueryListener<UserZone>() {
+
+                        @Override
+                        public void done(UserZone object, BmobException e) {
+                            if (e == null) {
+                                saveUserZoneToUser(object, objectId);
+                            } else {
+                                toast("用户空间不存在，请重新创建");
+                                CrashReport.postCatchedException(e);
+                            }
+                        }
+                    });
+                } else {
+                    e.printStackTrace();
+                    toast("用户空间创建失败，请重试");
+                    CrashReport.postCatchedException(e);
+                }
+            }
+
+            /**
+             * 将zoneId写入User
+             * @param object userzone
+             * @param objectId id
+             */
+            private void saveUserZoneToUser(UserZone object, final String objectId) {
+                MyUser user = BmobUser.getCurrentUser(MyUser.class);
+                user.setUserZone(object);
+                user.update(user.getObjectId(), new UpdateListener() {
                     @Override
-                    public void done(String objectId, BmobException e) {
-                        LoadingAlertDialog.getInstance(getContext()).dissmissLoadDialog();
+                    public void done(BmobException e) {
                         if (e == null) {
-                            doUiThread(objectId);
+                            toast("用户空间创建成功");
+                            Log.d(TAG, "done: zoneObjectId;" + objectId);
+                            UserUtils.getInstance().updateUserInfo(getContext(), "zoneObjId", objectId);
+                            navToUserZone();
                         } else {
-                            doUiThread(ExceptionMessage.MSG_ERROR);
+                            toast("信息更新失败");
+                            CrashReport.postCatchedException(e);
                         }
                     }
                 });
-                return null;
-            }
-
-            @Override
-            public void doUiThread(String objectId) {
-                if (objectId.equals(ExceptionMessage.MSG_ERROR)) {
-                    toast("用户空间创建失败，请重试");
-                } else {
-                    MyUser user = new MyUser();
-                    user.setUserZoneObjID(objectId);
-                    user.update(UserUtils.getInstance().getUserInfo(getContext()).getUserId(), new UpdateListener() {
-                        @Override
-                        public void done(BmobException e) {
-
-                        }
-                    });
-                    UserUtils.getInstance().updateUserInfo(getContext(), "userzoneobjid", objectId);
-                    toast("用户空间创建成功");
-                    Intent intent = new Intent(getContext(), UserZoneActivity.class);
-                    intent.putExtra("isMySelf", true);
-                    intent.putExtra("zoneObjectId", objectId);
-                    intent.putExtra("userObjectId", user.getUserId());
-                    intent.putExtra("photo", user.getUrl_photo());
-                    intent.putExtra("sex", user.getSex());
-                    sceneTransitionTo(intent, 1, rootView, R.id.iv_user_photo, "photos");
-                }
             }
         });
     }
@@ -273,16 +274,16 @@ public class UserFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // 用户修改了某些资料，需要更新界面
+        // 用户可能修改了某些资料，需要更新界面
         if (requestCode == Constants.Code.REQUEST_CODE_NAV_TO_USER_ZONE || requestCode == Constants.Code.REQUEST_CODE_NAV_TO_USER_ACCOUNT) {
-            updateUserView();
+            updateViews(true);
         }
         // 用户登录成功
         if (requestCode == Constants.Code.REQUEST_CODE_NAV_TO_LOGIN && resultCode == Constants.Code.RECULT_CODE_LOGIN_SUCCESS) {
-            updateUserView();
-            MyUser myUser = UserUtils.getInstance().getUser(getContext());
-            if (!TextUtils.isEmpty(myUser.getUserZoneObjID())) { // 用户有空间
-                UserZoneUtils.getInstance().updateZoneStatis(myUser.getUserZoneObjID(), "exper", 2);
+            updateViews(false);
+            if (UserUtils.getInstance().isCreateZone()) {// 用户有空间，增加经验值
+                UserZone zone = BmobUser.getCurrentUser(MyUser.class).getUserZone();
+                UserZoneUtils.getInstance().updateZoneStatis(zone.getObjectId(), "exper", 2);
                 BaseThreadHandler.getInstance().sendRunnable(new CommonUiRunnable<String>("个人经验+2") {
                     @Override
                     public void doUIThread() {
@@ -296,10 +297,15 @@ public class UserFragment extends BaseFragment {
                                 .build();
                         floatingText.attach2Window();
                         floatingText.startFloating(mExperTv);
+                        updateViews(true);
                     }
                 }, 2000, TimeUnit.MILLISECONDS);
             }
-
+        }
+        // 用户退出登录成功
+        if (requestCode == Constants.Code.REQUEST_CODE_NAV_TO_USER_ACCOUNT && resultCode == UserAccountActivity.LOGOUT_SUCCESS) {
+            binding.setUser(null);
+            binding.setUserZone(null);
         }
     }
 
@@ -308,7 +314,7 @@ public class UserFragment extends BaseFragment {
         Intent intent;
         switch (v.getId()) {
             case R.id.rl_user_zone:
-                navToUserZone();
+                preNavToUserZone();
                 break;
             case R.id.rl_account:
                 navToUserAccount();
@@ -330,6 +336,10 @@ public class UserFragment extends BaseFragment {
                 sceneTransitionTo(intent, Constants.Code.REQUEST_CODE_NAV_TO_ABOUT, rootView, R.id.tag_tv_about, "title");
                 break;
         }
+    }
+
+    private int getDefaultPhoto(boolean sex) {
+        return sex ? R.drawable.img_photo_woman : R.drawable.img_photo_man;
     }
 
 }

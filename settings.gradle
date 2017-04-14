@@ -1,1 +1,1 @@
-include ':app', 'library:FloatingTextView', ':library:PhotoPicker', ':library:WheelPicker'
+include ':app', 'library:FloatingTextView', ':library:Boxing', ':library:WheelPicker'

@@ -4,18 +4,12 @@ import android.content.Context;
 
 import com.shenhua.commonlibs.handler.BaseThreadHandler;
 import com.shenhua.commonlibs.handler.CommonRunnable;
-import com.shenhua.commonlibs.utils.DESUtils;
-import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.bean.scorebean.ExamScore;
 import com.shenhua.nandagy.bean.scorebean.GradeScore;
 import com.shenhua.nandagy.model.ScoreModelImpl;
-import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 import com.shenhua.nandagy.view.ScoreView;
 
 import java.util.List;
-
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by Shenhua on 4/1/2017.
@@ -73,19 +67,19 @@ public class ScorePresenter {
                     case ScoreModelImpl.LOGIN_SUCCESS:
                         String[] numName = scoreModel.getmNumName();
                         scoreView.onLoginSuccess(numName);
-                        MyUser user = UserUtils.getInstance().getBinding(context);
-                        UserUtils.getInstance().updateUserInfo(context, "name", numName[1]);
-                        String objectId = user.getUserId();
-                        user.setName_num(DESUtils.getInstance().encrypt(numName[0]));
-                        user.setName(DESUtils.getInstance().encrypt(numName[1]));
-                        user.setName_id(user.getName_id());
-                        user.setInfo("update");
-                        user.update(objectId, new UpdateListener() {
-                            @Override
-                            public void done(BmobException e) {
-
-                            }
-                        });
+//                        MyUser user = UserUtils.getInstance().isBinding(context);
+//                        UserUtils.getInstance().updateUserInfo(context, "name", numName[1]);
+//                        String objectId = user.getUserId();
+//                        user.setName_num(DESUtils.getInstance().encrypt(numName[0]));
+//                        user.setName(DESUtils.getInstance().encrypt(numName[1]));
+//                        user.setName_id(user.getName_id());
+//                        user.setInfo("update");
+//                        user.update(objectId, new UpdateListener() {
+//                            @Override
+//                            public void done(BmobException e) {
+//
+//                            }
+//                        });
                         break;
                 }
             }
