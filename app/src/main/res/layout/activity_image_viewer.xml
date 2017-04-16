@@ -2,22 +2,19 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#515151"
-    android:orientation="vertical">
+    android:background="#111111">
 
-    <uk.co.senab.photoview.PhotoView
-        android:id="@+id/photo_view"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:visibility="invisible" />
+    <android.support.v7.widget.Toolbar
+        style="@style/CommonToolbar.Light"
+        android:background="#40000000">
 
-    <include layout="@layout/common_toolbar_title_left" />
+        <TextView style="@style/ToolbarTitle.Center" />
+
+    </android.support.v7.widget.Toolbar>
 
 </FrameLayout>

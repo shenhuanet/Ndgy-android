@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -38,8 +39,10 @@ import butterknife.ButterKnife;
  * Created by Shenhua on 8/28/2016.
  */
 @ActivityFragmentInject(contentViewId = R.layout.frag_home_collapsing)
-public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelectedListener {
+public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelectedListener, AppBarLayout.OnOffsetChangedListener {
 
+    @BindView(R.id.appbar)
+    AppBarLayout mAppbar;
     @BindView(R.id.tablayout)
     TabLayout mTabLayout;
     @BindView(R.id.img_banner)
@@ -58,7 +61,8 @@ public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelecte
         for (String t : titles) {
             mTabLayout.addTab(mTabLayout.newTab().setText(t));
         }
-        mTabLayout.setOnTabSelectedListener(this);
+        mTabLayout.addOnTabSelectedListener(this);
+        mAppbar.addOnOffsetChangedListener(this);
         onTabUpdate(0);
         toGetHomeImg();
     }
@@ -141,4 +145,9 @@ public class HomeFragment extends BaseFragment implements TabLayout.OnTabSelecte
         abs.setAdapter(adapter);
     }
 
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        // a 0~1
+        float a = (float) Math.abs(verticalOffset) / (float) appBarLayout.getTotalScrollRange();
+    }
 }

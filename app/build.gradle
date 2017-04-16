@@ -38,7 +38,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     // android
-    compile 'com.android.support:cardview-v7:25.1.0'
+    compile 'com.android.support:cardview-v7:25.3.1'
 
     // libraries
     compile project(':library:WheelPicker')
@@ -53,7 +53,6 @@ dependencies {
 
     // segmented
     compile 'info.hoang8f:android-segmented:1.0.6'
-    compile 'q.rorbin:VerticalTabLayout:1.2.2'
 
     // ButterKnife
     compile 'com.jakewharton:butterknife:8.5.1'
@@ -67,7 +66,6 @@ dependencies {
 
     // superRecyclerview
     compile 'com.malinskiy:superrecyclerview:1.1.4'
-
     // leakcanary
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'

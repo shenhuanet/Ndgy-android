@@ -54,9 +54,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="16dp"
                         android:contentDescription="@string/img_photo"
-                        app:error="@{user==null? @drawable/img_photo_man : (user.sex ? @drawable/img_photo_woman : @drawable/img_photo_man)}"
-                        app:imageUrl="@{user.url_photo}"
-                        app:placeHolder="@{user==null? @drawable/img_photo_man : (user.sex ? @drawable/img_photo_woman : @drawable/img_photo_man)}" />
+                        android:src="@drawable/img_photo_man" />
 
                     <TextView
                         android:id="@+id/tv_user_name"

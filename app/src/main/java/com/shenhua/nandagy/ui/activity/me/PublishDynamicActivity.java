@@ -3,8 +3,8 @@ package com.shenhua.nandagy.ui.activity.me;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
@@ -13,7 +13,6 @@ import com.shenhua.nandagy.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 发布动态界面
@@ -30,33 +29,36 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
 
     @BindView(R.id.et_publish)
     EditText mPublishEt;
-    @BindView(R.id.btn_publish)
-    Button mPublishBtn;
+    private boolean mCanPublish;
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        mPublishBtn.setEnabled(false);
-        mPublishBtn.setClickable(false);
+//        mPublishBtn.setEnabled(false);
+//        mPublishBtn.setClickable(false);
         mPublishEt.addTextChangedListener(this);
-        mPublishEt.setText("http://docs.bmob.cn/data/Android/g_errorcode/doc/index.html#RESTAPI错误码列表");
     }
 
-    @OnClick({R.id.rootview, R.id.btn_publish})
-    void clicks(View v) {
-        switch (v.getId()) {
-            case R.id.rootview:
-                hideKeyboard();
-                break;
-            case R.id.btn_publish:
-                hideKeyboard();
-                doPublish();
-                break;
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.action_menu_send).setEnabled(mCanPublish);
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.publish_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_menu_send) {
+            // TODO sth.
+            hideKeyboard();
+            toast("99999999999");
         }
-    }
-
-    private void doPublish() {
-        toast("发布消息：" + mPublishEt.getText().toString());
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -71,12 +73,7 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
 
     @Override
     public void afterTextChanged(Editable s) {
-        if (mPublishEt.getText().length() <= 0) {
-            mPublishBtn.setEnabled(false);
-            mPublishBtn.setClickable(false);
-        } else {
-            mPublishBtn.setEnabled(true);
-            mPublishBtn.setClickable(true);
-        }
+        mCanPublish = mPublishEt.getText().length() > 0;
+        invalidateOptionsMenu();
     }
 }

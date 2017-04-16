@@ -66,6 +66,7 @@
     <string name="toolbar_title_setting">通用设置</string>
     <string name="toolbar_title_user_account">我的账号</string>
     <string name="toolbar_title_user_zone">主页详情</string>
+    <string name="toolbar_title_user_zone_my">我的主页</string>
     <string name="toolbar_title_user_zone_edit">编辑空间</string>
     <string name="toolbar_title_more_circle">校内圈子</string>
     <string name="toolbar_title_more_community">社团百态</string>
@@ -138,6 +139,17 @@
     <string name="userzone_edit_string_depart">系\u3000\u3000别</string>
     <string name="userzone_edit_string_qual">学\u3000\u3000历</string>
     <string name="userzone_edit_string_school">毕业中学</string>
+
+    <string name="useraccount_string_account">账号信息</string>
+    <string name="useraccount_string_username">用户名</string>
+    <string name="useraccount_string_nick">昵称</string>
+    <string name="useraccount_string_reset_pwd">修改密码</string>
+    <string name="useraccount_string_mobile">手机</string>
+    <string name="useraccount_string_email">邮箱</string>
+    <string name="useraccount_string_jiaowu">教务信息</string>
+    <string name="useraccount_string_name">姓名</string>
+    <string name="useraccount_string_school_number">学号</string>
+    <string name="useraccount_string_logout">退出登录</string>
 
 
 </resources>

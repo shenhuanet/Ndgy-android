@@ -109,7 +109,7 @@ public class WebActivity extends BaseActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        MenuItem menuItem = menu.findItem(R.id.action_refresh);
+        MenuItem menuItem = menu.findItem(R.id.action_menu_refresh);
         if (isLoading) menuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_menu_stop));
         else menuItem.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_menu_refresh));
         return true;
@@ -117,7 +117,7 @@ public class WebActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_refresh) {
+        if (item.getItemId() == R.id.action_menu_refresh) {
             if (isLoading) mWebView.stopLoading();
             else mWebView.reload();
             return true;

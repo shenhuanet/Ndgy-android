@@ -12,6 +12,7 @@
     <color name="colorDivider">#DADEDF</color>
     <color name="colorText">#576069</color>
     <color name="colorText1">#707070</color>
+    <color name="colorText2">#C0C0C0</color>
     <color name="colorPressed">#1CD6E0</color>
     <color name="colorEnabled">#D4D4D4</color>
     <color name="colorLight">#551DBFD8</color>

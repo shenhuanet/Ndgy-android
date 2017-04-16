@@ -47,6 +47,8 @@ public class UserZoneUtils {
                 .putString("qual", userZone.getQual())
                 .putString("sign", userZone.getSign())
                 .putString("birth", userZone.getBirth())
+//                .putBoolean("sex", userZone.getSex())
+//                .putString("photo", userZone.getPhoto())
                 .putString("userObjId", userZone.getUser() == null ? "" : userZone.getUser().getObjectId())
                 .apply();
     }
@@ -54,6 +56,7 @@ public class UserZoneUtils {
     public UserZone getUserZone(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PREF_USERZONE, Context.MODE_PRIVATE);
         UserZone userZone = new UserZone();
+        userZone.setObjectId(pref.getString("objectId", null));
         userZone.setDepart(pref.getString("depart", null));
         userZone.setDynamic(pref.getInt("dynamic", 0));
         userZone.setDynamicStr(pref.getString("dynamicStr", null));
@@ -67,7 +70,14 @@ public class UserZoneUtils {
         userZone.setQual(pref.getString("qual", null));
         userZone.setSign(pref.getString("sign", null));
         userZone.setBirth(pref.getString("birth", null));
+//        userZone.setSex(pref.getBoolean("sex", false));
+//        userZone.setPhoto(pref.getString("photo", ""));
         userZone.setUser(UserUtils.getInstance().getBasicUser(context));
         return userZone;
+    }
+
+    public String getUserZoneObjId(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PREF_USERZONE, Context.MODE_PRIVATE);
+        return pref.getString("objectId", null);
     }
 }

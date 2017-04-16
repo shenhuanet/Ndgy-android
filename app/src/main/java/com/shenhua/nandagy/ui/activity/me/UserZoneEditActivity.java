@@ -14,6 +14,7 @@ import com.shenhua.commonlibs.utils.ConvertUtils;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
 import com.shenhua.nandagy.databinding.ActivityUserZoneEditBinding;
+import com.shenhua.nandagy.utils.bmobutils.UserZoneUtils;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -58,8 +59,6 @@ public class UserZoneEditActivity extends BaseActivity {
     TextView mQualTv;
     @BindView(R.id.et_edit_zone_school)
     EditText mSchoolEt;
-    public static final int RESULT_EDIT = 100;
-    private UserZone userZone;
     private String zoneObjId;
 
     @Override
@@ -67,8 +66,8 @@ public class UserZoneEditActivity extends BaseActivity {
         ActivityUserZoneEditBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_user_zone_edit);
         initToolbar();
         ButterKnife.bind(this);
+        UserZone userZone = UserZoneUtils.getInstance().getUserZone(this);
         zoneObjId = getIntent().getStringExtra("zoneObjId");
-        userZone = (UserZone) getIntent().getSerializableExtra("userZoneInfo");
         binding.setData(userZone);
     }
 
@@ -142,6 +141,7 @@ public class UserZoneEditActivity extends BaseActivity {
 
     private void doUpdateInfo() {
         LoadingAlertDialog.getInstance(this).showLoadDialog("资料更新中，请稍后...", true);
+        UserZone userZone = UserZoneUtils.getInstance().getUserZone(this);
         userZone.setName(mNameEt.getText().toString());
         userZone.setSign(mSignEt.getText().toString());
         userZone.setBirth(mBrithTv.getText().toString());
@@ -159,7 +159,7 @@ public class UserZoneEditActivity extends BaseActivity {
                 } else {
                     toast("数据更新失败：" + e.getMessage());
                 }
-                setResult(RESULT_EDIT);
+                setResult(RESULT_OK);
             }
         });
     }

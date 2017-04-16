@@ -9,9 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.shenhua.commonlibs.handler.BaseThreadHandler;
 import com.shenhua.commonlibs.handler.CommonUiRunnable;
 import com.shenhua.commonlibs.utils.BusProvider;
@@ -65,8 +65,6 @@ public class UserFragment extends BaseDefaultFragment {
     CircleImageView mPhotoImageView;
     @BindView(R.id.tv_user_exper)
     TextView mExperTv;
-    @BindView(R.id.rl_account)
-    RelativeLayout mAccountLayout;
     @BindView(R.id.tag_tv_message)
     TextView mMessageTag;
     @BindView(R.id.tag_tv_setting)
@@ -115,12 +113,13 @@ public class UserFragment extends BaseDefaultFragment {
         MyUser user = BmobUser.getCurrentUser(MyUser.class);
         if (user != null) {
             binding.setUser(user);
-//            Glide.with(getContext()).load(user.getUrl_photo())
-//                    .placeholder(getDefaultPhoto(user.getSex()))
-//                    .error(getDefaultPhoto(user.getSex()))
-//                    .centerCrop()
-//                    .into(mPhotoImageView);
+            String url = user.getUrl_photo();
+            Log.d(TAG, "updateViews: 用户头像：" + url);
+            Glide.with(getContext()).load(url)
+                    .error(user.getSex() ? R.drawable.img_photo_woman : R.drawable.img_photo_man)
+                    .centerCrop().into(mPhotoImageView);
             if (UserUtils.getInstance().isCreateZone()) {
+                Log.d(TAG, "updateViews: 空间id：" + UserZoneUtils.getInstance().getUserZoneObjId(getContext()));
                 if (upgrade) {
                     String zoneObjId = UserUtils.getInstance().getUserzoneObjId(getContext());
                     BmobQuery<UserZone> query = new BmobQuery<>();
@@ -181,7 +180,6 @@ public class UserFragment extends BaseDefaultFragment {
     private void navToUserZone() {
         Intent intent = new Intent(getContext(), UserZoneActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("userzone", UserZoneUtils.getInstance().getUserZone(getContext()));
         intent.putExtra("isMyself", true);
         intent.putExtra("zoneObjectId", UserUtils.getInstance().getUserzoneObjId(getContext()));
         intent.putExtras(bundle);
@@ -336,10 +334,6 @@ public class UserFragment extends BaseDefaultFragment {
                 sceneTransitionTo(intent, Constants.Code.REQUEST_CODE_NAV_TO_ABOUT, rootView, R.id.tag_tv_about, "title");
                 break;
         }
-    }
-
-    private int getDefaultPhoto(boolean sex) {
-        return sex ? R.drawable.img_photo_woman : R.drawable.img_photo_man;
     }
 
 }
