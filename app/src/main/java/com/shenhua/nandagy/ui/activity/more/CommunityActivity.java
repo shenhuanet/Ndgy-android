@@ -24,5 +24,6 @@ public class CommunityActivity extends BaseActivity {
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
+
     }
 }

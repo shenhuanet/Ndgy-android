@@ -179,7 +179,7 @@ public class CameraPickerHelper {
 
     }
 
-    private Uri getFileUri(@NonNull Context context, @NonNull File file) {
+    public Uri getFileUri(@NonNull Context context, @NonNull File file) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return FileProvider.getUriForFile(context,
                     context.getApplicationContext().getPackageName() + ".file.provider", mOutputFile);

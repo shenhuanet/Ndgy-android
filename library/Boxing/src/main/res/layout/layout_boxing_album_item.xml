@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~  Copyright (C) 2017 Bilibili
   ~
   ~  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,21 +16,23 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/album_layout"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="?android:selectableItemBackground"
-                android:paddingTop="@dimen/boxing_item_spacing">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/album_layout"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="?android:selectableItemBackground"
+    android:paddingTop="@dimen/boxing_item_spacing">
 
     <ImageView
         android:id="@+id/album_thumbnail"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="12dp"
-        android:scaleType="centerCrop"/>
+        android:layout_marginStart="12dp"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/album_name"
@@ -39,12 +40,14 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_toEndOf="@id/album_thumbnail"
         android:layout_toRightOf="@id/album_thumbnail"
         android:ellipsize="end"
         android:maxEms="12"
         android:singleLine="true"
         android:textColor="@color/boxing_gray1"
-        tools:text="My Favorite Album"/>
+        tools:text="My Favorite Album" />
 
     <TextView
         android:id="@+id/album_size"
@@ -52,18 +55,22 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_toEndOf="@id/album_name"
         android:layout_toRightOf="@id/album_name"
         android:textColor="@color/boxing_gray1"
-        tools:text="(980)"/>
+        tools:text="(980)" />
 
     <ImageView
         android:id="@+id/album_checked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:src="@drawable/ic_boxing_check_black"
+        android:src="@drawable/ic_boxing_check_white"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 </RelativeLayout>

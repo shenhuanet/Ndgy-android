@@ -11,8 +11,8 @@
         android:id="@+id/nav_top_bar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:elevation="2dp"
-        android:titleTextColor="@android:color/white"
+        app:elevation="2dp"
+        app:navigationIcon="@drawable/ic_back_white"
         app:titleTextColor="@android:color/white">
 
         <TextView
@@ -53,7 +53,7 @@
             android:id="@+id/image_items_ok"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_gravity="right|center_vertical"
+            android:layout_gravity="end|center_vertical"
             android:layout_marginRight="@dimen/boxing_item_spacing"
             android:background="@drawable/selector_boxing_btn_solid"
             android:minWidth="60dp"

@@ -28,4 +28,7 @@
     <dimen name="boxing_item_half_spacing">4dp</dimen>
     <dimen name="boxing_media_margin">2dp</dimen>
     <dimen name="boxing_corner_radius">2dp</dimen>
+
+    <dimen name="common_toolbar_padding_top">0dp</dimen>
+    <dimen name="common_toolbar_height">48dp</dimen>
 </resources>

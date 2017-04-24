@@ -54,10 +54,13 @@ import com.shenhua.lib.boxing.widget.WindowManagerHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.shenhua.lib.boxing.utils.Contants.CAMERA_PERMISSIONS;
 import static com.shenhua.lib.boxing.utils.Contants.DEFAULT_SUB_DIR;
 import static com.shenhua.lib.boxing.utils.Contants.EXTRA_SELECTED_MEDIA;
 import static com.shenhua.lib.boxing.utils.Contants.EXTRA_TYPE_BACK;
+import static com.shenhua.lib.boxing.utils.Contants.STORAGE_PERMISSIONS;
 
+// 相册缩略图界面
 public class BoxingViewFragment extends AbsBoxingViewFragment implements View.OnClickListener {
 
     private static final int IMAGE_PREVIEW_REQUEST_CODE = 9086;
@@ -301,7 +304,6 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
         }
     }
 
-
     @Override
     public void onCameraActivityResult(int requestCode, int resultCode) {
         showProgressDialog();
@@ -445,7 +447,6 @@ public class BoxingViewFragment extends AbsBoxingViewFragment implements View.On
             }
         }
     }
-
 
     private class OnCameraClickListener implements View.OnClickListener {
 
