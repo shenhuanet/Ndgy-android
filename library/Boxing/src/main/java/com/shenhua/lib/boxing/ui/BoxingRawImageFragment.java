@@ -39,13 +39,15 @@ import java.lang.ref.WeakReference;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
+import static com.shenhua.lib.boxing.utils.Contants.BUNDLE_IMAGE;
+
 /**
  * show raw image with the control of finger gesture.
  *
  * @author ChenSL
  */
 public class BoxingRawImageFragment extends BoxingBaseFragment {
-    private static final String BUNDLE_IMAGE = "com.bilibili.boxing_impl.ui.BoxingRawImageFragment.image";
+
     private static final int MAX_SCALE = 15;
     private static final long MAX_IMAGE1 = 1024 * 1024L;
     private static final long MAX_IMAGE2 = 4 * MAX_IMAGE1;

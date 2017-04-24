@@ -162,17 +162,21 @@
         <activity
             android:name="com.shenhua.lib.boxing.ui.BoxingActivity"
             android:launchMode="singleTop"
-            android:theme="@style/Boxing.AppTheme.NoActionBar" />
+            android:theme="@style/BoxingStyle" />
 
         <activity
             android:name="com.shenhua.lib.boxing.ui.BoxingViewActivity"
             android:launchMode="singleTop"
-            android:theme="@style/Boxing.AppTheme.NoActionBar" />
+            android:theme="@style/BoxingStyle" />
+
+        <activity
+            android:name="com.shenhua.lib.boxing.ui.CameraActivity"
+            android:launchMode="singleTop" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Boxing.AppTheme.NoActionBar" />
+            android:theme="@style/BoxingStyle" />
         <!--Android N 版本使用相机-->
         <provider
             android:name="android.support.v4.content.FileProvider"

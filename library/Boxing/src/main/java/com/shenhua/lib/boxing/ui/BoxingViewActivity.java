@@ -47,6 +47,7 @@ import static com.shenhua.lib.boxing.utils.Contants.EXTRA_SELECTED_MEDIA;
 import static com.shenhua.lib.boxing.utils.Contants.EXTRA_TYPE_BACK;
 
 /**
+ * 图片预览界面
  * An Activity to show raw image by holding {@link BoxingViewFragment}.
  *
  * @author ChenSL

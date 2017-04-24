@@ -50,9 +50,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
+import static com.shenhua.lib.boxing.utils.Contants.CAMERA_PERMISSIONS;
 import static com.shenhua.lib.boxing.utils.Contants.EXTRA_CONFIG;
 import static com.shenhua.lib.boxing.utils.Contants.EXTRA_RESULT;
 import static com.shenhua.lib.boxing.utils.Contants.EXTRA_SELECTED_MEDIA;
+import static com.shenhua.lib.boxing.utils.Contants.STORAGE_PERMISSIONS;
 
 /**
  * A abstract class which implements {@link PickerContract.View} for custom media view.
@@ -62,8 +64,6 @@ import static com.shenhua.lib.boxing.utils.Contants.EXTRA_SELECTED_MEDIA;
  * @author ChenSL
  */
 public abstract class AbsBoxingViewFragment extends Fragment implements PickerContract.View {
-    public static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    public static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
 
     private static final int REQUEST_CODE_PERMISSION = 233;
 
@@ -433,7 +433,7 @@ public abstract class AbsBoxingViewFragment extends Fragment implements PickerCo
      *
      * @param activity      the caller activity.
      * @param fragment      the caller fragment, may be null.
-     * @param subFolderPath the folder name in "DCIM/bili/boxing/"
+     * @param subFolderPath the folder name in "ndgy/"
      */
     public final void startCamera(Activity activity, Fragment fragment, String subFolderPath) {
         try {

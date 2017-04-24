@@ -2,7 +2,6 @@ package com.shenhua.nandagy.ui.activity.me;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.AppBarLayout;
@@ -26,10 +25,9 @@ import com.shenhua.lib.boxing.impl.BoxingCrop;
 import com.shenhua.lib.boxing.impl.BoxingUcrop;
 import com.shenhua.lib.boxing.loader.BoxingGlideLoader;
 import com.shenhua.lib.boxing.loader.BoxingMediaLoader;
-import com.shenhua.lib.boxing.model.config.BoxingConfig;
-import com.shenhua.lib.boxing.model.config.BoxingCropOption;
 import com.shenhua.lib.boxing.model.entity.BaseMedia;
 import com.shenhua.lib.boxing.ui.BoxingActivity;
+import com.shenhua.lib.boxing.ui.CameraActivity;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
@@ -152,17 +150,17 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
      */
     private void initSelectPhotoView() {
         if (!accessFromMe) return;
-
         BoxingMediaLoader.getInstance().init(new BoxingGlideLoader());
         BoxingCrop.getInstance().init(new BoxingUcrop());
-
         mBpv.setInterpolator(new BounceInterpolator());
         View content = mBpv.getContentView();
         TextView take = (TextView) content.findViewById(R.id.tv_take_photo);
-
         take.setOnClickListener(v -> {
             mBpv.hide();
             // finalPhotoPath = Crop.takePhoto(UserZoneActivity.this, getCacheDir().getPath(), zoneObjectId + cacheHou);
+
+            Boxing.of().takePicture(this, CameraActivity.class, REQUEST_TAKE);
+
         });
         TextView pick = (TextView) content.findViewById(R.id.tv_pick_photo);
         pick.setOnClickListener(v -> {
@@ -173,19 +171,8 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
                 return;
             }
             MyUser user = BmobUser.getCurrentUser(MyUser.class);
-            Uri destUri = new Uri.Builder()
-                    .scheme("file")
-                    .appendPath(cachePath)
-                    .appendPath(user.getObjectId() + ".jpg")
-                    .build();
-            BoxingConfig singleCropImgConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG)
-                    .withCropOption(new BoxingCropOption(destUri)
-                            //设置最大尺寸
-                            .withMaxResultSize(400, 400)
-                            //设置比例为1:1
-                            .aspectRatio(1f, 1f));
-            // TODO: 4/16/2017 封装到简单调用
-            Boxing.of(singleCropImgConfig).withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT);
+            Boxing.buildSingleImageChoiceWithCorp(this, user.getObjectId())
+                    .withIntent(this, BoxingActivity.class).start(this, REQUEST_SELECT);
         });
         TextView cancel = (TextView) content.findViewById(R.id.tv_cancel);
         cancel.setOnClickListener(v -> mBpv.hide());
@@ -241,16 +228,25 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult: " + requestCode + "  " + resultCode);
+
+        if (data == null)
+            Log.d(TAG, "onActivityResult: 拍照回调 空");
+        else
+            Log.d(TAG, "onActivityResult: 拍照裁剪路径---->" + data.getData().getPath());
+
+
+
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_EDIT) {
                 updataViews(true);
+            } else if (requestCode == REQUEST_TAKE) {
+                if (data == null)
+                    Log.d(TAG, "onActivityResult: 拍照回调 空");
+                else
+                    Log.d(TAG, "onActivityResult: 拍照裁剪路径---->" + data.getData().getPath());
             } else {
-                ArrayList<BaseMedia> medias = null;
-                if (requestCode == REQUEST_SELECT) {
-                    medias = Boxing.getResult(data);
-                } else {
-                    medias = Boxing.getResult(data);
-                }
+                ArrayList<BaseMedia> medias = Boxing.getResult(data);
                 if (medias == null) {
                     Toast.makeText(this, "图片编辑失败", Toast.LENGTH_SHORT).show();
                     return;

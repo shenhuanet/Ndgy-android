@@ -26,8 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/colorAccent"
-        android:elevation="2dp"
-        android:titleTextColor="@android:color/white"
+        app:elevation="2dp"
+        app:navigationIcon="@drawable/ic_back_white"
         app:titleTextColor="@android:color/white">
 
         <TextView
@@ -35,8 +35,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
+            android:drawableEnd="@drawable/ic_pull_white"
             android:drawablePadding="8dp"
-            android:drawableRight="@drawable/abc_spinner_mtrl_am_alpha"
+            android:drawableRight="@drawable/ic_pull_white"
             android:gravity="center_vertical"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"

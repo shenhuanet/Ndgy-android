@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.support.v4.app.Fragment;
 
 import com.shenhua.lib.boxing.model.BoxingManager;
 import com.shenhua.lib.boxing.model.config.BoxingConfig;
+import com.shenhua.lib.boxing.model.config.BoxingCropOption;
 import com.shenhua.lib.boxing.model.entity.BaseMedia;
 import com.shenhua.lib.boxing.presenter.PickerPresenter;
 import com.shenhua.lib.boxing.ui.AbsBoxingActivity;
@@ -39,6 +41,10 @@ public class Boxing {
 
     private Intent mIntent;
 
+    private Boxing() {
+        this.mIntent = new Intent();
+    }
+
     private Boxing(BoxingConfig config) {
         BoxingManager.getInstance().setBoxingConfig(config);
         this.mIntent = new Intent();
@@ -65,6 +71,31 @@ public class Boxing {
             BoxingManager.getInstance().setBoxingConfig(config);
         }
         return new Boxing(config);
+    }
+
+    public static Boxing buildSingleImageChoice() {
+        BoxingConfig singleCropImgConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG);
+        return new Boxing(singleCropImgConfig);
+    }
+
+    public static Boxing buildSingleImageChoiceWithCorp(Context context, String title) {
+        Uri destUri = new Uri.Builder().scheme("file").appendPath(context.getCacheDir().getPath())
+                .appendPath(title + ".jpg").build();
+        BoxingConfig singleCropImgConfig = new BoxingConfig(BoxingConfig.Mode.SINGLE_IMG)
+                .withCropOption(new BoxingCropOption(destUri)
+                        .withMaxResultSize(400, 400)
+                        .aspectRatio(1f, 1f));
+        return new Boxing(singleCropImgConfig);
+    }
+
+    public static Boxing buildMultiImagesChoice() {
+        BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
+        return new Boxing(config);
+    }
+
+    public void takePicture(Activity activity, Class<?> cls, int requestCode) {
+        mIntent.setClass(activity, cls);
+        activity.startActivityForResult(mIntent, requestCode);
     }
 
     /**
@@ -129,7 +160,6 @@ public class Boxing {
         return this;
     }
 
-
     /**
      * use to start image viewer.
      *
@@ -150,7 +180,6 @@ public class Boxing {
         }
         return this;
     }
-
 
     /**
      * same as {@link Activity#startActivity(Intent)}

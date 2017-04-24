@@ -1,10 +1,15 @@
 package com.shenhua.lib.boxing.utils;
 
+import android.Manifest;
+
 /**
  * Created by shenhua on 4/13/2017.
  * Email shenhuanet@126.com
  */
 public class Contants {
+
+    public static final String[] STORAGE_PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    public static final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA};
 
     public static final String DEFAULT_SUB_DIR = "/ndgy/boxing";
     public static final String DEFAULT_CACHE_BIR = "/boxing";
@@ -16,7 +21,9 @@ public class Contants {
     public static final String EXTRA_START_POS = "com.bilibili.boxing.Boxing.start_pos";
     public static final String EXTRA_TYPE_BACK = "com.bilibili.boxing_impl.ui.BoxingViewActivity.type_back";
     public static final String STATE_SAVED_KEY = "com.bilibili.boxing.utils.CameraPickerHelper.saved_state";
+    public static final String BUNDLE_IMAGE = "com.bilibili.boxing_impl.ui.BoxingRawImageFragment.image";
 
     public static final String TAG = "com.bilibili.boxing_impl.ui.BoxingViewFragment";
+    public static final String TAG_TAKE = "com.bilibili.boxing_impl.ui.CameraActivity";
     public static final int DEFAULT_SELECTED_COUNT = 9;
 }
