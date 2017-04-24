@@ -34,4 +34,6 @@ dependencies {
         exclude group: 'com.squareup.okhttp3'
     }
     compile 'com.chensl.rotatephotoview:rotatephotoview:1.0.5'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
+    compile 'io.reactivex:rxjava:1.1.6'
 }

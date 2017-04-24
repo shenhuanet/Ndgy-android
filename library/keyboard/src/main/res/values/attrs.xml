@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <declare-styleable name="EmoticonsIndicatorView">
-
-        <attr name="bmpNomal" format="reference" />
-
-        <attr name="bmpSelect" format="reference" />
+    <declare-styleable name="KPSwitchPanelLayout">
+        <attr name="ignore_recommend_height" format="boolean" />
     </declare-styleable>
 </resources>

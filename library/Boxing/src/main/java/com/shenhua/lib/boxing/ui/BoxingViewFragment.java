@@ -63,7 +63,7 @@ import static com.shenhua.lib.boxing.utils.Contants.STORAGE_PERMISSIONS;
 // 相册缩略图界面
 public class BoxingViewFragment extends AbsBoxingViewFragment implements View.OnClickListener {
 
-    private static final int IMAGE_PREVIEW_REQUEST_CODE = 9086;
+    public static final int IMAGE_PREVIEW_REQUEST_CODE = 9086;
     private static final int IMAGE_CROP_REQUEST_CODE = 9087;
 
     private static final int GRID_COUNT = 3;

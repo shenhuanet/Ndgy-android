@@ -6,5 +6,6 @@
     <dimen name="more_tab_line_width">1dp</dimen>
 
     <dimen name="toolbar_title_size">18sp</dimen>
+    <dimen name="panel_height">200dp</dimen>
 
 </resources>

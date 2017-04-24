@@ -43,14 +43,16 @@ public class BoxingMediaLoader {
 
     public void displayThumbnail(@NonNull ImageView img, @NonNull String path, int width, int height) {
         if (ensureLoader()) {
-            throw new IllegalStateException("com.shenhua.lib.boxing.loader.BoxingMediaLoader init method should be called first");
+            throw new IllegalStateException("com.shenhua.lib.boxing.loader.BoxingMediaLoader init method should be called first  1  eg:\n\n\n" +
+                    "BoxingMediaLoader.getInstance().init(new BoxingGlideLoader());\n" +
+                    "BoxingCrop.getInstance().init(new BoxingUcrop());");
         }
         mLoader.displayThumbnail(img, path, width, height);
     }
 
     public void displayRaw(@NonNull ImageView img, @NonNull String path, int width, int height, IBoxingCallback callback) {
         if (ensureLoader()) {
-            throw new IllegalStateException("com.shenhua.lib.boxing.loader.BoxingMediaLoader init method should be called first");
+            throw new IllegalStateException("com.shenhua.lib.boxing.loader.BoxingMediaLoader init method should be called first  2");
         }
         mLoader.displayRaw(img, path, width, height, callback);
     }

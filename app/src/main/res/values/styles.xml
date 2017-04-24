@@ -8,6 +8,14 @@
         <item name="android:windowBackground">@color/colorBackground</item>
     </style>
 
+    <style name="AppThemeFitsSystemWindows" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
     <style name="AppTheme" parent="AppTheme.Base" />
 
     <style name="AppWelcome" parent="AppTheme.Base">
@@ -276,6 +284,13 @@
         <item name="android:ellipsize">end</item>
         <item name="android:lines">1</item>
         <item name="android:maxLength">20</item>
+    </style>
+
+    <style name="Panel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/panel_height</item>
+        <item name="android:background">#fffefefe</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
 </resources>

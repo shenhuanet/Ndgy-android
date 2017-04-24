@@ -208,10 +208,9 @@ public class BoxingViewActivity extends AbsBoxingViewActivity {
         mCurrentImageItem.setSelected(false);
     }
 
-
     private void setMenuIcon(boolean isSelected) {
         if (mNeedEdit) {
-            mSelectedMenuItem.setIcon(isSelected ? R.drawable.ic_boxing_checked : R.drawable.ic_boxing_unchecked);
+            mSelectedMenuItem.setIcon(isSelected ? R.drawable.ic_boxing_checked_white : R.drawable.ic_boxing_unchecked_white);
         }
     }
 
@@ -219,16 +218,14 @@ public class BoxingViewActivity extends AbsBoxingViewActivity {
     public void startLoading() {
         if (!mNeedLoading) {
             mCurrentImageItem = (ImageMedia) mSelectedImages.get(mStartPos);
-            if (mStartPos > 0 && mStartPos < mSelectedImages.size()) {
-                mGallery.setCurrentItem(mStartPos, false);
-            }
             mToolbar.setTitle(getString(R.string.boxing_image_preview_title_fmt, String.valueOf(mStartPos + 1)
                     , String.valueOf(mSelectedImages.size())));
             mProgressBar.setVisibility(View.GONE);
             mGallery.setVisibility(View.VISIBLE);
             mAdapter.setMedias(mImages);
+            mGallery.setCurrentItem(mStartPos, false);
         } else {
-            loadMedia(mAlbumId, mStartPos, mCurrentPage);
+            loadMedia(mAlbumId, mCurrentPage, mCurrentPage);
             mAdapter.setMedias(mImages);
         }
     }
@@ -262,7 +259,7 @@ public class BoxingViewActivity extends AbsBoxingViewActivity {
             return;
         }
         if (startPos < mImages.size() && !mFinishLoading) {
-            mGallery.setCurrentItem(mStartPos, false);
+            mGallery.setCurrentItem(startPos, false);
             mCurrentImageItem = (ImageMedia) mImages.get(startPos);
             mProgressBar.setVisibility(View.GONE);
             mGallery.setVisibility(View.VISIBLE);
@@ -290,7 +287,6 @@ public class BoxingViewActivity extends AbsBoxingViewActivity {
         outState.putString(EXTRA_ALBUM_ID, mAlbumId);
         super.onSaveInstanceState(outState);
     }
-
 
     @Override
     public void onBackPressed() {

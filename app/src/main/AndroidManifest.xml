@@ -35,18 +35,19 @@
         android:theme="@style/AppTheme">
 
         <!--<activity-->
-            <!--android:name=".ui.activity.SplashActivity"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:theme="@style/AppWelcome">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+        <!--android:name=".ui.activity.SplashActivity"-->
+        <!--android:label="@string/app_name"-->
+        <!--android:theme="@style/AppWelcome">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN" />-->
+        <!--<category android:name="android.intent.category.LAUNCHER" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
         <activity
-            android:name=".SimpleTranslucentChatActivity"
+            android:name=".ui.activity.me.PublishDynamicActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppThemeFitsSystemWindows"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -62,7 +63,10 @@
         <activity android:name=".ui.activity.me.ZoneActivity" />
         <activity android:name=".ui.activity.me.UserZoneEditActivity" />
         <activity android:name=".ui.activity.me.UserAccountActivity" />
-        <!--<activity android:name=".ui.activity.me.PublishDynamicActivity" />-->
+        <!--<activity-->
+        <!--android:name=".ui.activity.me.PublishDynamicActivity"-->
+        <!--android:theme="@style/AppThemeFitsSystemWindows"-->
+        <!--android:windowSoftInputMode="adjustResize" />-->
         <activity android:name=".ui.activity.me.MessageActivity" />
         <activity android:name=".ui.activity.me.SettingActivity" />
         <activity android:name=".ui.activity.me.AboutActivity" />

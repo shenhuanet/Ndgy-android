@@ -1,40 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.shenhua.lib.keyboard.widget.KPSwitchRootLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@id/common_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:theme="@style/LightToolbarTheme"
+        app:title="@null">
+
+        <TextView style="@style/ToolbarTitle" />
+
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
-        android:id="@+id/rootview"
+        android:id="@+id/layout_edit_root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
         android:clickable="true"
         android:orientation="vertical">
-
-        <include layout="@layout/common_toolbar_title_left" />
-
-
 
         <EditText
             android:id="@+id/et_publish"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_edit_text"
+            android:background="@android:color/transparent"
             android:gravity="start"
             android:hint="请输入内容..."
-            android:padding="16dp"
+            android:padding="5dp"
             android:textColor="@color/colorText"
             android:textSize="15sp" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="#30000000" />
+    <include layout="@layout/layout_tools" />
 
-</RelativeLayout>
+    <com.shenhua.lib.keyboard.widget.KPSwitchPanelLinearLayout
+        android:id="@+id/panel_root"
+        style="@style/Panel"
+        android:visibility="gone">
 
+        <include
+            android:id="@+id/sub_panel_emoji"
+            layout="@layout/view_sub_panel_emoji" />
+
+        <include
+            android:id="@+id/sub_panel_lacation"
+            layout="@layout/view_sub_panel_location" />
+
+    </com.shenhua.lib.keyboard.widget.KPSwitchPanelLinearLayout>
+
+</com.shenhua.lib.keyboard.widget.KPSwitchRootLinearLayout>

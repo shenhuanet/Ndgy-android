@@ -20,13 +20,13 @@
     <item android:state_enabled="true" android:state_pressed="true">
         <shape>
             <corners android:radius="@dimen/boxing_corner_radius" />
-            <solid android:color="@color/boxing_black" />
+            <solid android:color="@color/colorAccent" />
         </shape>
     </item>
 
     <item android:state_enabled="true">
         <shape>
-            <solid android:color="@color/boxing_black" />
+            <solid android:color="@color/colorAccent" />
             <corners android:radius="@dimen/boxing_corner_radius" />
         </shape>
     </item>

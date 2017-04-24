@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import com.shenhua.lib.boxing.R;
 import com.shenhua.lib.boxing.model.BoxingManager;
 import com.shenhua.lib.boxing.model.config.BoxingConfig;
 import com.shenhua.lib.boxing.model.config.BoxingCropOption;
@@ -18,6 +19,7 @@ import com.shenhua.lib.boxing.model.entity.BaseMedia;
 import com.shenhua.lib.boxing.presenter.PickerPresenter;
 import com.shenhua.lib.boxing.ui.AbsBoxingActivity;
 import com.shenhua.lib.boxing.ui.AbsBoxingViewFragment;
+import com.shenhua.lib.boxing.ui.BoxingViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,10 +69,18 @@ public class Boxing {
     public static Boxing get() {
         BoxingConfig config = BoxingManager.getInstance().getBoxingConfig();
         if (config == null) {
-            config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG).needCamera().needGif();
+            config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG).needCamera(R.drawable.ic_boxing_camera_white).needGif();
             BoxingManager.getInstance().setBoxingConfig(config);
         }
         return new Boxing(config);
+    }
+
+    public static void startPreview(Activity activity, ArrayList<? extends BaseMedia> selectedMedias, int postion, int requestCode) {
+        BoxingManager.getInstance().getBoxingConfig().withViewer(BoxingConfig.ViewMode.PRE_EDIT);
+        Intent intent = new Intent(activity, BoxingViewActivity.class);
+        intent.putExtra(EXTRA_SELECTED_MEDIA, selectedMedias);
+        intent.putExtra(EXTRA_START_POS, postion);
+        activity.startActivityForResult(intent, requestCode);
     }
 
     public static Boxing buildSingleImageChoice() {
@@ -90,6 +100,11 @@ public class Boxing {
 
     public static Boxing buildMultiImagesChoice() {
         BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG);
+        return new Boxing(config);
+    }
+
+    public static Boxing buildMultiImagesChoiceWithCamera() {
+        BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG).needCamera(R.drawable.ic_boxing_camera_white);
         return new Boxing(config);
     }
 
@@ -120,7 +135,7 @@ public class Boxing {
      * create a boxing entry. use {@link BoxingConfig.Mode#MULTI_IMG}.
      */
     public static Boxing of() {
-        BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG).needCamera().needGif();
+        BoxingConfig config = new BoxingConfig(BoxingConfig.Mode.MULTI_IMG).needCamera(R.drawable.ic_boxing_camera_white).needGif();
         return new Boxing(config);
     }
 
@@ -239,6 +254,12 @@ public class Boxing {
     public void start(@NonNull android.app.Fragment fragment, int requestCode, BoxingConfig.ViewMode viewMode) {
         BoxingManager.getInstance().getBoxingConfig().withViewer(viewMode);
         fragment.startActivityForResult(mIntent, requestCode);
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public void start(@NonNull Activity activity, int requestCode, BoxingConfig.ViewMode viewMode) {
+        BoxingManager.getInstance().getBoxingConfig().withViewer(viewMode);
+        activity.startActivityForResult(mIntent, requestCode);
     }
 
     /**

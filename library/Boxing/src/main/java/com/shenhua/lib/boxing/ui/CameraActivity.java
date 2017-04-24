@@ -86,8 +86,9 @@ public class CameraActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
             final Uri resultUri = UCrop.getOutput(data);
             // TODO: 4/18/2017 没有设置进去
-            setIntent(new Intent().setData(resultUri));
-            setResult(RESULT_OK);
+            Intent intent = new Intent();
+            intent.setData(resultUri);
+            setResult(RESULT_OK, intent);
             finish();
         } else if (resultCode == UCrop.RESULT_ERROR) {
             final Throwable cropError = UCrop.getError(data);
