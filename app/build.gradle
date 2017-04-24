@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion COMPILE_SDK_VERSION as int
+    buildToolsVersion BUILD_TOOLS_VERSION
     useLibrary 'org.apache.http.legacy'
 
     dataBinding {
@@ -12,16 +12,19 @@ android {
 
     defaultConfig {
         applicationId "com.shenhua.nandagy"
-        minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 3
-        versionName "3.0.0-test"
+        minSdkVersion MIN_SDK_VERSION as int
+        targetSdkVersion TARGET_SDK_VERSION as int
+        versionCode VERSION_CODE as int
+        versionName VERSION_NAME
 
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            minifyEnabled false
         }
     }
     compileOptions {
@@ -36,45 +39,36 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-
     // android
-    compile 'com.android.support:cardview-v7:25.3.1'
-
+    compile "com.android.support:cardview-v7:${cardview_v7}"
     // libraries
     compile project(':library:WheelPicker')
     compile project(':library:Boxing')
     compile project(':library:FloatingTextView')
-
     // shenhua
     compile 'com.shenhua.libs:bannerview:1.0.1'
     compile 'com.shenhua.libs:slidinglayout:1.1'
     compile 'com.shenhua.libs:commonlibs:1.1.8'
     compile 'com.shenhua.libs:library:1.0.0'
-
     // segmented
     compile 'info.hoang8f:android-segmented:1.0.6'
-
     // ButterKnife
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-
     // BugLy
     compile 'com.tencent.bugly:crashreport:2.4.0'
-
     // glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
     // superRecyclerview
     compile 'com.malinskiy:superrecyclerview:1.1.4'
     // leakcanary
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-
     //    compile 'com.umeng.analytics:analytics:latest.integration'
-
     //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
     //    compile 'cn.bmob.android:http-legacy:1.0'
     //    compile files('libs/sunjce_provider.jar')
+    compile project(':library:keyboard')
     //    compile files('libs/BmobSDK_3.5.1_20160719.jar')
 }

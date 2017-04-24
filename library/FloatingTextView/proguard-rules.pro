@@ -15,3 +15,6 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keep class com.shenhua.floatingtextview.Animator.TranslateFloatingAnimator
+-keep class com.shenhua.floatingtextview.base.FloatingText
+-keep class com.shenhua.floatingtextview.base.FloatingText**{ *; }

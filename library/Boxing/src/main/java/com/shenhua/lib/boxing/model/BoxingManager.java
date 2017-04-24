@@ -54,9 +54,11 @@ public class BoxingManager {
         return mConfig;
     }
 
+    @SuppressWarnings("unchecked")
     public void loadMedia(@NonNull final ContentResolver cr, final int page,
                           final String id, @NonNull final IMediaTaskCallback callback) {
         final IMediaTask task = mConfig.isVideoMode() ? new VideoTask() : new ImageTask();
+
         BoxingExecutor.getInstance().runWorker(new Runnable() {
             @Override
             public void run() {

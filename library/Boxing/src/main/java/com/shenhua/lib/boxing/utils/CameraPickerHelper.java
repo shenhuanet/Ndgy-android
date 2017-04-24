@@ -97,6 +97,7 @@ public class CameraPickerHelper {
     public void startCamera(final Activity activity, final Fragment fragment, final String subFolderPath) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || !takePhotoSecure(activity, fragment, subFolderPath)) {
             FutureTask<Boolean> task = BoxingExecutor.getInstance().runWorker(new Callable<Boolean>() {
+                @SuppressWarnings("deprecation")
                 @Override
                 public Boolean call() throws Exception {
                     try {

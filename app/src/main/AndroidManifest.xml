@@ -34,15 +34,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!--<activity-->
+            <!--android:name=".ui.activity.SplashActivity"-->
+            <!--android:label="@string/app_name"-->
+            <!--android:theme="@style/AppWelcome">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
         <activity
-            android:name=".ui.activity.SplashActivity"
+            android:name=".SimpleTranslucentChatActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppWelcome">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.activity.MainActivity" />
         <activity
             android:name=".ui.activity.me.LoginActivity"
@@ -52,7 +62,7 @@
         <activity android:name=".ui.activity.me.ZoneActivity" />
         <activity android:name=".ui.activity.me.UserZoneEditActivity" />
         <activity android:name=".ui.activity.me.UserAccountActivity" />
-        <activity android:name=".ui.activity.me.PublishDynamicActivity" />
+        <!--<activity android:name=".ui.activity.me.PublishDynamicActivity" />-->
         <activity android:name=".ui.activity.me.MessageActivity" />
         <activity android:name=".ui.activity.me.SettingActivity" />
         <activity android:name=".ui.activity.me.AboutActivity" />
