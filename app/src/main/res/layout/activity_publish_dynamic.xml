@@ -48,6 +48,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:clickable="true"
+            android:gravity="center_horizontal"
             android:visibility="gone"
             tools:visibility="visible" />
 
@@ -60,9 +61,14 @@
         style="@style/Panel"
         android:visibility="gone">
 
-        <include
+        <com.shenhua.lib.emoji.EmojiLayout
             android:id="@+id/sub_panel_emoji"
-            layout="@layout/view_sub_panel_emoji" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--<include-->
+        <!--android:id="@+id/sub_panel_emoji"-->
+        <!--layout="@layout/view_sub_panel_emoji" />-->
 
         <include
             android:id="@+id/sub_panel_lacation"

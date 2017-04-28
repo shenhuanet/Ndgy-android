@@ -17,8 +17,11 @@ package com.shenhua.lib.keyboard.utils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Build;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -84,6 +87,49 @@ public class ViewUtil {
                     getFitsSystemWindows();
         }
         return false;
+    }
+
+    public static int measureWidth(int measureSpec) {
+        int result = 0;
+        int specMode = View.MeasureSpec.getMode(measureSpec);
+        int specSize = View.MeasureSpec.getSize(measureSpec);
+
+        if (specMode == View.MeasureSpec.EXACTLY) {
+            result = specSize;
+        } else {
+            result = dp2px(200);
+            if (specMode == View.MeasureSpec.AT_MOST) {
+                result = Math.min(result, specSize);
+            }
+        }
+        return result;
+    }
+
+    public static int measureHeight(int measureSpec) {
+        int result = 0;
+        int specMode = View.MeasureSpec.getMode(measureSpec);
+        int specSize = View.MeasureSpec.getSize(measureSpec);
+
+        if (specMode == View.MeasureSpec.EXACTLY) {
+            result = specSize;
+        } else {
+            result = dp2px(200);
+            if (specMode == View.MeasureSpec.AT_MOST) {
+                result = Math.min(result, specSize);
+            }
+        }
+        return result;
+    }
+
+    public static int dp2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    public static int dp2px(float dpValue) {
+        Resources resources = Resources.getSystem();
+        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, resources.getDisplayMetrics());
+        return (int) px;
     }
 
 }

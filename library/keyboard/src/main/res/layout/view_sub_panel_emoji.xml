@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Panel"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#d5d3d5" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_emoji"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#d5d3d5" />
+
+    <LinearLayout
+        android:id="@+id/ll_emoji_group"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/emoji_group_height"
+        android:background="#eeeeee"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <include
+            android:id="@+id/rl_emoji_add"
+            layout="@layout/view_emoji_add_tab" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_emoji_group"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:tabMaxWidth="@dimen/emoji_group_height"
+            app:tabMode="scrollable"
+            app:tabTextColor="@android:color/white" />
+
+        <include
+            android:id="@+id/rl_emoji_setting"
+            layout="@layout/view_emoji_add_tab" />
+
+        <include
+            android:id="@+id/rl_emoji_del"
+            layout="@layout/view_emoji_add_tab" />
+
+    </LinearLayout>
+
+</LinearLayout>
