@@ -22,6 +22,7 @@ import com.shenhua.lib.boxing.loader.BoxingGlideLoader;
 import com.shenhua.lib.boxing.loader.BoxingMediaLoader;
 import com.shenhua.lib.boxing.model.entity.BaseMedia;
 import com.shenhua.lib.boxing.ui.BoxingActivity;
+import com.shenhua.lib.emoji.EmojiLayout;
 import com.shenhua.lib.keyboard.utils.KPSwitchConflictUtil;
 import com.shenhua.lib.keyboard.utils.KeyboardUtil;
 import com.shenhua.lib.keyboard.widget.KPSwitchPanelLinearLayout;
@@ -35,6 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.shenhua.lib.boxing.utils.Contants.EXTRA_SELECTED_MEDIA;
+import static com.shenhua.nandagy.R.id.sub_panel_emoji;
 
 /**
  * 发布动态界面
@@ -59,8 +61,8 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
     KPSwitchPanelLinearLayout mPanelRoot;
     @BindView(R.id.layout_edit_root)
     LinearLayout mEditRootLayout;
-    @BindView(R.id.sub_panel_emoji)
-    View mEmojiPanel;
+    @BindView(sub_panel_emoji)
+    EmojiLayout mEmojiPanel;
     @BindView(R.id.sub_panel_lacation)
     View mLocationPanel;
     @BindView(R.id.recyclerView)
@@ -96,6 +98,7 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
                 Boxing.startPreview(PublishDynamicActivity.this, medias, position, REQUEST_MITILL_PREVIEW_PHOTOS);
             }
         });
+        mEmojiPanel.wrapEditTextView(mPublishEt);
     }
 
     @OnClick(R.id.ib_camera)

@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,7 +23,7 @@ import java.util.List;
  * Created by shenhua on 4/27/2017.
  * Email shenhuanet@126.com
  */
-public class EmojiLayout extends LinearLayout implements View.OnClickListener {
+public class EmojiLayout extends LinearLayout implements View.OnClickListener, View.OnLongClickListener {
 
     private ViewPager mEmojiViewPager;
     private LinearLayout mEmojiGroupLayout;
@@ -33,6 +34,7 @@ public class EmojiLayout extends LinearLayout implements View.OnClickListener {
     private boolean mEmojiAddVisiable = true;// 添加按钮是否可见
     private boolean mEmojiSettingVisiable = false;// 设置按钮是否可见
     private EmojiPagerAdapter mEmojiPagerAdapter;
+    private EditText editText;
 
     public EmojiLayout(Context context) {
         this(context, null);
@@ -58,6 +60,7 @@ public class EmojiLayout extends LinearLayout implements View.OnClickListener {
         // 回删按钮
         mEmojiDeleteLayout = findViewById(R.id.rl_emoji_del);
         mEmojiDeleteLayout.setOnClickListener(this);
+        mEmojiDeleteLayout.setOnLongClickListener(this);
         setEmojiDeleteIcon(R.drawable.ic_keyborad_emoji_backspace);
         // 表情区的tab group
         mEmojiGroupTab = (TabLayout) findViewById(R.id.tab_emoji_group);
@@ -125,7 +128,8 @@ public class EmojiLayout extends LinearLayout implements View.OnClickListener {
      * @param editText editText
      */
     public void wrapEditTextView(EditText editText) {
-
+        this.editText = editText;
+        mEmojiPagerAdapter.wrapEditText(editText);
     }
 
     @Override
@@ -137,8 +141,15 @@ public class EmojiLayout extends LinearLayout implements View.OnClickListener {
             Toast.makeText(getContext(), "设置", Toast.LENGTH_SHORT).show();
         }
         if (v.getId() == R.id.rl_emoji_del) {
-            Toast.makeText(getContext(), "删除", Toast.LENGTH_SHORT).show();
+            editText.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
         }
     }
 
+    @Override
+    public boolean onLongClick(View v) {
+        if (v.getId() == R.id.rl_emoji_del) {
+            editText.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+        }
+        return true;
+    }
 }

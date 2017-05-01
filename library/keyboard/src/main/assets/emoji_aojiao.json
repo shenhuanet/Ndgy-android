@@ -1,312 +1,252 @@
 [
   {
     "id": "001",
-    "tag": "[xx]",
+    "tag": "[aj_dx]",
     "file": "emoji_001.png"
   },
   {
     "id": "002",
-    "tag": "[hh]",
+    "tag": "[aj_kx]",
     "file": "emoji_002.png"
   },
   {
     "id": "003",
-    "tag": "[aini]",
+    "tag": "[aj_wx]",
     "file": "emoji_003.png"
   },
   {
     "id": "004",
-    "tag": "[xk]",
+    "tag": "[aj_han]",
     "file": "emoji_004.png"
   },
   {
     "id": "005",
-    "tag": "[beis]",
+    "tag": "[aj_xiao]",
     "file": "emoji_005.png"
   },
   {
     "id": "006",
-    "tag": "[bis]",
+    "tag": "[aj_wx1]",
     "file": "emoji_006.png"
   },
   {
     "id": "007",
-    "tag": "[biz]",
+    "tag": "[aj_dy]",
     "file": "emoji_007.png"
   },
   {
     "id": "008",
-    "tag": "[canz]",
+    "tag": "[aj_jy]",
     "file": "emoji_008.png"
   },
   {
     "id": "009",
-    "tag": "[cj]",
+    "tag": "[aj_xy]",
     "file": "emoji_009.png"
   },
   {
     "id": "010",
-    "tag": "[dhq]",
+    "tag": "[aj_qinqin]",
     "file": "emoji_010.png"
   },
   {
     "id": "011",
-    "tag": "[dl]",
+    "tag": "[aj_qz]",
     "file": "emoji_011.png"
   },
   {
     "id": "012",
-    "tag": "[ding]",
+    "tag": "[aj_yax]",
     "file": "emoji_012.png"
   },
   {
     "id": "013",
-    "tag": "[ka]",
+    "tag": "[aj_kbz]",
     "file": "emoji_013.png"
   },
   {
     "id": "014",
-    "tag": "[hx]",
+    "tag": "[aj_ku]",
     "file": "emoji_014.png"
   },
   {
     "id": "015",
-    "tag": "[gz]",
+    "tag": "[aj_by]",
     "file": "emoji_016.png"
   },
   {
     "id": "016",
-    "tag": "[haha]",
+    "tag": "[aj_zy]",
     "file": "emoji_016.png"
   },
   {
     "id": "017",
-    "tag": "[han]",
+    "tag": "[aj_qinqin1]",
     "file": "emoji_017.png"
   },
   {
     "id": "018",
-    "tag": "[ldln]",
+    "tag": "[aj_hany]",
     "file": "emoji_018.png"
   },
   {
     "id": "019",
-    "tag": "[jiyan]",
+    "tag": "[aj_dyan]",
     "file": "emoji_019.png"
   },
   {
     "id": "020",
-    "tag": "[kelian]",
+    "tag": "[aj_o]",
     "file": "emoji_020.png"
   },
   {
     "id": "021",
-    "tag": "[heixian]",
+    "tag": "[aj_wz]",
     "file": "emoji_021.png"
   },
   {
     "id": "022",
-    "tag": "[huanxin]",
+    "tag": "[aj_ng]",
     "file": "emoji_022.png"
   },
   {
     "id": "023",
-    "tag": "[kun]",
+    "tag": "[aj_xs]",
     "file": "emoji_023.png"
   },
   {
     "id": "024",
-    "tag": "[qinqin]",
+    "tag": "[aj_p]",
     "file": "emoji_024.png"
   },
   {
     "id": "025",
-    "tag": "[yiwen]",
+    "tag": "[aj_bs]",
     "file": "emoji_025.png"
   },
   {
     "id": "026",
-    "tag": "[yhh]",
+    "tag": "[aj_kan]",
     "file": "emoji_026.png"
   },
   {
     "id": "027",
-    "tag": "[zhh]",
+    "tag": "[aj_wg]",
     "file": "emoji_027.png"
   },
   {
     "id": "028",
-    "tag": "[sw]",
+    "tag": "[aj_yun]",
     "file": "emoji_028.png"
   },
   {
     "id": "029",
-    "tag": "[xu]",
+    "tag": "[aj_ts]",
     "file": "emoji_029.png"
   },
   {
     "id": "030",
-    "tag": "[tu]",
+    "tag": "[aj_ot]",
     "file": "emoji_030.png"
   },
   {
     "id": "031",
-    "tag": "[tx]",
+    "tag": "[aj_can]",
     "file": "emoji_031.png"
   },
   {
     "id": "032",
-    "tag": "[tkx]",
+    "tag": "[aj_can1]",
     "file": "emoji_032.png"
   },
   {
     "id": "033",
-    "tag": "[sk]",
+    "tag": "[aj_tst]",
     "file": "emoji_033.png"
   },
   {
     "id": "034",
-    "tag": "[jx]",
+    "tag": "[aj_tst1]",
     "file": "emoji_034.png"
   },
   {
     "id": "035",
-    "tag": "[bb]",
+    "tag": "[aj_wm]",
     "file": "emoji_035.png"
   },
   {
     "id": "036",
-    "tag": "[kub]",
+    "tag": "[aj_sb]",
     "file": "emoji_036.png"
   },
   {
     "id": "037",
-    "tag": "[koub]",
+    "tag": "[aj_sb1]",
     "file": "emoji_037.png"
   },
   {
     "id": "038",
-    "tag": "[yun]",
+    "tag": "[aj_ymjx]",
     "file": "emoji_038.png"
   },
   {
     "id": "039",
-    "tag": "[sj]",
+    "tag": "[aj_sj]",
     "file": "emoji_039.png"
   },
   {
     "id": "040",
-    "tag": "[nm]",
+    "tag": "[aj_xk]",
     "file": "emoji_040.png"
   },
   {
     "id": "041",
-    "tag": "[dy]",
+    "tag": "[aj_fh]",
     "file": "emoji_041.png"
   },
   {
     "id": "042",
-    "tag": "[kz]",
+    "tag": "[aj_s]",
     "file": "emoji_042.png"
   },
   {
     "id": "043",
-    "tag": "[xy]",
+    "tag": "[aj_sd]",
     "file": "emoji_043.png"
   },
   {
     "id": "044",
-    "tag": "[ll]",
+    "tag": "[aj_bz]",
     "file": "emoji_044.png"
   },
   {
     "id": "045",
-    "tag": "[heng]",
+    "tag": "[aj_gan]",
     "file": "emoji_045.png"
   },
   {
     "id": "046",
-    "tag": "[zk]",
+    "tag": "[aj_o1]",
     "file": "emoji_046.png"
   },
   {
     "id": "047",
-    "tag": "[qian]",
+    "tag": "[aj_zd]",
     "file": "emoji_047.png"
   },
   {
     "id": "048",
-    "tag": "[sbing]",
+    "tag": "[aj_lan]",
     "file": "emoji_048.png"
   },
   {
     "id": "049",
-    "tag": "[shuai]",
+    "tag": "[aj_nu]",
     "file": "emoji_049.png"
   },
   {
     "id": "050",
-    "tag": "[nu]",
+    "tag": "[aj_qing]",
     "file": "emoji_050.png"
-  },
-  {
-    "id": "051",
-    "tag": "[atm]",
-    "file": "emoji_051.png"
-  },
-  {
-    "id": "052",
-    "tag": "[fdmj]",
-    "file": "emoji_052.png"
-  },
-  {
-    "id": "053",
-    "tag": "[xm]",
-    "file": "emoji_053.png"
-  },
-  {
-    "id": "054",
-    "tag": "[zhu]",
-    "file": "emoji_054.png"
-  },
-  {
-    "id": "055",
-    "tag": "[mao]",
-    "file": "emoji_055.png"
-  },
-  {
-    "id": "056",
-    "tag": "[zy]",
-    "file": "emoji_056.png"
-  },
-  {
-    "id": "057",
-    "tag": "[fz]",
-    "file": "emoji_057.png"
-  },
-  {
-    "id": "058",
-    "tag": "[nan]",
-    "file": "emoji_058.png"
-  },
-  {
-    "id": "059",
-    "tag": "[nv]",
-    "file": "emoji_059.png"
-  },
-  {
-    "id": "060",
-    "tag": "[yang]",
-    "file": "emoji_060.png"
-  },
-  {
-    "id": "061",
-    "tag": "[qiqiu]",
-    "file": "emoji_061.png"
-  },
-  {
-    "id": "062",
-    "tag": "[tz]",
-    "file": "emoji_062.png"
   }
 ]
