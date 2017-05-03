@@ -21,7 +21,6 @@
         android:background="#d5d3d5" />
 
     <LinearLayout
-        android:id="@+id/ll_emoji_group"
         android:layout_width="match_parent"
         android:layout_height="@dimen/emoji_group_height"
         android:background="#eeeeee"

@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
-import com.shenhua.commonlibs.base.BaseRecyclerAdapter;
 import com.shenhua.lib.boxing.impl.Boxing;
 import com.shenhua.lib.boxing.loader.BoxingGlideLoader;
 import com.shenhua.lib.boxing.loader.BoxingMediaLoader;
@@ -72,6 +71,7 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
     private ArrayList<BaseMedia> medias;
     public static final int REQUEST_MITILL_SELECTED_PHOTOS = 10;
     public static final int REQUEST_MITILL_PREVIEW_PHOTOS = 11;
+    private String[] mEmojiDirs = {"emoji_ay", "emoji_aojiao", "emoji_d"};
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
@@ -92,13 +92,10 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
         photosSelectedAdapter = new PhotosSelectedAdapter(this, null);
         mPhotosRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mPhotosRecyclerView.setAdapter(photosSelectedAdapter);
-        photosSelectedAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener<BaseMedia>() {
-            @Override
-            public void OnItemClick(View view, int position, BaseMedia data) {
-                Boxing.startPreview(PublishDynamicActivity.this, medias, position, REQUEST_MITILL_PREVIEW_PHOTOS);
-            }
-        });
-        mEmojiPanel.wrapEditTextView(mPublishEt);
+        photosSelectedAdapter.setOnItemClickListener((view, position, data)
+                -> Boxing.startPreview(PublishDynamicActivity.this, medias, position, REQUEST_MITILL_PREVIEW_PHOTOS));
+        mEmojiPanel.init(this, mPublishEt, mEmojiDirs);
+//        mEmojiPanel.init(this, mPublishEt);
     }
 
     @OnClick(R.id.ib_camera)

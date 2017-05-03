@@ -8,8 +8,7 @@
         android:id="@+id/rv_emoji"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:numColumns="7"
+        android:gravity="center"
         android:padding="10dp"
         android:scrollbars="none" />
 

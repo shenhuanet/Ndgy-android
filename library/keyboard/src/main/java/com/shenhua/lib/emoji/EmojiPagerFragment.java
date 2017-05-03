@@ -5,30 +5,29 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.shenhua.commonlibs.base.BaseRecyclerAdapter;
+import com.shenhua.lib.emoji.adapter.EmojiAdapter;
+import com.shenhua.lib.emoji.bean.EmojiGroup;
+import com.shenhua.lib.emoji.utils.EmojiLoader;
 import com.shenhua.lib.keyboard.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by shenhua on 4/28/2017.
  * Email shenhuanet@126.com
  */
-public class EmojiPagerFragment extends Fragment implements BaseRecyclerAdapter.OnItemClickListener<EmojiLoader.Emoji> {
+public class EmojiPagerFragment extends Fragment implements BaseRecyclerAdapter.OnItemClickListener<EmojiGroup.EmojiBean> {
 
-    private static final String TAG = "EmojiPagerFragment";
     private View rootView;
     private int mEmojiGroupItem;
+
     private EmojiAdapter mEmojiAdapter;
-    private List<EmojiLoader.Emoji> mEmojis = new ArrayList<>();
     private EditText mEditText;
+    private EmojiGroup emojiGroup;
 
     public static EmojiPagerFragment getInstance(int emojiGroupItem) {
         EmojiPagerFragment fragment = new EmojiPagerFragment();
@@ -51,7 +50,7 @@ public class EmojiPagerFragment extends Fragment implements BaseRecyclerAdapter.
             rootView = inflater.inflate(R.layout.layout_page_emoji, container, false);
             RecyclerView mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_emoji);
             mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 7));
-            mEmojiAdapter = new EmojiAdapter(getContext(), mEmojis);
+            mEmojiAdapter = new EmojiAdapter(getContext(), null);
             mRecyclerView.setAdapter(mEmojiAdapter);
             mEmojiAdapter.setOnItemClickListener(this);
         }
@@ -65,32 +64,24 @@ public class EmojiPagerFragment extends Fragment implements BaseRecyclerAdapter.
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (mEmojiGroupItem == 0) {
-            mEmojis = EmojiLoader.loadAssetEmojis(getContext(), "emoji_weico.json");
-        } else {
-            mEmojis = EmojiLoader.loadEmoji(getContext(), "");
-        }
-        mEmojiAdapter.setDatas(mEmojis);
+        mEmojiAdapter.setDatas(emojiGroup.getEmoji());
         mEmojiAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void OnItemClick(View view, int position, EmojiLoader.Emoji data) {
-//        Toast.makeText(getContext(), data.getId() + "-->" + data.getTag(), Toast.LENGTH_SHORT).show();
-        if (mEditText == null) {
-            Log.d(TAG, "OnItemClick: editText null");
-            return;
+    public void OnItemClick(View view, int position, EmojiGroup.EmojiBean data) {
+        if (mEmojiGroupItem == 0) {
+            EmojiLoader.getInstance().replaceEmoji(getContext(), mEditText,  data.getTag());
+        } else {
+            EmojiLoader.getInstance().replaceEmoji(getContext(), mEditText, data.getTag());
         }
-        Editable editable = mEditText.getText();
-        int start = mEditText.getSelectionStart();
-        int end = mEditText.getSelectionEnd();
-        start = start < 0 ? 0 : start;
-        end = start < 0 ? 0 : end;
-        editable.replace(start, end, data.getTag());
-
     }
 
     public void setEditText(EditText editText) {
         this.mEditText = editText;
+    }
+
+    public void setEmojiGroup(EmojiGroup emojiGroup) {
+        this.emojiGroup = emojiGroup;
     }
 }

@@ -6,6 +6,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.widget.EditText;
 
 import com.shenhua.lib.emoji.EmojiPagerFragment;
+import com.shenhua.lib.emoji.bean.EmojiGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by shenhua on 4/27/2017.
@@ -14,27 +18,32 @@ import com.shenhua.lib.emoji.EmojiPagerFragment;
 public class EmojiPagerAdapter extends FragmentPagerAdapter {
 
     private int mGroupCount = 0;
-    private EmojiPagerFragment emojiPagerFragment;
-    private EditText editText;
+    private EditText mEditText;
+    private List<EmojiGroup> mEmojiGroups = new ArrayList<>();
 
-    public EmojiPagerAdapter(FragmentManager fm, int groupCount) {
+    public EmojiPagerAdapter(FragmentManager fm, int mGgroupCount) {
         super(fm);
-        mGroupCount = groupCount;
+        this.mGroupCount = mGgroupCount;
     }
 
     public void wrapEditText(EditText editText) {
-        this.editText = editText;
+        this.mEditText = editText;
     }
 
     @Override
     public Fragment getItem(int position) {
-        emojiPagerFragment = EmojiPagerFragment.getInstance(position);
-        emojiPagerFragment.setEditText(editText);
+        EmojiPagerFragment emojiPagerFragment = EmojiPagerFragment.getInstance(position);
+        emojiPagerFragment.setEmojiGroup(getEmojiGroups(position));
+        emojiPagerFragment.setEditText(mEditText);
         return emojiPagerFragment;
     }
 
-    public void setGroupCount(int mGroupCount) {
-        this.mGroupCount = mGroupCount;
+    private EmojiGroup getEmojiGroups(int position) {
+        return mEmojiGroups.get(position);
+    }
+
+    public void setEmojiGroup(int position, EmojiGroup mEmojiGroup) {
+        this.mEmojiGroups.add(position, mEmojiGroup);
     }
 
     @Override

@@ -15,9 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.shenhua.lib.emoji.adapter.EmojiPagerAdapter;
+import com.shenhua.lib.emoji.bean.EmojiGroup;
+import com.shenhua.lib.emoji.utils.EmojiLoader;
 import com.shenhua.lib.keyboard.R;
-
-import java.util.List;
 
 /**
  * Created by shenhua on 4/27/2017.
@@ -25,15 +25,14 @@ import java.util.List;
  */
 public class EmojiLayout extends LinearLayout implements View.OnClickListener, View.OnLongClickListener {
 
+    public static final String DEFAULT_EMOJI = "emoji_weico";
     private ViewPager mEmojiViewPager;
-    private LinearLayout mEmojiGroupLayout;
     private TabLayout mEmojiGroupTab;
     private View mEmojiAddLayout;
     private View mEmojiSettingLayout;
     private View mEmojiDeleteLayout;
     private boolean mEmojiAddVisiable = true;// 添加按钮是否可见
     private boolean mEmojiSettingVisiable = false;// 设置按钮是否可见
-    private EmojiPagerAdapter mEmojiPagerAdapter;
     private EditText editText;
 
     public EmojiLayout(Context context) {
@@ -48,7 +47,6 @@ public class EmojiLayout extends LinearLayout implements View.OnClickListener, V
         super(context, attrs, defStyleAttr);
         inflate(context, R.layout.view_sub_panel_emoji, this);
         mEmojiViewPager = (ViewPager) findViewById(R.id.vp_emoji);
-        mEmojiGroupLayout = (LinearLayout) findViewById(R.id.ll_emoji_group);
         // 添加按钮
         mEmojiAddLayout = findViewById(R.id.rl_emoji_add);
         mEmojiAddLayout.setOnClickListener(this);
@@ -64,22 +62,62 @@ public class EmojiLayout extends LinearLayout implements View.OnClickListener, V
         setEmojiDeleteIcon(R.drawable.ic_keyborad_emoji_backspace);
         // 表情区的tab group
         mEmojiGroupTab = (TabLayout) findViewById(R.id.tab_emoji_group);
-        // 添加默认的小黄脸表情
-        mEmojiPagerAdapter = new EmojiPagerAdapter(((FragmentActivity) context).getSupportFragmentManager(), 1);
+    }
+
+    public void init(final Context context, EditText editText) {
+        this.init(context, editText, null);
+    }
+
+    public void init(final Context context, EditText editText, String[] emojiDirs) {
+        if (emojiDirs == null) {
+            emojiDirs = new String[]{};
+        }
+        // 初始化适配器
+        EmojiPagerAdapter mEmojiPagerAdapter = new EmojiPagerAdapter(((FragmentActivity) context).getSupportFragmentManager(), 1 + emojiDirs.length);
         mEmojiViewPager.setAdapter(mEmojiPagerAdapter);
         mEmojiGroupTab.setupWithViewPager(mEmojiViewPager);
-        // 添加自定义表情
-        List<EmojiGroup> emojiGroup = EmojiLoader.getInstance().getEmojiGroups();
-        if (emojiGroup != null && emojiGroup.size() != 0) {
-            mEmojiPagerAdapter.setGroupCount(emojiGroup.size() + 1);
-            mEmojiPagerAdapter.notifyDataSetChanged();
-            for (int i = 1; i < emojiGroup.size() + 1; i++) {
-                mEmojiGroupTab.getTabAt(i).setIcon(emojiGroup.get(i).getGroupIcon());
+        // 设置editText
+        this.editText = editText;
+        mEmojiPagerAdapter.wrapEditText(editText);
+        // 获取表情组
+        EmojiGroup emojiGroup;
+        for (int i = 0; i < emojiDirs.length + 1; i++) {
+            if (i == 0) {
+                emojiGroup = EmojiLoader.getInstance().getEmojiGroup(getContext(), DEFAULT_EMOJI);
+                EmojiLoader.getInstance().setDefaultEmojiGroupIcon(context, mEmojiGroupTab.getTabAt(0), emojiGroup.getGroupIcon());
+                mEmojiPagerAdapter.setEmojiGroup(0, emojiGroup);
+            } else {
+                emojiGroup = EmojiLoader.getInstance().getEmojiGroup(context, emojiDirs[i - 1]);
+                EmojiLoader.getInstance().setDefaultEmojiGroupIcon(context, mEmojiGroupTab.getTabAt(i), emojiGroup.getGroupIcon());
+                mEmojiPagerAdapter.setEmojiGroup(i, emojiGroup);
             }
-        } else {
-            mEmojiPagerAdapter.notifyDataSetChanged();
         }
-        mEmojiGroupTab.getTabAt(0).setIcon(R.drawable.ic_tab_emoji_default);
+        // 添加表情组  IndexOutOfBoundsException将导致数组越界
+//        for (int i = 0; i < emojiDirs.length + 1; i++) {
+//            final int finalI = i;
+//            final String[] finalEmojiDirs = emojiDirs;
+//            BaseThreadHandler.getInstance().sendRunnable(new CommonRunnable<EmojiGroup>() {
+//                @Override
+//                public EmojiGroup doChildThread() {
+//                    if (finalI == 0) {
+//                        return EmojiLoader.getInstance().getEmojiGroup(getContext(), DEFAULT_EMOJI);
+//                    } else {
+//                        return EmojiLoader.getInstance().getEmojiGroup(context, finalEmojiDirs[finalI - 1]);
+//                    }
+//                }
+//
+//                @Override
+//                public void doUiThread(EmojiGroup group) {
+//                    if (finalI == 0) {
+//                        EmojiLoader.getInstance().setDefaultEmojiGroupIcon(context, mEmojiGroupTab.getTabAt(0), DEFAULT_EMOJI, group.getGroupIcon());
+//                        mEmojiPagerAdapter.setEmojiGroup(0, group);
+//                    } else {
+//                        EmojiLoader.getInstance().setDefaultEmojiGroupIcon(context, mEmojiGroupTab.getTabAt(finalI), finalEmojiDirs[finalI - 1], group.getGroupIcon());
+//                        mEmojiPagerAdapter.setEmojiGroup(finalI, group);
+//                    }
+//                }
+//            });
+//        }
     }
 
     /**
@@ -120,16 +158,6 @@ public class EmojiLayout extends LinearLayout implements View.OnClickListener, V
     public void setEmojiDeleteIcon(@DrawableRes int resId) {
         ImageView imageView = (ImageView) mEmojiDeleteLayout.findViewById(R.id.iv_emoji_group_icon);
         imageView.setImageResource(resId);
-    }
-
-    /**
-     * 关联editText
-     *
-     * @param editText editText
-     */
-    public void wrapEditTextView(EditText editText) {
-        this.editText = editText;
-        mEmojiPagerAdapter.wrapEditText(editText);
     }
 
     @Override
