@@ -33,6 +33,7 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="10dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_location" />
+        android:src="@drawable/ic_location"
+        android:visibility="gone" />
 
 </LinearLayout>

@@ -318,6 +318,10 @@ public class UserFragment extends BaseDefaultFragment {
                 navToUserAccount();
                 break;
             case R.id.rl_publish:
+                if (!UserUtils.getInstance().isCreateZone()) {// 用户没有空间
+                    crateUserZone();
+                    return;
+                }
                 intent = new Intent(getContext(), PublishDynamicActivity.class);
                 sceneTransitionTo(intent, Constants.Code.REQUEST_CODE_NAV_TO_PUBLISH_DYNAMIC, rootView, R.id.tag_tv_publish, "title");
                 break;

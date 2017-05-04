@@ -1,7 +1,7 @@
 package com.shenhua.nandagy.presenter;
 
 import com.shenhua.commonlibs.callback.HttpCallback;
-import com.shenhua.nandagy.bean.CircleData;
+import com.shenhua.nandagy.bean.bmobbean.SchoolCircle;
 import com.shenhua.nandagy.model.CircleModel;
 import com.shenhua.nandagy.model.CircleModelImpl;
 import com.shenhua.nandagy.view.CircleView;
@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * Created by MVPHelper on 2016/10/06
  */
-public class CirclePresenterImpl implements CirclePresenter, HttpCallback<List<CircleData>> {
+public class CirclePresenterImpl implements CirclePresenter, HttpCallback<List<SchoolCircle>> {
 
-    private CircleModel<List<CircleData>> circleModel;
+    private CircleModel<List<SchoolCircle>> circleModel;
     private CircleView circleView;
 
     public CirclePresenterImpl(CircleView circleView) {
@@ -41,7 +41,7 @@ public class CirclePresenterImpl implements CirclePresenter, HttpCallback<List<C
     }
 
     @Override
-    public void onSuccess(List<CircleData> data) {
+    public void onSuccess(List<SchoolCircle> data) {
         circleView.updateList(data);
     }
 

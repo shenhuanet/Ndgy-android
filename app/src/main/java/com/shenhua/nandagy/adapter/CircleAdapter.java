@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.shenhua.commonlibs.base.BaseRecyclerAdapter;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.bean.CircleData;
+import com.shenhua.nandagy.bean.bmobbean.SchoolCircle;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ import java.util.List;
  * Created by Shenhua on 10/6/2016.
  * e-mail shenhuanet@126.com
  */
-public class CircleAdapter extends BaseRecyclerAdapter<CircleData> {
+public class CircleAdapter extends BaseRecyclerAdapter<SchoolCircle> {
 
-    public CircleAdapter(Context context, List<CircleData> datas) {
+    public CircleAdapter(Context context, List<SchoolCircle> datas) {
         super(context, datas);
     }
 
@@ -24,7 +24,7 @@ public class CircleAdapter extends BaseRecyclerAdapter<CircleData> {
     }
 
     @Override
-    public void bindData(BaseRecyclerAdapter.BaseRecyclerViewHolder holder, int position, CircleData item) {
+    public void bindData(BaseRecyclerAdapter.BaseRecyclerViewHolder holder, int position, SchoolCircle item) {
 
     }
 

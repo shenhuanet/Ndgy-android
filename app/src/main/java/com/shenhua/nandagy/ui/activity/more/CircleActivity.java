@@ -11,7 +11,7 @@ import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.CircleAdapter;
-import com.shenhua.nandagy.bean.CircleData;
+import com.shenhua.nandagy.bean.bmobbean.SchoolCircle;
 import com.shenhua.nandagy.presenter.CirclePresenterImpl;
 import com.shenhua.nandagy.view.CircleView;
 
@@ -54,12 +54,9 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
     public void onRefresh() {
         circlePresenter.refreshData();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                toast("ok");
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
+        new Handler().postDelayed(() -> {
+            toast("ok");
+            mSwipeRefreshLayout.setRefreshing(false);
         }, 2000);
     }
 
@@ -70,7 +67,7 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
     }
 
     @Override
-    public void updateList(List<CircleData> datas) {
+    public void updateList(List<SchoolCircle> datas) {
         CircleAdapter adapter = new CircleAdapter(this, datas);
         mSwipeRefreshLayout.setAdapter(adapter);
         adapter.setOnItemClickListener((view, i, data) -> {

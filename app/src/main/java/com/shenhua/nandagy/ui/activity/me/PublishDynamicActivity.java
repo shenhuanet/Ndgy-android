@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,12 +28,20 @@ import com.shenhua.lib.keyboard.utils.KeyboardUtil;
 import com.shenhua.lib.keyboard.widget.KPSwitchPanelLinearLayout;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.PhotosSelectedAdapter;
+import com.shenhua.nandagy.bean.bmobbean.SchoolCircle;
+import com.shenhua.nandagy.bean.bmobbean.UserZone;
+import com.shenhua.nandagy.utils.bmobutils.UserZoneUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UploadBatchListener;
 
 import static com.shenhua.lib.boxing.utils.Contants.EXTRA_SELECTED_MEDIA;
 import static com.shenhua.nandagy.R.id.sub_panel_emoji;
@@ -66,11 +75,11 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
     View mLocationPanel;
     @BindView(R.id.recyclerView)
     RecyclerView mPhotosRecyclerView;
-    private PhotosSelectedAdapter photosSelectedAdapter;
-    private boolean mCanPublish;
-    private ArrayList<BaseMedia> medias;
     public static final int REQUEST_MITILL_SELECTED_PHOTOS = 10;
     public static final int REQUEST_MITILL_PREVIEW_PHOTOS = 11;
+    private boolean mCanPublish;
+    private PhotosSelectedAdapter photosSelectedAdapter;
+    private ArrayList<BaseMedia> medias;
     private String[] mEmojiDirs = {"emoji_ay", "emoji_aojiao", "emoji_d"};
 
     @Override
@@ -78,6 +87,10 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
         ButterKnife.bind(this);
         mPublishEt.addTextChangedListener(this);
 
+        initKeyboard();
+    }
+
+    private void initKeyboard() {
         KeyboardUtil.attach(this, mPanelRoot);
         KPSwitchConflictUtil.attach(mPanelRoot, mPublishEt, switchToPanel -> {
                     if (switchToPanel) {
@@ -96,6 +109,28 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
                 -> Boxing.startPreview(PublishDynamicActivity.this, medias, position, REQUEST_MITILL_PREVIEW_PHOTOS));
         mEmojiPanel.init(this, mPublishEt, mEmojiDirs);
 //        mEmojiPanel.init(this, mPublishEt);
+    }
+
+    private void publish(List<BmobFile> bmobFiles) {
+        UserZone userZone = UserZoneUtils.getInstance().getUserZone(this);
+        SchoolCircle circle = new SchoolCircle();
+        circle.setUserZone(userZone);
+        circle.setContent(mPublishEt.getText().toString());
+        if (bmobFiles != null) {
+            circle.setPics(bmobFiles);
+        }
+        circle.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e == null) {
+                    Log.d("shenhuaLog -- " + PublishDynamicActivity.class.getSimpleName(), "done: " + s);
+                    toast("发布成功");
+                    // 执行跳转 finish
+                } else {
+                    toast("发布失败:" + e.getMessage());
+                }
+            }
+        });
     }
 
     @OnClick(R.id.ib_camera)
@@ -119,9 +154,50 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_menu_send) {
-            // TODO sth.
             hideKeyboard();
-            toast(mPublishEt.getText().toString());
+            if (medias != null && medias.size() > 0) {
+                String[] files = new String[medias.size()];
+                for (int i = 0; i < medias.size(); i++) {
+                    files[i] = medias.get(i).getPath();
+                }
+                BmobFile.uploadBatch(files, new UploadBatchListener() {
+                    /**
+                     * 批量上传成功
+                     * @param list 上传完成后的BmobFile集合，是为了方便对其上传后的数据进行操作，例如你可以将该文件保存到表中
+                     * @param list1 上传文件的完整url地址
+                     */
+                    @Override
+                    public void onSuccess(List<BmobFile> list, List<String> list1) {
+                        if (list1.size() == files.length) {// 如果数量相等，则代表文件全部上传完成
+                            Log.d("shenhuaLog -- " + PublishDynamicActivity.class.getSimpleName(), "onSuccess: 等");
+                            publish(list);
+                        } else {
+                            Log.d("shenhuaLog -- " + PublishDynamicActivity.class.getSimpleName(), "onSuccess: 不等");
+                        }
+                    }
+
+                    /**
+                     * 上传进度
+                     * @param i 表示当前第几个文件正在上传
+                     * @param i1 表示当前上传文件的进度值（百分比）
+                     * @param i2 表示总的上传文件数
+                     * @param i3 表示总的上传进度（百分比）
+                     */
+                    @Override
+                    public void onProgress(int i, int i1, int i2, int i3) {
+                        // item 布局中圆形进度条
+                        Log.d("shenhuaLog -- " + PublishDynamicActivity.class.getSimpleName(), "onProgress: " + i);
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+                        toast("上传失败:" + s);
+                    }
+                });
+
+            } else {
+                publish(null);
+            }
         }
         return super.onOptionsItemSelected(item);
     }

@@ -3,6 +3,7 @@ package com.shenhua.nandagy.bean;
 import java.io.Serializable;
 
 /**
+ * 内容详情跳转时传递参数
  * Created by Shenhua on 3/24/2017.
  * e-mail shenhuanet@126.com
  */

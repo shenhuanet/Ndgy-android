@@ -1,7 +1,7 @@
 package com.shenhua.nandagy.view;
 
 import com.shenhua.commonlibs.mvp.BaseView;
-import com.shenhua.nandagy.bean.CircleData;
+import com.shenhua.nandagy.bean.bmobbean.SchoolCircle;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface CircleView extends BaseView {
 
-    void updateList(List<CircleData> datas);
+    void updateList(List<SchoolCircle> datas);
 
 }

@@ -66,10 +66,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <!--<include-->
-        <!--android:id="@+id/sub_panel_emoji"-->
-        <!--layout="@layout/view_sub_panel_emoji" />-->
-
         <include
             android:id="@+id/sub_panel_lacation"
             layout="@layout/view_sub_panel_location" />
