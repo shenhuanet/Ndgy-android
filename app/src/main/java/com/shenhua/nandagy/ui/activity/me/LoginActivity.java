@@ -37,6 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -224,6 +225,7 @@ public class LoginActivity extends BaseActivity {
                             setResult(Constants.Code.RECULT_CODE_LOGIN_SUCCESS);
                             LoginActivity.this.finish();
                         } else {
+                            e.printStackTrace();
                             if (e.getErrorCode() == 101) {
                                 toast(R.string.login_info_singin_failed);
                             } else {
@@ -370,7 +372,8 @@ public class LoginActivity extends BaseActivity {
                 user.setUsername(username);
                 user.setPassword(password);
                 user.setSex(gender);
-                user.setUrl_photo(imgUrl);
+                BmobFile file = new BmobFile(imgUrl.substring(imgUrl.lastIndexOf("/") - 32, imgUrl.lastIndexOf("/")), "QQ", imgUrl);
+                user.setAvatar(file);
                 user.setNick(nick);
                 user.signUp(new SaveListener<MyUser>() {
                     @Override

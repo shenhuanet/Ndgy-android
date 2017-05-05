@@ -19,13 +19,14 @@ public class CircleAdapter extends BaseRecyclerAdapter<SchoolCircle> {
     }
 
     @Override
-        public int getItemViewId(int viewType) {
+    public int getItemViewId(int viewType) {
         return R.layout.item_circle;
     }
 
     @Override
     public void bindData(BaseRecyclerAdapter.BaseRecyclerViewHolder holder, int position, SchoolCircle item) {
-
+        holder.setText(R.id.tv_content, item.getContent());
+        holder.setImage(R.id.iv_user_photo, item.getUserZone().getUser().getAvatar().getUrl());
     }
 
 }

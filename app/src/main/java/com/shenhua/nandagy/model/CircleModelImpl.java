@@ -1,20 +1,35 @@
 package com.shenhua.nandagy.model;
 
 import com.shenhua.commonlibs.callback.HttpCallback;
-import com.shenhua.commonlibs.mvp.HttpManager;
 import com.shenhua.nandagy.bean.bmobbean.SchoolCircle;
 
 import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by MVPHelper on 2016/10/06
  */
 public class CircleModelImpl implements CircleModel<List<SchoolCircle>> {
 
-    private HttpManager httpManager = HttpManager.getInstance();
-
     @Override
-    public void toGetCircleData(HttpCallback callback) {
-        // TODO: 10/6/2016 获取数据
+    public void toGetCircleData(HttpCallback<List<SchoolCircle>> callback) {
+        callback.onPreRequest();
+        BmobQuery<SchoolCircle> query = new BmobQuery<>();
+        query.setLimit(50);
+        query.include("userzone.user");
+        query.findObjects(new FindListener<SchoolCircle>() {
+            @Override
+            public void done(List<SchoolCircle> list, BmobException e) {
+                callback.onPostRequest();
+                if (e == null) {
+                    callback.onSuccess(list);
+                } else {
+                    callback.onError(e.getMessage());
+                }
+            }
+        });
     }
 }

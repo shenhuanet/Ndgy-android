@@ -85,7 +85,6 @@ public class CameraActivity extends AppCompatActivity {
         }
         if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
             final Uri resultUri = UCrop.getOutput(data);
-            // TODO: 4/18/2017 没有设置进去
             Intent intent = new Intent();
             intent.setData(resultUri);
             setResult(RESULT_OK, intent);

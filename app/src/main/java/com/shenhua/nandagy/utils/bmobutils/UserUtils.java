@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 
 /**
  * 用户工具类，提供本地用户数据存储和访问, 全局用户数据统一访问入口，以及其他辅助功能
@@ -36,7 +37,7 @@ public class UserUtils {
                 .putString("name", user.getName())
                 .putString("name_id", user.getName_id())
                 .putString("info", user.getInfo())
-                .putString("url_photo", user.getUrl_photo())
+                .putString("url_photo", user.getAvatar() == null ? "" : user.getAvatar().getFileUrl())
                 .putString("email", user.getEmail())
                 .putString("phone", user.getMobilePhoneNumber())
                 .putBoolean("gender", user.getSex())
@@ -124,7 +125,7 @@ public class UserUtils {
         MyUser myUser = new MyUser();
         myUser.setNick(pref.getString("nick", null));
         myUser.setSex(pref.getBoolean("gender", false));
-        myUser.setUrl_photo(pref.getString("url_photo", null));
+        myUser.setAvatar(new BmobFile("fileName", "group", pref.getString("url_photo", null)));
         return myUser;
     }
 

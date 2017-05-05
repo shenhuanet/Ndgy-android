@@ -72,4 +72,8 @@ public class Constants {
 
     }
 
+    public static class FileC {
+        public static final String PICTURE_SAVE_DIR = "ndgy";
+    }
+
 }

@@ -18,6 +18,7 @@
         android:orientation="horizontal">
 
         <com.shenhua.commonlibs.widget.CircleImageView
+            android:id="@+id/iv_user_photo"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/img_beifeng" />
@@ -43,7 +44,6 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
 
     <LinearLayout
@@ -54,14 +54,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="标题"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
+            android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"

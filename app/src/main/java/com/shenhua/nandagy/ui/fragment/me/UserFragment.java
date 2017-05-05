@@ -113,7 +113,8 @@ public class UserFragment extends BaseDefaultFragment {
         MyUser user = BmobUser.getCurrentUser(MyUser.class);
         if (user != null) {
             binding.setUser(user);
-            String url = user.getUrl_photo();
+            // TODO: 5/5/2017 NullPointerException getAvatar
+            String url = user.getAvatar().getFileUrl();
             Log.d(TAG, "updateViews: 用户头像：" + url);
             Glide.with(getContext()).load(url)
                     .error(user.getSex() ? R.drawable.img_photo_woman : R.drawable.img_photo_man)

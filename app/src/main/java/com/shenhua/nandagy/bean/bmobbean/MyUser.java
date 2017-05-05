@@ -3,11 +3,12 @@ package com.shenhua.nandagy.bean.bmobbean;
 import java.io.Serializable;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 
 public class MyUser extends BmobUser implements Serializable {
 
     private static final long serialVersionUID = 5589615413893455310L;
-    private String url_photo;
+    private BmobFile avatar;
     private String nick;
     private String name_num;
     private String name_id;
@@ -23,6 +24,14 @@ public class MyUser extends BmobUser implements Serializable {
         this.name_num = nameNum;
         this.name_id = nameId;
         this.name = name;
+    }
+
+    public BmobFile getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(BmobFile avatar) {
+        this.avatar = avatar;
     }
 
     public String getInfo() {
@@ -71,14 +80,6 @@ public class MyUser extends BmobUser implements Serializable {
 
     public void setSex(Boolean sex) {
         this.sex = sex;
-    }
-
-    public String getUrl_photo() {
-        return url_photo;
-    }
-
-    public void setUrl_photo(String url_photo) {
-        this.url_photo = url_photo;
     }
 
     public UserZone getUserZone() {

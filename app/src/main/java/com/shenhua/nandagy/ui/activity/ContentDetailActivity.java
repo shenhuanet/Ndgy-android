@@ -24,6 +24,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
+import com.shenhua.commonlibs.base.BaseWebViewClient;
+import com.shenhua.commonlibs.callback.JSInterface;
 import com.shenhua.commonlibs.mvp.BaseMvpActivity;
 import com.shenhua.commonlibs.utils.ScreenUtils;
 import com.shenhua.nandagy.R;
@@ -112,9 +114,8 @@ public class ContentDetailActivity extends BaseMvpActivity<ContentDetailPresente
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setAllowFileAccess(true);
-        // TODO: 3/23/2017  chromium: [INFO:CONSOLE(1)] "Uncaught TypeError: window.imgClickListener.openImage is not a function", source:  (1)
-//        mWebView.addJavascriptInterface(new JSInterface(this), "imgClickListener");
-//        mWebView.setWebViewClient(new BaseWebViewClient());
+        mWebView.addJavascriptInterface(new JSInterface(this), "imgClickListener");
+        mWebView.setWebViewClient(new BaseWebViewClient());
     }
 
     @OnClick(R.id.fab)

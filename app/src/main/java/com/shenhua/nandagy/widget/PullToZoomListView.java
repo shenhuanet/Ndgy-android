@@ -301,7 +301,7 @@ public class PullToZoomListView extends RecyclerView implements AbsListView.OnSc
                 try {
                     this.mLastMotionY = paramMotionEvent.getY(paramMotionEvent.findPointerIndex(this.mActivePointerId));
                 } catch (IllegalArgumentException e) {
-                    // TODO: handle exception
+                    e.printStackTrace();
                 }
                 break;
             case MotionEvent.ACTION_POINTER_UP:
@@ -353,7 +353,6 @@ public class PullToZoomListView extends RecyclerView implements AbsListView.OnSc
                 f2 = this.mScale - (this.mScale - 1.0F) * PullToZoomListView.sInterpolator.getInterpolation(f1);
                 localLayoutParams = PullToZoomListView.this.mHeaderContainer.getLayoutParams();
                 if (f2 > 1.0F) {
-                    Log.d("mmm", "f2>1.0");
                     localLayoutParams.height = PullToZoomListView.this.mHeaderHeight;
                     localLayoutParams.height = ((int) (f2 * PullToZoomListView.this.mHeaderHeight));
                     PullToZoomListView.this.mHeaderContainer.setLayoutParams(localLayoutParams);

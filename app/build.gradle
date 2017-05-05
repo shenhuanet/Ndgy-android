@@ -45,10 +45,11 @@ dependencies {
     compile project(':library:WheelPicker')
     compile project(':library:Boxing')
     compile project(':library:FloatingTextView')
+    compile project(':library:keyboard')
     // shenhua
     compile 'com.shenhua.libs:bannerview:1.0.1'
     compile 'com.shenhua.libs:slidinglayout:1.1'
-    compile 'com.shenhua.libs:commonlibs:1.1.8'
+    compile 'com.shenhua.libs:commonlibs:1.1.9'
     compile 'com.shenhua.libs:library:1.0.0'
     // segmented
     compile 'info.hoang8f:android-segmented:1.0.6'
@@ -69,6 +70,5 @@ dependencies {
     //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
     //    compile 'cn.bmob.android:http-legacy:1.0'
     //    compile files('libs/sunjce_provider.jar')
-    compile project(':library:keyboard')
     //    compile files('libs/BmobSDK_3.5.1_20160719.jar')
 }

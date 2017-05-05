@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
@@ -17,9 +19,12 @@ import android.widget.ProgressBar;
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.base.BaseWebViewClient;
+import com.shenhua.commonlibs.utils.ImageUtils;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.callback.WebImageJSInterface;
+import com.shenhua.nandagy.service.Constants;
 import com.shenhua.nandagy.service.HttpService;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +56,7 @@ public class WebActivity extends BaseActivity {
         url = intent.getStringExtra("url");
     }
 
-    @SuppressLint({"JavascriptInterface", "SetJavaScriptEnabled", "AddJavascriptInterface"})
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onResume() {
         super.onResume();
@@ -63,38 +68,34 @@ public class WebActivity extends BaseActivity {
             settings.setBuiltInZoomControls(false);
             settings.setSupportZoom(true);
             mWebView.setDrawingCacheEnabled(true);
-            mWebView.addJavascriptInterface(new WebImageJSInterface(this), "imgClickListener");
             mWebView.setWebViewClient(new MyWebViewClient());
             mWebView.loadUrl(HttpService.SCHOOL_WEB_HOST + url);
             isInit = true;
         }
     }
 
-    // TODO: 3/28/2017 shouldn't use
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        MenuItem.OnMenuItemClickListener handler = new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
+        MenuItem.OnMenuItemClickListener handler = item -> {
+            if (!TextUtils.isEmpty(imgUrl)) {
                 if (item.getItemId() == 0) {
-                    toast("还未实现");
-//                    startActivity(new Intent(ContentActivity.this, ViewImgActivity.class).putExtra("url", imgUrl));
+                    ArrayList<String> imgs = new ArrayList<>();
+                    imgs.add(imgUrl);
+                    startActivity(new Intent(this, ImageViewerActivity.class).putStringArrayListExtra(ImageViewerActivity.EXTRA_KEY, imgs));
                 } else {
-                    toast("还未实现");
+                    ImageUtils.downLoadImageDefault(this, imgUrl, Constants.FileC.PICTURE_SAVE_DIR);
                 }
-                return true;
             }
+            return true;
         };
         if (v instanceof WebView) {
             WebView.HitTestResult result = ((WebView) v).getHitTestResult();
             int type = result.getType();
             if (type == WebView.HitTestResult.IMAGE_TYPE || type == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
                 imgUrl = result.getExtra();
-                menu.add(0, 0, 0, "查看图片")
-                        .setOnMenuItemClickListener(handler);
-                menu.add(0, 1, 0, "保存图片")
-                        .setOnMenuItemClickListener(handler);
+                menu.add(0, 0, 0, "查看图片").setOnMenuItemClickListener(handler);
+                menu.add(0, 1, 0, "保存图片").setOnMenuItemClickListener(handler);
             }
         }
 
@@ -143,7 +144,7 @@ public class WebActivity extends BaseActivity {
         }
 
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             return false;
         }
     }

@@ -21,14 +21,18 @@ import com.shenhua.commonlibs.base.BaseListAdapter;
 import com.shenhua.commonlibs.mvp.BaseMvpFragment;
 import com.shenhua.commonlibs.utils.BusBooleanEvent;
 import com.shenhua.commonlibs.utils.BusProvider;
+import com.shenhua.commonlibs.utils.DESUtils;
 import com.shenhua.commonlibs.widget.InnerGridView;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.JiaowuDataAdapter;
 import com.shenhua.nandagy.bean.ContentPassesData;
 import com.shenhua.nandagy.bean.JiaowuData;
+import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.presenter.JiaowuPresenter;
 import com.shenhua.nandagy.service.Constants;
 import com.shenhua.nandagy.ui.activity.ContentDetailActivity;
+import com.shenhua.nandagy.ui.activity.jiaowu.BindingActivity;
+import com.shenhua.nandagy.ui.activity.jiaowu.ScoreActivity;
 import com.shenhua.nandagy.ui.activity.me.LoginActivity;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 import com.shenhua.nandagy.view.JiaowuView;
@@ -39,6 +43,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bmob.v3.BmobUser;
 
 /**
  * 教务处
@@ -177,20 +182,19 @@ public class JiaoWuFragment extends BaseMvpFragment<JiaowuPresenter, JiaowuView>
     }
 
     private void doIsBinding(boolean showMsg) {
-        // TODO: 4/11/2017
-//        MyUser user = UserUtils.getInstance().isBinding(getContext());
-//        if (user != null) {
-//            Intent intent = new Intent(getContext(), ScoreActivity.class);
-//            intent.putExtra("name_num", DESUtils.getInstance().decrypt(user.getName_num()));
-//            intent.putExtra("name_id", DESUtils.getInstance().decrypt(user.getName_id()));
-//            startActivity(intent);
-//        } else {
-//            if (showMsg) {
-//                toast("请先登录教务系统");
-//            }
-//            Intent intent = new Intent(getContext(), BindingActivity.class);
-//            startActivityForResult(intent, Constants.Code.REQUEST_CODE_NAV_TO_BINDING);
-//        }
+        if (UserUtils.getInstance().isBinding(getContext())) {
+            MyUser user = BmobUser.getCurrentUser(MyUser.class);
+            Intent intent = new Intent(getContext(), ScoreActivity.class);
+            intent.putExtra("name_num", DESUtils.getInstance().decrypt(user.getName_num()));
+            intent.putExtra("name_id", DESUtils.getInstance().decrypt(user.getName_id()));
+            startActivity(intent);
+        } else {
+            if (showMsg) {
+                toast("请先登录教务系统");
+            }
+            Intent intent = new Intent(getContext(), BindingActivity.class);
+            startActivityForResult(intent, Constants.Code.REQUEST_CODE_NAV_TO_BINDING);
+        }
     }
 
     @Override

@@ -47,8 +47,6 @@ public class UserZoneUtils {
                 .putString("qual", userZone.getQual())
                 .putString("sign", userZone.getSign())
                 .putString("birth", userZone.getBirth())
-//                .putBoolean("sex", userZone.getSex())
-//                .putString("photo", userZone.getPhoto())
                 .putString("userObjId", userZone.getUser() == null ? "" : userZone.getUser().getObjectId())
                 .apply();
     }
@@ -70,8 +68,6 @@ public class UserZoneUtils {
         userZone.setQual(pref.getString("qual", null));
         userZone.setSign(pref.getString("sign", null));
         userZone.setBirth(pref.getString("birth", null));
-//        userZone.setSex(pref.getBoolean("sex", false));
-//        userZone.setPhoto(pref.getString("photo", ""));
         userZone.setUser(UserUtils.getInstance().getBasicUser(context));
         return userZone;
     }

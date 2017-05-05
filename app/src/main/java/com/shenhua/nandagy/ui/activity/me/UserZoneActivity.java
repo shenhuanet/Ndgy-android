@@ -32,6 +32,7 @@ import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
 import com.shenhua.nandagy.databinding.ActivityUserZoneBinding;
+import com.shenhua.nandagy.ui.activity.ImageViewerActivity;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 import com.shenhua.nandagy.utils.bmobutils.UserZoneUtils;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
@@ -84,6 +85,7 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
     private static final int REQUEST_SELECT = 13;
     private boolean accessFromMe;
     private String zoneObjectId;
+    private String imageUrl;
     private ActivityUserZoneBinding binding;
     private UserZone userZoneBean;
 
@@ -115,7 +117,8 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
                 public void done(UserZone userZone, BmobException e) {
                     if (e == null) {
                         binding.setUserZone(userZone);
-                        Glide.with(UserZoneActivity.this).load(userZone.getUser().getUrl_photo())
+                        imageUrl = userZone.getUser().getAvatar().getUrl();
+                        Glide.with(UserZoneActivity.this).load(imageUrl)
                                 .error(userZone.getUser().getSex() ? R.drawable.img_photo_woman : R.drawable.img_photo_man)
                                 .centerCrop().into(mCircleImageView);
                         if (accessFromMe) {
@@ -137,7 +140,8 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
             userZoneBean = uz;
             binding.setUserZone(uz);
             if (user != null) {
-                Glide.with(UserZoneActivity.this).load(user.getUrl_photo())
+                imageUrl = user.getAvatar().getFileUrl();
+                Glide.with(UserZoneActivity.this).load(imageUrl)
                         .error(user.getSex() ? R.drawable.img_photo_woman : R.drawable.img_photo_man)
                         .centerCrop().into(mCircleImageView);
             }
@@ -157,8 +161,6 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
         TextView take = (TextView) content.findViewById(R.id.tv_take_photo);
         take.setOnClickListener(v -> {
             mBpv.hide();
-            // finalPhotoPath = Crop.takePhoto(UserZoneActivity.this, getCacheDir().getPath(), zoneObjectId + cacheHou);
-
             Boxing.of().takePicture(this, CameraActivity.class, REQUEST_TAKE);
 
         });
@@ -183,7 +185,9 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
         if (accessFromMe && !mBpv.getIsShowing()) {
             mBpv.show();
         } else {
-            // TODO: 3/30/2017  showPhotoDetail();
+            ArrayList<String> imgs = new ArrayList<>();
+            imgs.add(imageUrl);
+            startActivity(new Intent(this, ImageViewerActivity.class).putStringArrayListExtra(ImageViewerActivity.EXTRA_KEY, imgs));
         }
     }
 
@@ -236,7 +240,6 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
             Log.d(TAG, "onActivityResult: 拍照裁剪路径---->" + data.getData().getPath());
 
 
-
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_EDIT) {
                 updataViews(true);
@@ -271,33 +274,20 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
             public void done(BmobException e) {
                 LoadingAlertDialog.getInstance(UserZoneActivity.this).dissmissLoadDialog();
                 if (e == null) {
-                    String result = bmobFile.getFileUrl();
-                    UserUtils.getInstance().updateUserInfo(UserZoneActivity.this, "url_photo", result);
-                    Glide.with(UserZoneActivity.this).load(result).centerCrop().into(mCircleImageView);
-                    Log.d(TAG, "done: 头像更新成功:" + result);
-                    updatePhotoBase(result);
-                } else {
-                    toast("头像更新失败：" + e.getMessage());
-                }
-            }
-        });
-    }
-
-    /**
-     * 更新bmob user表的数据
-     *
-     * @param url photo url
-     */
-    private void updatePhotoBase(String url) {
-        MyUser user = BmobUser.getCurrentUser(MyUser.class);
-        user.setUrl_photo(url);
-        user.update(user.getObjectId(), new UpdateListener() {
-            @Override
-            public void done(BmobException e) {
-                if (e == null) {
-                    // http://bmob-cdn-6329.b0.upaiyun.com/2017/04/15/e0efe82484674fa7974ebeaeab187554.jpg
-                    UserUtils.getInstance().updateUserInfo(UserZoneActivity.this, "url_photo", url);
-                    toast("头像更新成功！");
+                    MyUser user = BmobUser.getCurrentUser(MyUser.class);
+                    user.setAvatar(bmobFile);
+                    user.update(user.getObjectId(), new UpdateListener() {
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                toast("头像更新成功！");
+                            } else {
+                                toast("头像更新失败：" + e.getMessage());
+                            }
+                        }
+                    });
+                    UserUtils.getInstance().updateUserInfo(UserZoneActivity.this, "url_photo", bmobFile.getFileUrl());
+                    Glide.with(UserZoneActivity.this).load(bmobFile.getFileUrl()).centerCrop().into(mCircleImageView);
                 } else {
                     toast("头像更新失败：" + e.getMessage());
                 }

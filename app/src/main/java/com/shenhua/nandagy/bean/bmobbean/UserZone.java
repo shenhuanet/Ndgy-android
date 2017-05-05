@@ -15,8 +15,6 @@ public class UserZone extends BmobObject implements Serializable {
     private Integer dynamic;
     private Integer mi;
     private Integer exper;
-//    private boolean sex;
-//    private String photo;
     private String dynamicStr;
     private String name;
     private String sign;
@@ -30,22 +28,6 @@ public class UserZone extends BmobObject implements Serializable {
 
     public UserZone() {
     }
-
-//    public boolean getSex() {
-//        return sex;
-//    }
-//
-//    public void setSex(boolean sex) {
-//        this.sex = sex;
-//    }
-//
-//    public String getPhoto() {
-//        return photo;
-//    }
-//
-//    public void setPhoto(String photo) {
-//        this.photo = photo;
-//    }
 
     public Integer getDynamic() {
         return dynamic;

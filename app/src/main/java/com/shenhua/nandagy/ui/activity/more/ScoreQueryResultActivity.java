@@ -12,6 +12,7 @@ import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.utils.ImageUtils;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.scorebean.ScoreCETBean;
+import com.shenhua.nandagy.service.Constants;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreBecFragment;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreCAPFragment;
 import com.shenhua.nandagy.ui.fragment.scorequery.ScoreCetResultFragment;
@@ -100,7 +101,7 @@ public class ScoreQueryResultActivity extends BaseActivity {
                 Bitmap bitmap = viewShot(frameLayout);
                 try {
                     // TODO: 4/7/2017 权限请求
-                    ImageUtils.saveBitmapToSDCard(this, bitmap, String.valueOf(System.currentTimeMillis()), "ndgy", true);
+                    ImageUtils.saveBitmapImage(this, bitmap, String.valueOf(System.currentTimeMillis()), Constants.FileC.PICTURE_SAVE_DIR, true);
                     showSnackBar("图片保存成功");
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -76,7 +76,7 @@ public class ScoreQueryTask<T> extends AsyncTask<Integer, Integer, ScoreQueryRes
     }
 
     private ScoreQueryResult doQueryMandarin() {
-        ScoreQueryResult resultBean = new ScoreQueryResult();
+        ScoreQueryResult<String> resultBean = new ScoreQueryResult<>();
         Document doc;
         Map<String, String> cookies;
         Connection.Response res;
