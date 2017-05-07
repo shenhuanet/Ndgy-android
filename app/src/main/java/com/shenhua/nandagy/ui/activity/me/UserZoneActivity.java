@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.AppBarLayout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,9 +32,11 @@ import com.shenhua.nandagy.bean.bmobbean.MyUser;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
 import com.shenhua.nandagy.databinding.ActivityUserZoneBinding;
 import com.shenhua.nandagy.ui.activity.ImageViewerActivity;
+import com.shenhua.nandagy.utils.bmobutils.AvatarUtils;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 import com.shenhua.nandagy.utils.bmobutils.UserZoneUtils;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
+import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -79,15 +80,13 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
     TextView mZoneMiTv;
     @BindView(R.id.bpv)
     BaseShareView mBpv;
-    private static final String TAG = "UserZoneActivity";
     public static final int REQUEST_EDIT = 1;
     private static final int REQUEST_TAKE = 12;
     private static final int REQUEST_SELECT = 13;
     private boolean accessFromMe;
-    private String zoneObjectId;
-    private String imageUrl;
     private ActivityUserZoneBinding binding;
     private UserZone userZoneBean;
+    private String zoneObjectId;
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
@@ -117,10 +116,8 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
                 public void done(UserZone userZone, BmobException e) {
                     if (e == null) {
                         binding.setUserZone(userZone);
-                        imageUrl = userZone.getUser().getAvatar().getUrl();
-                        Glide.with(UserZoneActivity.this).load(imageUrl)
-                                .error(userZone.getUser().getSex() ? R.drawable.img_photo_woman : R.drawable.img_photo_man)
-                                .centerCrop().into(mCircleImageView);
+                        userZoneBean = userZone;
+                        AvatarUtils.loadUserAvatar(UserZoneActivity.this, userZone.getUser(), mCircleImageView);
                         if (accessFromMe) {
                             mZoneIdTv.setText(String.format(getString(R.string.userzone_text_objid), zoneObjectId));
                             UserZoneUtils.getInstance().saveUserZone(UserZoneActivity.this, userZone);
@@ -139,12 +136,7 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
             MyUser user = BmobUser.getCurrentUser(MyUser.class);
             userZoneBean = uz;
             binding.setUserZone(uz);
-            if (user != null) {
-                imageUrl = user.getAvatar().getFileUrl();
-                Glide.with(UserZoneActivity.this).load(imageUrl)
-                        .error(user.getSex() ? R.drawable.img_photo_woman : R.drawable.img_photo_man)
-                        .centerCrop().into(mCircleImageView);
-            }
+            AvatarUtils.loadUserAvatar(UserZoneActivity.this, user, mCircleImageView);
             mZoneIdTv.setText(String.format(getString(R.string.userzone_text_objid), zoneObjectId));
         }
     }
@@ -186,7 +178,7 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
             mBpv.show();
         } else {
             ArrayList<String> imgs = new ArrayList<>();
-            imgs.add(imageUrl);
+            imgs.add(AvatarUtils.getOtherUserAvatar(userZoneBean));
             startActivity(new Intent(this, ImageViewerActivity.class).putStringArrayListExtra(ImageViewerActivity.EXTRA_KEY, imgs));
         }
     }
@@ -232,31 +224,30 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult: " + requestCode + "  " + resultCode);
-
-        if (data == null)
-            Log.d(TAG, "onActivityResult: 拍照回调 空");
-        else
-            Log.d(TAG, "onActivityResult: 拍照裁剪路径---->" + data.getData().getPath());
-
-
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_EDIT) {
-                updataViews(true);
-            } else if (requestCode == REQUEST_TAKE) {
-                if (data == null)
-                    Log.d(TAG, "onActivityResult: 拍照回调 空");
-                else
-                    Log.d(TAG, "onActivityResult: 拍照裁剪路径---->" + data.getData().getPath());
-            } else {
-                ArrayList<BaseMedia> medias = Boxing.getResult(data);
-                if (medias == null) {
-                    Toast.makeText(this, "图片编辑失败", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Log.d(TAG, "onActivityResult: " + medias.get(0).getPath());
-                upLoadPhoto(medias.get(0).getPath());
+            switch (requestCode) {
+                case REQUEST_EDIT:
+                    updataViews(true);
+                    break;
+                case REQUEST_TAKE:
+                    if (data != null) {
+                        upLoadPhoto(data.getData().getPath());
+                    } else {
+                        toast("照片选择发生错误");
+                    }
+                    break;
+                case REQUEST_SELECT:
+                    ArrayList<BaseMedia> medias = Boxing.getResult(data);
+                    if (medias != null && medias.size() > 0) {
+                        upLoadPhoto(medias.get(0).getPath());
+                    } else {
+                        toast("照片选择发生错误");
+                    }
+                    break;
             }
+        }
+        if (resultCode == UCrop.RESULT_ERROR) {
+            toast("操作失败");
         }
     }
 

@@ -20,6 +20,7 @@ public class CircleModelImpl implements CircleModel<List<SchoolCircle>> {
         BmobQuery<SchoolCircle> query = new BmobQuery<>();
         query.setLimit(50);
         query.include("userzone.user");
+        query.order("-createdAt");// 降序排列
         query.findObjects(new FindListener<SchoolCircle>() {
             @Override
             public void done(List<SchoolCircle> list, BmobException e) {

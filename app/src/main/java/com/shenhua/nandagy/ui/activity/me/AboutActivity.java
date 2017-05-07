@@ -72,7 +72,7 @@ public class AboutActivity extends BaseActivity {
     private void initShareView() {
         mShareView.setInterpolator(new BounceInterpolator());
         View content = mShareView.getContentView();
-        GridView gridView = (GridView) content.findViewById(R.id.gridview);
+        GridView gridView = (GridView) content.findViewById(R.id.gridView);
         List<BaseImageTextItem> items = new ArrayList<>();
         String[] titles = getResources().getStringArray(R.array.share_items);
         int[] resIds = {R.drawable.ic_share_qq, R.drawable.ic_share_wechat, R.drawable.ic_share_moments,

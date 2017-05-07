@@ -5,13 +5,11 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.shenhua.commonlibs.handler.BaseThreadHandler;
 import com.shenhua.commonlibs.handler.CommonUiRunnable;
 import com.shenhua.commonlibs.utils.BusProvider;
@@ -33,6 +31,7 @@ import com.shenhua.nandagy.ui.activity.me.PublishDynamicActivity;
 import com.shenhua.nandagy.ui.activity.me.SettingActivity;
 import com.shenhua.nandagy.ui.activity.me.UserAccountActivity;
 import com.shenhua.nandagy.ui.activity.me.UserZoneActivity;
+import com.shenhua.nandagy.utils.bmobutils.AvatarUtils;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 import com.shenhua.nandagy.utils.bmobutils.UserZoneUtils;
 import com.shenhua.nandagy.widget.LoadingAlertDialog;
@@ -57,7 +56,6 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 public class UserFragment extends BaseDefaultFragment {
 
-    private static final String TAG = "UserFragment";
     public static final int EVENT_TYPE_MESSAGE = 1;
     public static final int EVENT_TYPE_SETTING = 2;
     public static final int EVENT_TYPE_ABOUT = 3;
@@ -113,14 +111,8 @@ public class UserFragment extends BaseDefaultFragment {
         MyUser user = BmobUser.getCurrentUser(MyUser.class);
         if (user != null) {
             binding.setUser(user);
-            // TODO: 5/5/2017 NullPointerException getAvatar
-            String url = user.getAvatar().getFileUrl();
-            Log.d(TAG, "updateViews: 用户头像：" + url);
-            Glide.with(getContext()).load(url)
-                    .error(user.getSex() ? R.drawable.img_photo_woman : R.drawable.img_photo_man)
-                    .centerCrop().into(mPhotoImageView);
+            AvatarUtils.loadUserAvatar(getContext(), user, mPhotoImageView);
             if (UserUtils.getInstance().isCreateZone()) {
-                Log.d(TAG, "updateViews: 空间id：" + UserZoneUtils.getInstance().getUserZoneObjId(getContext()));
                 if (upgrade) {
                     String zoneObjId = UserUtils.getInstance().getUserzoneObjId(getContext());
                     BmobQuery<UserZone> query = new BmobQuery<>();
@@ -179,12 +171,14 @@ public class UserFragment extends BaseDefaultFragment {
      * 进入用户空间
      */
     private void navToUserZone() {
-        Intent intent = new Intent(getContext(), UserZoneActivity.class);
-        Bundle bundle = new Bundle();
-        intent.putExtra("isMyself", true);
-        intent.putExtra("zoneObjectId", UserUtils.getInstance().getUserzoneObjId(getContext()));
-        intent.putExtras(bundle);
-        sceneTransitionTo(intent, Constants.Code.REQUEST_CODE_NAV_TO_USER_ZONE, rootView, R.id.iv_user_photo, "photos");
+        mPhotoImageView.postDelayed(() -> {
+            Intent intent = new Intent(getContext(), UserZoneActivity.class);
+            Bundle bundle = new Bundle();
+            intent.putExtra("isMyself", true);
+            intent.putExtra("zoneObjectId", UserUtils.getInstance().getUserzoneObjId(getContext()));
+            intent.putExtras(bundle);
+            sceneTransitionTo(intent, Constants.Code.REQUEST_CODE_NAV_TO_USER_ZONE, rootView, R.id.iv_user_photo, "photos");
+        }, 1500);
     }
 
     /**
@@ -223,7 +217,6 @@ public class UserFragment extends BaseDefaultFragment {
                 LoadingAlertDialog.getInstance(getContext()).dissmissLoadDialog();
                 if (e == null) {
                     // 创建一条空间数据后，查询该数据
-                    Log.d(TAG, "空间创建完毕: " + objectId);
                     BmobQuery<UserZone> query = new BmobQuery<>();
                     query.getObject(objectId, new QueryListener<UserZone>() {
 
@@ -257,7 +250,6 @@ public class UserFragment extends BaseDefaultFragment {
                     public void done(BmobException e) {
                         if (e == null) {
                             toast("用户空间创建成功");
-                            Log.d(TAG, "done: zoneObjectId;" + objectId);
                             UserUtils.getInstance().updateUserInfo(getContext(), "zoneObjId", objectId);
                             navToUserZone();
                         } else {
@@ -305,6 +297,7 @@ public class UserFragment extends BaseDefaultFragment {
         if (requestCode == Constants.Code.REQUEST_CODE_NAV_TO_USER_ACCOUNT && resultCode == UserAccountActivity.LOGOUT_SUCCESS) {
             binding.setUser(null);
             binding.setUserZone(null);
+            mPhotoImageView.setImageResource(R.drawable.img_photo_man);
         }
     }
 
