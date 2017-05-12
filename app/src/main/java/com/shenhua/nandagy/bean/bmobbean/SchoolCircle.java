@@ -19,20 +19,14 @@ public class SchoolCircle extends BmobObject implements Serializable {
     private String content;
     private List<BmobFile> pics;
     private BmobRelation likes;
+    private BmobRelation hates;
+    private Integer great;
     private Integer hate;
     private Integer comment;
     private Integer share;
     private boolean isFavorite;
     private boolean isLove;
     private boolean isAudit;
-
-    public UserZone getUserZone() {
-        return userzone;
-    }
-
-    public void setUserZone(UserZone userZone) {
-        this.userzone = userZone;
-    }
 
     public String getContent() {
         return content;
@@ -56,6 +50,22 @@ public class SchoolCircle extends BmobObject implements Serializable {
 
     public void setLikes(BmobRelation likes) {
         this.likes = likes;
+    }
+
+    public BmobRelation getHates() {
+        return hates;
+    }
+
+    public void setHates(BmobRelation hates) {
+        this.hates = hates;
+    }
+
+    public Integer getGreat() {
+        return great;
+    }
+
+    public void setGreat(Integer great) {
+        this.great = great;
     }
 
     public Integer getHate() {
@@ -104,5 +114,13 @@ public class SchoolCircle extends BmobObject implements Serializable {
 
     public void setAudit(boolean audit) {
         isAudit = audit;
+    }
+
+    public UserZone getUserzone() {
+        return userzone;
+    }
+
+    public void setUserzone(UserZone userzone) {
+        this.userzone = userzone;
     }
 }

@@ -3,6 +3,7 @@ package com.shenhua.nandagy.utils.bmobutils;
 import android.content.Context;
 import android.text.TextUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.shenhua.nandagy.R;
@@ -33,26 +34,60 @@ public class AvatarUtils {
     }
 
     private static void setErrorAvatar(Context context, MyUser user, ImageView view) {
-        boolean sex = user.getSex();
-        Glide.with(context).load(sex ? R.drawable.img_photo_woman : R.drawable.img_photo_man)
-                .centerCrop().into(view);
+        try {
+            boolean sex = user.getSex();
+            Glide.with(context).load(sex ? R.drawable.img_photo_woman : R.drawable.img_photo_man)
+                    .centerCrop().into(view);
+        } catch (Exception e) {
+            Glide.with(context).load(R.drawable.img_photo_woman).centerCrop().into(view);
+        }
+    }
+
+    public static void displayUserAvatar(Context context, UserZone userZone, ImageView view) {
+        String result = getOtherUserAvatar(userZone);
+        switch (result) {
+            case "error":
+            case "man":
+                view.setImageResource(R.drawable.img_photo_man);
+                break;
+            case "woman":
+                view.setImageResource(R.drawable.img_photo_woman);
+                break;
+            default:
+                Glide.with(context).load(result).centerCrop().into(view);
+                break;
+        }
     }
 
     public static String getOtherUserAvatar(UserZone userZone) {
         try {
             if (userZone.getUser().getAvatar() == null) {
-                return null;
+                return "error";
             } else {
                 String url = userZone.getUser().getAvatar().getFileUrl();
                 if (!TextUtils.isEmpty(url)) {
                     return url;
                 } else {
-                    return null;
+                    if (userZone.getUser().getSex()) {
+                        return "woman";
+                    } else {
+                        return "man";
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return "error";
+        }
+    }
+
+    public static void loadUserNick(UserZone userZone, TextView view) {
+        try {
+            String nick = userZone.getUser().getNick();
+            view.setText(nick);
+        } catch (Exception e) {
+            e.printStackTrace();
+            view.setText("佚名");
         }
     }
 }

@@ -114,7 +114,10 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
     private void publish(List<BmobFile> bmobFiles) {
         UserZone userZone = UserZoneUtils.getInstance().getUserZone(this);
         SchoolCircle circle = new SchoolCircle();
-        circle.setUserZone(userZone);
+        circle.setUserzone(userZone);
+        circle.setGreat(0);
+        circle.setHate(0);
+        circle.setComment(0);
         circle.setContent(mPublishEt.getText().toString());
         if (bmobFiles != null) {
             circle.setPics(bmobFiles);
@@ -123,8 +126,8 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
             @Override
             public void done(String s, BmobException e) {
                 if (e == null) {
-                    Log.d("shenhuaLog -- " + PublishDynamicActivity.class.getSimpleName(), "done: " + s);
                     toast("发布成功");
+
                     // 执行跳转 finish
                 } else {
                     toast("发布失败:" + e.getMessage());

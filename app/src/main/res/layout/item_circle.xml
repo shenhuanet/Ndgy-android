@@ -1,76 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:background="@drawable/bg_layout_selector"
-    android:baselineAligned="false"
-    android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    android:paddingTop="10dp">
+    android:clickable="true"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <com.shenhua.commonlibs.widget.CircleImageView
-            android:id="@+id/iv_user_photo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/img_beifeng" />
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.shenhua.commonlibs.widget.CircleImageView
+                android:id="@+id/iv_user_photo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/img_photo_man" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_user_nick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    tools:text="●●●●" />
+
+                <TextView
+                    android:id="@+id/tv_time_ago"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    tools:text="▃▃▃▃▃" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="北风"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+                tools:text="■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.shenhua.commonlibs.widget.InnerGridView
+                android:id="@+id/gridView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="23分钟前"
-                android:textSize="12sp" />
+                android:layout_marginTop="10dp"
+                android:numColumns="3"
+                android:scrollbars="none" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/layout_content"
+    <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:background="#F8F9F8"
+        android:gravity="center_vertical"
+        android:minHeight="40dp"
+        android:orientation="horizontal"
+        app:divider="@drawable/bg_divider_gray_tool"
+        app:dividerPadding="5dp"
+        app:showDividers="middle">
 
-        <TextView
-            android:id="@+id/tv_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="如果你是一个大学生，android studio中如何设置注释模板，在开发程序的时候，我们一般都会给文件自动添加上一些关于文件的注释信息，比如开发者的名字，开发的时间，开发者信息。"
-            android:textColor="@color/colorText"
-            android:textSize="14sp" />
+        <FrameLayout
+            android:id="@+id/f_fav"
+            style="@style/CircleToolStyle">
 
-        <com.shenhua.commonlibs.widget.InnerGridView
-            android:id="@+id/gridView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:numColumns="auto_fit"
-            android:scrollbars="none" />
+            <TextView
+                android:id="@+id/tv_fav"
+                style="@style/CircleToolTextViewStyle"
+                android:drawableLeft="@drawable/ic_fav_selector" />
 
-    </LinearLayout>
+        </FrameLayout>
 
-    <include layout="@layout/view_circle_tool" />
+        <FrameLayout
+            android:id="@+id/f_comment"
+            style="@style/CircleToolStyle">
+
+            <TextView
+                android:id="@+id/tv_comment"
+                style="@style/CircleToolTextViewStyle"
+                android:drawableLeft="@drawable/ic_comment_selector"
+                tools:text="30" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/f_hate"
+            style="@style/CircleToolStyle">
+
+            <TextView
+                android:id="@+id/tv_hate"
+                style="@style/CircleToolTextViewStyle"
+                android:drawableLeft="@drawable/ic_hate_selector"
+                tools:text="30" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/f_great"
+            style="@style/CircleToolStyle">
+
+            <TextView
+                android:id="@+id/tv_great"
+                style="@style/CircleToolTextViewStyle"
+                android:drawableLeft="@drawable/ic_great_selector"
+                tools:text="30" />
+
+        </FrameLayout>
+
+    </android.support.v7.widget.LinearLayoutCompat>
 
 </LinearLayout>

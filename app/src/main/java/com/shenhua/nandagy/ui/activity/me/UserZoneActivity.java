@@ -178,8 +178,9 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
             mBpv.show();
         } else {
             ArrayList<String> imgs = new ArrayList<>();
+            // TODO: 5/9/2017 男女头像详情查看,考虑使用imageView getTag()
             imgs.add(AvatarUtils.getOtherUserAvatar(userZoneBean));
-            startActivity(new Intent(this, ImageViewerActivity.class).putStringArrayListExtra(ImageViewerActivity.EXTRA_KEY, imgs));
+            startActivity(new Intent(this, ImageViewerActivity.class).putStringArrayListExtra(ImageViewerActivity.EXTRA_IMGS_KEY, imgs));
         }
     }
 

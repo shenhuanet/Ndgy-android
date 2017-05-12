@@ -35,23 +35,22 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.activity.SplashActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppWelcome">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        android:name=".ui.activity.SplashActivity"
+        android:label="@string/app_name"
+        android:theme="@style/AppWelcome">
+        <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+
         <!--<activity-->
-        <!--android:name=".ui.activity.me.PublishDynamicActivity"-->
-        <!--android:label="@string/app_name"-->
-        <!--android:theme="@style/AppThemeFitsSystemWindows"-->
-        <!--android:windowSoftInputMode="adjustResize">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.MAIN" />-->
-        <!--<category android:name="android.intent.category.LAUNCHER" />-->
-        <!--</intent-filter>-->
+            <!--android:name=".ui.activity.more.CircleActivity"-->
+            <!--android:label="@string/app_name">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         <!--</activity>-->
 
         <activity android:name=".ui.activity.MainActivity" />
@@ -74,6 +73,7 @@
         <activity android:name=".ui.activity.more.StudyAreaActivity" />
         <activity android:name=".ui.activity.more.EmployActivity" />
         <activity android:name=".ui.activity.more.CircleActivity" />
+        <activity android:name=".ui.activity.more.CircleDetailActivity" />
         <activity android:name=".ui.activity.more.CommunityActivity" />
         <activity android:name=".ui.activity.more.LostFoundActivity" />
         <activity android:name=".ui.activity.more.PaperPlaneActivity" />

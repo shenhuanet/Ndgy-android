@@ -178,7 +178,7 @@ public class UserFragment extends BaseDefaultFragment {
             intent.putExtra("zoneObjectId", UserUtils.getInstance().getUserzoneObjId(getContext()));
             intent.putExtras(bundle);
             sceneTransitionTo(intent, Constants.Code.REQUEST_CODE_NAV_TO_USER_ZONE, rootView, R.id.iv_user_photo, "photos");
-        }, 1500);
+        }, 500);
     }
 
     /**

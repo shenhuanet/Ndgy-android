@@ -18,6 +18,7 @@ public class CircleModelImpl implements CircleModel<List<SchoolCircle>> {
     public void toGetCircleData(HttpCallback<List<SchoolCircle>> callback) {
         callback.onPreRequest();
         BmobQuery<SchoolCircle> query = new BmobQuery<>();
+//        query.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);
         query.setLimit(50);
         query.include("userzone.user");
         query.order("-createdAt");// 降序排列

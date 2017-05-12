@@ -70,11 +70,7 @@ public class EmojiPagerFragment extends Fragment implements BaseRecyclerAdapter.
 
     @Override
     public void OnItemClick(View view, int position, EmojiGroup.EmojiBean data) {
-        if (mEmojiGroupItem == 0) {
-            EmojiLoader.getInstance().replaceEmoji(getContext(), mEditText, data.getTag());
-        } else {
-            EmojiLoader.getInstance().replaceEmoji(getContext(), mEditText, data.getTag());
-        }
+        EmojiLoader.getInstance().replaceEmoji(getContext(), mEditText, data.getTag());
     }
 
     public void setEditText(EditText editText) {

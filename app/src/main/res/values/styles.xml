@@ -198,20 +198,22 @@
         <item name="android:textColor">@color/colorText</item>
     </style>
 
-    <style name="CircleToolTextViewStyle">
+    <style name="CircleToolStyle">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:padding">5dp</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:gravity">center</item>
         <item name="android:clickable">true</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
-    <style name="DividerVertical">
-        <item name="android:layout_width">1px</item>
-        <item name="android:layout_height">10dp</item>
-        <item name="android:background">@color/colorDivider</item>
+    <style name="CircleToolTextViewStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="ToolbarRadioButton">

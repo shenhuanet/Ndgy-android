@@ -82,7 +82,7 @@ public class WebActivity extends BaseActivity {
                 if (item.getItemId() == 0) {
                     ArrayList<String> imgs = new ArrayList<>();
                     imgs.add(imgUrl);
-                    startActivity(new Intent(this, ImageViewerActivity.class).putStringArrayListExtra(ImageViewerActivity.EXTRA_KEY, imgs));
+                    startActivity(new Intent(this, ImageViewerActivity.class).putStringArrayListExtra(ImageViewerActivity.EXTRA_IMGS_KEY, imgs));
                 } else {
                     ImageUtils.downLoadImageDefault(this, imgUrl, Constants.FileC.PICTURE_SAVE_DIR);
                 }

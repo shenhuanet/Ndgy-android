@@ -69,6 +69,7 @@
     <string name="toolbar_title_user_zone_my">我的主页</string>
     <string name="toolbar_title_user_zone_edit">编辑空间</string>
     <string name="toolbar_title_more_circle">校内圈子</string>
+    <string name="toolbar_title_more_circle_detail">帖子详情</string>
     <string name="toolbar_title_more_community">社团百态</string>
     <string name="toolbar_title_more_lost">失物招领</string>
     <string name="toolbar_title_more_pager">纸飞机</string>

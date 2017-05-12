@@ -89,7 +89,7 @@ public abstract class HomeContentBaseFragment extends BaseMvpFragment<HomePresen
     }
 
     public void onReload() {
-
+        mEmptyLayout.setVisibility(View.INVISIBLE);
     }
 
 }

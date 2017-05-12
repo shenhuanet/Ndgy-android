@@ -76,4 +76,5 @@ public class UserZoneUtils {
         SharedPreferences pref = context.getSharedPreferences(PREF_USERZONE, Context.MODE_PRIVATE);
         return pref.getString("objectId", null);
     }
+
 }

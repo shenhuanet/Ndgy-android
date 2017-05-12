@@ -53,6 +53,7 @@ public class EmojiLoader {
         return sInstance;
     }
 
+    // TODO: 5/9/2017  开始前即加载所有表情,需要用的时候可根据LruCache加载
     static {
         sEmojiDrawable = new LruCache<String, Bitmap>(CACHE_MAX_SIZE) {
             @Override

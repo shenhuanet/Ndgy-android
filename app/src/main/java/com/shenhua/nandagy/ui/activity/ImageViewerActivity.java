@@ -36,20 +36,30 @@ public class ImageViewerActivity extends BaseActivity {
 
     @BindView(R.id.viewpager)
     ViewPager viewPager;
-    public static final String EXTRA_KEY = "imgs";
+    public static final String EXTRA_POSITION_KEY = "item";
+    public static final String EXTRA_IMGS_KEY = "imgs";
     private boolean isFull = true;
     private List<String> imgs;
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        imgs = getIntent().getStringArrayListExtra(EXTRA_KEY);
+        imgs = getIntent().getStringArrayListExtra(EXTRA_IMGS_KEY);
+        int mCurrentItem = 0;
+        try {
+            mCurrentItem = getIntent().getIntExtra("item", 0);
+        } catch (Exception e) {
+            mCurrentItem = 0;
+        }
         if (imgs == null || imgs.size() == 0) {
             finish();
         }
-        setupToolbarTitle(String.format("%d/" + imgs.size(), viewPager.getCurrentItem() + 1));
+
         viewPager.setPageMargin((int) (getResources().getDisplayMetrics().density * 15));
         viewPager.setAdapter(new ViewPagerAdapter());
+        viewPager.setCurrentItem(mCurrentItem);
+        setupToolbarTitle(String.format("%d/" + imgs.size(), viewPager.getCurrentItem() + 1));
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

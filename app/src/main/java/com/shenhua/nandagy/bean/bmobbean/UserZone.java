@@ -3,6 +3,7 @@ package com.shenhua.nandagy.bean.bmobbean;
 import java.io.Serializable;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * 用户空间工具类
@@ -25,6 +26,7 @@ public class UserZone extends BmobObject implements Serializable {
     private String qual;
     private String highSchool;
     private MyUser user;
+    private BmobRelation favorite;
 
     public UserZone() {
     }
@@ -139,5 +141,18 @@ public class UserZone extends BmobObject implements Serializable {
 
     public void setUser(MyUser user) {
         this.user = user;
+    }
+
+    public BmobRelation getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(BmobRelation favorite) {
+        this.favorite = favorite;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return getObjectId().equals(((UserZone) obj).getObjectId());
     }
 }
