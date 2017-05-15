@@ -1,7 +1,8 @@
 package com.shenhua.nandagy.model;
 
-import com.shenhua.commonlibs.callback.HttpCallback;
 import com.shenhua.nandagy.bean.bmobbean.SchoolCircle;
+import com.shenhua.nandagy.callback.CircleLoaderCallback;
+import com.shenhua.nandagy.utils.DataLoadType;
 
 import java.util.List;
 
@@ -15,13 +16,13 @@ import cn.bmob.v3.listener.FindListener;
 public class CircleModelImpl implements CircleModel<List<SchoolCircle>> {
 
     @Override
-    public void toGetCircleData(HttpCallback<List<SchoolCircle>> callback) {
+    public void toGetCircleData(CircleLoaderCallback callback) {
         callback.onPreRequest();
         BmobQuery<SchoolCircle> query = new BmobQuery<>();
-//        query.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);
+        query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
         query.setLimit(50);
         query.include("userzone.user");
-        query.order("-createdAt");// 降序排列
+        query.order("-createdAt");
         query.findObjects(new FindListener<SchoolCircle>() {
             @Override
             public void done(List<SchoolCircle> list, BmobException e) {
@@ -30,6 +31,28 @@ public class CircleModelImpl implements CircleModel<List<SchoolCircle>> {
                     callback.onSuccess(list);
                 } else {
                     callback.onError(e.getMessage());
+                    callback.onSuccess(list, DataLoadType.TYPE_REFRESH_FAIL);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void toLoadMoreCircleData(int itemCount, CircleLoaderCallback callback) {
+        BmobQuery<SchoolCircle> query = new BmobQuery<>();
+        query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
+        query.setSkip(itemCount);
+        query.setLimit(20);
+        query.include("userzone.user");
+        query.order("-createdAt");
+        query.findObjects(new FindListener<SchoolCircle>() {
+            @Override
+            public void done(List<SchoolCircle> list, BmobException e) {
+                if (e == null) {
+                    callback.onSuccess(list, DataLoadType.TYPE_LOAD_MORE_SUCCESS);
+                } else {
+                    callback.onError(e.getMessage());
+                    callback.onSuccess(list, DataLoadType.TYPE_LOAD_MORE_FAIL);
                 }
             }
         });

@@ -16,5 +16,6 @@
     <item name="et_sfz" type="id" />
 
     <item name="sign_switch" type="id" />
+    <item name="refresh_head" type="id"/>
 
 </resources>

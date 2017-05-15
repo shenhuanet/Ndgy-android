@@ -2,6 +2,9 @@ package com.shenhua.nandagy.adapter;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,15 +14,16 @@ import com.shenhua.commonlibs.base.BaseRecyclerAdapter;
 import com.shenhua.lib.emoji.utils.EmojiLoader;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.DaoMaster;
-import com.shenhua.nandagy.database.GreatHateFav;
 import com.shenhua.nandagy.bean.GreatHateFavDao;
 import com.shenhua.nandagy.bean.bmobbean.SchoolCircle;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
+import com.shenhua.nandagy.database.GreatHateFav;
 import com.shenhua.nandagy.utils.RelativeDateFormat;
 import com.shenhua.nandagy.utils.bmobutils.AvatarUtils;
 import com.shenhua.nandagy.utils.bmobutils.CircleDataLoader;
 import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 import com.shenhua.nandagy.utils.bmobutils.UserZoneUtils;
+import com.shenhua.nandagy.widget.refresh.PacManRefreshHead;
 
 import java.util.List;
 
@@ -30,14 +34,20 @@ import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by Shenhua on 10/6/2016.
- * e-mail shenhuanet@126.com
+ * E-mail shenhuanet@126.com
  */
 public class CircleAdapter extends BaseRecyclerAdapter<SchoolCircle> {
 
-    private GreatHateFavDao dao;
     private static final int TYPE_GREAT = 0;
     private static final int TYPE_HATE = 1;
     private static final int TYPE_FAV = 2;
+    private static final int TYPE_HEADER = 1;
+    private static final int TYPE_ITEM = 2;
+    private static final int TYPE_FOOTER = 3;
+
+    private GreatHateFavDao dao;
+    private boolean mShowFooter;
+    private int lastPosition = -1;
 
     public CircleAdapter(Context context, List<SchoolCircle> datas) {
         super(context, datas);
@@ -47,38 +57,84 @@ public class CircleAdapter extends BaseRecyclerAdapter<SchoolCircle> {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (mShowFooter && getItemCount() - 1 == position) {
+            return TYPE_FOOTER;
+        }
+        return TYPE_ITEM;
+    }
+
+    @Override
     public int getItemViewId(int viewType) {
-        return R.layout.item_circle;
+        if (viewType == TYPE_FOOTER) {
+            return R.layout.item_footer;
+        } else {
+            return R.layout.item_circle;
+        }
+    }
+
+    private void setAnimation(View viewToAnimate, int position) {
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils
+                    .loadAnimation(viewToAnimate.getContext(), R.anim.item_bottom_in);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
+
+    public void showFooter() {
+        notifyItemInserted(getItemCount());
+        mShowFooter = true;
+    }
+
+    public void hideFooter() {
+        notifyItemRemoved(getItemCount() - 1);
+        mShowFooter = false;
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(BaseRecyclerViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        if (holder.itemView.getAnimation() != null && holder.itemView
+                .getAnimation().hasStarted()) {
+            holder.itemView.clearAnimation();
+        }
     }
 
     @Override
     public void bindData(BaseRecyclerAdapter.BaseRecyclerViewHolder holder, int position, SchoolCircle item) {
-        // 用户名
-        AvatarUtils.loadUserNick(item.getUserzone(), (TextView) holder.getView(R.id.tv_user_nick));
-        // 时间
-        holder.setText(R.id.tv_time_ago, RelativeDateFormat.friendly_time(item.getCreatedAt()));
-        // 头像
-        AvatarUtils.loadUserAvatar(mContext, item.getUserzone().getUser(), (ImageView) holder.getView(R.id.iv_user_photo));
-        // 图片组
-        List<BmobFile> file = item.getPics();
-        if (file != null && file.size() > 0) {
-            GridView gridView = (GridView) holder.getView(R.id.gridView);
-            CircleGridAdapter adapter = new CircleGridAdapter(mContext, file);
-            gridView.setAdapter(adapter);
+        if (getItemViewType(position) == TYPE_FOOTER) {
+            PacManRefreshHead head = (PacManRefreshHead) holder.getView(R.id.pac_man);
+            head.performLoading();
+        } else {
+            // 用户名
+            AvatarUtils.loadUserNick(item.getUserzone(), (TextView) holder.getView(R.id.tv_user_nick));
+            // 时间
+            holder.setText(R.id.tv_time_ago, RelativeDateFormat.friendly_time(item.getCreatedAt()));
+            // 头像
+            AvatarUtils.loadUserAvatar(mContext, item.getUserzone().getUser(), (ImageView) holder.getView(R.id.iv_user_photo));
+            // 图片组
+            List<BmobFile> file = item.getPics();
+            if (file != null && file.size() > 0) {
+                GridView gridView = (GridView) holder.getView(R.id.gridView);
+                CircleGridAdapter adapter = new CircleGridAdapter(mContext, file);
+                gridView.setAdapter(adapter);
+            }
+            // 内容
+            TextView content = (TextView) holder.getView(R.id.tv_content);
+            content.setText(item.getContent());
+            EmojiLoader.replaceEmoji(mContext, content);
+            // 底部数据
+            holder.setText(R.id.tv_comment, CircleDataLoader.formatNumber(item.getComment()));
+            holder.setText(R.id.tv_hate, CircleDataLoader.formatNumber(item.getHate()));
+            holder.setText(R.id.tv_great, CircleDataLoader.formatNumber(item.getGreat()));
+            // 底部点击事件
+            onGreatClick(holder, item);
+            onHateClick(holder, item);
+            onCommentClick(holder, item);
+            onFavClick(holder, item);
+            setAnimation(holder.itemView, position);
         }
-        // 内容
-        TextView content = (TextView) holder.getView(R.id.tv_content);
-        content.setText(item.getContent());
-        EmojiLoader.replaceEmoji(mContext, content);
-        // 底部数据
-        holder.setText(R.id.tv_comment, CircleDataLoader.formatNumber(item.getComment()));
-        holder.setText(R.id.tv_hate, CircleDataLoader.formatNumber(item.getHate()));
-        holder.setText(R.id.tv_great, CircleDataLoader.formatNumber(item.getGreat()));
-        // 底部点击事件
-        onGreatClick(holder, item);
-        onHateClick(holder, item);
-        onCommentClick(holder, item);
-        onFavClick(holder, item);
     }
 
     private void onFavClick(BaseRecyclerViewHolder holder, SchoolCircle item) {

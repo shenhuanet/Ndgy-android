@@ -37,7 +37,6 @@ public class CircleDataLoader {
                 return fav != null && fav.size() != 0 && fav.get(0).getIsFav();
             }
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -54,7 +53,6 @@ public class CircleDataLoader {
                 return fav != null && fav.size() != 0 && fav.get(0).getIsGreat();
             }
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -71,7 +69,6 @@ public class CircleDataLoader {
                 return fav != null && fav.size() != 0 && fav.get(0).getIsHate();
             }
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
