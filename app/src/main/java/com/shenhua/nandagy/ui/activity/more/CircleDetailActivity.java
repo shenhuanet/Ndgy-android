@@ -1,19 +1,26 @@
 package com.shenhua.nandagy.ui.activity.more;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
+import com.shenhua.lib.emoji.EmojiLayout;
 import com.shenhua.lib.emoji.utils.EmojiLoader;
+import com.shenhua.lib.keyboard.utils.KPSwitchConflictUtil;
+import com.shenhua.lib.keyboard.utils.KeyboardUtil;
+import com.shenhua.lib.keyboard.widget.KPSwitchPanelLinearLayout;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.CircleGridAdapter;
-import com.shenhua.nandagy.bean.DaoMaster;
-import com.shenhua.nandagy.bean.GreatHateFavDao;
 import com.shenhua.nandagy.bean.bmobbean.SchoolCircle;
+import com.shenhua.nandagy.database.DaoMaster;
+import com.shenhua.nandagy.database.GreatHateFavDao;
 import com.shenhua.nandagy.utils.RelativeDateFormat;
 import com.shenhua.nandagy.utils.bmobutils.AvatarUtils;
 import com.shenhua.nandagy.utils.bmobutils.CircleDataLoader;
@@ -24,6 +31,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.datatype.BmobFile;
+
+import static com.shenhua.nandagy.R.id.gridView;
 
 /**
  * Created by shenhua on 5/12/2017.
@@ -47,7 +56,7 @@ public class CircleDetailActivity extends BaseActivity {
     ImageView mUserPhotoIv;
     @BindView(R.id.tv_content)
     TextView mContentTv;
-    @BindView(R.id.gridView)
+    @BindView(gridView)
     GridView mPhotosGv;
     @BindView(R.id.tv_fav)
     TextView mFavTv;
@@ -57,6 +66,17 @@ public class CircleDetailActivity extends BaseActivity {
     TextView mHateTv;
     @BindView(R.id.tv_great)
     TextView mGreatTv;
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyvlerView;
+
+    @BindView(R.id.panel_root)
+    KPSwitchPanelLinearLayout mPanelRoot;
+    @BindView(R.id.et_comment)
+    EditText mCommentEt;
+    @BindView(R.id.sub_panel_emoji)
+    EmojiLayout mEmojiPanel;
+    @BindView(R.id.ib_emoji)
+    ImageButton mEmojiIb;
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle bundle) {
@@ -75,6 +95,7 @@ public class CircleDetailActivity extends BaseActivity {
         // 图片组
         List<BmobFile> file = data.getPics();
         if (file != null && file.size() > 0) {
+            mPhotosGv.setVisibility(View.VISIBLE);
             CircleGridAdapter adapter = new CircleGridAdapter(this, file);
             mPhotosGv.setAdapter(adapter);
         }
@@ -86,6 +107,26 @@ public class CircleDetailActivity extends BaseActivity {
         mCommentTv.setText(CircleDataLoader.formatNumber(data.getComment()));
         mHateTv.setText(CircleDataLoader.formatNumber(data.getHate()));
         mGreatTv.setText(CircleDataLoader.formatNumber(data.getGreat()));
+
+        initKeyboard();
+        initData();
+    }
+
+    private void initKeyboard() {
+        KeyboardUtil.attach(this, mPanelRoot);
+        KPSwitchConflictUtil.attach(mPanelRoot, mCommentEt, switchToPanel -> {
+                    if (switchToPanel) {
+                        mCommentEt.clearFocus();
+                    } else {
+                        mCommentEt.requestFocus();
+                    }
+                },
+                new KPSwitchConflictUtil.SubPanelAndTrigger(mEmojiPanel, mEmojiIb));
+        mEmojiPanel.init(this, mCommentEt, new String[]{"emoji_ay", "emoji_aojiao", "emoji_d"});
+    }
+
+    private void initData() {
+
     }
 
     @OnClick({R.id.f_fav, R.id.f_comment, R.id.f_hate, R.id.f_great})

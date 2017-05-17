@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.shenhua.lib.emoji.EmojiLayout;
 import com.shenhua.lib.emoji.bean.EmojiGroup;
 
 import java.io.IOException;
@@ -63,6 +64,13 @@ public class EmojiLoader {
                 }
             }
         };
+    }
+
+    public static void initEmoji(Context contexts, String[] dirs) {
+        EmojiLoader.getInstance().getEmojiGroup(contexts, EmojiLayout.DEFAULT_EMOJI);
+        for (String dir : dirs) {
+            EmojiLoader.getInstance().getEmojiGroup(contexts, dir);
+        }
     }
 
     public EmojiGroup getEmojiGroup(Context context, String dir) {

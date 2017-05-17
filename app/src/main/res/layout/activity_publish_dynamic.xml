@@ -2,7 +2,6 @@
 <com.shenhua.lib.keyboard.widget.KPSwitchRootLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -54,7 +53,7 @@
 
     </LinearLayout>
 
-    <include layout="@layout/layout_tools" />
+    <include layout="@layout/layout_publish_tools" />
 
     <com.shenhua.lib.keyboard.widget.KPSwitchPanelLinearLayout
         android:id="@+id/panel_root"

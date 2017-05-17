@@ -1,5 +1,6 @@
 package com.shenhua.nandagy.ui.activity.me;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -44,7 +45,6 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadBatchListener;
 
 import static com.shenhua.lib.boxing.utils.Contants.EXTRA_SELECTED_MEDIA;
-import static com.shenhua.nandagy.R.id.sub_panel_emoji;
 
 /**
  * 发布动态界面
@@ -69,7 +69,7 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
     KPSwitchPanelLinearLayout mPanelRoot;
     @BindView(R.id.layout_edit_root)
     LinearLayout mEditRootLayout;
-    @BindView(sub_panel_emoji)
+    @BindView(R.id.sub_panel_emoji)
     EmojiLayout mEmojiPanel;
     @BindView(R.id.sub_panel_lacation)
     View mLocationPanel;
@@ -80,7 +80,6 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
     private boolean mCanPublish;
     private PhotosSelectedAdapter photosSelectedAdapter;
     private ArrayList<BaseMedia> medias;
-    private String[] mEmojiDirs = {"emoji_ay", "emoji_aojiao", "emoji_d"};
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
@@ -107,7 +106,7 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
         mPhotosRecyclerView.setAdapter(photosSelectedAdapter);
         photosSelectedAdapter.setOnItemClickListener((view, position, data)
                 -> Boxing.startPreview(PublishDynamicActivity.this, medias, position, REQUEST_MITILL_PREVIEW_PHOTOS));
-        mEmojiPanel.init(this, mPublishEt, mEmojiDirs);
+        mEmojiPanel.init(this, mPublishEt, new String[]{"emoji_ay", "emoji_aojiao", "emoji_d"});
 //        mEmojiPanel.init(this, mPublishEt);
     }
 
@@ -127,8 +126,8 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
             public void done(String s, BmobException e) {
                 if (e == null) {
                     toast("发布成功");
-
-                    // 执行跳转 finish
+                    setResult(RESULT_OK);
+                    PublishDynamicActivity.this.finish();
                 } else {
                     toast("发布失败:" + e.getMessage());
                 }
@@ -163,6 +162,13 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
                 for (int i = 0; i < medias.size(); i++) {
                     files[i] = medias.get(i).getPath();
                 }
+                final ProgressDialog dialog = new ProgressDialog(this);
+                dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                dialog.setMax(medias.size());
+                dialog.setCancelable(false);
+                dialog.setMessage("正在上传图片");
+                dialog.show();
+                dialog.setProgress(0);
                 BmobFile.uploadBatch(files, new UploadBatchListener() {
                     /**
                      * 批量上传成功
@@ -173,6 +179,9 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
                     public void onSuccess(List<BmobFile> list, List<String> list1) {
                         if (list1.size() == files.length) {// 如果数量相等，则代表文件全部上传完成
                             Log.d("shenhuaLog -- " + PublishDynamicActivity.class.getSimpleName(), "onSuccess: 等");
+                            if (dialog.isShowing()) {
+                                dialog.dismiss();
+                            }
                             publish(list);
                         } else {
                             Log.d("shenhuaLog -- " + PublishDynamicActivity.class.getSimpleName(), "onSuccess: 不等");
@@ -188,13 +197,15 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
                      */
                     @Override
                     public void onProgress(int i, int i1, int i2, int i3) {
-                        // item 布局中圆形进度条
-                        Log.d("shenhuaLog -- " + PublishDynamicActivity.class.getSimpleName(), "onProgress: " + i);
+                        dialog.setProgress(i);
                     }
 
                     @Override
                     public void onError(int i, String s) {
                         toast("上传失败:" + s);
+                        if (dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
                     }
                 });
 

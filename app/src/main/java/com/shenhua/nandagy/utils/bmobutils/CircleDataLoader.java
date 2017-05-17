@@ -2,9 +2,9 @@ package com.shenhua.nandagy.utils.bmobutils;
 
 import android.content.Context;
 
-import com.shenhua.nandagy.bean.GreatHateFavDao;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
 import com.shenhua.nandagy.database.GreatHateFav;
+import com.shenhua.nandagy.database.GreatHateFavDao;
 
 import java.util.List;
 

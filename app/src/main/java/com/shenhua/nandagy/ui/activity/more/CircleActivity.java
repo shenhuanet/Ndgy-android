@@ -11,13 +11,15 @@ import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
 import com.shenhua.commonlibs.base.BaseSpacesItemDecoration;
 import com.shenhua.commonlibs.utils.ConvertUtils;
-import com.shenhua.lib.emoji.EmojiLayout;
 import com.shenhua.lib.emoji.utils.EmojiLoader;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.adapter.CircleAdapter;
 import com.shenhua.nandagy.bean.bmobbean.SchoolCircle;
 import com.shenhua.nandagy.presenter.CirclePresenterImpl;
+import com.shenhua.nandagy.service.Constants;
+import com.shenhua.nandagy.ui.activity.me.PublishDynamicActivity;
 import com.shenhua.nandagy.utils.DataLoadType;
+import com.shenhua.nandagy.utils.bmobutils.UserUtils;
 import com.shenhua.nandagy.view.CircleView;
 import com.shenhua.nandagy.widget.refresh.AutoLoadMoreRecyclerView;
 import com.shenhua.nandagy.widget.refresh.ThreePointLoadingView;
@@ -53,15 +55,11 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
     private CirclePresenterImpl mCirclePresenter;
     private CircleAdapter mCircleAdapter;
     private List<SchoolCircle> mDatas = new ArrayList<>();
-    private String[] mEmojiDirs = {"emoji_ay", "emoji_aojiao", "emoji_d"};
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        EmojiLoader.getInstance().getEmojiGroup(this, EmojiLayout.DEFAULT_EMOJI);
-        for (String mEmojiDir : mEmojiDirs) {
-            EmojiLoader.getInstance().getEmojiGroup(this, mEmojiDir);
-        }
+        EmojiLoader.initEmoji(this, new String[]{"emoji_ay", "emoji_aojiao", "emoji_d"});
         mFab.attachToRecyclerView(mRecycler);
         mRefreshLayout.setColorSchemeResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -150,7 +148,19 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
 
     @OnClick(R.id.fab)
     void addPublish() {
-        toast("点我干嘛");
+        if (!UserUtils.getInstance().isLogin()) {
+            toast("请登录后操作");
+            return;
+        }
+        Intent intent = new Intent(this, PublishDynamicActivity.class);
+        startActivityForResult(intent, Constants.Code.REQUEST_CODE_NAV_TO_PUBLISH_DYNAMIC);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == Constants.Code.REQUEST_CODE_NAV_TO_PUBLISH_DYNAMIC) {
+            onRefresh();
+        }
+    }
 }

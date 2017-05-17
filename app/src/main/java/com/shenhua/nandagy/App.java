@@ -26,11 +26,9 @@ public class App extends Application {
         Bmob.initialize(this, BmobService.APP_KEY);
         BmobInstallation.getCurrentInstallation().save();
         mApplicationContext = this;
+        CrashReport.initCrashReport(getApplicationContext(), "9096160264", DEBUG_MODE);
         if (DEBUG_MODE) {
             LeakCanary.install(this);
-            CrashReport.initCrashReport(getApplicationContext(), "9096160264", true);
-        } else {
-            CrashReport.initCrashReport(getApplicationContext(), "9096160264", false);
         }
     }
 

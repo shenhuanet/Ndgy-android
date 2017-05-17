@@ -13,11 +13,11 @@ import android.widget.Toast;
 import com.shenhua.commonlibs.base.BaseRecyclerAdapter;
 import com.shenhua.lib.emoji.utils.EmojiLoader;
 import com.shenhua.nandagy.R;
-import com.shenhua.nandagy.bean.DaoMaster;
-import com.shenhua.nandagy.bean.GreatHateFavDao;
 import com.shenhua.nandagy.bean.bmobbean.SchoolCircle;
 import com.shenhua.nandagy.bean.bmobbean.UserZone;
+import com.shenhua.nandagy.database.DaoMaster;
 import com.shenhua.nandagy.database.GreatHateFav;
+import com.shenhua.nandagy.database.GreatHateFavDao;
 import com.shenhua.nandagy.utils.RelativeDateFormat;
 import com.shenhua.nandagy.utils.bmobutils.AvatarUtils;
 import com.shenhua.nandagy.utils.bmobutils.CircleDataLoader;
@@ -115,8 +115,10 @@ public class CircleAdapter extends BaseRecyclerAdapter<SchoolCircle> {
             AvatarUtils.loadUserAvatar(mContext, item.getUserzone().getUser(), (ImageView) holder.getView(R.id.iv_user_photo));
             // 图片组
             List<BmobFile> file = item.getPics();
+            GridView gridView = (GridView) holder.getView(R.id.gridView);
+            gridView.setVisibility(View.GONE);
             if (file != null && file.size() > 0) {
-                GridView gridView = (GridView) holder.getView(R.id.gridView);
+                gridView.setVisibility(View.VISIBLE);
                 CircleGridAdapter adapter = new CircleGridAdapter(mContext, file);
                 gridView.setAdapter(adapter);
             }
