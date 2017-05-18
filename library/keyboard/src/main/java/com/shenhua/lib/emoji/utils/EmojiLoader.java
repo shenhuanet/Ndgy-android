@@ -54,16 +54,19 @@ public class EmojiLoader {
         return sInstance;
     }
 
-    // TODO: 5/9/2017  开始前即加载所有表情,需要用的时候可根据LruCache加载
+
     static {
-        sEmojiDrawable = new LruCache<String, Bitmap>(CACHE_MAX_SIZE) {
-            @Override
-            protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
-                if (oldValue != newValue) {
-                    oldValue.recycle();
-                }
-            }
-        };
+        sEmojiDrawable = new LruCache<>(CACHE_MAX_SIZE);
+//        sEmojiDrawable = new LruCache<String, Bitmap>(CACHE_MAX_SIZE) {
+//            @Override
+//            protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
+//                if (oldValue != newValue) {
+//                    oldValue.recycle();
+//                    // TODO: 5/9/2017  开始前即加载所有表情,需要用的时候可根据LruCache加载
+//                    // TODO: 5/18/2017 trying to use a recycled bitmap
+//                }
+//            }
+//        };
     }
 
     public static void initEmoji(Context contexts, String[] dirs) {

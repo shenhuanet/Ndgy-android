@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
 import com.shenhua.commonlibs.base.BaseActivity;
@@ -67,8 +66,6 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
     ImageButton mLocationIb;
     @BindView(R.id.panel_root)
     KPSwitchPanelLinearLayout mPanelRoot;
-    @BindView(R.id.layout_edit_root)
-    LinearLayout mEditRootLayout;
     @BindView(R.id.sub_panel_emoji)
     EmojiLayout mEmojiPanel;
     @BindView(R.id.sub_panel_lacation)
@@ -100,14 +97,13 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
                 },
                 new KPSwitchConflictUtil.SubPanelAndTrigger(mEmojiPanel, mEmojiIb),
                 new KPSwitchConflictUtil.SubPanelAndTrigger(mLocationPanel, mLocationIb));
+        mEmojiPanel.init(this, mPublishEt, new String[]{"emoji_ay", "emoji_aojiao", "emoji_d"});
 
         photosSelectedAdapter = new PhotosSelectedAdapter(this, null);
         mPhotosRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mPhotosRecyclerView.setAdapter(photosSelectedAdapter);
         photosSelectedAdapter.setOnItemClickListener((view, position, data)
                 -> Boxing.startPreview(PublishDynamicActivity.this, medias, position, REQUEST_MITILL_PREVIEW_PHOTOS));
-        mEmojiPanel.init(this, mPublishEt, new String[]{"emoji_ay", "emoji_aojiao", "emoji_d"});
-//        mEmojiPanel.init(this, mPublishEt);
     }
 
     private void publish(List<BmobFile> bmobFiles) {

@@ -118,7 +118,6 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
                 mCircleAdapter.hideFooter();
                 if (datas == null || datas.size() == 0) {
                     mRecycler.notifyAllLoaded();
-                    toast("全部加载完毕噜(☆＿☆)");
                 } else {
                     mCircleAdapter.addMoreItem(datas);
                     mRecycler.notifyMoreLoaded();

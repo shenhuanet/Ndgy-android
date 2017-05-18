@@ -43,8 +43,11 @@ public class AvatarUtils {
         }
     }
 
-    public static void displayUserAvatar(Context context, UserZone userZone, ImageView view) {
-        String result = getOtherUserAvatar(userZone);
+    /**
+     * 未使用
+     */
+    private static void displayUserAvatar(Context context, UserZone userZone, ImageView view) {
+        String result = getOtherUserAvatarUrl(userZone);
         switch (result) {
             case "error":
             case "man":
@@ -59,25 +62,17 @@ public class AvatarUtils {
         }
     }
 
-    public static String getOtherUserAvatar(UserZone userZone) {
-        try {
-            if (userZone.getUser().getAvatar() == null) {
-                return "error";
-            } else {
-                String url = userZone.getUser().getAvatar().getFileUrl();
-                if (!TextUtils.isEmpty(url)) {
-                    return url;
-                } else {
-                    if (userZone.getUser().getSex()) {
-                        return "woman";
-                    } else {
-                        return "man";
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static String getOtherUserAvatarUrl(UserZone userZone) {
+        if (userZone.getUser() == null) {
             return "error";
+        } else if (userZone.getUser().getAvatar() == null) {
+            if (userZone.getUser().getSex()) {
+                return "woman";
+            } else {
+                return "man";
+            }
+        } else {
+            return userZone.getUser().getAvatar().getFileUrl();
         }
     }
 

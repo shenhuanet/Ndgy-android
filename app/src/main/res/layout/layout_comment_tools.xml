@@ -2,16 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="#fffefe"
+    android:background="#efefef"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <EditText
         android:id="@+id/et_comment"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="10dp"
         android:layout_weight="1"
+        android:background="@drawable/bg_edit_round"
         android:padding="10dp" />
 
     <ImageButton
@@ -24,10 +27,14 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_emoji" />
 
-    <Button
-        android:id="@+id/btn_send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="send" />
+    <ImageButton
+        android:id="@+id/ib_send"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_menu_send_theme" />
 
 </LinearLayout>

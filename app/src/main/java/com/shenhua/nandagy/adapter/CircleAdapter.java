@@ -149,7 +149,7 @@ public class CircleAdapter extends BaseRecyclerAdapter<SchoolCircle> {
                 // nav to login
             } else if (!UserUtils.getInstance().isCreateZone()) {// 未创建空间
                 Toast.makeText(mContext, "你当前还没有创建空间哦", Toast.LENGTH_SHORT).show();
-                // nav to create zone
+                // TODO: 5/18/2017  nav to create zone
             } else {
                 if (isFav) {// 已点赞
                     Toast.makeText(mContext, "你已收藏", Toast.LENGTH_SHORT).show();

@@ -73,7 +73,10 @@
         <activity android:name=".ui.activity.more.StudyAreaActivity" />
         <activity android:name=".ui.activity.more.EmployActivity" />
         <!--<activity android:name=".ui.activity.more.CircleActivity" />-->
-        <activity android:name=".ui.activity.more.CircleDetailActivity" />
+        <activity
+            android:name=".ui.activity.more.CircleDetailActivity"
+            android:theme="@style/AppThemeFitsSystemWindows"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.activity.more.CommunityActivity" />
         <activity android:name=".ui.activity.more.LostFoundActivity" />
         <activity android:name=".ui.activity.more.PaperPlaneActivity" />
