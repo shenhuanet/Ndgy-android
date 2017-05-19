@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shenhua.commonlibs.base.BaseRecyclerAdapter;
+import com.shenhua.lib.emoji.utils.EmojiLoader;
 import com.shenhua.nandagy.R;
 import com.shenhua.nandagy.bean.bmobbean.SchoolCircleComment;
 import com.shenhua.nandagy.utils.RelativeDateFormat;
@@ -33,5 +34,6 @@ public class CircleDetailCmAdapter extends BaseRecyclerAdapter<SchoolCircleComme
         AvatarUtils.loadUserNick(schoolCircleComment.getCommenter(), (TextView) holder.getView(R.id.tv_detail_nike));
         holder.setText(R.id.tv_time_ago, RelativeDateFormat.friendly_time(schoolCircleComment.getCreatedAt()));
         holder.setText(R.id.tv_detail_comment, schoolCircleComment.getContent());
+        EmojiLoader.replaceEmoji(mContext, (TextView) holder.getView(R.id.tv_detail_comment));
     }
 }

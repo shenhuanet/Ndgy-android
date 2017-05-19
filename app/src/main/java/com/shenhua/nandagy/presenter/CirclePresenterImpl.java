@@ -42,12 +42,21 @@ public class CirclePresenterImpl implements CirclePresenter, CircleLoaderCallbac
         circleView.showProgress();
     }
 
+    /**
+     * 用于加载更多时
+     */
     @Override
     public void onSuccess(List<SchoolCircle> schoolCircles, int type) {
+        if (schoolCircles == null) {
+            return;
+        }
         mStartPage += schoolCircles.size();
         circleView.updateList(schoolCircles, type);
     }
 
+    /**
+     * 用于刷新
+     */
     @Override
     public void onSuccess(List<SchoolCircle> data) {
         mStartPage = data.size();

@@ -72,8 +72,9 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
         mCircleAdapter = new CircleAdapter(this, null);
         mRecycler.setAutoAdapter(mCircleAdapter);
 
+        mCirclePresenter = new CirclePresenterImpl(CircleActivity.this);
+
         mRecycler.postDelayed(() -> {
-            mCirclePresenter = new CirclePresenterImpl(CircleActivity.this);
             mCirclePresenter.execute();
         }, 500);
 
