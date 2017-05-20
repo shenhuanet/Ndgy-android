@@ -55,6 +55,7 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
     private CirclePresenterImpl mCirclePresenter;
     private CircleAdapter mCircleAdapter;
     private List<SchoolCircle> mDatas = new ArrayList<>();
+    private int currentItem;
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
@@ -79,11 +80,12 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
         }, 500);
 
         mCircleAdapter.setOnItemClickListener((view, i, schoolCircle) -> {
+            currentItem = i;
             Intent intent = new Intent(this, CircleDetailActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable(CircleDetailActivity.EXTRAKEY, schoolCircle);
             intent.putExtras(bundle);
-            startActivity(intent);
+            startActivityForResult(intent, Constants.Code.REQUEST_CODE_NAV_CIRCLE_DETAIL);
         });
     }
 
@@ -159,8 +161,19 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == Constants.Code.REQUEST_CODE_NAV_TO_PUBLISH_DYNAMIC) {
-            onRefresh();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Constants.Code.REQUEST_CODE_NAV_TO_PUBLISH_DYNAMIC) {
+                onRefresh();
+            }
+            if (requestCode == Constants.Code.REQUEST_CODE_NAV_CIRCLE_DETAIL) {
+                if (mDatas != null && mDatas.size() > 0) {
+                    SchoolCircle sc = (SchoolCircle) data.getSerializableExtra(CircleDetailActivity.EXTRAKEY);
+                    if (sc != null) {
+                        mDatas.set(currentItem, sc);
+                        mCircleAdapter.updateItem(currentItem, sc);
+                    }
+                }
+            }
         }
     }
 }

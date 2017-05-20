@@ -6,19 +6,19 @@
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <com.shenhua.commonlibs.widget.CircleImageView
         android:id="@+id/iv_detail_photo"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         tools:src="@drawable/img_photo_man" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -26,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorText"
+            android:textSize="12sp"
             tools:text="麦爱丽" />
 
         <TextView
@@ -34,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textColor="@color/colorText2"
-            android:textSize="12sp"
+            android:textSize="8sp"
             tools:text="▃▃▃▃▃" />
 
         <TextView
@@ -43,13 +44,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
+            android:textSize="10sp"
             tools:text="这是评论的内容" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="3dp"
             android:background="@color/colorDivider" />
 
     </LinearLayout>

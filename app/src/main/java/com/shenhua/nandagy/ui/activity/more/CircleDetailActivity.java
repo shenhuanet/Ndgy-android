@@ -1,9 +1,11 @@
 package com.shenhua.nandagy.ui.activity.more;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -47,6 +49,7 @@ import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by shenhua on 5/12/2017.
@@ -101,8 +104,9 @@ public class CircleDetailActivity extends BaseActivity {
     private static final int M_FAV = 0;
     private static final int M_COMMENT = 1;
     private static final int M_HATE = 2;
-    private static final int M_GRTAT = 3;
+    private static final int M_GREAT = 3;
     private SchoolCircle data;
+    private String hint;
     private int mCurrent = -1;
 
     @Override
@@ -157,6 +161,32 @@ public class CircleDetailActivity extends BaseActivity {
     }
 
     /**
+     * 更新评论点赞等数据
+     */
+    public void updateComGreFav(int mType, Integer number) {
+        switch (mType) {
+            case M_COMMENT:
+                mCommentTv.setText(CircleDataLoader.formatNumber(number));
+                data.setComment(number);
+                break;
+            case M_HATE:
+                mHateTv.setText(CircleDataLoader.formatNumber(number));
+                data.setHate(number);
+                break;
+            case M_GREAT:
+                mGreatTv.setText(CircleDataLoader.formatNumber(number));
+                data.setGreat(number);
+                break;
+        }
+        data.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+
+            }
+        });
+    }
+
+    /**
      * 获取评论数据
      */
     private void initCommentData() {
@@ -173,11 +203,19 @@ public class CircleDetailActivity extends BaseActivity {
             public void done(List<SchoolCircleComment> list, BmobException e) {
                 onDataLoding(false);
                 if (e == null) {
-                    if (list.size() > 0) {
+                    updateComGreFav(M_COMMENT, list == null ? 0 : list.size());
+                    if (list != null && list.size() > 0) {
                         mEmptyView.setVisibility(View.INVISIBLE);
                         mRecyvlerView.setVisibility(View.VISIBLE);
                         CircleDetailCmAdapter adapter = new CircleDetailCmAdapter(CircleDetailActivity.this, list);
                         mRecyvlerView.setAdapter(adapter);
+                        adapter.setOnItemClickListener((view, i, c) -> {
+                            try {
+                                mCommentEt.setHint("@ " + (hint = c.getCommenter().getUser().getNick()));
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        });
                     } else {
                         onDataEmpty();
                     }
@@ -204,6 +242,7 @@ public class CircleDetailActivity extends BaseActivity {
             @Override
             public void done(List<UserZone> list, BmobException e) {
                 onUzDataLoaded(list, e);
+                updateComGreFav(M_HATE, list == null ? 0 : list.size());
             }
         });
         mCurrent = M_HATE;
@@ -233,7 +272,7 @@ public class CircleDetailActivity extends BaseActivity {
      * 获取点赞数据
      */
     private void initGreatData() {
-        if (mCurrent == M_GRTAT) {
+        if (mCurrent == M_GREAT) {
             return;
         }
         onDataLoding(true);
@@ -244,9 +283,10 @@ public class CircleDetailActivity extends BaseActivity {
             @Override
             public void done(List<UserZone> list, BmobException e) {
                 onUzDataLoaded(list, e);
+                updateComGreFav(M_GREAT, list == null ? 0 : list.size());
             }
         });
-        mCurrent = M_GRTAT;
+        mCurrent = M_GREAT;
     }
 
     /**
@@ -291,6 +331,8 @@ public class CircleDetailActivity extends BaseActivity {
         EmojiLoader.replaceEmoji(this, mContentTv);
         // 底部数据
         mFavTv.setSelected(CircleDataLoader.getInstance().isFav(this, data.getObjectId(), dao));
+        mHateTv.setSelected(CircleDataLoader.getInstance().isHate(this, data.getObjectId(), dao));
+        mGreatTv.setSelected(CircleDataLoader.getInstance().isGreat(this, data.getObjectId(), dao));
         mCommentTv.setText(CircleDataLoader.formatNumber(data.getComment()));
         mHateTv.setText(CircleDataLoader.formatNumber(data.getHate()));
         mGreatTv.setText(CircleDataLoader.formatNumber(data.getGreat()));
@@ -313,7 +355,11 @@ public class CircleDetailActivity extends BaseActivity {
 
         UserZone userZone = UserZoneUtils.getInstance().getUserZone(this);
         SchoolCircleComment comment = new SchoolCircleComment();
-        comment.setContent(mCommentEt.getText().toString());
+        if (TextUtils.isEmpty(hint)) {
+            comment.setContent(mCommentEt.getText().toString());
+        } else {
+            comment.setContent("@ " + hint + " " + mCommentEt.getText().toString());
+        }
         comment.setCommenter(userZone);
         comment.setCommentCircle(data);
         comment.save(new SaveListener<String>() {
@@ -322,7 +368,9 @@ public class CircleDetailActivity extends BaseActivity {
                 if (e == null) {
                     toast("评论成功");
                     mCommentEt.setText("");
+                    mCommentEt.setHint(hint = "");
                     KPSwitchConflictUtil.hidePanelAndKeyboard(mPanelRoot);
+                    mCurrent = -1;
                     initCommentData();
                 } else {
                     toast("评论失败 " + e.getMessage());
@@ -355,6 +403,11 @@ public class CircleDetailActivity extends BaseActivity {
             KPSwitchConflictUtil.hidePanelAndKeyboard(mPanelRoot);
             return true;
         }
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(EXTRAKEY, data);
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
         return super.onKeyDown(keyCode, event);
     }
 }

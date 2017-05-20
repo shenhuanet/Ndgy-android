@@ -1,7 +1,6 @@
 package com.shenhua.nandagy.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -101,6 +100,11 @@ public class CircleAdapter extends BaseRecyclerAdapter<SchoolCircle> {
         }
     }
 
+    public void updateItem(int position, SchoolCircle data) {
+        mDatas.set(position, data);
+        notifyItemChanged(position);
+    }
+
     @Override
     public void bindData(BaseRecyclerAdapter.BaseRecyclerViewHolder holder, int position, SchoolCircle item) {
         if (getItemViewType(position) == TYPE_FOOTER) {
@@ -119,6 +123,7 @@ public class CircleAdapter extends BaseRecyclerAdapter<SchoolCircle> {
             gridView.setVisibility(View.GONE);
             if (file != null && file.size() > 0) {
                 gridView.setVisibility(View.VISIBLE);
+                gridView.setNumColumns(file.size() <= 3 ? file.size() : 3);
                 CircleGridAdapter adapter = new CircleGridAdapter(mContext, file);
                 gridView.setAdapter(adapter);
             }
@@ -177,9 +182,8 @@ public class CircleAdapter extends BaseRecyclerAdapter<SchoolCircle> {
     }
 
     private void onCommentClick(BaseRecyclerViewHolder holder, SchoolCircle item) {
-        // TODO: 5/12/2017 评论
         holder.getView(R.id.f_comment).setOnClickListener(v -> {
-            Log.d("shenhuaLog -- " + CircleAdapter.class.getSimpleName(), "onCommentClick: ");
+            mOnItemClickListener.OnItemClick(v, holder.getAdapterPosition(), item);
         });
     }
 

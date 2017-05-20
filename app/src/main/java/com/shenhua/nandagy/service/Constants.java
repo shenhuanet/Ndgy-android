@@ -39,6 +39,7 @@ public class Constants {
         public static final int REQUEST_CODE_NAV_TO_SETTING = 6;
         public static final int REQUEST_CODE_NAV_TO_ABOUT = 7;
         public static final int REQUEST_CODE_NAV_TO_BINDING = 8;
+        public static final int REQUEST_CODE_NAV_CIRCLE_DETAIL = 9;
 
         public static final int RECULT_CODE_LOGIN_SUCCESS = 100;
         public static final int RECULT_CODE_BINDING_SUCCESS = 101;

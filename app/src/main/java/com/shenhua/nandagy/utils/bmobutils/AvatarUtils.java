@@ -81,7 +81,6 @@ public class AvatarUtils {
             String nick = userZone.getUser().getNick();
             view.setText(nick);
         } catch (Exception e) {
-            e.printStackTrace();
             view.setText("佚名");
         }
     }

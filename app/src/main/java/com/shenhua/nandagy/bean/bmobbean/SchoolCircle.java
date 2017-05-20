@@ -24,8 +24,6 @@ public class SchoolCircle extends BmobObject implements Serializable {
     private Integer hate;
     private Integer comment;
     private Integer share;
-    private boolean isFavorite;
-    private boolean isLove;
     private boolean isAudit;
 
     public String getContent() {
@@ -90,22 +88,6 @@ public class SchoolCircle extends BmobObject implements Serializable {
 
     public void setShare(Integer share) {
         this.share = share;
-    }
-
-    public boolean isFavorite() {
-        return isFavorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
-    }
-
-    public boolean isLove() {
-        return isLove;
-    }
-
-    public void setLove(boolean love) {
-        isLove = love;
     }
 
     public boolean isAudit() {
