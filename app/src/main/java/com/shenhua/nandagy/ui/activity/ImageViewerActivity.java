@@ -103,7 +103,7 @@ public class ImageViewerActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.image_menu, menu);
+        getMenuInflater().inflate(R.menu.image, menu);
         return true;
     }
 

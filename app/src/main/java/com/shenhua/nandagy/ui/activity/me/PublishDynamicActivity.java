@@ -145,7 +145,7 @@ public class PublishDynamicActivity extends BaseActivity implements TextWatcher 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.publish_menu, menu);
+        getMenuInflater().inflate(R.menu.publish, menu);
         return true;
     }
 

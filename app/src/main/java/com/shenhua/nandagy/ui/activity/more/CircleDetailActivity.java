@@ -98,7 +98,7 @@ public class CircleDetailActivity extends BaseActivity {
 
     @BindView(R.id.progress_bar)
     ProgressBar mProgerssBar;
-    @BindView(R.id.emptey)
+    @BindView(R.id.empty)
     TextView mEmptyView;
     public static final String EXTRAKEY = "circle";
     private static final int M_FAV = 0;

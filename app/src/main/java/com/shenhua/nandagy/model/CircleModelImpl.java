@@ -19,7 +19,6 @@ public class CircleModelImpl implements CircleModel<List<SchoolCircle>> {
     public void toGetCircleData(CircleLoaderCallback callback) {
         callback.onPreRequest();
         BmobQuery<SchoolCircle> query = new BmobQuery<>();
-        query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
         query.setLimit(50);
         query.include("userzone.user");
         query.order("-createdAt");
@@ -40,7 +39,6 @@ public class CircleModelImpl implements CircleModel<List<SchoolCircle>> {
     @Override
     public void toLoadMoreCircleData(int itemCount, CircleLoaderCallback callback) {
         BmobQuery<SchoolCircle> query = new BmobQuery<>();
-        query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
         query.setSkip(itemCount);
         query.setLimit(20);
         query.include("userzone.user");
@@ -49,10 +47,13 @@ public class CircleModelImpl implements CircleModel<List<SchoolCircle>> {
             @Override
             public void done(List<SchoolCircle> list, BmobException e) {
                 if (e == null) {
-                    callback.onSuccess(list, DataLoadType.TYPE_LOAD_MORE_SUCCESS);
+                    if (list.size() > 0) {
+                        callback.onSuccess(list, DataLoadType.TYPE_LOAD_MORE_SUCCESS);
+                    } else {
+                        callback.onSuccess(list, DataLoadType.TYPE_LOAD_MORE_FAIL);
+                    }
                 } else {
                     callback.onError(e.getMessage());
-                    callback.onSuccess(list, DataLoadType.TYPE_LOAD_MORE_FAIL);
                 }
             }
         });

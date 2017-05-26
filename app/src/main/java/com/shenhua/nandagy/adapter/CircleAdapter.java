@@ -1,7 +1,10 @@
 package com.shenhua.nandagy.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.GridView;
@@ -17,6 +20,7 @@ import com.shenhua.nandagy.bean.bmobbean.UserZone;
 import com.shenhua.nandagy.database.DaoMaster;
 import com.shenhua.nandagy.database.GreatHateFav;
 import com.shenhua.nandagy.database.GreatHateFavDao;
+import com.shenhua.nandagy.ui.activity.me.UserZoneActivity;
 import com.shenhua.nandagy.utils.RelativeDateFormat;
 import com.shenhua.nandagy.utils.bmobutils.AvatarUtils;
 import com.shenhua.nandagy.utils.bmobutils.CircleDataLoader;
@@ -41,7 +45,7 @@ public class CircleAdapter extends BaseRecyclerAdapter<SchoolCircle> {
     private static final int TYPE_HATE = 1;
     private static final int TYPE_FAV = 2;
     private static final int TYPE_HEADER = 1;
-    private static final int TYPE_ITEM = 2;
+    private static final int TYPE_ITEM = 0;
     private static final int TYPE_FOOTER = 3;
 
     private GreatHateFavDao dao;
@@ -74,11 +78,16 @@ public class CircleAdapter extends BaseRecyclerAdapter<SchoolCircle> {
 
     private void setAnimation(View viewToAnimate, int position) {
         if (position > lastPosition) {
-            Animation animation = AnimationUtils
-                    .loadAnimation(viewToAnimate.getContext(), R.anim.item_bottom_in);
+            Animation animation = AnimationUtils.loadAnimation(viewToAnimate.getContext(), R.anim.item_bottom_in);
             viewToAnimate.startAnimation(animation);
             lastPosition = position;
         }
+    }
+
+    @Override
+    public int getItemCount() {
+        int i = mShowFooter ? 1 : 0;
+        return mDatas != null ? mDatas.size() + i : 0;
     }
 
     public void showFooter() {
@@ -91,57 +100,84 @@ public class CircleAdapter extends BaseRecyclerAdapter<SchoolCircle> {
         mShowFooter = false;
     }
 
-    @Override
-    public void onViewDetachedFromWindow(BaseRecyclerViewHolder holder) {
-        super.onViewDetachedFromWindow(holder);
-        if (holder.itemView.getAnimation() != null && holder.itemView
-                .getAnimation().hasStarted()) {
-            holder.itemView.clearAnimation();
-        }
-    }
-
     public void updateItem(int position, SchoolCircle data) {
         mDatas.set(position, data);
         notifyItemChanged(position);
     }
 
     @Override
-    public void bindData(BaseRecyclerAdapter.BaseRecyclerViewHolder holder, int position, SchoolCircle item) {
+    public void onViewDetachedFromWindow(BaseRecyclerViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        if (holder.itemView.getAnimation() != null && holder.itemView.getAnimation().hasStarted()) {
+            holder.itemView.clearAnimation();
+        }
+    }
+
+    @Override
+    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == TYPE_FOOTER) {
+            return new BaseRecyclerAdapter.BaseRecyclerViewHolder(mContext, mInflater.inflate(getItemViewId(viewType), parent, false), viewType);
+        } else {
+            final BaseRecyclerViewHolder holder = new BaseRecyclerViewHolder(mContext, mInflater.inflate(getItemViewId(viewType), parent, false), viewType);
+            if (mOnItemClickListener != null) {
+                holder.itemView.setOnClickListener(v -> mOnItemClickListener.OnItemClick(v, holder.getLayoutPosition(), mDatas.get(holder.getAdapterPosition())));
+            }
+            return holder;
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
         if (getItemViewType(position) == TYPE_FOOTER) {
             PacManRefreshHead head = (PacManRefreshHead) holder.getView(R.id.pac_man);
             head.performLoading();
         } else {
-            // 用户名
-            AvatarUtils.loadUserNick(item.getUserzone(), (TextView) holder.getView(R.id.tv_user_nick));
-            // 时间
-            holder.setText(R.id.tv_time_ago, RelativeDateFormat.friendly_time(item.getCreatedAt()));
-            // 头像
-            AvatarUtils.loadUserAvatar(mContext, item.getUserzone().getUser(), (ImageView) holder.getView(R.id.iv_user_photo));
-            // 图片组
-            List<BmobFile> file = item.getPics();
-            GridView gridView = (GridView) holder.getView(R.id.gridView);
-            gridView.setVisibility(View.GONE);
-            if (file != null && file.size() > 0) {
-                gridView.setVisibility(View.VISIBLE);
-                gridView.setNumColumns(file.size() <= 3 ? file.size() : 3);
-                CircleGridAdapter adapter = new CircleGridAdapter(mContext, file);
-                gridView.setAdapter(adapter);
-            }
-            // 内容
-            TextView content = (TextView) holder.getView(R.id.tv_content);
-            content.setText(item.getContent());
-            EmojiLoader.replaceEmoji(mContext, content);
-            // 底部数据
-            holder.setText(R.id.tv_comment, CircleDataLoader.formatNumber(item.getComment()));
-            holder.setText(R.id.tv_hate, CircleDataLoader.formatNumber(item.getHate()));
-            holder.setText(R.id.tv_great, CircleDataLoader.formatNumber(item.getGreat()));
-            // 底部点击事件
-            onGreatClick(holder, item);
-            onHateClick(holder, item);
-            onCommentClick(holder, item);
-            onFavClick(holder, item);
+            bindData(holder, position, mDatas.get(position));
             setAnimation(holder.itemView, position);
         }
+    }
+
+    @Override
+    public void bindData(BaseRecyclerAdapter.BaseRecyclerViewHolder holder, int position, SchoolCircle item) {
+        // 用户名
+        AvatarUtils.loadUserNick(item.getUserzone(), (TextView) holder.getView(R.id.tv_user_nick));
+        // 时间
+        holder.setText(R.id.tv_time_ago, RelativeDateFormat.friendly_time(item.getCreatedAt()));
+        // 头像
+        AvatarUtils.loadUserAvatar(mContext, item.getUserzone().getUser(), (ImageView) holder.getView(R.id.iv_user_photo));
+        // 图片组
+        List<BmobFile> file = item.getPics();
+        GridView gridView = (GridView) holder.getView(R.id.gridView);
+        gridView.setVisibility(View.GONE);
+        if (file != null && file.size() > 0) {
+            gridView.setVisibility(View.VISIBLE);
+            gridView.setNumColumns(file.size() <= 3 ? file.size() : 3);
+            CircleGridAdapter adapter = new CircleGridAdapter(mContext, file);
+            gridView.setAdapter(adapter);
+        }
+        // 内容
+        TextView content = (TextView) holder.getView(R.id.tv_content);
+        content.setText(item.getContent());
+        EmojiLoader.replaceEmoji(mContext, content);
+        // 底部数据
+        holder.setText(R.id.tv_comment, CircleDataLoader.formatNumber(item.getComment()));
+        holder.setText(R.id.tv_hate, CircleDataLoader.formatNumber(item.getHate()));
+        holder.setText(R.id.tv_great, CircleDataLoader.formatNumber(item.getGreat()));
+        // 底部点击事件
+        onGreatClick(holder, item);
+        onHateClick(holder, item);
+        onCommentClick(holder, item);
+        onFavClick(holder, item);
+
+        holder.getView(R.id.iv_user_photo).setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, UserZoneActivity.class);
+            Bundle bundle = new Bundle();
+            boolean b = UserUtils.getInstance().getUserzoneObjId(mContext).equals(item.getUserzone().getObjectId());
+            intent.putExtra("isMyself", b);
+            intent.putExtra("zoneObjectId", item.getUserzone().getObjectId());
+            intent.putExtras(bundle);
+            mContext.startActivity(intent);
+        });
     }
 
     private void onFavClick(BaseRecyclerViewHolder holder, SchoolCircle item) {

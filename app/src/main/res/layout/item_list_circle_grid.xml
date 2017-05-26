@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="2dp"
+        android:background="@drawable/img_picture_placeholder"
         android:scaleType="center" />
 
 </com.shenhua.commonlibs.widget.SquareLayout>

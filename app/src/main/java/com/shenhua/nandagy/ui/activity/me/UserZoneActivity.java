@@ -192,7 +192,7 @@ public class UserZoneActivity extends BaseActivity implements AppBarLayout.OnOff
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.zone_menu, menu);
+        getMenuInflater().inflate(R.menu.zone, menu);
         return true;
     }
 

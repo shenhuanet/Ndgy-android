@@ -21,7 +21,6 @@ import org.jsoup.select.Elements;
  */
 public class ContentDetailModelImpl implements ContentDetailModel<ContentDetailData> {
 
-    private static final String TAG = "ContentDetailModelImpl";
     private HttpManager httpManager = HttpManager.getInstance();
 
     /**

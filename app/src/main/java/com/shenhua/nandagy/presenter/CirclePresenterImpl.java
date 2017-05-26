@@ -47,9 +47,6 @@ public class CirclePresenterImpl implements CirclePresenter, CircleLoaderCallbac
      */
     @Override
     public void onSuccess(List<SchoolCircle> schoolCircles, int type) {
-        if (schoolCircles == null) {
-            return;
-        }
         mStartPage += schoolCircles.size();
         circleView.updateList(schoolCircles, type);
     }

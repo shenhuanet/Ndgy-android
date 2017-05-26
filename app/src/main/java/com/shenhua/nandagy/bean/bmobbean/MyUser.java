@@ -90,4 +90,8 @@ public class MyUser extends BmobUser implements Serializable {
         this.userZone = userZone;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return getObjectId().equals(((MyUser) obj).getObjectId());
+    }
 }

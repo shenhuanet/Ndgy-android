@@ -77,4 +77,12 @@ public class Constants {
         public static final String PICTURE_SAVE_DIR = "ndgy";
     }
 
+    public static class ErrorInfo {
+        public static final String ERROR_NO_NET = "no net";
+        public static final String ERROR_NO_DATA = "no data";
+        public static final String ERROR_NO_MOREDATA = "no more data";
+        public static final String ERROR_TIMEOUT = "time out";
+        public static final String ERROR_PARSE = "parse error";
+    }
+
 }

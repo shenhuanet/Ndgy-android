@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.shenhua.commonlibs.annotation.ActivityFragmentInject;
@@ -47,11 +49,13 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.recycler_view)
-    AutoLoadMoreRecyclerView mRecycler;
+    AutoLoadMoreRecyclerView mRecyclerView;
     @BindView(R.id.tpl_view)
     ThreePointLoadingView mLoadingView;
     @BindView(R.id.fab)
     FloatingActionButton mFab;
+    @BindView(R.id.empty)
+    TextView mEmptyView;
     private CirclePresenterImpl mCirclePresenter;
     private CircleAdapter mCircleAdapter;
     private List<SchoolCircle> mDatas = new ArrayList<>();
@@ -61,21 +65,21 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
         ButterKnife.bind(this);
         EmojiLoader.initEmoji(this, new String[]{"emoji_ay", "emoji_aojiao", "emoji_d"});
-        mFab.attachToRecyclerView(mRecycler);
+        mFab.attachToRecyclerView(mRecyclerView);
         mRefreshLayout.setColorSchemeResources(android.R.color.holo_orange_light, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_red_light);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecycler.setAutoLayoutManager(linearLayoutManager)
+        mRecyclerView.setAutoLayoutManager(linearLayoutManager)
                 .setAutoHasFixedSize(true)
                 .addAutoItemDecoration(new BaseSpacesItemDecoration(ConvertUtils.dp2px(this, 4), false))
                 .setAutoItemAnimator(new DefaultItemAnimator());
         mRefreshLayout.setOnRefreshListener(this);
-        mRecycler.setOnLoadMoreListener(this);
+        mRecyclerView.setOnLoadMoreListener(this);
         mCircleAdapter = new CircleAdapter(this, null);
-        mRecycler.setAutoAdapter(mCircleAdapter);
+        mRecyclerView.setAutoAdapter(mCircleAdapter);
 
         mCirclePresenter = new CirclePresenterImpl(CircleActivity.this);
 
-        mRecycler.postDelayed(() -> {
+        mRecyclerView.postDelayed(() -> {
             mCirclePresenter.execute();
         }, 500);
 
@@ -99,7 +103,7 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
     public void loadMore() {
         mCirclePresenter.loadMoreData();
         mCircleAdapter.showFooter();
-        mRecycler.scrollToPosition(mCircleAdapter.getItemCount() - 1);
+        mRecyclerView.scrollToPosition(mCircleAdapter.getItemCount() - 1);
     }
 
     @Override
@@ -109,26 +113,30 @@ public class CircleActivity extends BaseActivity implements CircleView, SwipeRef
                 mRefreshLayout.setRefreshing(false);
                 mDatas.addAll(datas);
                 mCircleAdapter.setDatas(datas);
-                if (mRecycler.isAllLoaded()) {
-                    // 之前全部加载完了的话，这里把状态改回来供底部加载用
-                    mRecycler.notifyMoreLoaded();
+                mEmptyView.setVisibility(datas.size() <= 0 ? View.VISIBLE : View.GONE);
+                if (mRecyclerView.isAllLoaded()) {
+                    mRecyclerView.notifyMoreLoaded();
                 }
                 break;
             case DataLoadType.TYPE_REFRESH_FAIL:
                 mRefreshLayout.setRefreshing(false);
+                mEmptyView.setVisibility(View.VISIBLE);
                 break;
             case DataLoadType.TYPE_LOAD_MORE_SUCCESS:
                 mCircleAdapter.hideFooter();
-                if (datas == null || datas.size() == 0) {
-                    mRecycler.notifyAllLoaded();
+                if (datas.size() <= 0) {
+                    mRecyclerView.notifyAllLoaded();
                 } else {
                     mCircleAdapter.addMoreItem(datas);
-                    mRecycler.notifyMoreLoaded();
+                    mRecyclerView.notifyMoreLoaded();
                 }
                 break;
             case DataLoadType.TYPE_LOAD_MORE_FAIL:
+                if (datas.size() <= 0) {
+                    mRecyclerView.notifyAllLoaded();
+                }
                 mCircleAdapter.hideFooter();
-                mRecycler.notifyMoreLoaded();
+                mRecyclerView.notifyMoreLoaded();
                 break;
         }
     }

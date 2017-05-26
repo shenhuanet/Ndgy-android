@@ -72,6 +72,7 @@
     <string name="toolbar_title_more_circle_detail">帖子详情</string>
     <string name="toolbar_title_more_community">社团百态</string>
     <string name="toolbar_title_more_lost">失物招领</string>
+    <string name="toolbar_title_more_lost_add">添加失物招领信息</string>
     <string name="toolbar_title_more_pager">纸飞机</string>
     <string name="toolbar_title_more_study">学习专区</string>
     <string name="toolbar_title_score_query_result">成绩查询结果</string>

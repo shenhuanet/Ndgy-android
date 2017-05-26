@@ -27,8 +27,7 @@ public class CircleGridAdapter extends BaseListAdapter<BmobFile> {
     @Override
     public void onBindItemView(BaseViewHolder baseViewHolder, BmobFile bmobFile, int position) {
         ImageView view = baseViewHolder.getView(R.id.iv_nine_grid);
-        Glide.with(mContext).load(bmobFile.getFileUrl()).thumbnail(0.5f)
-                .placeholder(R.drawable.img_picture_placeholder).into(view);
+        Glide.with(mContext).load(bmobFile.getFileUrl()).thumbnail(0.5f).into(view);
         view.setOnClickListener(v -> {
             ArrayList<String> list = new ArrayList<>();
             for (int i = 0; i < mDatas.size(); i++) {

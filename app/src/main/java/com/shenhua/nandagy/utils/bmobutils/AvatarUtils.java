@@ -2,6 +2,7 @@ package com.shenhua.nandagy.utils.bmobutils;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -79,9 +80,27 @@ public class AvatarUtils {
     public static void loadUserNick(UserZone userZone, TextView view) {
         try {
             String nick = userZone.getUser().getNick();
-            view.setText(nick);
+            Log.d("shenhuaLog -- " + AvatarUtils.class.getSimpleName(), "loadUserNick: " + nick);
+            if (TextUtils.isEmpty(nick)) {
+                view.setText("未设置昵称");
+            } else {
+                view.setText(nick);
+            }
         } catch (Exception e) {
-            view.setText("佚名");
+            view.setText("未设置昵称");
+        }
+    }
+
+    public static void loadUserNick(MyUser user, TextView view) {
+        try {
+            String nick = user.getNick();
+            if (TextUtils.isEmpty(nick)) {
+                view.setText("未设置昵称");
+            } else {
+                view.setText(nick);
+            }
+        } catch (Exception e) {
+            view.setText("未设置昵称");
         }
     }
 }
