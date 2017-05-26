@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
         android:orientation="vertical"
-        tools:context="com.shenhua.nandagy.ui.activity.jiaowu.ScoreActivity">
+        tools:context="com.shenhua.nandagy.module.jiaowu.ui.activity.ScoreActivity">
 
         <include layout="@layout/common_toolbar_title_center" />
 

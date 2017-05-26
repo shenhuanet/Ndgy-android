@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorBackground"
-    tools:context="com.shenhua.nandagy.ui.activity.jiaowu.BindingActivity">
+    tools:context="com.shenhua.nandagy.module.jiaowu.ui.activity.BindingActivity">
 
     <include layout="@layout/common_toolbar_title_left" />
 

@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.shenhua.nandagy.base.BaseSQLiteDao;
-import com.shenhua.nandagy.bean.StudyListData;
+import com.shenhua.nandagy.bean.module.StudyListData;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -33,7 +33,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.SplashActivity"
+            android:name=".module.acommon.ui.activity.SplashActivity"
             android:label="@string/app_name"
             android:theme="@style/AppWelcome">
             <intent-filter>
@@ -52,50 +52,50 @@
         <!-- </intent-filter> -->
         <!-- </activity> -->
 
-        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".module.acommon.ui.activity.MainActivity" />
         <activity
-            android:name=".ui.activity.me.LoginActivity"
+            android:name=".module.me.ui.activity.LoginActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.activity.ContentDetailActivity" />
-        <activity android:name=".ui.activity.me.UserZoneActivity" />
-        <activity android:name=".ui.activity.me.ZoneActivity" />
-        <activity android:name=".ui.activity.me.UserZoneEditActivity" />
-        <activity android:name=".ui.activity.me.UserAccountActivity" />
+        <activity android:name=".module.acommon.ui.activity.ContentDetailActivity" />
+        <activity android:name=".module.me.ui.activity.UserZoneActivity" />
+        <activity android:name=".module.me.ui.activity.ZoneActivity" />
+        <activity android:name=".module.me.ui.activity.UserZoneEditActivity" />
+        <activity android:name=".module.me.ui.activity.UserAccountActivity" />
         <activity
-            android:name=".ui.activity.me.PublishDynamicActivity"
+            android:name=".module.me.ui.activity.PublishDynamicActivity"
             android:theme="@style/AppThemeFitsSystemWindows"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.activity.me.MessageActivity" />
-        <activity android:name=".ui.activity.me.SettingActivity" />
-        <activity android:name=".ui.activity.me.AboutActivity" />
-        <activity android:name=".ui.activity.more.ScoreQueryActivity" />
-        <activity android:name=".ui.activity.more.StudyAreaActivity" />
-        <activity android:name=".ui.activity.more.EmployActivity" />
-        <activity android:name=".ui.activity.more.CircleActivity" />
+        <activity android:name=".module.me.ui.activity.MessageActivity" />
+        <activity android:name=".module.me.ui.activity.SettingActivity" />
+        <activity android:name=".module.me.ui.activity.AboutActivity" />
+        <activity android:name=".module.more.score.ui.activity.ScoreQueryActivity" />
+        <activity android:name=".module.more.study.ui.activity.StudyAreaActivity" />
+        <activity android:name=".module.more.common.EmployActivity" />
+        <activity android:name=".module.more.circle.ui.activity.CircleActivity" />
         <activity
-            android:name=".ui.activity.more.CircleDetailActivity"
+            android:name=".module.more.circle.ui.activity.CircleDetailActivity"
             android:theme="@style/AppThemeFitsSystemWindows"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.activity.more.CommunityActivity" />
-        <activity android:name=".ui.activity.more.LostFoundActivity" />
-        <activity android:name=".ui.activity.more.PaperPlaneActivity" />
-        <activity android:name=".ui.activity.more.PoyangLakeActivity" />
-        <activity android:name=".ui.activity.me.FeedbackActivity" />
-        <activity android:name=".ui.activity.WebActivity" />
-        <activity android:name=".ui.activity.more.ScoreQueryResultActivity" />
-        <activity android:name=".ui.activity.xuegong.FinanceActivity" />
-        <activity android:name=".ui.activity.xuegong.EduAdminActivity" />
-        <activity android:name=".ui.activity.home.GroupActivity" />
-        <activity android:name=".ui.activity.home.PartyActivity" />
-        <activity android:name=".ui.activity.home.LibraryActivity" />
-        <activity android:name=".ui.activity.more.StudyAreaDetailActivity" />
+        <activity android:name=".module.more.community.ui.activity.CommunityActivity" />
+        <activity android:name=".module.more.lostfound.ui.activity.LostFoundActivity" />
+        <activity android:name=".module.more.pager.ui.activity.PaperPlaneActivity" />
+        <activity android:name=".module.more.common.PoyangLakeActivity" />
+        <activity android:name=".module.me.ui.activity.FeedbackActivity" />
+        <activity android:name=".module.acommon.ui.activity.WebActivity" />
+        <activity android:name=".module.more.score.ui.activity.ScoreQueryResultActivity" />
+        <activity android:name=".module.xuegong.ui.activity.FinanceActivity" />
+        <activity android:name=".module.xuegong.ui.activity.EduAdminActivity" />
+        <activity android:name=".module.home.ui.activity.GroupActivity" />
+        <activity android:name=".module.home.ui.activity.PartyActivity" />
+        <activity android:name=".module.home.ui.activity.LibraryActivity" />
+        <activity android:name=".module.more.study.ui.activity.StudyAreaDetailActivity" />
         <activity
-            android:name=".ui.activity.jiaowu.ScoreActivity"
+            android:name=".module.jiaowu.ui.activity.ScoreActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.activity.jiaowu.BindingActivity"
+            android:name=".module.jiaowu.ui.activity.BindingActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.activity.ImageViewerActivity" />
+        <activity android:name=".module.acommon.ui.activity.ImageViewerActivity" />
 
         <!-- tencent -->
         <activity
@@ -206,7 +206,7 @@
                 android:resource="@xml/boxing_file_provider" />
         </provider>
 
-        <activity android:name=".ui.activity.more.LostFoundAddActivity"></activity>
+        <activity android:name=".module.more.lostfound.ui.activity.LostFoundAddActivity"></activity>
     </application>
 
 </manifest>

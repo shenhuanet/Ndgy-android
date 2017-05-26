@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activity.more.PaperPlaneActivity">
+    tools:context=".module.more.pager.ui.activity.PaperPlaneActivity">
 
     <include layout="@layout/common_toolbar_pager" />
 
