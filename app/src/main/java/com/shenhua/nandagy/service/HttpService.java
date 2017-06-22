@@ -29,6 +29,8 @@ public class HttpService {
     public static final String SCORE_QUERY_URL_CAP = "http://218.65.89.144/user/user_login.jsp";
     public static final String SCORE_QUERY_URL_CAP2 = "http://wx.233.com/u/hook/45.html";
 
+    // "http://search.neea.edu.cn/Query"+"DataAction.do?act=neeaLogout&signout=1"+"&t="+Math.random()
+
     // 验证码
     public static final String VERFY_CODE_PETS = "http://chaxun.neea.edu.cn/examcenter/myimage.jsp"; // 150x50
     public static final String VERFY_CODE_COMPUTER = "http://chaxun.neea.edu.cn/examcenter/myimage.jsp"; // 150x50

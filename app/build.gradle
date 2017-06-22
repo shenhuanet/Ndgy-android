@@ -15,7 +15,7 @@ android {
         applicationId "com.shenhua.nandagy"
         minSdkVersion MIN_SDK_VERSION as int
         targetSdkVersion TARGET_SDK_VERSION as int
-        versionCode VERSION_CODE as int
+        versionCode 3
         versionName VERSION_NAME
 
     }

@@ -23,7 +23,7 @@ import com.squareup.otto.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.bmob.push.BmobPush;
+import cn.bmob.v3.update.BmobUpdateAgent;
 
 /**
  * MainActivity
@@ -47,9 +47,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     protected void onCreate(BaseActivity baseActivity, Bundle savedInstanceState) {
-//        BmobUpdateAgent.update(this);
+        BmobUpdateAgent.update(this);
 //        BmobUpdateAgent.setUpdateOnlyWifi(false);
-        BmobPush.startWork(this);
+//        BmobPush.startWork(this);
 
         ButterKnife.bind(this);
         setupTabHost();
